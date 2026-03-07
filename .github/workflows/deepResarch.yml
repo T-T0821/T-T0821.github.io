@@ -174,7 +174,7 @@ jobs:
 
           # research エージェントで実行、失敗時(No such agent等)はデフォルトにフォールバック
           set +e
-          cat /tmp/copilot_prompt.txt | copilot --experimental --agent research --allow-all-tools
+          cat /tmp/copilot_prompt.txt | copilot -p /research --allow-all-tools
           EXIT_CODE=$?
           set -e
 
