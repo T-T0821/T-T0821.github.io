@@ -52,7 +52,10 @@ jobs:
         uses: actions/setup-node@v4
 
       - name: Install Copilot CLI
-        run: npm install -g @github/copilot
+        run: |
+          npm install -g @github/copilot
+          # バージョン確認
+          copilot version || true
 
       # ─────────────────────────────────────────────
       # 3. シークレット確認
@@ -73,6 +76,15 @@ jobs:
             exit 1
           fi
           echo "COPILOT_PAT シークレットを確認しました。"
+
+      - name: Check available Copilot agents
+        env:
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
+        run: |
+          echo "=== Copilot CLI version ==="
+          copilot version || true
+          echo "=== Available agents (experimental) ==="
+          echo "/agent" | timeout 15 copilot --experimental --allow-all-tools 2>&1 | head -30 || true
 
       # ─────────────────────────────────────────────
       # 4. 出力ファイル名を決定 (Copilot CLI 実行前に確定)
@@ -160,9 +172,16 @@ jobs:
           上記のファイルパスにファイルを作成してください。
           PROMPT_EOF
 
-          # --agent research = /research と同等のビルトインエージェント
-          # (claude-sonnet-4.6 でウェブ・コードベース横断の Deep Research を実行)
-          cat /tmp/copilot_prompt.txt | copilot --agent research --allow-all-tools
+          # research エージェントで実行、失敗時(No such agent等)はデフォルトにフォールバック
+          set +e
+          cat /tmp/copilot_prompt.txt | copilot --experimental --agent research --allow-all-tools
+          EXIT_CODE=$?
+          set -e
+
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "::warning::research エージェントが利用できなかったため、デフォルトエージェントで再試行します"
+            cat /tmp/copilot_prompt.txt | copilot --experimental --allow-all-tools
+          fi
 
           # ファイルが生成されているか確認
           if [ ! -f "$FILEPATH" ]; then
