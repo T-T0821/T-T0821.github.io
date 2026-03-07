@@ -97,7 +97,7 @@ jobs:
           - Markdown 本文のみを出力し、余分な説明は不要です。"
 
           # プログラムモードで実行 (-p) し、標準出力をファイルに保存
-          copilot -p "$PROMPT" --allow-all-tools > article_output.txt
+          copilot /research -p "$PROMPT" --allow-all-tools > article_output.txt
 
           # GITHUB_OUTPUT へ書き出し (ヒアドキュメントで改行を保持)
           {
