@@ -125,7 +125,13 @@ jobs:
         run: |
           mkdir -p "$DIRPATH"
 
-          PROMPT="以下のトピックについて深く調査し、技術ブログ記事を作成してください。
+          # プロンプトをファイルに書き出す (改行・特殊文字を安全に扱うため)
+          cat > /tmp/copilot_prompt.txt << 'PROMPT_EOF'
+          以下のトピックについて深く調査し、技術ブログ記事を作成してください。
+          PROMPT_EOF
+
+          # 変数展開が必要な部分は別途追記
+          cat >> /tmp/copilot_prompt.txt << PROMPT_EOF
 
           トピック: ${TOPIC}
 
@@ -135,11 +141,11 @@ jobs:
           最初に YAML フロントマターを記述し、その後に記事本文を続けます:
 
           ---
-          title: \"<記事タイトル>\"
+          title: "<記事タイトル>"
           date: ${TODAY}
-          category: \"${CATEGORY}\"
-          description: \"<記事の1〜2文の概要>\"
-          lang: \"${LANGUAGE}\"
+          category: "${CATEGORY}"
+          description: "<記事の1〜2文の概要>"
+          lang: "${LANGUAGE}"
           ---
 
           <${LANGUAGE}での Markdown 記事本文>
@@ -151,9 +157,12 @@ jobs:
           - 読者が実際に動かせるよう具体的なコードスニペットを含める
           - 記事の最後に「## 参考資料」セクションを設け、調査・執筆の際に参照した公式ドキュメント・ブログ・GitHub リポジトリ等の URL をリスト形式で列挙する（各リンクは [タイトル](URL) 形式で記述すること）
 
-          上記のファイルパスにファイルを作成してください。"
+          上記のファイルパスにファイルを作成してください。
+          PROMPT_EOF
 
-          copilot /research -p "$PROMPT" --allow-all-tools
+          # --agent research = /research と同等のビルトインエージェント
+          # (claude-sonnet-4.6 でウェブ・コードベース横断の Deep Research を実行)
+          cat /tmp/copilot_prompt.txt | copilot --agent research --allow-all-tools
 
           # ファイルが生成されているか確認
           if [ ! -f "$FILEPATH" ]; then
