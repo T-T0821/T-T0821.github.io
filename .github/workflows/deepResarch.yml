@@ -172,16 +172,9 @@ jobs:
           上記のファイルパスにファイルを作成してください。
           PROMPT_EOF
 
-          # research エージェントで実行、失敗時(No such agent等)はデフォルトにフォールバック
-          set +e
+          # research エージェントで Deep Research を実行
+          # 失敗した場合はそのままワークフローを終了する
           cat /tmp/copilot_prompt.txt | copilot -p /research --allow-all-tools
-          EXIT_CODE=$?
-          set -e
-
-          if [ $EXIT_CODE -ne 0 ]; then
-            echo "::warning::research エージェントが利用できなかったため、デフォルトエージェントで再試行します"
-            cat /tmp/copilot_prompt.txt | copilot --experimental --allow-all-tools
-          fi
 
           # ファイルが生成されているか確認
           if [ ! -f "$FILEPATH" ]; then
