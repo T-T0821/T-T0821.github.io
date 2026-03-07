@@ -1,0 +1,209 @@
+name: Deep Research Article Generator
+
+on:
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: "調査・記事化するトピック (例: React Server Components の仕組み)"
+        required: true
+        type: string
+      filename:
+        description: "出力ファイル名 (拡張子なし。省略時はトピックから自動生成)"
+        required: false
+        type: string
+      category:
+        description: "記事のカテゴリ"
+        required: true
+        type: choice
+        options:
+          - frontend
+          - backend
+          - ai
+          - devops
+          - security
+          - other
+      language:
+        description: "記事の言語"
+        required: false
+        default: "日本語"
+        type: choice
+        options:
+          - 日本語
+          - English
+
+permissions:
+  contents: write
+  models: read   # GitHub Models / Copilot API へのアクセス権
+
+jobs:
+  deep-research:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ─────────────────────────────────────────────
+      # 1. チェックアウト
+      # ─────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ─────────────────────────────────────────────
+      # 2. gh copilot 拡張をインストール
+      # ─────────────────────────────────────────────
+      - name: Install gh copilot extension
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh extension install github/gh-copilot --force
+
+      # ─────────────────────────────────────────────
+      # 3. Deep Research を Copilot API で実行
+      # ─────────────────────────────────────────────
+      - name: Run Deep Research via Copilot API
+        id: research
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOPIC: ${{ inputs.topic }}
+          LANGUAGE: ${{ inputs.language }}
+        run: |
+          SYSTEM_PROMPT="You are a technical writer and researcher. \
+          When given a topic, you perform deep research and produce \
+          a comprehensive, well-structured blog article in Markdown format."
+
+          USER_PROMPT="以下のトピックについて深く調査し、技術ブログ記事として${LANGUAGE}でMarkdown形式で書いてください。
+
+          トピック: ${TOPIC}
+
+          記事の要件:
+          - タイトルは「# タイトル」で始める
+          - 概要・背景、詳細な解説、コード例（適切な言語タグ付き）、実践的なユースケース、まとめ のセクションを含める
+          - VitePress の Markdown 記法に対応した内容にする
+          - 読者が実際に動かせるよう具体的なコードスニペットを含める
+
+          Markdown 本文のみを出力し、余分な説明は不要です。"
+
+          # GitHub Models API (Claude Sonnet 4.6) で Deep Research を実行
+          RESPONSE=$(gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /models/anthropic/claude-sonnet-4-6/chat/completions \
+            --field "messages[0][role]=system" \
+            --field "messages[0][content]=$SYSTEM_PROMPT" \
+            --field "messages[1][role]=user" \
+            --field "messages[1][content]=$USER_PROMPT" \
+            --field "max_tokens=4096" \
+            --field "temperature=0.3" 2>/dev/null) || true
+
+          # レスポンスから content を抽出
+          ARTICLE=$(echo "$RESPONSE" | jq -r '.choices[0].message.content // empty')
+
+          if [ -z "$ARTICLE" ]; then
+            echo "::warning::API からの結果が空のため、プレースホルダーを使用します。"
+            ARTICLE="# ${TOPIC}
+
+          > このファイルは GitHub Copilot Deep Research によって自動生成されました。
+
+          ## 概要
+
+          ${TOPIC} に関する調査記事です。
+
+          <!-- TODO: Deep Research の結果をここに挿入 -->
+          "
+          fi
+
+          # GITHUB_OUTPUT へ書き出し (ヒアドキュメントで改行を保持)
+          {
+            echo "ARTICLE<<__EOF__"
+            echo "$ARTICLE"
+            echo "__EOF__"
+          } >> "$GITHUB_OUTPUT"
+
+      # ─────────────────────────────────────────────
+      # 4. 出力ファイル名を決定
+      # ─────────────────────────────────────────────
+      - name: Determine output filename
+        id: filename
+        env:
+          TOPIC: ${{ inputs.topic }}
+          CUSTOM_FILENAME: ${{ inputs.filename }}
+        run: |
+          if [ -n "$CUSTOM_FILENAME" ]; then
+            SLUG="$CUSTOM_FILENAME"
+          else
+            # ASCII 文字のみのスラグ生成
+            SLUG=$(echo "$TOPIC" \
+              | tr '[:upper:]' '[:lower:]' \
+              | sed 's/[^a-z0-9 ]//g' \
+              | sed 's/ \+/-/g' \
+              | sed 's/^-//;s/-$//' \
+              | cut -c1-60)
+
+            # 日本語など ASCII にならない場合は日時ベース
+            if [ -z "$SLUG" ]; then
+              SLUG="research-$(date +%Y%m%d-%H%M%S)"
+            fi
+          fi
+
+          TODAY=$(date +%Y-%m-%d)
+          CATEGORY="${{ inputs.category }}"
+          echo "slug=$SLUG"                             >> "$GITHUB_OUTPUT"
+          echo "filepath=docs/${CATEGORY}/${SLUG}.md"  >> "$GITHUB_OUTPUT"
+          echo "dirpath=docs/${CATEGORY}"               >> "$GITHUB_OUTPUT"
+          echo "date=$TODAY"                            >> "$GITHUB_OUTPUT"
+          echo "生成ファイルパス: docs/${CATEGORY}/${SLUG}.md"
+
+      # ─────────────────────────────────────────────
+      # 5. Markdown ファイルを docs/ に書き込む
+      # ─────────────────────────────────────────────
+      - name: Write article to docs/
+        env:
+          FILEPATH:  ${{ steps.filename.outputs.filepath }}
+          DIRPATH:   ${{ steps.filename.outputs.dirpath }}
+          TOPIC:     ${{ inputs.topic }}
+          CATEGORY:  ${{ inputs.category }}
+          LANGUAGE:  ${{ inputs.language }}
+          TODAY:     ${{ steps.filename.outputs.date }}
+          ARTICLE:   ${{ steps.research.outputs.ARTICLE }}
+        run: |
+          # カテゴリディレクトリを作成
+          mkdir -p "$DIRPATH"
+
+          # フロントマターを書き込む
+          cat > "$FILEPATH" << FRONTMATTER
+          ---
+          title: "${TOPIC}"
+          date: ${TODAY}
+          category: "${CATEGORY}"
+          description: "GitHub Copilot Deep Research によって自動生成された記事"
+          lang: "${LANGUAGE}"
+          ---
+
+          FRONTMATTER
+
+          # 調査結果を追記
+          printf '%s\n' "$ARTICLE" >> "$FILEPATH"
+
+          echo "ファイルを書き込みました: $FILEPATH"
+          echo "--- 内容プレビュー (先頭30行) ---"
+          head -30 "$FILEPATH"
+
+      # ─────────────────────────────────────────────
+      # 6. コミット & プッシュ
+      # ─────────────────────────────────────────────
+      - name: Commit and push
+        env:
+          FILEPATH:  ${{ steps.filename.outputs.filepath }}
+          TOPIC:     ${{ inputs.topic }}
+          CATEGORY:  ${{ inputs.category }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add "$FILEPATH"
+
+          if git diff --cached --quiet; then
+            echo "変更なし。コミットをスキップします。"
+          else
+            git commit -m "docs(${CATEGORY}): Deep Research 記事を追加「${TOPIC}」"
+            git push
+            echo "記事をリポジトリにプッシュしました: $FILEPATH"
+          fi
