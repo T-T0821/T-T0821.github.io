@@ -24,7 +24,7 @@ function buildSidebar() {
     .map(cat => {
       const catDir = path.join(docsDir, cat)
       const files = fs.readdirSync(catDir)
-        .filter((f: string) => f.endsWith('.md'))
+        .filter((f: string) => f.endsWith('.md') && f !== 'index.md')
         .map((f: string) => {
           const slug = f.replace(/\.md$/, '')
           // フロントマターから title を取得（なければスラグをそのまま使用）
