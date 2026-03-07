@@ -47,15 +47,7 @@ jobs:
         uses: actions/checkout@v4
 
       # ─────────────────────────────────────────────
-      # 2. gh copilot 拡張をインストール
-      # ─────────────────────────────────────────────
-      - name: Install gh copilot extension
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh extension install github/gh-copilot --force
-
-      # ─────────────────────────────────────────────
-      # 3. Deep Research を Copilot API で実行
+      # 2. Deep Research を Copilot API で実行
       # ─────────────────────────────────────────────
       - name: Run Deep Research via Copilot API
         id: research
@@ -118,7 +110,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       # ─────────────────────────────────────────────
-      # 4. 出力ファイル名を決定
+      # 3. 出力ファイル名を決定
       # ─────────────────────────────────────────────
       - name: Determine output filename
         id: filename
@@ -152,7 +144,7 @@ jobs:
           echo "生成ファイルパス: docs/${CATEGORY}/${SLUG}.md"
 
       # ─────────────────────────────────────────────
-      # 5. Markdown ファイルを docs/ に書き込む
+      # 4. Markdown ファイルを docs/ に書き込む
       # ─────────────────────────────────────────────
       - name: Write article to docs/
         env:
@@ -187,7 +179,7 @@ jobs:
           head -30 "$FILEPATH"
 
       # ─────────────────────────────────────────────
-      # 6. コミット & プッシュ
+      # 5. コミット & プッシュ
       # ─────────────────────────────────────────────
       - name: Commit and push
         env:
