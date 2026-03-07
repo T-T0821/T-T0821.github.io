@@ -39,92 +39,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # ─────────────────────────────────────────────
-      # 1. チェックアウト
-      # ─────────────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ─────────────────────────────────────────────
-      # 2. Node.js セットアップ & Copilot CLI インストール
-      # ─────────────────────────────────────────────
-      - name: Set up Node.js environment
+      - name: Set up Node.js
         uses: actions/setup-node@v4
 
       - name: Install Copilot CLI
-        run: |
-          npm install -g @github/copilot
-          # バージョン確認
-          copilot version || true
+        run: npm install -g @github/copilot
 
-      # ─────────────────────────────────────────────
-      # 3. シークレット確認
-      #    リポジトリ Settings → Secrets → Actions に
-      #    COPILOT_PAT を追加してください。
-      #    取得先: https://github.com/settings/personal-access-tokens/new
-      #    必要な権限: "Copilot Requests" (Read-only)
-      # ─────────────────────────────────────────────
-      - name: Check COPILOT_PAT secret
+      - name: Validate COPILOT_PAT secret
         env:
           TOKEN: ${{ secrets.COPILOT_PAT }}
         run: |
-          if [ -z "$TOKEN" ]; then
-            echo "::error::シークレット COPILOT_PAT が設定されていません。"
-            echo "::error::https://github.com/settings/personal-access-tokens/new で"
-            echo "::error::「Copilot Requests」権限付き fine-grained PAT を作成し、"
-            echo "::error::リポジトリの Settings > Secrets > Actions に COPILOT_PAT として登録してください。"
+          [ -n "$TOKEN" ] || {
+            echo "::error::COPILOT_PAT が未設定です。Settings > Secrets > Actions に登録してください。"
             exit 1
-          fi
-          echo "COPILOT_PAT シークレットを確認しました。"
+          }
 
-      - name: Check available Copilot agents
-        env:
-          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
-        run: |
-          echo "=== Copilot CLI version ==="
-          copilot version || true
-          echo "=== Available agents (experimental) ==="
-          echo "/agent" | timeout 15 copilot --experimental --allow-all-tools 2>&1 | head -30 || true
-
-      # ─────────────────────────────────────────────
-      # 4. 出力ファイル名を決定 (Copilot CLI 実行前に確定)
-      # ─────────────────────────────────────────────
-      - name: Determine output filename
+      - name: Resolve output filepath
         id: filename
         env:
           TOPIC: ${{ inputs.topic }}
           CUSTOM_FILENAME: ${{ inputs.filename }}
+          CATEGORY: ${{ inputs.category }}
         run: |
           if [ -n "$CUSTOM_FILENAME" ]; then
             SLUG="$CUSTOM_FILENAME"
           else
-            # ASCII 文字のみのスラグ生成
             SLUG=$(echo "$TOPIC" \
               | tr '[:upper:]' '[:lower:]' \
-              | sed 's/[^a-z0-9 ]//g' \
-              | sed 's/ \+/-/g' \
-              | sed 's/^-//;s/-$//' \
+              | sed 's/[^a-z0-9 ]//g; s/ \+/-/g; s/^-//; s/-$//' \
               | cut -c1-60)
-
-            # 日本語など ASCII にならない場合は日時ベース
-            if [ -z "$SLUG" ]; then
-              SLUG="research-$(date +%Y%m%d-%H%M%S)"
-            fi
+            [ -n "$SLUG" ] || SLUG="research-$(date +%Y%m%d-%H%M%S)"
           fi
 
-          TODAY=$(date +%Y-%m-%d)
-          CATEGORY="${{ inputs.category }}"
-          echo "slug=$SLUG"                             >> "$GITHUB_OUTPUT"
-          echo "filepath=docs/${CATEGORY}/${SLUG}.md"  >> "$GITHUB_OUTPUT"
-          echo "dirpath=docs/${CATEGORY}"               >> "$GITHUB_OUTPUT"
-          echo "date=$TODAY"                            >> "$GITHUB_OUTPUT"
-          echo "生成ファイルパス: docs/${CATEGORY}/${SLUG}.md"
+          echo "filepath=docs/${CATEGORY}/${SLUG}.md" >> "$GITHUB_OUTPUT"
+          echo "dirpath=docs/${CATEGORY}"             >> "$GITHUB_OUTPUT"
+          echo "date=$(date +%Y-%m-%d)"               >> "$GITHUB_OUTPUT"
 
-      # ─────────────────────────────────────────────
-      # 5. Copilot CLI で Deep Research を実行し指定パスへ直接書き込む
-      #    ※ copilot -p はエージェントとして動作しファイルを自律的に
-      #      作成する。stdout はエージェントログのため使用しない。
-      # ─────────────────────────────────────────────
       - name: Run Deep Research via Copilot CLI
         env:
           COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
@@ -137,73 +90,44 @@ jobs:
         run: |
           mkdir -p "$DIRPATH"
 
-          # プロンプトをファイルに書き出す (改行・特殊文字を安全に扱うため)
-          cat > /tmp/copilot_prompt.txt << 'PROMPT_EOF'
-          以下のトピックについて深く調査し、技術ブログ記事を作成してください。
-          PROMPT_EOF
+          PROMPT=$(cat << EOF
+          /research ${TOPIC}
 
-          # 変数展開が必要な部分は別途追記
-          cat >> /tmp/copilot_prompt.txt << PROMPT_EOF
+          調査結果を ${FILEPATH} に技術ブログ記事として書き込んでください。
 
-          トピック: ${TOPIC}
-
-          出力先ファイルパス: ${FILEPATH}
-
-          ファイルには以下の形式で書き込んでください。
-          最初に YAML フロントマターを記述し、その後に記事本文を続けます:
-
+          フロントマター:
           ---
           title: "<記事タイトル>"
           date: ${TODAY}
           category: "${CATEGORY}"
-          description: "<記事の1〜2文の概要>"
+          description: "<1〜2文の概要>"
           lang: "${LANGUAGE}"
           ---
 
-          <${LANGUAGE}での Markdown 記事本文>
+          ${LANGUAGE} での記事本文の要件:
+          - 「# タイトル」で始める
+          - 概要・背景 / 詳細解説 / コード例 / ユースケース / まとめ のセクションを含める
+          - VitePress Markdown 記法に準拠し、実行可能なコードスニペットを含める
+          - 末尾に「## 参考資料」として参照 URL を [タイトル](URL) 形式でリスト化する
+          EOF
+          )
 
-          記事の要件:
-          - タイトルは「# タイトル」で始める
-          - 概要・背景、詳細な解説、コード例（適切な言語タグ付き）、実践的なユースケース、まとめ のセクションを含める
-          - VitePress の Markdown 記法に対応した内容にする
-          - 読者が実際に動かせるよう具体的なコードスニペットを含める
-          - 記事の最後に「## 参考資料」セクションを設け、調査・執筆の際に参照した公式ドキュメント・ブログ・GitHub リポジトリ等の URL をリスト形式で列挙する（各リンクは [タイトル](URL) 形式で記述すること）
+          echo "$PROMPT" | sed 's/^          //' | copilot -p - --allow-all-tools
 
-          上記のファイルパスにファイルを作成してください。
-          PROMPT_EOF
-
-          # research エージェントで Deep Research を実行
-          # 失敗した場合はそのままワークフローを終了する
-          cat /tmp/copilot_prompt.txt | copilot -p /research --allow-all-tools
-
-          # ファイルが生成されているか確認
-          if [ ! -f "$FILEPATH" ]; then
-            echo "::error::Copilot CLI がファイルを生成しませんでした: $FILEPATH"
+          [ -f "$FILEPATH" ] || {
+            echo "::error::ファイルが生成されませんでした: $FILEPATH"
             exit 1
-          fi
+          }
 
-          echo "ファイルを生成しました: $FILEPATH"
-          echo "--- 内容プレビュー (先頭30行) ---"
-          head -30 "$FILEPATH"
-
-      # ─────────────────────────────────────────────
-      # 6. コミット & プッシュ
-      # ─────────────────────────────────────────────
       - name: Commit and push
         env:
-          FILEPATH:  ${{ steps.filename.outputs.filepath }}
-          TOPIC:     ${{ inputs.topic }}
-          CATEGORY:  ${{ inputs.category }}
+          FILEPATH: ${{ steps.filename.outputs.filepath }}
+          TOPIC: ${{ inputs.topic }}
+          CATEGORY: ${{ inputs.category }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
           git add "$FILEPATH"
-
-          if git diff --cached --quiet; then
-            echo "変更なし。コミットをスキップします。"
-          else
-            git commit -m "docs(${CATEGORY}): Deep Research 記事を追加「${TOPIC}」"
-            git push
-            echo "記事をリポジトリにプッシュしました: $FILEPATH"
-          fi
+          git diff --cached --quiet && exit 0
+          git commit -m "docs(${CATEGORY}): Deep Research 記事を追加「${TOPIC}」"
+          git push
