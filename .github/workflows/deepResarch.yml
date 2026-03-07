@@ -112,7 +112,7 @@ jobs:
           EOF
           )
 
-          echo "$PROMPT" | sed 's/^          //' | copilot -p - --allow-all-tools
+          copilot -p "$(echo "$PROMPT" | sed 's/^          //')" --allow-all-tools
 
           [ -f "$FILEPATH" ] || {
             echo "::error::ファイルが生成されませんでした: $FILEPATH"
