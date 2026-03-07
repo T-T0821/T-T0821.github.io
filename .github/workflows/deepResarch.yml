@@ -75,39 +75,7 @@ jobs:
           echo "COPILOT_PAT シークレットを確認しました。"
 
       # ─────────────────────────────────────────────
-      # 4. Copilot CLI で Deep Research を実行
-      # ─────────────────────────────────────────────
-      - name: Run Deep Research via Copilot CLI
-        id: research
-        env:
-          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
-          TOPIC: ${{ inputs.topic }}
-          LANGUAGE: ${{ inputs.language }}
-        run: |
-          PROMPT="以下のトピックについて深く調査し、技術ブログ記事として${LANGUAGE}でMarkdown形式で書いてください。
-
-          トピック: ${TOPIC}
-
-          記事の要件:
-          - タイトルは「# タイトル」で始める
-          - 概要・背景、詳細な解説、コード例（適切な言語タグ付き）、実践的なユースケース、まとめ のセクションを含める
-          - VitePress の Markdown 記法に対応した内容にする
-          - 読者が実際に動かせるよう具体的なコードスニペットを含める
-          - 記事の最後に「## 参考資料」セクションを設け、調査・執筆の際に参照した公式ドキュメント・ブログ・GitHub リポジトリ等の URL をリスト形式で列挙する（各リンクはMarkdownのリンク記法 [タイトル](URL) で記述すること）
-          - Markdown 本文のみを出力し、余分な説明は不要です。"
-
-          # プログラムモードで実行 (-p) し、標準出力をファイルに保存
-          copilot /research -p "$PROMPT" --allow-all-tools > article_output.txt
-
-          # GITHUB_OUTPUT へ書き出し (ヒアドキュメントで改行を保持)
-          {
-            echo "ARTICLE<<__EOF__"
-            cat article_output.txt
-            echo "__EOF__"
-          } >> "$GITHUB_OUTPUT"
-
-      # ─────────────────────────────────────────────
-      # 5. 出力ファイル名を決定
+      # 4. 出力ファイル名を決定 (Copilot CLI 実行前に確定)
       # ─────────────────────────────────────────────
       - name: Determine output filename
         id: filename
@@ -141,42 +109,64 @@ jobs:
           echo "生成ファイルパス: docs/${CATEGORY}/${SLUG}.md"
 
       # ─────────────────────────────────────────────
-      # 6. Markdown ファイルを docs/ に書き込む
+      # 5. Copilot CLI で Deep Research を実行し指定パスへ直接書き込む
+      #    ※ copilot -p はエージェントとして動作しファイルを自律的に
+      #      作成する。stdout はエージェントログのため使用しない。
       # ─────────────────────────────────────────────
-      - name: Write article to docs/
+      - name: Run Deep Research via Copilot CLI
         env:
-          FILEPATH:  ${{ steps.filename.outputs.filepath }}
-          DIRPATH:   ${{ steps.filename.outputs.dirpath }}
-          TOPIC:     ${{ inputs.topic }}
-          CATEGORY:  ${{ inputs.category }}
-          LANGUAGE:  ${{ inputs.language }}
-          TODAY:     ${{ steps.filename.outputs.date }}
-          ARTICLE:   ${{ steps.research.outputs.ARTICLE }}
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
+          TOPIC: ${{ inputs.topic }}
+          LANGUAGE: ${{ inputs.language }}
+          FILEPATH: ${{ steps.filename.outputs.filepath }}
+          DIRPATH: ${{ steps.filename.outputs.dirpath }}
+          CATEGORY: ${{ inputs.category }}
+          TODAY: ${{ steps.filename.outputs.date }}
         run: |
-          # カテゴリディレクトリを作成
           mkdir -p "$DIRPATH"
 
-          # フロントマターを書き込む
-          cat > "$FILEPATH" << FRONTMATTER
+          PROMPT="以下のトピックについて深く調査し、技術ブログ記事を作成してください。
+
+          トピック: ${TOPIC}
+
+          出力先ファイルパス: ${FILEPATH}
+
+          ファイルには以下の形式で書き込んでください。
+          最初に YAML フロントマターを記述し、その後に記事本文を続けます:
+
           ---
-          title: "${TOPIC}"
+          title: \"<記事タイトル>\"
           date: ${TODAY}
-          category: "${CATEGORY}"
-          description: "GitHub Copilot Deep Research によって自動生成された記事"
-          lang: "${LANGUAGE}"
+          category: \"${CATEGORY}\"
+          description: \"<記事の1〜2文の概要>\"
+          lang: \"${LANGUAGE}\"
           ---
 
-          FRONTMATTER
+          <${LANGUAGE}での Markdown 記事本文>
 
-          # 調査結果を追記
-          printf '%s\n' "$ARTICLE" >> "$FILEPATH"
+          記事の要件:
+          - タイトルは「# タイトル」で始める
+          - 概要・背景、詳細な解説、コード例（適切な言語タグ付き）、実践的なユースケース、まとめ のセクションを含める
+          - VitePress の Markdown 記法に対応した内容にする
+          - 読者が実際に動かせるよう具体的なコードスニペットを含める
+          - 記事の最後に「## 参考資料」セクションを設け、調査・執筆の際に参照した公式ドキュメント・ブログ・GitHub リポジトリ等の URL をリスト形式で列挙する（各リンクは [タイトル](URL) 形式で記述すること）
 
-          echo "ファイルを書き込みました: $FILEPATH"
+          上記のファイルパスにファイルを作成してください。"
+
+          copilot /research -p "$PROMPT" --allow-all-tools
+
+          # ファイルが生成されているか確認
+          if [ ! -f "$FILEPATH" ]; then
+            echo "::error::Copilot CLI がファイルを生成しませんでした: $FILEPATH"
+            exit 1
+          fi
+
+          echo "ファイルを生成しました: $FILEPATH"
           echo "--- 内容プレビュー (先頭30行) ---"
           head -30 "$FILEPATH"
 
       # ─────────────────────────────────────────────
-      # 7. コミット & プッシュ
+      # 6. コミット & プッシュ
       # ─────────────────────────────────────────────
       - name: Commit and push
         env:
