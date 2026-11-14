@@ -1,0 +1,116 @@
+{
+  "conf": "cvpr",
+  "updated": "2026-11-14",
+  "year": 2025,
+  "headline": "ナッシュビル開催。数百枚の画像から3D情報を一度に推定する VGGT（Meta・オックスフォード大）が最優秀論文に",
+  "summary": "米国ナッシュビルで開催され、投稿は約1.3万本、採択2,872本（約22.1%）、参加登録は9,375人でした。最優秀論文は、1枚から数百枚の画像を入力に、カメラの位置・深度・点群・点の追跡を最適化計算なしに1回の推論で推定する VGGT（オックスフォード大学・Meta）です。最優秀学生論文は、レーザーの光が伝わる様子を時間分解で捉えたデータから3Dを復元する研究。佳作には、オープンな重みとデータの VLM である Molmo/PixMo や、カジュアルな動画からカメラと構造を推定する MegaSaM が選ばれました。基調講演は Harry Shum 氏、Laurens van der Maaten 氏、Carolina Parada 氏です。",
+  "stats": {
+    "submissions": 13008,
+    "accepted": 2872,
+    "rate": "22.1%",
+    "note": "公式のまとめ記事では投稿12,008本と記載"
+  },
+  "attendees": "登録9,375人（75か国・地域）",
+  "keynotes": [
+    "Harry Shum",
+    "Laurens van der Maaten",
+    "Carolina Parada"
+  ],
+  "trends": [
+    "フィードフォワード3D復元: 最適化（SfM・バンドル調整）を1回の推論で置き換える VGGT",
+    "主要分野: 画像・動画合成、多視点3D、マルチモーダル学習、人物、低レベル画像処理、視覚と言語の推論",
+    "オープンな VLM: 重みとデータを公開した Molmo/PixMo",
+    "計算イメージング: 光の伝搬を捉える時間分解 LiDAR による逆レンダリング"
+  ],
+  "implications": [
+    "3D 復元が「時間をかけた最適化」から「基盤モデルによる即時推定」に変わりつつあり、ロボット・AR・現場の3D計測を手軽にする",
+    "VLM の重みだけでなく学習データまで公開する流れが評価されており、オープンなマルチモーダルモデルを自社用途に合わせて作り直しやすくなっている"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "VGGT: Visual Geometry Grounded Transformer",
+      "authors": "Jianyuan Wang, Minghao Chen, Nikita Karaev, Andrea Vedaldi, Christian Rupprecht, David Novotny",
+      "url": "https://arxiv.org/abs/2503.11651"
+    },
+    {
+      "award": "Best Student Paper",
+      "title": "Neural Inverse Rendering from Propagating Light",
+      "authors": "Anagh Malik ほか"
+    },
+    {
+      "award": "Best Paper Honorable Mention",
+      "title": "MegaSaM: Accurate, Fast and Robust Structure and Motion from Casual Dynamic Videos",
+      "authors": "Zhengqi Li ほか"
+    },
+    {
+      "award": "Best Paper Honorable Mention",
+      "title": "Molmo and PixMo: Open Weights and Open Data for State-of-the-Art Vision-Language Models",
+      "authors": "Matt Deitke ほか"
+    },
+    {
+      "award": "Best Paper Honorable Mention",
+      "title": "3D Student Splatting and Scooping",
+      "authors": "Jialin Zhu ほか"
+    },
+    {
+      "award": "Best Paper Honorable Mention",
+      "title": "Generative Multimodal Pretraining with Discrete Diffusion Timestep Tokens",
+      "authors": "Kaihang Pan ほか"
+    }
+  ],
+  "featured": [
+    {
+      "title": "VGGT: Visual Geometry Grounded Transformer",
+      "titleJa": "VGGT：視覚幾何に根ざした Transformer",
+      "award": "Best Paper",
+      "authors": [
+        "Jianyuan Wang",
+        "Minghao Chen",
+        "Nikita Karaev",
+        "Andrea Vedaldi",
+        "Christian Rupprecht",
+        "David Novotny"
+      ],
+      "url": "https://arxiv.org/abs/2503.11651",
+      "why": "1枚から数百枚の画像を入れるだけで、カメラパラメータ・深度マップ・点群・点の追跡を1秒程度でまとめて出力する大規模 Transformer です。従来の最適化ベースの手法より速く、多くの3Dタスクで高い精度を示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "1枚〜数百枚の画像から、カメラパラメータ（内部・外部）、深度マップ、点マップ、3D点トラッキング用特徴を、単一のフィードフォワード推論で一度に予測する大規模Transformer「VGGT」を提案した。1秒未満で再構成でき、後処理の幾何最適化なしでも最適化ベースの手法を上回ることが多い。",
+        "novelty": "DUSt3R/MASt3Rは2画像しか扱えず、複数画像の統合には高コストな後処理（グローバルアライメント）が必要だったが、VGGTは多数の画像を直接処理する。また従来の単一タスク特化の3Dモデルと異なり、共有バックボーンで関連する複数の3D量を同時に予測し、そのマルチタスク学習が精度を高めることを示した。",
+        "method": "約1.2Bパラメータの標準的なTransformerで、各画像をDINOでトークン化し、カメラトークンと4つのレジスタトークンを付与して、フレーム内自己注意と全フレーム間のグローバル自己注意を交互に行うAlternating-Attention（24層）で処理する。最初のフレームには専用の学習可能トークンを与え、第1カメラ座標系で予測させる。カメラはカメラヘッド（自己注意4層＋線形層）、深度・点マップ・トラッキング特徴はDPTヘッドで出力し、トラッキングはCoTracker2系モジュールで行う。カメラ・深度・点マップ・トラッキングのマルチタスク損失（不確実性重み付き損失と勾配項を含む）でエンドツーエンドに学習し、正解座標は第1カメラ基準で正規化する。",
+        "validation": "RealEstate10KとCO3Dv2のカメラ姿勢推定（10フレーム）でAUC@30が85.3／88.2（BA併用で93.5／91.8）となり、VGGSfM v2（78.9／83.4）やMASt3R（76.4／81.8）を上回り、推論は約0.2秒。DTUの多視点深度ではOverallをDUSt3Rの1.741から0.382に改善し、ETH3Dの点マップ推定でもDUSt3R・MASt3Rを上回った（深度＋カメラからの構成が0.677で点マップヘッド直接の0.709より良好）。アブレーションでAlternating-Attentionが全体自己注意のみやクロスアテンションより良く、マルチタスク学習も有効だった。さらに、事前学習済み特徴によりCoTrackerのTAP-Vid性能が向上し（RGB-Sのδ_avg^visが78.9→84.0）、新規視点合成でも入力カメラ不要で競合する結果を得た。",
+        "discussion": "魚眼・パノラマ画像は非対応で、極端な入力回転下では性能が低下し、大きな非剛体変形のあるシーンでは失敗する。これらは対象データでのファインチューニングで対処できると著者らは述べる。また、全体自己注意はトークン数が多いとメモリ負荷が大きく（200フレームでピークGPUメモリ約40.6GB）、LLM分野の高速化技術の適用が課題となる。",
+        "next": [
+          {
+            "title": "DUSt3R: Geometric 3D Vision Made Easy",
+            "reason": "VGGTが直接の比較対象かつ出発点とする、点マップ回帰による2画像フィードフォワード3D再構成の基礎となる論文であるため。"
+          },
+          {
+            "title": "VGGSfM: Visual Geometry Grounded Deep Structure From Motion",
+            "reason": "カメラのパラメータ化やトラッキングの設計をVGGTが踏襲しており、微分可能BAによるエンドツーエンドSfMとの違いを理解できるため。"
+          },
+          {
+            "title": "Fast3R: Towards 3D Reconstruction of 1000+ Images in One Forward Pass",
+            "reason": "VGGTと同様に多数画像をフィードフォワードで処理する並行研究であり、速度とスケーラビリティの比較に役立つため。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "CVPR Paper Awards（IEEE TCPAMI・受賞一覧）",
+      "url": "https://tc.computer.org/tcpami/awards/cvpr-paper-awards/"
+    },
+    {
+      "title": "CVPR 2025 Wrap-Up（公式）",
+      "url": "https://cvpr.thecvf.com/Conferences/2025/News/Wrap"
+    },
+    {
+      "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
+      "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    }
+  ],
+  "unreachable": []
+}

@@ -1,0 +1,105 @@
+{
+  "conf": "ijcai",
+  "year": 2022,
+  "updated": "2026-11-14",
+  "headline": "ウィーンで欧州の ECAI と合同開催。投票ルール・SAT ソルバー・逆合成（化学）の探索が最優秀論文に選ばれた回",
+  "summary": "欧州の AI 会議 ECAI と合同の IJCAI-ECAI 2022 として、ウィーンで現地開催されました。投稿4,535本・採択679本（約14.9%）です。最優秀論文は3本で、有権者の好みを距離で表したとき最適な「歪み」を達成するシンプルな投票ルール Plurality Veto、量化ブール式の SAT ソルバーの学習戦略の比較、化合物の合成経路を逆向きに探す逆合成への証明数探索の応用でした。研究功績賞は Stuart Russell 氏、Computers and Thought 賞は機械学習の信頼性・安全性の Bo Li 氏です。",
+  "stats": {
+    "submissions": 4535,
+    "accepted": 679,
+    "rate": "14.9%"
+  },
+  "trends": [
+    "計算社会選択: 最適な歪みを達成する単純な投票ルール",
+    "自動推論: 量化ブール式（QBF）ソルバーの学習手法",
+    "探索の化学への応用: 証明数探索による逆合成計画（合成経路の多様性と完全性）",
+    "AI の安全性・信頼性: Russell 氏（人間と両立する AI）と Bo Li 氏（敵対的頑健性）の受賞"
+  ],
+  "implications": [
+    "化学合成の経路探索に古典的な探索アルゴリズムを使う研究は、創薬・材料開発の自動化で探索と学習を組み合わせる流れを示している",
+    "安全性・信頼性の研究者が両方の主要賞を受けたことは、ChatGPT 以前から AI の安全性が学会の中心課題になっていたことを示す"
+  ],
+  "awards": [
+    {
+      "award": "Distinguished Paper",
+      "title": "Plurality Veto: A Simple Voting Rule Achieving Optimal Metric Distortion",
+      "authors": "Fatih Erdem Kizilkaya, David Kempe",
+      "url": "https://arxiv.org/abs/2206.07098"
+    },
+    {
+      "award": "Distinguished Paper",
+      "title": "QCDCL with Cube Learning or Pure Literal Elimination – What is Best?",
+      "authors": "Benjamin Böhm, Tomáš Peitl, Olaf Beyersdorff"
+    },
+    {
+      "award": "Distinguished Paper",
+      "title": "Completeness and Diversity in Depth-First Proof-Number Search with Applications to Retrosynthesis",
+      "authors": "Christopher Franz, Georg Mogk, Thomas Mrziglod, Kevin Schewior"
+    },
+    {
+      "award": "Award for Research Excellence",
+      "title": "Stuart Russell"
+    },
+    {
+      "award": "Computers and Thought Award",
+      "title": "Bo Li"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Plurality Veto: A Simple Voting Rule Achieving Optimal Metric Distortion",
+      "titleJa": "Plurality Veto：最適な距離歪みを達成するシンプルな投票ルール",
+      "award": "Distinguished Paper",
+      "authors": [
+        "Fatih Erdem Kizilkaya",
+        "David Kempe"
+      ],
+      "url": "https://arxiv.org/abs/2206.07098",
+      "why": "有権者と候補者の好みを「距離」として捉えたとき、選ばれた候補が最適な候補に比べてどれだけ悪くなりうるか（歪み）を最小にする投票ルールは複雑なものしか知られていませんでしたが、各候補の得票数から順に拒否票を引いていくだけの単純なルールで最適値3を達成できることを示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "有権者と候補者が計量空間に埋め込まれ、有権者は近い候補者ほど上位に順位付けするというメトリック・ディストーションの枠組みで、歪み（distortion）3を達成する非常に単純な投票ルール PluralityVeto を提案した研究。さらに、これを k ラウンドだけ実行して残りスコアに比例して当選者を選ぶランダム化ルール（k-Round PluralityVeto）に一般化し、期待ディストーションが任意の k で高々3であることを示した。",
+        "novelty": "決定論的ルールの下限3を達成する先行結果（Gkatzelis らの PluralityMatching）は、二部グラフの完全マッチングに基づく非構成的な存在証明と複雑な探索に依存していた。本研究は、各候補者の初期スコアを第1位票数とし、有権者が順に残存候補の最下位を拒否するだけという極めて単純な構成で同じ最適値3を達成し、証明も1段落で済む。また各有権者への問い合わせは2回程度で通信量が小さく（有権者あたり O(log m) ビット）、多勝者ルールで多項式時間かつ歪み3という Caragiannis らの未解決問題にも解答を与えた。",
+        "method": "各候補者のスコアを plurality スコア（第1位票数）で初期化し、n人の有権者を任意の順に処理して、各有権者が残存候補のうち自分の最下位の候補のスコアを1減らし、0になった候補は脱落させる。スコアの総和は n なので最終的に全員が脱落し、最後に残った候補が当選する。証明は、ドミネーション・グラフ G(c) が完全マッチングを持てば c の歪みが高々3という補題を利用し、拒否の過程から該当マッチングを構成する形で行われる。ランダム化版は k ラウンドで止め、残りスコアに比例した確率で当選者を選ぶ。k=0 で Random Dictatorship、k=n-1 で PluralityVeto に一致する。さらに整数でなく分数的に減らす FractionalVeto により Ranking-Matching Lemma の構成的証明も与える。",
+        "validation": "実験ではなく理論的な証明による検証である。PluralityVeto は歪み3を達成し、第1位票が過半数の候補は処理順に関わらず当選することが示された。k-Round PluralityVeto は任意の k で期待歪みが高々3であり、k=0 の Random Dictatorship は既知の 3-2/n に対応する。また、第1位票を持つ候補しか選べないルールの歪みは 3-o(1) 以上という既存の下限により、この上界はほぼ最適とされる。",
+        "discussion": "ランダム化ルールでも歪み3を超える改善（3-Ω(1) など）が可能かは未解決であり、k は出力の分散を制御するが歪みの上界自体は改善しない。また実装には有権者を逐次的に問い合わせる n ラウンドの手続きが必要で、並列性や戦略的操作への耐性は本文からは明確でなく、実データでの評価も示されていない。",
+        "next": [
+          {
+            "title": "Resolving the Optimal Metric Distortion Conjecture",
+            "reason": "歪み3を初めて達成した PluralityMatching と Ranking-Matching Lemma の原典で、本研究が簡略化した対象である。"
+          },
+          {
+            "title": "An Analysis Framework for Metric Voting Based on LP Duality",
+            "reason": "ドミネーション・グラフとフローを用いた上界証明の枠組みを与えており、本論文の証明の土台になっている。"
+          },
+          {
+            "title": "The Metric Distortion of Multiwinner Voting",
+            "reason": "本研究が未解決問題を解決した多勝者ルールの歪みの設定と還元手法を理解できる。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Congratulations to the authors of the #IJCAI2022 distinguished papers（AIhub）",
+      "url": "https://aihub.org/2022/07/28/congratulations-to-the-authors-of-the-ijcai2022-distinguished-papers/"
+    },
+    {
+      "title": "IJCAI Past Conferences（公式・開催地）",
+      "url": "https://www.ijcai.org/past_conferences"
+    },
+    {
+      "title": "IJCAI Awards（公式・各賞の受賞者）",
+      "url": "https://www.ijcai.org/awards"
+    },
+    {
+      "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
+      "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    }
+  ],
+  "unreachable": [
+    "招待講演者の一覧は公式ページから取得できなかったため省略しています",
+    "開催日程（日付）は公式ページで確認できなかったため月のみ表示しています"
+  ]
+}

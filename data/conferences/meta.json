@@ -204,17 +204,101 @@
       "name": "AAAI",
       "fullName": "AAAI Conference on Artificial Intelligence",
       "field": "ai",
-      "cadence": "毎年1〜2月",
+      "cadence": "毎年1〜3月",
       "site": "https://aaai.org/conference/aaai/",
-      "editions": {}
+      "editions": {
+        "2020": {
+          "start": "2020-02",
+          "end": "2020-02",
+          "location": "米国・ニューヨーク"
+        },
+        "2021": {
+          "start": "2021-02",
+          "end": "2021-02",
+          "location": "オンライン開催"
+        },
+        "2022": {
+          "start": "2022-02",
+          "end": "2022-03",
+          "location": "オンライン開催"
+        },
+        "2023": {
+          "start": "2023-02",
+          "end": "2023-02",
+          "location": "米国・ワシントン D.C."
+        },
+        "2024": {
+          "start": "2024-02-20",
+          "end": "2024-02-27",
+          "location": "カナダ・バンクーバー"
+        },
+        "2025": {
+          "start": "2025-02-25",
+          "end": "2025-03-04",
+          "location": "米国・フィラデルフィア"
+        },
+        "2026": {
+          "start": "2026-01-20",
+          "end": "2026-01-27",
+          "location": "シンガポール"
+        },
+        "2027": {
+          "start": "2027-02-16",
+          "end": "2027-02-23",
+          "location": "カナダ・モントリオール",
+          "source": "https://aaai.org/conference/aaai/aaai-27/"
+        }
+      }
     },
     "ijcai": {
       "name": "IJCAI",
       "fullName": "International Joint Conference on Artificial Intelligence",
       "field": "ai",
-      "cadence": "毎年8月ごろ",
+      "cadence": "毎年7〜8月",
       "site": "https://www.ijcai.org/",
-      "editions": {}
+      "editions": {
+        "2020": {
+          "start": "2021-01",
+          "end": "2021-01",
+          "location": "オンライン開催（当初予定は横浜。2021年1月に延期）"
+        },
+        "2021": {
+          "start": "2021-08",
+          "end": "2021-08",
+          "location": "オンライン開催（主催はモントリオール）"
+        },
+        "2022": {
+          "start": "2022-07",
+          "end": "2022-07",
+          "location": "オーストリア・ウィーン（ECAI と合同）"
+        },
+        "2023": {
+          "start": "2023-08",
+          "end": "2023-08",
+          "location": "中国・マカオ"
+        },
+        "2024": {
+          "start": "2024-08-03",
+          "end": "2024-08-09",
+          "location": "韓国・済州島"
+        },
+        "2025": {
+          "start": "2025-08",
+          "end": "2025-08",
+          "location": "カナダ・モントリオール／中国・広州"
+        },
+        "2026": {
+          "start": "2026-08-15",
+          "end": "2026-08-21",
+          "location": "ドイツ・ブレーメン（ECAI と合同）"
+        },
+        "2027": {
+          "start": "2027-08-07",
+          "end": "2027-08-13",
+          "location": "日本・京都（中国・横琴でも8月15〜17日に開催）",
+          "source": "https://www.ijcai.org/future_conferences"
+        }
+      }
     },
     "cvpr": {
       "name": "CVPR",
@@ -222,7 +306,49 @@
       "field": "cv",
       "cadence": "毎年6月",
       "site": "https://cvpr.thecvf.com/",
-      "editions": {}
+      "editions": {
+        "2020": {
+          "start": "2020-06",
+          "end": "2020-06",
+          "location": "オンライン開催（当初予定は米国・シアトル）"
+        },
+        "2021": {
+          "start": "2021-06",
+          "end": "2021-06",
+          "location": "オンライン開催"
+        },
+        "2022": {
+          "start": "2022-06",
+          "end": "2022-06",
+          "location": "米国・ニューオーリンズ"
+        },
+        "2023": {
+          "start": "2023-06",
+          "end": "2023-06",
+          "location": "カナダ・バンクーバー"
+        },
+        "2024": {
+          "start": "2024-06",
+          "end": "2024-06",
+          "location": "米国・シアトル"
+        },
+        "2025": {
+          "start": "2025-06-11",
+          "end": "2025-06-15",
+          "location": "米国・ナッシュビル"
+        },
+        "2026": {
+          "start": "2026-06-03",
+          "end": "2026-06-07",
+          "location": "米国・デンバー"
+        },
+        "2027": {
+          "start": "2027-06",
+          "end": "2027-06",
+          "location": "米国・シアトル（日程は公式ページ内で記載が食い違っている）",
+          "source": "https://cvpr.thecvf.com/Conferences/FutureMeetings"
+        }
+      }
     },
     "iccv": {
       "name": "ICCV",
@@ -230,7 +356,29 @@
       "field": "cv",
       "cadence": "奇数年の秋",
       "site": "https://iccv.thecvf.com/",
-      "editions": {}
+      "editions": {
+        "2021": {
+          "start": "2021-10-11",
+          "end": "2021-10-17",
+          "location": "オンライン開催（当初予定はカナダ・モントリオール）"
+        },
+        "2023": {
+          "start": "2023-10-02",
+          "end": "2023-10-06",
+          "location": "フランス・パリ"
+        },
+        "2025": {
+          "start": "2025-10-19",
+          "end": "2025-10-23",
+          "location": "米国・ホノルル"
+        },
+        "2027": {
+          "start": "2027-10-02",
+          "end": "2027-10-08",
+          "location": "中国・香港",
+          "source": "https://iccv.thecvf.com/"
+        }
+      }
     },
     "eccv": {
       "name": "ECCV",
@@ -238,7 +386,28 @@
       "field": "cv",
       "cadence": "偶数年の秋",
       "site": "https://eccv.ecva.net/",
-      "editions": {}
+      "editions": {
+        "2020": {
+          "start": "2020-08",
+          "end": "2020-08",
+          "location": "オンライン開催（当初予定は英国・グラスゴー）"
+        },
+        "2022": {
+          "start": "2022-10",
+          "end": "2022-10",
+          "location": "イスラエル・テルアビブ"
+        },
+        "2024": {
+          "start": "2024-09",
+          "end": "2024-09",
+          "location": "イタリア・ミラノ"
+        },
+        "2026": {
+          "start": "2026-09-08",
+          "end": "2026-09-12",
+          "location": "スウェーデン・マルメ"
+        }
+      }
     },
     "acl": {
       "name": "ACL",

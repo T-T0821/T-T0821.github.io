@@ -1,0 +1,90 @@
+{
+  "conf": "iccv",
+  "updated": "2026-11-14",
+  "year": 2023,
+  "headline": "パリ開催。超広帯域の単一光子イメージングがマー賞、Segment Anything と「すべてをどこでも追跡する」研究も受賞した回",
+  "summary": "パリで開催され、投稿8,620本・採択2,155本（約25.0%）でした。マー賞（Best Paper）は、単一光子カメラを受動的に使い、静止画から高速な現象まで極めて広い時間帯域の光を捉える計算イメージング研究（トロント大学）です。最優秀学生論文は、動画中のあらゆる画素を長時間・遮蔽をまたいで追跡する「Tracking Everything Everywhere All at Once」、佳作には Meta のセグメンテーション基盤モデル Segment Anything（SAM）が選ばれました。",
+  "stats": {
+    "submissions": 8620,
+    "accepted": 2155,
+    "rate": "25.0%"
+  },
+  "trends": [
+    "計算イメージング: 単一光子カメラによる超広帯域の受動的撮像",
+    "セグメンテーションの基盤モデル: プロンプトで何でも切り出せる Segment Anything",
+    "長期の密な追跡: 動画全体で一貫した画素ごとの動きの表現"
+  ],
+  "implications": [
+    "Segment Anything は、ラベル付けの自動化や検査画像の領域抽出などで最も広く使われる画像基盤モデルの一つになった",
+    "新しいセンサー（単一光子カメラ・イベントカメラ）と計算を組み合わせる研究が最高賞を得ており、カメラのハードウェア自体も AI と一緒に設計する時代に入っている"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper（Marr Prize）",
+      "title": "Passive Ultra-Wideband Single-Photon Imaging",
+      "authors": "Mian Wei, Sotiris Nousias, Rahul Gulve, David B. Lindell, Kiriakos N. Kutulakos"
+    },
+    {
+      "award": "Best Student Paper",
+      "title": "Tracking Everything Everywhere All at Once",
+      "authors": "Qianqian Wang ほか"
+    },
+    {
+      "award": "Best Paper Honorable Mention",
+      "title": "Segment Anything",
+      "authors": "Alexander Kirillov ほか（Meta）",
+      "url": "https://arxiv.org/abs/2304.02643"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Segment Anything",
+      "titleJa": "Segment Anything：何でもセグメンテーションする基盤モデル",
+      "award": "Best Paper Honorable Mention",
+      "authors": [
+        "Alexander Kirillov",
+        "Eric Mintun",
+        "Nikhila Ravi",
+        "ほか"
+      ],
+      "url": "https://arxiv.org/abs/2304.02643",
+      "why": "点・枠・テキストなどのプロンプトから任意の物体の領域を切り出す基盤モデル SAM と、1,100万枚の画像に10億個以上のマスクを付けたデータセット SA-1B を公開しました。追加学習なしで多くのセグメンテーション課題に使えます。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "画像セグメンテーションの基盤モデルを目指す Segment Anything (SA) プロジェクトで、新タスク（プロンプト可能セグメンテーション）、モデル SAM、データセット SA-1B（1,100万枚・11億マスク超）を同時に提案した研究。点・ボックス・マスク・テキストなどのプロンプトから有効なマスクを返し、プロンプトエンジニアリングによって新しい画像分布やタスクへゼロショットで転用できる。モデルとデータセットは公開されている。",
+        "novelty": "NLP の基盤モデルに倣い、「どんなプロンプトでも有効なマスクを返す」というタスクを事前学習目的かつ下流タスクへの汎化手段として定義した点が新しい。曖昧なプロンプトに対応するため複数マスクを出力し、固定タスク群を解く従来のマルチタスクモデルとは異なり、物体検出器などと組み合わせて未学習のタスクを解ける。また、モデルを使ってアノテーションを行う「データエンジン」により、既存の最大データセットの約400倍のマスクを持つ SA-1B を構築した。",
+        "method": "SAM は、MAE 事前学習済み ViT を用いる重い画像エンコーダ（画像ごとに1回実行）、点・ボックス・テキスト（CLIP）とマスクを埋め込むプロンプトエンコーダ、軽量なマスクデコーダの3要素で構成される。画像埋め込みを再利用するため、プロンプトごとのマスク予測はブラウザ上の CPU で約50msで動く。曖昧さには1プロンプトあたり3つのマスクと IoU 推定の信頼度スコアを出力し、学習時は最小損失のマスクのみ逆伝播する。データエンジンは、支援付き手動、半自動、完全自動（32×32 の格子点でプロンプトし、信頼度と安定性でマスクを選別して NMS をかける）の3段階で構成される。",
+        "validation": "23種類の多様なデータセットで単一点プロンプトのセグメンテーションを評価し、強力な対話型セグメンテーション手法 RITM に対し 16/23 のデータセットで mIoU が上回った（最大で約47 IoU）。人手評価でも SAM の方が一貫して高評価で、曖昧さを考慮する3マスク出力の oracle 評価では全データセットで RITM を上回った。ゼロショット転用では、BSDS500 のエッジ検出（ODS .768、R50 .928）、LVIS の物体提案（AR@1000 は全体で 59.3、ViTDet-H の 63.0 に及ばないが、中・大物体と rare・common クラスでは上回る）、インスタンスセグメンテーション（COCO AP 46.5、ViTDet-H は 51.0）を評価した。インスタンスセグメンテーションでは AP が ViTDet-H を下回る一方、人手評価では SAM のマスクの方が高く評価された。SA-1B のマスク品質は、500枚の約5万マスクを人手で修正して比較した結果、94%が IoU 90%超だった。",
+        "discussion": "テキストからマスクへの予測は予備的な概念実証にとどまり、BSDS500 のエッジ検出や COCO のインスタンスセグメンテーションなど、データセット固有のバイアスを学習した教師あり手法には AP で及ばない場面がある。点を増やして IoU が非常に高い領域を目指す場面でも、SAM はそのための最適化をしていないため差が縮まる。公平性の分析では人物のセグメンテーションに有意な差は見られなかったが、衣服のセグメンテーションでは知覚される性別表現による偏りの兆候があり、大規模システムの一部として使う際にはバイアスが生じうると述べられている。また、SA-1B は地理的に偏りがあり、アフリカや低所得国の画像は少ない。",
+        "next": [
+          {
+            "title": "Learning Transferable Visual Models From Natural Language Supervision (CLIP)",
+            "reason": "SAM が採用しているゼロショット転用の考え方と、テキストプロンプト用の CLIP 埋め込みの元になった論文であり、SAM のテキスト対応の仕組みを理解できる。"
+          },
+          {
+            "title": "Masked Autoencoders Are Scalable Vision Learners",
+            "reason": "SAM の画像エンコーダ（ViT-H）の事前学習手法である MAE を理解するために有用である。"
+          },
+          {
+            "title": "Exploring Plain Vision Transformer Backbones for Object Detection (ViTDet)",
+            "reason": "SAM が高解像度入力に適応する際に参照した ViT の構成であり、本論文の物体提案・インスタンスセグメンテーションの比較対象でもあるため。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "ICCV Paper Awards（IEEE TCPAMI・受賞一覧）",
+      "url": "https://tc.computer.org/tcpami/awards/iccv-paper-awards/"
+    },
+    {
+      "title": "International Conference on Computer Vision（AI Wiki・開催地と投稿数）",
+      "url": "https://www.aiwiki.ai/wiki/iccv"
+    }
+  ],
+  "unreachable": [
+    "基調講演者の一覧は公式ページから取得できなかったため省略しています",
+    "マー賞の論文は arXiv 版が見つからなかったため、落合フォーマットは Segment Anything で作成しています"
+  ]
+}

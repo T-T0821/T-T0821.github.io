@@ -1,0 +1,89 @@
+{
+  "conf": "aaai",
+  "year": 2020,
+  "updated": "2026-11-14",
+  "headline": "ニューヨーク開催。常識推論ベンチマーク WinoGrande が最優秀論文に選ばれ、「ベンチマークの抜け穴」問題に光が当たった回",
+  "summary": "コロナ禍直前の2020年2月にニューヨークで開催されました。投稿7,737本・採択1,591本（約20.6%）です。最優秀論文は、常識推論の古典的テスト Winograd Schema を4万4千問規模に拡張し、言語モデルが統計的な手がかりで「ずる」をできないよう偏りを取り除いた WinoGrande でした。AI の社会貢献トラックでは、多数のセンサーを使った機械学習による地震早期警報が受賞しています。BERT 系モデルが既存ベンチマークで人間並みの点を出し始めた時期で、「本当に理解しているのか」を問う評価の作り方が注目されました。",
+  "stats": {
+    "submissions": 7737,
+    "accepted": 1591,
+    "rate": "20.6%"
+  },
+  "trends": [
+    "常識推論とベンチマークの偏り: 敵対的フィルタリング（AFLite）でデータの統計的な手がかりを除去",
+    "AI の社会貢献: 地震早期警報など、防災・社会インフラへの応用を独立トラックで評価",
+    "事前学習言語モデルの台頭: BERT 系の成功を受け、NLP 系の発表が増えた"
+  ],
+  "implications": [
+    "ベンチマークの高得点がそのまま実力を意味しないという問題提起は、その後の LLM 評価（データ汚染・ショートカット学習）の議論に直結している",
+    "社会課題への応用を正式なトラックで評価する流れは、以降の AAAI の特色として定着した"
+  ],
+  "awards": [
+    {
+      "award": "Outstanding Paper",
+      "title": "WinoGrande: An Adversarial Winograd Schema Challenge at Scale",
+      "authors": "Keisuke Sakaguchi, Ronan Le Bras, Chandra Bhagavatula, Yejin Choi",
+      "url": "https://arxiv.org/abs/1907.10641"
+    },
+    {
+      "award": "AI for Social Impact Track",
+      "title": "A Distributed Multi-Sensor Machine Learning Approach to Earthquake Early Warning",
+      "authors": "Kevin Fauvel ほか"
+    }
+  ],
+  "featured": [
+    {
+      "title": "WinoGrande: An Adversarial Winograd Schema Challenge at Scale",
+      "titleJa": "WinoGrande：大規模な敵対的 Winograd スキーマ課題",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Keisuke Sakaguchi",
+        "Ronan Le Bras",
+        "Chandra Bhagavatula",
+        "Yejin Choi"
+      ],
+      "url": "https://arxiv.org/abs/1907.10641",
+      "why": "代名詞が何を指すかを常識で判断させる課題を4万4千問に拡張し、モデルが単語の共起などの手がかりで正解できる問題をアルゴリズムで取り除きました。人間は94%正解する一方、当時の最先端モデルは大きく下回り、評価データ作りの考え方を変えました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "Winograd Schema Challenge（WSC）に着想を得た、4.4万問規模の常識推論ベンチマーク WinoGrande を提案した研究。クラウドソーシングで問題を大量に作成し、アルゴリズムでバイアスを除去して、人間には易しい（94.0%）が機械には難しいデータセットにしている。さらに、転移学習の資源としても有効であることを示した。",
+        "novelty": "WSCは273問と小規模で、単語連想などのデータセット固有バイアスの影響を受けやすいという課題があった。本研究は、クラウドソーシングによる大規模化と、単語共起で検出できるバイアスを埋め込み表現上の機械検出可能なバイアスへ一般化した軽量な敵対的フィルタリング AfLite を組み合わせた。AfLite は過剰生成も各反復でのモデル再学習も不要という点で従来の AF より広く適用でき、計算コストも小さい。",
+        "method": "作業者には WikiHow 記事からランダムに選んだアンカー語を含めるという制約を課し、ツイン文（15〜30語、70%以上の単語重複）を作成させた。計7.7万問を収集し、3人の検証者による検証で68%（5.3万問）を有効とした。AfLite では、少量データ（6k件）で微調整した RoBERTa の埋め込みを用い、ランダム分割で学習した線形分類器（ロジスティック回帰）のアンサンブル（n=64、m=10,000）が正解を高い割合（閾値τ=0.75以上）で当てられる事例を、反復ごとに上位k=500件ずつ除去する。その結果、12,282問の debiased 版が得られ、除去された31k問は追加の訓練データとして公開された（all 版は43,972問）。",
+        "validation": "WinoGrande debiased のテストで、RoBERTa は 79.1%（訓練データ41k件時）、2%の訓練データ（約800件）では約59%にとどまり、人間の 94.0% を15〜35ポイント下回った。局所文脈のみのベースラインや DPR で微調整したモデルはほぼ偶然水準から60%未満だった。WinoGrande での転移学習により、WSC 90.1%、DPR 93.1%、COPA 90.6%、KnowRef 85.6%、Winogender 97.1% を達成した。KL ダイバージェンスは AfLite により 2.53 から 0.12 へ大幅に低下した（ランダム削減では 2.51、PMI フィルタでは 2.42）。",
+        "discussion": "著者らは、既存ベンチマークでの高精度は、真の常識推論能力ではなくデータセット固有のバイアスによって過大評価されている可能性があると指摘している。転移学習による改善のうち、既存データのバイアス利用によるものと真の常識推論の進歩によるものがどの程度かは、今後の課題として残されている。また、人間が作る静的なベンチマークではなく、最先端モデルの進歩に合わせて進化する動的なデータセットの設計が必要だと主張している。",
+        "next": [
+          {
+            "title": "RoBERTa: A Robustly Optimized BERT Pretraining Approach",
+            "reason": "本論文の主要なベースラインかつ AfLite の埋め込み抽出にも使われているモデルの詳細を理解するため。"
+          },
+          {
+            "title": "SWAG: A Large-Scale Adversarial Dataset for Grounded Commonsense Inference",
+            "reason": "AfLite の元になった敵対的フィルタリング（AF）の考え方を把握するため。"
+          },
+          {
+            "title": "Annotation artifacts in natural language inference data",
+            "reason": "データセットのアノテーションアーティファクトという問題設定の背景を理解するため。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "AAAI Conference Paper Awards and Recognition（公式・受賞一覧）",
+      "url": "https://aaai.org/about-aaai/aaai-awards/aaai-conference-paper-awards-and-recognition/"
+    },
+    {
+      "title": "AAAI Conference on Artificial Intelligence（Wikipedia・開催地）",
+      "url": "https://en.wikipedia.org/wiki/AAAI_Conference_on_Artificial_Intelligence"
+    },
+    {
+      "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
+      "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    }
+  ],
+  "unreachable": [
+    "招待講演者の一覧は公式ページから取得できなかったため省略しています",
+    "開催日程（日付）は公式ページで確認できなかったため月のみ表示しています"
+  ]
+}

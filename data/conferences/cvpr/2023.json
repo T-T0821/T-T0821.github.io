@@ -1,0 +1,145 @@
+{
+  "conf": "cvpr",
+  "updated": "2026-11-14",
+  "year": 2023,
+  "headline": "バンクーバー開催。自動運転を「計画」中心に統合した UniAD と、LLM が画像処理プログラムを書く Visual Programming が最優秀論文に",
+  "summary": "バンクーバーで開催され、投稿9,155本・採択2,360本（約25.8%）でした。最優秀論文は2本で、認識・予測・計画を1つのネットワークにまとめ、最終目的である走行計画に向けて全体を最適化する自動運転モデル UniAD（上海 AI Lab ほか）と、自然言語の指示から LLM が視覚処理のプログラムを生成して実行し、追加学習なしで複雑な視覚推論を行う Visual Programming（Allen AI）が選ばれました。佳作には DreamBooth（被写体を指定した画像生成）や動的シーンのレンダリング DynIBaR が入っています。",
+  "stats": {
+    "submissions": 9155,
+    "accepted": 2360,
+    "rate": "25.8%"
+  },
+  "trends": [
+    "エンドツーエンド自動運転: 認識から計画までを計画中心に統合（UniAD）",
+    "LLM による視覚推論: LLM が視覚モジュールを組み合わせるプログラムを生成（Visual Programming）",
+    "画像生成のパーソナライズ: 数枚の写真から被写体を学ぶ DreamBooth",
+    "3D 点群の位置合わせ: 最大クリークによる頑健な3D レジストレーション（最優秀学生論文）"
+  ],
+  "implications": [
+    "自動運転がモジュールの組み合わせから「計画を目的にした一体学習」へ移り、エンドツーエンド自動運転の流れが本格化した",
+    "LLM を「司令塔」にして既存の画像認識モデルを道具として使う設計は、のちのマルチモーダルエージェントの原型になった"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Planning-oriented Autonomous Driving",
+      "authors": "Yihan Hu ほか",
+      "url": "https://arxiv.org/abs/2212.10156"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Visual Programming: Compositional Visual Reasoning Without Training",
+      "authors": "Tanmay Gupta, Aniruddha Kembhavi",
+      "url": "https://arxiv.org/abs/2211.11559"
+    },
+    {
+      "award": "Best Student Paper",
+      "title": "3D Registration with Maximal Cliques",
+      "authors": "Xiyu Zhang ほか"
+    },
+    {
+      "award": "Best Paper Honorable Mention",
+      "title": "DynIBaR: Neural Dynamic Image-Based Rendering",
+      "authors": "Zhengqi Li ほか"
+    },
+    {
+      "award": "Best Student Paper Honorable Mention",
+      "title": "DreamBooth: Fine Tuning Text-to-Image Diffusion Models for Subject-Driven Generation",
+      "authors": "Nataniel Ruiz ほか"
+    },
+    {
+      "award": "Longuet-Higgins Prize",
+      "title": "Online Object Tracking: A Benchmark（2013年）",
+      "authors": "Yi Wu, Jongwoo Lim, Ming-Hsuan Yang"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Planning-oriented Autonomous Driving",
+      "titleJa": "UniAD：計画を目的とした自動運転",
+      "award": "Best Paper",
+      "authors": [
+        "Yihan Hu",
+        "Jiazhi Yang",
+        "Li Chen",
+        "Keyu Li",
+        "ほか"
+      ],
+      "url": "https://arxiv.org/abs/2212.10156",
+      "why": "物体検出・追跡・地図・動き予測・占有予測・計画を別々に最適化するのではなく、すべてを走行計画に役立つよう1つのネットワークで結合しました。nuScenes で各タスクと計画の性能を同時に改善しています。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "自動運転の最終目標である自車の経路計画（planning）に向けて、検出・追跡・地図生成・動き予測・占有予測を1つのネットワークに統合したエンドツーエンドの枠組み UniAD を提案した研究。各タスクを個別モデルや単純なマルチタスク学習で扱うのではなく、計画に貢献するよう設計・優先付けする「planning-oriented」な思想を掲げている。",
+        "novelty": "知覚・予測・計画にわたる5つの主要タスク（検出/追跡、地図、動き予測、占有予測、計画）を包括的に連携させた初の取り組みとされ、従来のエンドツーエンド手法（Table 1の(c.2)）が欠いていた構成要素を補っている。全ノードを統一的なクエリインターフェースで接続することで、バウンディングボックス表現より広い受容野で上流の誤差の累積を和らげ、エージェント間相互作用なども柔軟に表現できる点が新しい。",
+        "method": "マルチカメラ画像からBEVFormerでBEV特徴を得て、TrackFormer（検出・追跡クエリ＋自車クエリ）、MapFormer（パノプティックセグメンテーションによる地図クエリ）、MotionFormer（エージェント間・エージェント–地図・ゴール点の3種の相互作用で全エージェントの軌道をシーン中心で予測）、OccFormer（BEV特徴をクエリ、エージェント特徴をキー/バリューとし、アテンションマスクで画素とエージェントを対応付けてインスタンス単位の占有を予測）、Plannerの順にTransformerデコーダで接続する。Plannerは自車クエリにコマンド埋め込みを加えた「plan query」からウェイポイントを出力し、推論時にOccFormerの占有予測を用いたニュートン法で衝突を避けるよう最適化する。MotionFormerの学習ではKinematic制約付きの非線形平滑化でGT軌道を補正し、学習は知覚部の事前学習（6エポック）の後に全体を20エポックでエンドツーエンド学習する2段階で行う。",
+        "validation": "nuScenesデータセットで、各タスクの有無を変えたアブレーションと既存手法との比較を実施した。MTLベースライン（ID-0）に対し、UniADはminADEで-15.2%、minFDEで-17.0%、平均L2で-0.15m、平均衝突率で-0.51%と改善し、計画ではST-P3に対しL2誤差を51.2%、衝突率を56.3%削減した（Table 7でL2平均1.03m、衝突率平均0.31%）。追跡ではMUTR3D比でAMOTA+6.5ポイント、モーション予測ではminADE 0.71でViP3DやPnPNetを上回った一方、Immortal Trackerや一部の地図クラスでは専用手法に劣る。",
+        "discussion": "複数タスクを統合した系は学習に大きな計算資源を要し（特に時系列履歴を用いる場合）、軽量なデプロイ向けの設計が今後の課題とされている。深度推定や行動予測などの追加タスクをどう組み込むかも将来の方向として挙げられている。また失敗例は大型トラックやトレーラーなどのロングテールなシーンに偏っており、評価もnuScenesのオープンループ設定が中心である点に留意が必要。",
+        "next": [
+          {
+            "title": "BEVFormer: Learning Bird's-Eye-View Representation from Multi-Camera Images via Spatiotemporal Transformers",
+            "reason": "UniADのBEV特徴抽出器として採用されており、入力表現の理解に必須だから。"
+          },
+          {
+            "title": "ST-P3: End-to-End Vision-Based Autonomous Driving via Spatial-Temporal Feature Learning",
+            "reason": "計画性能の主要な比較対象であり、同じくビジョンベースのエンドツーエンド手法の先行例だから。"
+          },
+          {
+            "title": "ViP3D: End-to-End Visual Trajectory Prediction via 3D Agent Queries",
+            "reason": "クエリベースでエージェントを接続するエンドツーエンドの知覚・予測手法で、UniADの追跡・予測部との比較に役立つから。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Visual Programming: Compositional visual reasoning without training",
+      "titleJa": "Visual Programming：学習なしの合成的な視覚推論",
+      "award": "Best Paper",
+      "authors": [
+        "Tanmay Gupta",
+        "Aniruddha Kembhavi"
+      ],
+      "url": "https://arxiv.org/abs/2211.11559",
+      "why": "GPT-3 に数例のプログラム例を見せて、自然言語の指示から物体検出・切り抜き・画像編集などを組み合わせる Python 風のプログラムを生成させ、それを実行して答えを出します。追加学習なしで画像の質問応答や編集ができ、処理過程も読めるのが特徴です。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "自然言語の指示から、GPT-3 のインコンテキスト学習で Python 風のモジュール型プログラムを生成し、それを実行して解と解釈可能な根拠を得るニューロシンボリック手法 VisProg を提案した研究。タスク固有の学習を一切行わず、既存の視覚モデルや画像処理関数、Python 関数を組み合わせて、複雑で組み合わせ的な視覚タスクを解く。",
+        "novelty": "従来の Neural Module Networks はレイアウト生成器の学習やエンドツーエンドの微分可能なネットワークを要したが、VisProg は少数の例示だけで高水準のプログラムを生成し、学習済み SOTA モデルや非微分の Python モジュールも呼び出せる。Socratic Models のようにタスクごとに固定された構成ではなく、インスタンスごとにモデルの組み合わせをプログラムとして決定できる。さらに各ステップの入出力を HTML で可視化した視覚的根拠を出力し、誤り分析や指示の修正に使える。",
+        "method": "プロンプトには「指示とそれに対応する高水準プログラム」のペアを手書きで用意し、新しい指示を与えると GPT-3 が画像を見ずにプログラムを生成する。各行はモジュール名、引数、出力変数で構成され、20 種のモジュール（OWL-ViT、DSFD、MaskFormer、CLIP、ViLT、Stable Diffusion、OpenCV 系処理、算術・論理演算など）を呼び出す。各モジュールは parse・execute・html の3メソッドを持つ Python クラスで、インタプリタがプログラム状態（変数名と値の辞書）を更新しながら1行ずつ実行し、各ステップの HTML を連結して視覚的根拠を作る。",
+        "validation": "4タスクで評価した。GQA（質問タイプごとにサンプルした部分集合）では ViLT-vqa の 47.8 に対し、5回の投票で 50.5（+2.7 点）、手作業で選んだプロンプトで 50.0 だった。NLVRv2 では画像ペアで学習せずに 62.4%（投票）を達成し、ファインチューニング済み ViLT-nlvr の 76.3 を上限として比較した。知識タグ付けでは元の指示で F1 63.7（局在のみ 80.6）、視覚的根拠を見て修正した指示で 75.7（局在のみ 84.9）に向上し、画像編集の正解率も 59.8 から 66.4 に向上した。",
+        "discussion": "GQA では不正なプログラムが誤りの最大要因（16% のサンプル）であり、プロンプト例の追加やモジュールの高性能モデルへの置き換えが改善の方向とされる。NLVR では VQA モデルの性能が律速で、より良いモデルに替えれば最大 24% の改善余地があると分析されている。また GPT-3 の API コストのため評価は部分集合で行われており、プロンプト戦略の改善やユーザーのフィードバックを取り込む方法が今後の課題とされる。",
+        "next": [
+          {
+            "title": "Neural Module Networks",
+            "reason": "VisProg が比較・改良対象とするモジュール型視覚推論の原点であり、アプローチの違いを理解できる。"
+          },
+          {
+            "title": "Socratic Models: Composing Zero-Shot Multimodal Reasoning with Language",
+            "reason": "複数の事前学習モデルを言語で合成する関連手法で、タスクごとに固定された構成と VisProg のインスタンスごとのプログラム生成を比較できる。"
+          },
+          {
+            "title": "Chain of Thought Prompting Elicits Reasoning in Large Language Models",
+            "reason": "中間推論ステップをプロンプトに含める考え方の基礎であり、VisProg のプログラム生成と多数決による性能向上の背景を理解できる。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "CVPR Paper Awards（IEEE TCPAMI・受賞一覧）",
+      "url": "https://tc.computer.org/tcpami/awards/cvpr-paper-awards/"
+    },
+    {
+      "title": "CVPR 2023 Best Paper Award Winners Announced（公式）",
+      "url": "https://cvpr.thecvf.com/Conferences/2023/BestPaperAwards"
+    },
+    {
+      "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
+      "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    }
+  ],
+  "unreachable": [
+    "基調講演者の一覧は公式ページから取得できなかったため省略しています",
+    "開催日程（日付）は公式ページで確認できなかったため月のみ表示しています"
+  ]
+}

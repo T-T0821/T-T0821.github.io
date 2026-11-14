@@ -1,0 +1,72 @@
+{
+  "conf": "ijcai",
+  "year": 2024,
+  "updated": "2026-11-14",
+  "headline": "済州島開催・投稿5,651本で採択率14%。CV 分野の投稿が最多になり、公平性つきオンライン最適化が最優秀論文に選ばれた回",
+  "summary": "韓国・済州島で開催され、投稿は5,651本（前年比23.8%増）と過去最多、採択は791本（14.0%）でした。参加者は約3,000人です。15の分野のうちコンピュータビジョンの投稿が1,616本と最も多く、機械学習（1,542本）を上回りました。「AI・芸術・創造性」「AI for Social Good」「人間中心の AI」の3分野が新設されています。最優秀論文は、グループ間の公平性を保つオンライン組合せ最適化、データベースの機密情報を守る問い合わせ評価、好みの容量ベースモデルのオンライン学習の3本です。研究功績賞は Thomas Dietterich 氏、Computers and Thought 賞は Nisarg Shah 氏でした。",
+  "stats": {
+    "submissions": 5651,
+    "accepted": 791,
+    "rate": "14.0%"
+  },
+  "attendees": "約3,000人",
+  "trends": [
+    "CV 分野の急増: 投稿1,616本で最多、採択率は8.4%と狭き門",
+    "公平性とオンライン意思決定: グループ公平性制約つきの組合せ最適化",
+    "プライバシーと知識表現: 認識論的な方針による機密データの問い合わせ制御",
+    "新分野: AI と芸術・創造性、社会貢献、人間中心の AI"
+  ],
+  "implications": [
+    "総合 AI 会議でも画像認識の投稿が最多になっており、CV 系の研究が専門会議以外にも大量に流れ込んでいる",
+    "最高賞はあえて公平性・プライバシー・意思決定理論から選ばれており、量の多い分野と評価される分野が分かれている"
+  ],
+  "awards": [
+    {
+      "award": "Distinguished Paper",
+      "title": "Online Combinatorial Optimization with Group Fairness Constraints",
+      "authors": "Negin Golrezaei, Rad Niazadeh, Kumar Kshitij Patel, Fransisca Susan"
+    },
+    {
+      "award": "Distinguished Paper",
+      "title": "Enhancing Controlled Query Evaluation Through Epistemic Policies",
+      "authors": "Gianluca Cima, Domenico Lembo, Lorenzo Marconi, Riccardo Rosati, Domenico Fabio Savo"
+    },
+    {
+      "award": "Distinguished Paper",
+      "title": "Online Learning of Capacity-Based Preference Models",
+      "authors": "Margot Herin, Patrice Perny, Nataliya Sokolovska"
+    },
+    {
+      "award": "Award for Research Excellence",
+      "title": "Thomas Dietterich"
+    },
+    {
+      "award": "Computers and Thought Award",
+      "title": "Nisarg Shah"
+    }
+  ],
+  "featured": [],
+  "sources": [
+    {
+      "title": "Congratulations to the #IJCAI2024 distinguished paper award winners（AIhub）",
+      "url": "https://aihub.org/2024/08/07/congratulations-to-the-ijcai2024-distinguished-paper-award-winners/"
+    },
+    {
+      "title": "IJCAI 2024：論文提交量増加了23.8%（新浪）",
+      "url": "https://news.sina.cn/ai/2024-08-10/detail-incieihv9479458.d.html?vt=4"
+    },
+    {
+      "title": "IJCAI Past Conferences（公式・開催地）",
+      "url": "https://www.ijcai.org/past_conferences"
+    },
+    {
+      "title": "IJCAI Awards（公式・各賞の受賞者）",
+      "url": "https://www.ijcai.org/awards"
+    }
+  ],
+  "unreachable": [
+    "最優秀論文は arXiv 版が見つからなかったため、落合フォーマットは作成していません",
+    "招待講演者の一覧は公式ページから取得できなかったため省略しています",
+    "開催日程（日付）は公式ページで確認できなかったため月のみ表示しています"
+  ]
+}

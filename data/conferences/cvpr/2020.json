@@ -1,0 +1,89 @@
+{
+  "conf": "cvpr",
+  "updated": "2026-11-14",
+  "year": 2020,
+  "headline": "シアトル開催予定から初のオンライン開催へ。画像だけから左右対称な物体の3D形状を教師なしで学ぶ研究が最優秀論文に",
+  "summary": "シアトルで予定されていましたが、COVID-19 のため初めて完全オンラインで開催されました。投稿6,656本・採択1,470本（約22.1%）です。最優秀論文は、ネット上の顔や動物の写真だけから、3D の正解データなしで物体の形・質感・照明を分解して復元する研究（オックスフォード大学）でした。物体の「ほぼ左右対称」という性質を手がかりにする発想が評価されました。最優秀学生論文は、2分割の空間分割でコンパクトなメッシュを生成する BSP-Net です。",
+  "stats": {
+    "submissions": 6656,
+    "accepted": 1470,
+    "rate": "22.1%"
+  },
+  "trends": [
+    "教師なし3D復元: 対称性を手がかりに単一画像から形状・反射・照明を分解",
+    "コンパクトな3D表現: 空間分割によるメッシュ生成（BSP-Net）",
+    "人物の3Dキャプチャ: 単眼カメラでの人物の動きと服の変形の推定（DeepCap）"
+  ],
+  "implications": [
+    "3D の正解データを集めにくい現実の対象でも、物理的な性質（対称性など）を仮定すれば画像だけから3Dを学べることが示され、のちの NeRF・3D 生成研究につながった",
+    "オンライン開催への移行で論文動画の公開が当たり前になり、CV の最新研究が産業界に早く届くようになった"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Unsupervised Learning of Probably Symmetric Deformable 3D Objects from Images in the Wild",
+      "authors": "Shangzhe Wu, Christian Rupprecht, Andrea Vedaldi",
+      "url": "https://arxiv.org/abs/1911.11130"
+    },
+    {
+      "award": "Best Student Paper",
+      "title": "BSP-Net: Generating Compact Meshes via Binary Space Partitioning",
+      "authors": "Zhiqin Chen, Andrea Tagliasacchi, Hao Zhang"
+    },
+    {
+      "award": "Best Paper Honorable Mention",
+      "title": "DeepCap: Monocular Human Performance Capture Using Weak Supervision",
+      "authors": "Marc Habermann ほか"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Unsupervised Learning of Probably Symmetric Deformable 3D Objects from Images in the Wild",
+      "titleJa": "自然画像からの「ほぼ対称」な変形物体の教師なし3D学習",
+      "award": "Best Paper",
+      "authors": [
+        "Shangzhe Wu",
+        "Christian Rupprecht",
+        "Andrea Vedaldi"
+      ],
+      "url": "https://arxiv.org/abs/1911.11130",
+      "why": "顔・猫の顔・車などの写真だけから、3D の正解や複数視点の画像なしに、深度・反射率・照明・視点に分解して3D形状を復元しました。物体がおおむね左右対称であることと、非対称な部分を確率的に扱う工夫が鍵です。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "外部教師なし（キーポイント、シルエット、3Dモデル、複数視点いずれも不要）で、単一視点の画像集合のみから、変形可能な物体カテゴリ（人間の顔、猫の顔、車）の3D形状を学習する手法を提案した研究。学習後は1枚の画像から深度、アルベド、視点、照明を推定できる。",
+        "novelty": "多くの物体が持つ左右対称性を幾何的な手がかりとして使い、さらに照明を明示的にモデル化することで、シェーディングにより見た目が非対称でも対称性を利用できるようにした。加えて、画素ごとに対称な対応点を持つ確率（信頼度マップ）をエンドツーエンドで学習し、「おそらく対称」な物体を扱える点が新しい。",
+        "method": "画像を深度d、アルベドa、光方向l、視点wに分解するオートエンコーダを構築し、正準視点で深度とアルベドを生成してランバート反射モデルで陰影付けし、視点変換で再投影して入力を再構成する。深度とアルベドを左右反転した第2の再構成も作り、両方の再構成を入力と比較する。損失はラプラス分布に基づく負の対数尤度で、画素ごとの信頼度マップσ、σ'を同時に推定し、非対称領域（髪など）の影響を下げる。ぼやけを抑えるためVGG16のrelu3_3特徴による知覚損失も併用する。深度から法線を計算して陰影を求めるので、形状と陰影が互いに制約し合う。",
+        "validation": "合成顔データセットBFMで、教師あり学習（SIDE 0.410, MAD 10.78）と定数・平均深度のベースラインに対し、本手法はSIDE 0.793、MAD 16.51となり、定数ベースラインを大きく上回り教師ありに近づいた。アブレーションでは、アルベド反転なしでSIDE 2.916、照明なしで2.406と大きく悪化した。非対称な色パッチを加えた実験では、信頼度なしでSIDE 2.141、信頼度ありで0.878と、信頼度マップの有効性が示された。3DFAWのキーポイント深度相関では、2Dキーポイントを使うDepthNet（GitHub版35.77）を上回る48.98、CelebAで事前学習すると54.65となった。Lifting AutoEncodersやSzabóらの手法とは定性比較で優位とされ、定量比較はできていない。",
+        "discussion": "ランバート反射を仮定しているため、極端な照明、影、鏡面反射、暗くノイズの多いテクスチャでは失敗し、極端な姿勢でも品質が下がる。深度マップ1枚の表現は顔のようにほぼ凸で正準視点が自然な物体には十分だが、複雑な物体にはメッシュやボクセルなど別の3D表現、または複数の正準視点への拡張が課題とされている。",
+        "next": [
+          {
+            "title": "Lifting AutoEncoders: Unsupervised Learning of a Fully-Disentangled 3D Morphable Model using Deep Non-Rigid Structure from Motion",
+            "reason": "本手法が定性比較の対象とした、生画像のみから3D形状を教師なしで学習する直接の先行手法である。"
+          },
+          {
+            "title": "Deforming Autoencoders: Unsupervised Disentangling of Shape and Appearance",
+            "reason": "形状と外観を分離するオートエンコーダの基盤で、本手法が形状と独立に陰影を予測する点を改良した対象である。"
+          },
+          {
+            "title": "Neural 3D Mesh Renderer",
+            "reason": "本手法が再投影に用いる微分可能レンダラの実装元であり、勾配計算の仕組みを理解できる。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "CVPR Paper Awards（IEEE TCPAMI・受賞一覧）",
+      "url": "https://tc.computer.org/tcpami/awards/cvpr-paper-awards/"
+    },
+    {
+      "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
+      "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    }
+  ],
+  "unreachable": [
+    "基調講演者の一覧は公式ページから取得できなかったため省略しています",
+    "開催日程（日付）は公式ページで確認できなかったため月のみ表示しています"
+  ]
+}

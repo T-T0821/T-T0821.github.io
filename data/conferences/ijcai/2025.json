@@ -1,0 +1,79 @@
+{
+  "conf": "ijcai",
+  "year": 2025,
+  "updated": "2026-11-14",
+  "headline": "モントリオールと広州の2会場開催。規範を守る強化学習、身体性 AI モデルの圧縮などが最優秀論文に選ばれた回",
+  "summary": "カナダ・モントリオールを主会場に、中国・広州でも開催する2会場方式で行われました。最優秀論文は3本で、社会・法・倫理の規範を「拘束ボルト」として多目的強化学習に組み込み規範に沿った行動を学ばせる手法（ウィーン工科大学）、身体性 AI モデルを頑健性の境界を保ちながら圧縮する手法、超ヒューリスティクスの高速化の理論でした。モントリオール会場では Yoshua Bengio 氏、Bernhard Schölkopf 氏、Cynthia Rudin 氏らが講演し、AGI・ASI をテーマにしたパネルも開かれています。研究功績賞は Rina Dechter 氏、Computers and Thought 賞は Aditya Grover 氏です。",
+  "trends": [
+    "規範に従う AI: 法・倫理の規範を多目的強化学習の目的として扱う",
+    "身体性 AI の効率化: ロボット用モデルの頑健性を保った圧縮",
+    "進化計算・探索の理論: 超ヒューリスティクスの演算子選択の高速化",
+    "AGI・安全性: Bengio 氏らの講演と AGI/ASI パネル"
+  ],
+  "implications": [
+    "規範や規則を守ることを学習の目的に組み込む研究は、EU AI 法などの規制対応で「ルールを守る AI」を設計する際の参考になる",
+    "ロボット向けモデルの圧縮が最高賞に選ばれており、身体性 AI をエッジ機器で動かすための効率化が重要課題になっている"
+  ],
+  "awards": [
+    {
+      "award": "Distinguished Paper",
+      "title": "Combining MORL with Restraining Bolts to Learn Normative Behaviour",
+      "authors": "Emery A. Neufeld, Agata Ciabattoni, Radu Florin Tulcan"
+    },
+    {
+      "award": "Distinguished Paper",
+      "title": "Boost Embodied AI Models with Robust Compression Boundary",
+      "authors": "Chong Yu, Tao Chen, Zhongxue Gan"
+    },
+    {
+      "award": "Distinguished Paper",
+      "title": "Speeding Up Hyper-Heuristics With Markov-Chain Operator Selection and the Only-Worsening Acceptance Operator",
+      "authors": "Abderrahim Bendahi, Benjamin Doerr, Adrien Fradin, Johannes F. Lutzeyer"
+    },
+    {
+      "award": "Award for Research Excellence",
+      "title": "Rina Dechter"
+    },
+    {
+      "award": "Computers and Thought Award",
+      "title": "Aditya Grover"
+    }
+  ],
+  "keynotes": [
+    "Bernhard Schölkopf",
+    "Cynthia Rudin",
+    "Heng Ji",
+    "Luc De Raedt",
+    "Yoshua Bengio",
+    "Rina Dechter（以上モントリオール）",
+    "Toby Walsh",
+    "Harry Shum",
+    "Yew Soon Ong",
+    "Shing-Tung Yau",
+    "Xin Yao（以上広州）"
+  ],
+  "featured": [],
+  "sources": [
+    {
+      "title": "Congratulations to the #IJCAI2025 distinguished paper award winners（AIhub）",
+      "url": "https://aihub.org/2025/08/20/congratulations-to-the-ijcai2025-distinguished-paper-award-winners/"
+    },
+    {
+      "title": "IJCAI 2025 Video Recordings（公式）",
+      "url": "https://2025.ijcai.org/?p=1978"
+    },
+    {
+      "title": "IJCAI Past Conferences（公式・開催地）",
+      "url": "https://www.ijcai.org/past_conferences"
+    },
+    {
+      "title": "IJCAI Awards（公式・各賞の受賞者）",
+      "url": "https://www.ijcai.org/awards"
+    }
+  ],
+  "unreachable": [
+    "投稿数・採択数は確認できませんでした",
+    "最優秀論文は arXiv 版が見つからなかったため、落合フォーマットは作成していません",
+    "開催日程（日付）は公式ページで確認できなかったため月のみ表示しています"
+  ]
+}
