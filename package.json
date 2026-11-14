@@ -6,6 +6,9 @@
   "scripts": {
     "docs:dev": "vitepress dev docs --host 0.0.0.0",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs --host 0.0.0.0"
+    "docs:preview": "vitepress preview docs --host 0.0.0.0",
+    "digest:trending": "NODE_USE_ENV_PROXY=1 node scripts/trending/collect.mjs",
+    "digest:news": "NODE_USE_ENV_PROXY=1 node scripts/news/collect.mjs",
+    "digest": "npm run digest:trending; npm run digest:news"
   }
 }

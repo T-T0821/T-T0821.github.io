@@ -11,6 +11,9 @@ hero:
       text: 今日のトレンド OSS
       link: /trending/
     - theme: alt
+      text: 生成AIの動向
+      link: /genai/
+    - theme: alt
       text: 記事一覧を見る
       link: /markdown-examples
     - theme: alt
@@ -20,7 +23,10 @@ hero:
 features:
   - icon: 🔥
     title: トレンド OSS を毎朝自動要約
-    details: GitHub Trending や Trendshift で直近24時間に注目を集めた OSS を毎朝 9:00 に収集し、Claude が日本語で技術的な要点をまとめます。
+    details: Trendshift で直近24時間にスターが急増した OSS を毎朝 9:00 ごろに収集し、Claude が README をもとに日本語で技術的な要点をまとめます。
+  - icon: 📰
+    title: 分野別ニュースと論文
+    details: AWS、PLC・装置設計、生成AI、開発手法の4分野について、公式ブログや技術メディアのニュースと arXiv などの論文を毎朝収集し、重要なものを日本語で紹介します。
   - icon: 🤖
     title: AI による自動執筆
     details: GitHub Copilotが指定したトピックを Deep Research し、構造化された技術記事を自動生成します。

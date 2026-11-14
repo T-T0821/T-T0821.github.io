@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-14",
+  "model": "claude-sonnet-5-5",
+  "overview": "今日は AWS のセキュリティ・ID 管理まわりの更新が目立ち、Secrets Manager のクロスアカウントレプリケーション、Security Hub CSPM と Organizations 宣言型ポリシーの連携、Cognito の OAuth 2.0 トークン交換、AgentCore Identity の OAuth 2.0 discovery URL 対応が発表されました。AI エージェントがユーザーに代わって下流サービスを呼ぶ場面を想定した認可まわりの拡充も続いています。データ基盤では Aurora/RDS の Graviton5 (R9g) 対応、Aurora PostgreSQL express configuration の CloudFormation 対応、RDS for Oracle のメンテナンス停止時間の短縮が出ています。アーキテクチャ記事ではエンタープライズ AI エージェントの参照構成や本番トラフィックを使ったリグレッションテストが紹介されています。",
+  "news": [
+    {
+      "title": "AWS Secrets Manager がクロスアカウントレプリケーションに対応",
+      "summary": "プライマリシークレットのコピーを別の AWS アカウントに同期して保持できるようになりました。既存のマルチリージョンレプリケーションをアカウント境界を越えて拡張するもので、クロスアカウントアクセス、バックアップ、災害復旧に使えます。中央のチームがシークレットを管理・ローテーションし、利用側アカウントは常に最新のローカルコピーを参照できます。",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/secrets-manager-cross-account/",
+      "source": "AWS What's New",
+      "original": "AWS Secrets Manager now supports cross-account replication"
+    },
+    {
+      "title": "Security Hub CSPM が Organizations の宣言型ポリシーによる一元設定に対応",
+      "summary": "宣言型ポリシーを使い、組織内の全アカウント・全リージョンで Security Hub CSPM を有効化し、有効にするセキュリティ標準やコントロールを定義できます。ポリシーは全体にも特定のアカウントとリージョンの組み合わせにも適用でき、設定のドリフト防止に役立ちます。",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/security-hub-cspm-org-policies/",
+      "source": "AWS What's New",
+      "original": "AWS Security Hub CSPM now supports centralized configuration with AWS Organizations declarative policies"
+    },
+    {
+      "title": "Amazon Cognito が OAuth 2.0 トークン交換（RFC 8693）に対応",
+      "summary": "ユーザーに代わって動作するサービスや AI エージェントが、ユーザーのトークンを特定の下流サービス向けにスコープされた新しいトークンへ交換できるようになりました。従来は元のトークンを転送するか、独自にトークン発行の仕組みを構築・運用する必要がありました。",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/cognito-token-exchange/",
+      "source": "AWS What's New",
+      "original": "Amazon Cognito now supports OAuth 2.0 token exchange"
+    },
+    {
+      "title": "Bedrock AgentCore Identity が OAuth 2.0 の discovery URL に対応",
+      "summary": "インバウンドの JWT 認可とアウトバウンドの OAuth 認証情報プロバイダーの両方で、OAuth 2.0 認可サーバーの discovery URL を使えるようになりました。これまでは OIDC の discovery URL のみ対応で、OIDC 非対応の OAuth 2.0 サーバーは使えませんでした。",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/bedrock-agentcore-oauth2-discovery/",
+      "source": "AWS What's New",
+      "original": "Amazon Bedrock AgentCore Identity now supports OAuth 2.0 discovery URLs"
+    },
+    {
+      "title": "Aurora と RDS が Graviton5 ベースの R9g インスタンスに対応",
+      "summary": "Aurora (PostgreSQL 互換・MySQL 互換) と RDS for PostgreSQL / MySQL / MariaDB で R9g インスタンスが一般提供されました。Aurora では Graviton4 の同等サイズと比べ、オンデマンド料金で最大 30% の性能向上、最大 22% の価格性能比向上とされています（エンジン、バージョン、ワークロードによる）。",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-aurora-rds-postgresql-mysql-mariadb-r9g-instances/",
+      "source": "AWS What's New",
+      "original": "Amazon Aurora and RDS now support Graviton5-based R9g database instances"
+    },
+    {
+      "title": "Aurora PostgreSQL の express configuration が CloudFormation に対応",
+      "summary": "express configuration で作成する Aurora PostgreSQL クラスターを CloudFormation テンプレートでデプロイできるようになりました。express configuration は Aurora Serverless データベースを数秒で作成してクエリできる構成で、createOnly プロパティ withExpressConfiguration を使って指定します。",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/aurora-postgresql-cloudformation/",
+      "source": "AWS What's New",
+      "original": "Aurora PostgreSQL with express configuration now supported in CloudFormation"
+    },
+    {
+      "title": "RDS for Oracle がマイナーバージョン自動アップグレードとメンテナンスのダウンタイムを短縮",
+      "summary": "自動マイナーバージョンアップグレードのほか、メンテナンスウィンドウで実施されるマイナーバージョンアップグレードと OS 更新でもダウンタイムが短縮されました。自動アップグレードを有効にしている DB インスタンスは自動的に恩恵を受けます。",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/rds-oracle-reduces-maintenance-downtime-for-amvu-scheduled-upgrades/",
+      "source": "AWS What's New",
+      "original": "Amazon RDS for Oracle reduces downtime for automatic minor version upgrades and scheduled maintenance"
+    },
+    {
+      "title": "エンタープライズ AI エージェントの内部構成：統制と可観測性を備えたループ型アーキテクチャ",
+      "summary": "API ゲートウェイ、5 フェーズのエージェントランタイム、知識・状態層、プラットフォームサービス、横断的な信頼・統制フレームワークからなる 5 層の参照アーキテクチャを紹介しています。各層を AWS のマネージドサービスに対応付け、参考にすべき設計パターンと避けるべき失敗例も扱っています。",
+      "url": "https://aws.amazon.com/blogs/architecture/inside-an-enterprise-ai-agent-a-governed-observable-loop-architecture/",
+      "source": "AWS Architecture Blog",
+      "original": "Inside an enterprise AI agent: A governed, observable loop architecture"
+    }
+  ],
+  "papers": [
+    {
+      "title": "起動処理の共有と事前ウォームアップによるサーバーレス LLM のコールドスタート高速化",
+      "summary": "サーバーレス LLM のコールドスタートは約 1 分かかるものの、重みのロードは 5〜11% にすぎず、大半はコンパイル、メモリプロファイリング、ランタイム設定が占めると指摘しています。提案手法 Cairn は、最初にモデルを起動したサーバーが重みとエンジンの成果物をクラスター共有の CXL メモリプールに公開し、他のサーバーが再利用する仕組みです。",
+      "url": "https://arxiv.org/abs/2611.16180",
+      "source": "arXiv",
+      "original": "Fast Serverless LLM Cold Starts by Sharing and Prewarming Startup Work"
+    }
+  ]
+}
