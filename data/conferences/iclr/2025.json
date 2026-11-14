@@ -100,6 +100,172 @@
           }
         ]
       }
+    },
+    {
+      "title": "Learning Dynamics of LLM Finetuning",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Yi Ren",
+        "Danica J. Sutherland"
+      ],
+      "url": "https://arxiv.org/abs/2407.10490",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "LLMのファインチューニング（SFT・DPO・その変種）における学習ダイナミクス、すなわち「ある訓練例の更新が他の応答の予測にどう影響するか」を、ステップごとの分解として定式化した研究。これにより、ファインチューニング後に特定種類の幻覚が強まる現象や、繰り返し生成（repeater）、off-policy DPOで好ましい応答の確率まで下がる現象を統一的に説明する。",
+        "novelty": "従来のLLM微調整の分析は訓練目標・収束時の状態・強化学習との関係に注目していたが、本研究は更新過程そのものを動的な視点で捉える。また、softmax＋クロスエントロピーのモデルに負の勾配を加えると確率質量が最尤の出力へ集まる「squeezing effect」を新たに指摘し、off-policy DPOの劣化やon-policy手法・各種DPO変種の利点を説明する。",
+        "method": "予測の対数確率の変化 Δlog π を、−η·A(現在の予測確率に依存)·K(経験的NTK、入力間の類似度)·G(損失が決める残差ベクトル)の3項に分解する（Proposition 1）。LLMには、causal maskingを用いて系列全体を入力とするバックボーンとして扱うことでこの形式を拡張し、SFTではG=π−y、DPOでは正例・負例それぞれにβ(1−a)を掛けた項としてG_DPO+/−を導出した。さらに、softmax出力に負の勾配を与えた際の確率質量の動きをロジスティック回帰で解析的に示した。",
+        "validation": "Anthropic-HHとUltraFeedbackから5000例を訓練用に抽出し、pythia-410M/1B/1.4B/2.8BおよびQwen1.5-0.5B/1.8Bで実験した。500例のプロービングデータで、言い換え・無関係な応答・ランダム文などの各応答タイプの対数尤度を追跡した結果、SFTでは類似応答が初期に上昇後に低下し、他の質問の好ましい応答 y_{j≠u}^+ の確信度は上がり続けた（幻覚の説明）。off-policy DPOでは、貪欲デコード応答の対数尤度が約−113から−63へ急上昇し、SFTでの正例応答の上昇（−130から−90）より速く、squeezing effectと整合した。",
+        "discussion": "正負の圧力と自己回帰性を厳密に考慮した場合、squeezing effectはより複雑になり、2つのeNTK項の違いが影響するため詳細な分析は今後の課題とされている。また、解析は更新間でeNTKによる相対的な影響が安定しているという仮定に依拠しており、ChatGPT生成応答が互いに非常に似ていると見なされる「指紋」的性質など、応答間の類似性の理解も今後の研究課題である。なお、提供された本文は中略されており、アブストラクトにある改善手法の詳細や実験結果は確認できなかった。",
+        "next": [
+          {
+            "title": "Unintentional Unalignment: Likelihood Displacement in Direct Preference Optimization",
+            "reason": "DPOで好ましい応答の尤度が下がる現象をトークンレベルで分析しており、本論文のsqueezing effectと結論が整合すると述べられているため。"
+          },
+          {
+            "title": "Preference Fine-Tuning of LLMs Should Leverage Suboptimal, On-Policy Data",
+            "reason": "on-policyデータとnegative gradientの役割を実証的に扱い、本論文がon-policy手法の優位性を説明する対象となっているため。"
+          },
+          {
+            "title": "Better Supervisory Signals by Observing Learning Paths",
+            "reason": "本論文の学習ダイナミクス分解（Proposition 1）の基になった先行研究であり、枠組みの理解に役立つため。"
+          }
+        ]
+      },
+      "titleJa": "LLMファインチューニングの学習ダイナミクス",
+      "why": "SFT・DPOおよびその変種において、ある訓練例の更新が他の応答の予測に与える影響をステップごとに分解して定式化し、特定種類の幻覚の増加、繰り返し生成、off-policy DPOで好ましい応答の確率まで下がる現象を統一的に説明した研究である。softmax＋クロスエントロピーのモデルに負の勾配を加えると確率質量が最尤の出力へ集まる「squeezing effect」を新たに指摘し、off-policy DPOの劣化やon-policy手法・各種DPO変種の利点を説明した点が注目され、ICLR 2025でOutstanding Paperに選ばれた。"
+    },
+    {
+      "title": "Data Shapley in One Training Run",
+      "award": "Honorable Mention",
+      "authors": [
+        "Jiachen T. Wang",
+        "Prateek Mittal",
+        "Dawn Song",
+        "Ruoxi Jia"
+      ],
+      "url": "https://arxiv.org/abs/2406.11011",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "基盤モデルの事前学習規模でも使えるデータ帰属手法「In-Run Data Shapley」を提案した研究。再学習を必要とせず、1回の学習ラン（特定のターゲットモデル）に対する各学習データの貢献度をShapley値として算出する。",
+        "novelty": "従来のRetraining-based Data Shapleyは多数のデータ部分集合での再学習が必要で大規模モデルに適用できず、スコアも学習アルゴリズム全般に対するもので特定の学習ランに対する帰属ができなかった。本手法は各勾配更新ステップの局所効用に対するShapley値を求めて累積することで、特定ランへの帰属を可能にし、最も効率的な実装では通常学習とほぼ同等の実行時間で済む。また、TracIN-Idealが一次近似のShapley値に相当することを示し、その計算不可能とされてきた問題を克服している。",
+        "method": "各イテレーションtで、バッチの部分集合のみで更新した場合の検証損失変化を局所効用U(t)と定義し、その総和を全体の効用とする。Shapley値の線形性により、各ステップのShapley値を累積したものがIn-Run Data Shapleyとなる。U(t)を一次・二次のテイラー展開で近似すると閉形式が得られ、一次は学習点と検証点の勾配内積、二次はそれに加えて勾配-ヘッセ行列-勾配積による他の学習点との相互作用項を含む。計算には、差分プライバシーのghost clippingに着想を得た「ghost dot-product」により個別勾配を実体化せず1回の逆伝播で勾配内積を求め、二次項も「ghost gradient-Hessian-gradient product」により追加1回の逆伝播で計算する。",
+        "validation": "A100 80GB GPUでGPT2-Smallを学習した際のスループットは、通常学習76.2に対し一次（ghost）70.5、二次（ghost）34.4で、直接実装（4.2、1.8）より30倍超高速だった。GPT2の3500イテレーション時点でのモンテカルロ推定（1000順列）との比較では、一次近似のRMSEは約0.0003だった。Pileのサブセット（約10Bトークン）では、約16%が負の二次In-Run Data Shapley値を持ち、これらを除去して再学習すると、テスト損失3.75に達するまでの反復数が一次・二次とも約25%減少し、影響関数より良好だった。",
+        "discussion": "計算資源の制約からGPT2やPythia-410M中心の検証にとどまり、より大規模なモデルへの適用は今後の課題である。二次の手法は通常学習の約2倍の時間を要し、一次・二次ともテイラー近似に基づくため近似誤差を伴う（本文では一次近似でもSpearman相関0.94超と報告）。著作権への示唆（言い換えでも貢献が大きいという分析）は、ロイヤルティ配分などの制度設計の議論と合わせて慎重に解釈する必要がある。",
+        "next": [
+          {
+            "title": "Estimating Training Data Influence by Tracing Gradient Descent",
+            "reason": "In-Run Data Shapleyの一次近似と等価とされるTracIN-Idealを提案した直接の先行研究で、両者の関係を理解できる。"
+          },
+          {
+            "title": "Data Shapley: Equitable Valuation of Data for Machine Learning",
+            "reason": "再学習ベースのData Shapleyを提唱した原論文で、本研究が克服しようとする計算・概念上の限界の出発点を押さえられる。"
+          },
+          {
+            "title": "Scaling up differentially private deep learning with fast per-example gradient clipping",
+            "reason": "本研究のghost dot-product技術の着想元となったghost clippingの原理を理解できる。"
+          }
+        ]
+      },
+      "titleJa": "1回の学習ランでのData Shapley",
+      "why": "基盤モデルの事前学習規模でも使えるデータ帰属手法In-Run Data Shapleyを提案し、再学習なしに特定の学習ランに対する各データの貢献度をShapley値として算出できるようにした研究である。各勾配更新ステップの局所効用のShapley値を累積する方式で、最も効率的な実装では通常学習とほぼ同等の実行時間で済み、GPT2-Smallの学習では直接実装より30倍超高速だった。Pileのサブセットで約16%を占める負の値のデータを除去して再学習すると、テスト損失3.75に達するまでの反復数が約25%減り、影響関数より良好な結果となった点も注目される。"
+    },
+    {
+      "title": "SAM 2: Segment Anything in Images and Videos",
+      "award": "Honorable Mention",
+      "authors": [
+        "Nikhila Ravi",
+        "Valentin Gabeur",
+        "Yuan-Ting Hu",
+        "Ronghang Hu",
+        "Chaitanya Ryali",
+        "Tengyu Ma",
+        "Haitham Khedr",
+        "Roman Rädle",
+        "Chloe Rolland",
+        "Laura Gustafson",
+        "Eric Mintun",
+        "Junting Pan",
+        "Kalyan Vasudev Alwala",
+        "Nicolas Carion",
+        "Chao-Yuan Wu",
+        "Ross Girshick",
+        "Piotr Dollár",
+        "Christoph Feichtenhofer"
+      ],
+      "url": "https://arxiv.org/abs/2408.00714",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "画像向け基盤モデルSAMを動画へ拡張し、画像と動画の両方でプロンプト（クリック・ボックス・マスク）から対象をセグメントできる統一モデルSAM 2を提案した研究。動画中の対象の時空間マスク（masklet）を予測するPromptable Visual Segmentation（PVS）タスクを定義し、モデル、データエンジン、史上最大の動画セグメンテーションデータセットSA-Vを公開した。",
+        "novelty": "従来の「SAM＋動画トラッカー」の分離型では誤り修正時に各フレームで一からアノテーションし直す必要があったが、SAM 2はメモリを持つ単一モデルで任意フレームへのプロンプトによる対話的修正を可能にした。SA-Vは5万900本の動画に3,550万マスクを持ち、既存VOSデータセットの53倍（自動生成を除くと15倍）で、物体の部位も含み特定カテゴリに限定されない。画像では1クリックmIoU 58.9対58.1でSAMを上回りつつ6倍高速とされる。",
+        "method": "フレームを1枚ずつ処理するストリーミング型トランスフォーマーで、MAE事前学習済みHieraエンコーダ、過去フレームの記憶と物体ポインタへクロスアテンションするメモリアテンション、SAM同様のプロンプトエンコーダ・マスクデコーダ、メモリエンコーダ、FIFOメモリバンクで構成される。オクルージョンに対応するため対象が当該フレームに存在するかを予測するヘッドを追加し、階層エンコーダからのスキップ接続で高解像度特徴をデコードに使う。画像と動画で共同学習し、8フレーム系列で対話的プロンプトをシミュレートして学習する。データは、SAMのみ(Phase 1)、SAM＋SAM 2 Mask(Phase 2)、SAM 2(Phase 3)の3段階のモデルインザループで収集し、さらに自動生成masklet（Auto）を品質検証して加えた。",
+        "validation": "9つのゼロショット動画データセットでの対話的セグメンテーションで、SAM+XMem++およびSAM+Cutieを上回り、約3分の1以下のインタラクション数で同等以上の精度を達成した。17データセットでの半教師ありVOSでも、1クリック64.7、3クリック75.3、5クリック77.6、ボックス74.4、GTマスク79.3（J&F）といずれもベースラインより高く、MOSE valで76.6/77.9（B+/L）、SA-V valで76.8/77.9など従来手法を大きく上回った。データエンジンはPhase 1比で8.4倍高速（1フレーム37.8秒→4.5秒）で、画像では37データセットのゼロショット評価で精度向上と約6倍の高速化（130.1 FPS対21.7 FPS）を示した。",
+        "discussion": "付録の限界(§C)は今回の本文では省略されており詳細は確認できない。本文からは、SA-V val/testは通常と異なりPhase 1の手動アノテーションで作られており評価バイアス低減を狙っている点、また既存手法のSA-Vでの精度が大きく低く「動画で何でもセグメント」にはまだ差がある点が読み取れる。データ量と精度にべき乗則的な関係が見られるため、さらなるデータ拡大による改善余地が示唆される。",
+        "next": [
+          {
+            "title": "Segment Anything",
+            "reason": "SAM 2の元となる画像向けプロンプタブルセグメンテーションの基盤モデルとSA-1Bデータセットを理解するため。"
+          },
+          {
+            "title": "Putting the Object Back into Video Object Segmentation (Cutie)",
+            "reason": "SAM 2の主要な比較対象である最先端VOS手法で、メモリ設計の違いを把握するため。"
+          },
+          {
+            "title": "XMem++: Production-level Video Segmentation From Few Annotated Frames",
+            "reason": "複数フレームのマスク入力を扱うベースラインで、対話的動画セグメンテーションの従来手法との差を確認するため。"
+          }
+        ]
+      },
+      "titleJa": "SAM 2: 画像と動画のあらゆるものをセグメントする",
+      "why": "画像向け基盤モデルSAMを動画へ拡張し、クリック・ボックス・マスクのプロンプトで画像と動画の両方を扱える統一モデルSAM 2を提案した研究です。動画中の対象の時空間マスクを予測するPromptable Visual Segmentationというタスクを定義し、メモリを持つ単一モデルにより任意のフレームへのプロンプトで対話的に修正できるようにしたほか、5万900本の動画に3,550万マスクを持つ史上最大規模のSA-Vデータセットも公開しました。9つのゼロショット動画データセットでSAM+XMem++やSAM+Cutieを約3分の1以下のインタラクション数で上回り、画像でもSAMより高精度かつ約6倍高速で、ICLR 2025でHonorable Mentionを受賞しています。"
+    },
+    {
+      "title": "CogVideoX: Text-to-Video Diffusion Models with An Expert Transformer",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Zhuoyi Yang",
+        "Jiayan Teng",
+        "Wendi Zheng",
+        "Ming Ding",
+        "Shiyu Huang",
+        "Jiazheng Xu",
+        "Yuanming Yang",
+        "Wenyi Hong",
+        "Xiaohan Zhang",
+        "Guanyu Feng",
+        "Da Yin",
+        "Yuxuan Zhang",
+        "Weihan Wang",
+        "Yean Cheng",
+        "Bin Xu",
+        "Xiaotao Gu",
+        "Yuxiao Dong",
+        "Jie Tang"
+      ],
+      "url": "https://arxiv.org/abs/2408.06072",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "テキストから最大10秒・16fps・768×1360pxの長尺で動きの大きい動画を生成する、拡散Transformerベースの大規模text-to-videoモデルCogVideoX（5Bと2B）を提案した。3D VAE、expert Transformer、段階的学習、動画キャプション生成パイプラインを組み合わせ、一貫性のある動画生成を目指している。コード、モデル重み、VAE、キャプションモデルも公開している。",
+        "novelty": "2D VAEのファインチューニングではなく3D causal VAEを新たに学習し、空間・時間方向に圧縮することでflickerを抑えつつ系列長を削減した。テキストと映像の特徴空間の差を、MMDiTのような二系統のTransformerではなくExpert Adaptive LayerNormで吸収し、少ない追加パラメータで整合性を高めた。さらに空間・時間分離のattentionではなく3D full attentionで大きな動きの一貫性を保つ点、Multi-Resolution Frame PackやExplicit Uniform Samplingといった学習上の工夫も新しい。",
+        "method": "動画を3D causal VAE（8×8×4圧縮、時間方向のcausal convolutionとcontext parallel）で潜在化しpatch化、T5のテキスト埋め込みとシーケンス方向に連結してexpert Transformerに入力する。位置埋め込みは3D-RoPE（x,y,tのチャネル比3/8,3/8,2/8）、拡散ステップ入力のVision/Text Expert AdaLNで各モダリティを別々に変調し、3D full attentionで時空間を同時にモデル化する。学習では異なる長さ・解像度の動画を同一バッチにまとめるMulti-Resolution Frame Pack、256pxから768pxへの段階的学習、各データ並列rankが担当区間内でタイムステップをサンプリングするExplicit Uniform Samplingを用いる。データは約35Mの単一ショットクリップと20億枚の画像で、フィルタ分類器で品質を選別し、Panda70M・CogVLM・GPT-4・LLaMA2を組み合わせた密なキャプションを生成した（後にCogVLM2-Captionへ蒸留）。",
+        "validation": "VAE比較（WebVid検証セット、256×256・17フレーム）では、提案VAEがPSNR 29.1・Flickering 85.5で、Open-Sora（28.5/92.4）やOpen-Sora-Plan（27.6/90.2）を上回った。VBenchの一部指標とDynamic Quality、GPT4o-MTScoreによる評価では、CogVideoX-5BがHuman Action 96.8、Dynamic Degree 70.95、GPT4o-MTScore 3.36などで7指標中5指標で最良となった。人手評価では、Kling（2024.7）との比較で合計スコアが2.74対2.17と全観点でCogVideoX-5Bが上回った。アブレーションでは3D-RoPE、Expert AdaLN、3D full attention、Explicit Uniform Samplingそれぞれの有効性を示している。",
+        "discussion": "VAEの圧縮率を過度に上げる（16×16×8）と、チャネル数を増やしても収束が困難になり、より高圧縮なVAEは今後の課題とされている。高品質データでのファインチューニングは字幕や透かしの除去と画質向上をもたらす一方、意味理解能力がわずかに低下した。3D full attentionは高解像度で推論コストが増え（768×1360で2D+1Dの4.17sに対し9.60s）、今後は大規模化のスケーリング則の検討と、より長く高品質な動画生成が展望として挙げられている。",
+        "next": [
+          {
+            "title": "Scalable Diffusion Models with Transformers",
+            "reason": "CogVideoXの土台となるDiTとAdaLNによるタイムステップ条件付けを理解するため。"
+          },
+          {
+            "title": "Language Model Beats Diffusion -- Tokenizer is Key to Visual Generation",
+            "reason": "本論文の3D causal VAEが採用する時間方向のcausal convolutionの出典で、動画トークナイザの設計を理解できるため。"
+          },
+          {
+            "title": "Scaling Rectified Flow Transformers for High-Resolution Image Synthesis",
+            "reason": "比較対象のMMDiTが提案されており、Expert AdaLNとの設計の違いを理解できるため。"
+          }
+        ]
+      },
+      "titleJa": "CogVideoX: expert Transformer を用いたテキストから動画への拡散モデル",
+      "why": "テキストから最大10秒・16fps・768×1360pxの動きの大きい長尺動画を生成する、拡散Transformerベースの大規模モデルCogVideoX(5Bと2B)を提案した研究です。3D causal VAE、Expert Adaptive LayerNorm、3D full attentionなどにより一貫性のある生成を目指し、VBenchなどの評価で7指標中5指標で最良となり、人手評価でもKlingを全観点で上回りました。コードやモデル重みも公開されており、被引用数でも同年2位と高い注目を集めています。"
     }
   ],
   "sources": [
@@ -114,6 +280,10 @@
     {
       "title": "ICLR 2025（公式サイト）",
       "url": "https://iclr.cc/Conferences/2025"
+    },
+    {
+      "title": "Most Influential ICLR Papers 2025-09（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2025/09/most-influential-iclr-papers-2025-09-version/"
     }
   ],
   "unreachable": [

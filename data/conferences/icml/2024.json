@@ -151,6 +151,153 @@
           }
         ]
       }
+    },
+    {
+      "title": "VideoPoet: A Large Language Model for Zero-Shot Video Generation",
+      "award": "Best Paper",
+      "authors": [
+        "Dan Kondratyuk",
+        "Lijun Yu",
+        "Xiuye Gu",
+        "José Lezama",
+        "Jonathan Huang",
+        "Grant Schindler",
+        "Rachel Hornung",
+        "Vighnesh Birodkar",
+        "Jimmy Yan",
+        "Ming-Chang Chiu",
+        "Krishna Somandepalli",
+        "Hassan Akbari",
+        "Yair Alon",
+        "Yong Cheng",
+        "Josh Dillon",
+        "Agrim Gupta",
+        "Meera Hahn",
+        "Anja Hauth",
+        "David Hendon",
+        "Alonso Martinez",
+        "David Minnen",
+        "Mikhail Sirotenko",
+        "Kihyuk Sohn",
+        "Xuan Yang",
+        "Hartwig Adam",
+        "Ming-Hsuan Yang",
+        "Irfan Essa",
+        "Huisheng Wang",
+        "David A. Ross",
+        "Bryan Seybold",
+        "Lu Jiang"
+      ],
+      "url": "https://arxiv.org/abs/2312.14125",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "VideoPoet は、テキスト・画像・動画・音声など多様な入力条件から、音声付きも含む高品質な動画を生成するデコーダのみの大規模言語モデル（LLM）である。LLM と同様の「事前学習＋タスク適応」の二段階で学習し、1つのモデルでT2V、I2V、動画編集、スタイライゼーションなどを実行できる。拡散モデルが主流の動画生成に対し、LLM 方式でも最先端水準の品質、特に大きく高忠実な動きの生成が可能であることを示した。",
+        "novelty": "動画生成の主流である拡散モデル（画像モデルにアダプタ等で機能を追加する方式）に対し、LLM のインフラと学習レシピをそのまま使い、多様なタスクを単一モデル・統一語彙で扱う点が新しい。テキスト付き動画だけでなく、テキストなし動画も複数の自己教師ありタスクに再利用して学習できる。さらに、タスクの連鎖（I2V→スタイライゼーションなど）による未学習タスクのゼロショット実行や、最後の1秒を条件にした自己回帰的な最大10秒の長尺生成も可能にした。",
+        "method": "MAGVIT-v2 で画像・動画を、SoundStream で音声を離散トークン化して統一語彙にし、テキストは凍結した T5 XL の埋め込みとして入力する。プレフィックス付きデコーダのみのトランスフォーマで、<task> トークンと入出力の組合せによりT2V、I2V、将来フレーム予測、インペイント/アウトペイント、音声⇄動画、スタイライゼーション（テキスト＋オプティカルフロー＋深度）などを学習する。系列長ごとにタスクをまとめる Alternating Gradient Descent でパディングをほぼ0%にし、前半25%は画像90%、以降は動画90%とする2段階サンプリングを行う。さらに、窓付き局所注意を用いた非自己回帰の超解像トランスフォーマをトークン空間で2段（各2倍）カスケードし、224×128 から 896×512 を得る。",
+        "validation": "MSR-VTT、UCF-101（T2V）、Kinetics-600（フレーム予測）、SSv2（インペイント/アウトペイント）でゼロショット評価した。300M モデルのタスク比較では全タスク併用が全体として最良で、8B モデルでは MSR-VTT の FVD が 355、UCF-101 の FVD が 687 などの結果を示した。T2V の比較では、事前学習モデルで MSR-VTT の FVD 213、UCF-101 の FVD 355、IS 38.44 を得て、微調整後は MSR-VTT の CLIPSIM 0.3123 を達成した。約250プロンプトの人間評価では、Show-1、VideoCrafter、Phenaki、Pika、Gen2、WALT、Lumiere と比較し、動きの面白さと現実性で大きく優位で、映像品質では Lumiere のみが上回った。",
+        "discussion": "限界として、トークナイザの再構成が視覚的忠実度の上限になること、学習データの方針（LAION など著作権のある画像を除外）により静止シーンの美的品質が最良のベースラインに及ばないこと、動きを伴う小さな物体や細部が難しいことが挙げられている。また300Mモデルではマルチタスク学習がやや劣る場合があり、各タスクの学習不足の可能性が指摘されている。悪用（ディープフェイクなど）への懸念があり、電子透かしなどの対策が述べられている。",
+        "next": [
+          {
+            "title": "Language Model Beats Diffusion -- Tokenizer is Key to Visual Generation (MAGVIT-v2)",
+            "reason": "VideoPoet の視覚トークナイザであり、生成品質の上限を決める設計を理解するため。"
+          },
+          {
+            "title": "MAGVIT: Masked Generative Video Transformer (COMMIT)",
+            "reason": "インペイント/アウトペイント等のマルチタスク動画生成と、超解像で用いる非自己回帰トランスフォーマの基礎を押さえるため。"
+          },
+          {
+            "title": "Lumiere: A Space-Time Diffusion Model for Video Generation",
+            "reason": "人間評価で映像品質のみ VideoPoet を上回った拡散ベースの比較対象で、両方式の違いを理解するため。"
+          }
+        ]
+      },
+      "titleJa": "VideoPoet: ゼロショット動画生成のための大規模言語モデル",
+      "why": "テキスト・画像・動画・音声など多様な入力から音声付きも含む動画を生成する、デコーダのみの大規模言語モデルを、LLMと同様の事前学習とタスク適応の二段階で学習し、T2V、I2V、動画編集、スタイライゼーションを単一モデルで扱えることを示した研究です。拡散モデルが主流の動画生成において、LLM方式でも最先端水準の品質、特に大きく高忠実な動きを実現し、タスクの連鎖による未学習タスクのゼロショット実行や最大10秒の長尺生成も可能にした点が注目されます。約250プロンプトの人間評価では、動きの面白さと現実性で比較手法を大きく上回り、映像品質ではLumiereのみが上回りました。"
+    },
+    {
+      "title": "Scaling Rectified Flow Transformers for High-Resolution Image Synthesis",
+      "award": "Best Paper",
+      "authors": [
+        "Patrick Esser",
+        "Sumith Kulal",
+        "Andreas Blattmann",
+        "Rahim Entezari",
+        "Jonas Müller",
+        "Harry Saini",
+        "Yam Levi",
+        "Dominik Lorenz",
+        "Axel Sauer",
+        "Frederic Boesel",
+        "Dustin Podell",
+        "Tim Dockhorn",
+        "Zion English",
+        "Kyle Lacey",
+        "Alex Goodwin",
+        "Yannik Marek",
+        "Robin Rombach"
+      ],
+      "url": "https://arxiv.org/abs/2403.03206",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "高解像度テキスト画像生成に向けて、Rectified Flow の学習時ノイズ（タイムステップ）サンプリングを改良し、テキストと画像で別々の重みを持つ新しい Transformer アーキテクチャ MM-DiT を提案した研究。最大8Bパラメータまでスケールさせ、検証損失が予測可能にスケールすることと、それが自動評価・人手評価の向上と相関することを示した。",
+        "novelty": "Rectified Flow は理論的には優れるが、これまでは小〜中規模でクラス条件付きモデル中心の検証に留まっていた。本研究は大規模・系統的な比較により、中間タイムステップを重視するサンプラー（logit-normal 等）で従来の拡散定式化を上回ることを示した。また、固定のテキスト表現をクロスアテンションで入れる従来方式と異なり、画像・テキストのトークンを双方向に混合する構造を採用した。",
+        "method": "RF の損失をタイムステップ密度 π(t) による重み付き損失として扱い、速度予測が難しい中間の t を多く引くために logit-normal、heavy-tail の mode sampling、CosMap などのサンプラーを導入した。MM-DiT は、画像とテキストで独立した重みを持つ2系統のTransformerを使い、アテンション時のみ系列を連結して相互参照させる構造である。さらに、学習安定化のためのQ・KへのRMSNorm（QK正規化）、解像度に応じたタイムステップのシフト（式23、1024²ではα=3.0）、可変アスペクト比のための位置エンコーディング、16チャネルのオートエンコーダ、CogVLMによる合成キャプションと元キャプションの50/50混合を組み合わせている。",
+        "validation": "ImageNetとCC12Mで61種類の定式化を、CLIPスコアとFID、複数のサンプラー設定について非支配ソートで順位付けした。rf/lognorm(0.00, 1.00) は一貫して上位で、一様サンプリングのRFやLDM-Linear（eps/linear）を上回り、サンプリングステップを減らしたときの劣化もRFは小さかった。MM-DiTはDiT、CrossDiT、UViTより良好で、GenEvalの総合スコアは合成キャプション混合により43.27から49.78に向上した。スケーリング研究では検証損失がモデルサイズと学習ステップに対して滑らかに低下し、GenEval、人手評価、T2I-CompBenchと強く相関した。最大の8BモデルはSDXL、SDXL-Turbo、Pixart-α、DALL-E 3などを、プロンプト理解の定量評価と人手選好評価で上回ったと報告されている。",
+        "discussion": "解像度シフト値の決定は「全画素が一定」という非現実的な仮定に基づく導出に、人手評価で補った経験的なものであり、QK正規化も万能な処方箋ではなく学習設定に応じた調整が必要だと著者自身が述べている。また、評価した定式化はCLIPとFIDで得意・不得意が分かれ、サンプリングステップ数によって最良の設定が変わるなど、条件依存性が残る。提供された本文は途中で省略されているため、動画モデルでの検証や付録の詳細（DPOによるアライメントなど）は本稿の情報だけでは評価できない。",
+        "next": [
+          {
+            "title": "Scalable Diffusion Models with Transformers",
+            "reason": "MM-DiTのベースとなるDiTアーキテクチャと、モジュレーションによる条件付けの仕組みを理解するため。"
+          },
+          {
+            "title": "Flow Matching for Generative Modeling",
+            "reason": "本論文の学習目的である条件付きフロー・マッチングと確率パスの理論的基礎を押さえるため。"
+          },
+          {
+            "title": "Elucidating the Design Space of Diffusion-Based Generative Models",
+            "reason": "本論文が比較対象とするEDMの定式化と、ノイズスケジュール設計の考え方を理解するため。"
+          }
+        ]
+      },
+      "titleJa": "高解像度画像合成に向けた Rectified Flow Transformer のスケーリング",
+      "why": "高解像度のテキスト画像生成に向けて、Rectified Flow のタイムステップサンプリングを改良し、テキストと画像で別々の重みを持ちトークンを双方向に混合する Transformer「MM-DiT」を提案した研究です。これまで小〜中規模での検証が中心だった Rectified Flow を、61種類の定式化の系統的な比較と最大8Bパラメータまでのスケーリングで検証し、検証損失が予測可能に低下して自動評価・人手評価の向上と相関することを示した点が注目されます。最大の8Bモデルは SDXL や DALL-E 3 などを、プロンプト理解の定量評価と人手選好評価で上回ったと報告されており、ICML 2024 の Best Paper に選ばれました。"
+    },
+    {
+      "title": "Vision Mamba: Efficient Visual Representation Learning with Bidirectional State Space Model",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Lianghui Zhu",
+        "Bencheng Liao",
+        "Qian Zhang",
+        "Xinlong Wang",
+        "Wenyu Liu",
+        "Xinggang Wang"
+      ],
+      "url": "https://arxiv.org/abs/2401.09417",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "Mamba（選択的状態空間モデル）を画像向けに拡張し、self-attentionを使わずSSMのみで構成した汎用ビジョンバックボーン「Vision Mamba（Vim）」を提案した研究。ImageNet分類、COCO検出、ADE20Kセグメンテーションで、高解像度時の計算・メモリ効率に優れつつDeiTを上回る性能を示した。",
+        "novelty": "従来の視覚向けSSMはタスク特化型か、CNNやattentionとのハイブリッドが中心だった。Vimは画像をパッチ列として扱う純粋なSSMバックボーンであり、密予測タスクを扱えた最初の純SSMモデルだと主張している。2次元の帰納バイアスを入れず、ViTと同様の系列的・モダリティ非依存の表現学習を保っている。",
+        "method": "画像をパッチに分割して線形射影し、位置埋め込みとクラストークンを加えた系列をVimブロックに通す。Vimブロックは、前向きと後ろ向きの両方向にそれぞれConv1dと選択的SSMを適用し、zでゲートして足し合わせる双方向構造をとる。MambaのハードウェアアウェアなSRAM内計算と再計算によりIOとメモリを削減し、計算量は系列長に対して線形になる。分類トークンは系列の中央に置く設計が最良だった。",
+        "validation": "ImageNet-1KでVim-Tiが76.1%、Vim-Sが80.3%、Vim-Bが81.9%を達成し、DeiT-Ti/S/Bをそれぞれ3.9/0.5/0.1ポイント上回った。長系列ファインチューニング後はVim-S†が81.4%でDeiT-B級の精度になった。ADE20KではVim-Tiが41.0 mIoUでDeiT-Tiより1.8高く、Vim-Sは44.9 mIoUでDeiT-Sより0.9高かった。COCOではVim-TiがDeiT-Tiより box AP で1.3、mask AP で1.1高かった。1248×1248の画像でのバッチ推論では、DeiTより2.8倍高速で、GPUメモリを86.8%削減した。",
+        "discussion": "本文中の実験は教師あり分類での事前学習に限られ、マスク画像モデリングなどの大規模な教師なし事前学習やCLIP型のマルチモーダル学習は今後の課題とされている。また、効率の優位は高解像度で顕著になる一方、512×512ではDeiTと同程度のFPS・メモリである。医用画像、リモートセンシング、長尺動画など超高解像度・長系列への応用が展望として挙げられている。",
+        "next": [
+          {
+            "title": "Mamba: Linear-time sequence modeling with selective state spaces",
+            "reason": "Vimの基盤となる選択的SSMとハードウェアアウェアなアルゴリズムの詳細を理解するため。"
+          },
+          {
+            "title": "VMamba: Visual state space model",
+            "reason": "多方向スキャンと階層構造を使う同時期の視覚向けMambaで、Vimとの設計の違いを比較できるため。"
+          },
+          {
+            "title": "Efficiently modeling long sequences with structured state spaces",
+            "reason": "S4はMambaやVimにつながるSSMの原点であり、連続系から離散化・畳み込み表現までの基礎が学べるため。"
+          }
+        ]
+      },
+      "titleJa": "Vision Mamba: 双方向状態空間モデルによる効率的な視覚表現学習",
+      "why": "Mamba（選択的状態空間モデル）を画像向けに拡張し、self-attentionを使わずSSMのみで構成した汎用ビジョンバックボーン「Vision Mamba（Vim）」を提案した研究です。ImageNet分類・COCO検出・ADE20Kセグメンテーションで同規模のDeiTを上回り、1248×1248の画像のバッチ推論ではDeiTより2.8倍高速でGPUメモリを86.8%削減しており、高解像度での効率の高さが注目されます。密予測タスクを扱えた最初の純SSMモデルだと主張されており、被引用数でもICML 2024の上位（Paper Digest集計で同年2位）に入っています。"
     }
   ],
   "sources": [
@@ -169,6 +316,10 @@
     {
       "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
       "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    },
+    {
+      "title": "Most Influential ICML Papers（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-icml-papers-2026-03-version/"
     }
   ],
   "unreachable": [

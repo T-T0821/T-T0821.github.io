@@ -139,6 +139,158 @@
           }
         ]
       }
+    },
+    {
+      "title": "An empirical analysis of compute-optimal large language model training（Chinchilla）",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Jordan Hoffmann",
+        "Sebastian Borgeaud",
+        "Arthur Mensch ほか（DeepMind）"
+      ],
+      "url": "https://arxiv.org/abs/2203.15556",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "与えられた計算予算（FLOPs）のもとで、Transformer言語モデルのモデルサイズ（パラメータ数）と学習トークン数をどう配分すれば最適かを実証的に調べた研究。既存の大規模LLMは学習トークンが不足（undertrained）しており、モデルサイズと学習トークン数は同じ比率で増やすべきだと示した。この予測に基づき、Gopherと同じ計算量で70Bパラメータ・1.4兆トークンのChinchillaを学習した。",
+        "novelty": "Kaplanら(2020)は計算量が10倍になるとモデルサイズを5.5倍、トークン数を1.8倍にすべきとしたが、本研究はモデルサイズとトークン数をほぼ等比率（指数 約0.5ずつ）で増やすべきと結論づけた。差が生じる理由として、Kaplanらは全モデルで学習率スケジュール長を固定していたため、少ないデータでの学習の効果を過小評価していた点を指摘している。また、70M〜16Bの400以上のモデルを、トークン数ごとに学習率スケジュールを合わせて学習した点も特徴である。",
+        "method": "3つの独立した手法で N_opt ∝ C^a、D_opt ∝ C^b の指数を推定した。(1) モデルサイズごとに複数の学習長で学習し、FLOPあたり最小損失の包絡線を取る。(2) 9種類の固定FLOP予算でモデルサイズを変え、IsoFLOP曲線に放物線をフィットして最小損失の点を求める。(3) 損失を L(N,D)=E+A/N^α+B/D^β とパラメトリックに表し、Huber損失とL-BFGSでフィットして、FLOPs≈6NDの制約下で最適配分を導出する。いずれの手法でもa、bは約0.5付近（a=0.46〜0.50、b=0.50〜0.54）となった。",
+        "validation": "予測の検証として、Gopher(280B、300Bトークン)と同じ計算予算で、70B・1.4兆トークンのChinchillaを学習し、Gopher、GPT-3、Jurassic-1、MT-NLG 530Bと比較した。MMLUの5-shot平均精度は67.6%でGopherの60.0%を7.6ポイント上回り、BIG-benchの平均精度は65.1%（Gopherは54.4%）となった。Pileの全サブセットでGopherを上回り、Natural Questionsなどの閉書QAでもSOTAを更新した。モデルが4倍小さいため推論コストも小さい。",
+        "discussion": "大規模での比較はChinchillaとGopherの2本のみで中間スケールの検証がなく、計算量・モデルサイズ・トークン数のべき乗則を仮定しているが、高計算量域ではlog(N_opt)に凹みが見られ、最適サイズを過大推定している可能性がある。また、学習は1エポック未満の範囲に限られ、複数エポックの設定は今後の課題である。さらに、必要なデータ量が現在の規模を大きく超えるため、高品質データセットの収集、train/testの重複への注意、毒性・バイアス・プライバシーへの配慮が重要になる。",
+        "next": [
+          {
+            "title": "Scaling Laws for Neural Language Models",
+            "reason": "本論文が直接の比較対象とし、結論を修正したスケーリング則の原論文であり、差異の理解に不可欠である。"
+          },
+          {
+            "title": "Scaling language models: Methods, analysis & insights from training Gopher",
+            "reason": "Chinchillaが同じ計算予算で比較した基準モデルGopherの詳細と、評価設定の元になった論文である。"
+          },
+          {
+            "title": "Improving language models by retrieving from trillions of tokens",
+            "reason": "検索拡張により実質的な学習データ量を増やす別のアプローチで、データ規模の重要性という本論文の示唆とつながる。"
+          }
+        ]
+      },
+      "titleJa": "計算最適な大規模言語モデル学習の実証分析（Chinchilla）",
+      "why": "与えられた計算予算のもとで、モデルサイズと学習トークン数をどう配分すべきかを400以上のモデルで実証的に調べ、既存の大規模LLMは学習トークンが不足しており、両者をほぼ等比率で増やすべきだと示した研究である。Kaplanらの結論との差は学習率スケジュール長を固定していた点にあると指摘している。この予測に基づきGopherと同じ計算量で学習した70BのChinchillaは、MMLU 5-shotで67.6%（Gopherは60.0%）などGopherを上回り、4倍小さいため推論コストも小さい点が注目される。"
+    },
+    {
+      "title": "Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding（Imagen）",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Chitwan Saharia",
+        "William Chan",
+        "Saurabh Saxena",
+        "Lala Li",
+        "Jay Whang",
+        "Emily Denton",
+        "Seyed Kamyar Seyed Ghasemipour",
+        "Burcu Karagol Ayan",
+        "S. Sara Mahdavi",
+        "Rapha Gontijo Lopes",
+        "Tim Salimans",
+        "Jonathan Ho",
+        "David J Fleet",
+        "Mohammad Norouzi"
+      ],
+      "url": "https://arxiv.org/abs/2205.11487",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "Imagen は、凍結した大規模言語モデル（T5-XXL）のテキスト埋め込みを条件として、64×64 の基本拡散モデルと 2 段の超解像拡散モデルで最大 1024×1024 の画像を生成するテキスト画像生成モデルである。高い写実性と、テキストの深い理解に基づく画像とテキストの整合性の両立を目指している。あわせて、評価用ベンチマーク DrawBench も提案している。",
+        "novelty": "従来は画像・テキストのペアデータで学習したテキストエンコーダ（CLIP など）が主流だったが、テキストのみで事前学習した汎用の大規模言語モデルが、テキスト画像生成のエンコーダとして驚くほど有効であることを示した。さらに、言語モデルを大きくするほうが、画像拡散モデルを大きくするよりも画質と整合性を大きく改善するという知見を得ている。また、大きなガイダンス重みでも画質が劣化しない dynamic thresholding と、より単純で収束が速くメモリ効率のよい Efficient U-Net も新たに提案している。",
+        "method": "T5-XXL などの事前学習済みテキストエンコーダを凍結し、テキスト埋め込み列を 64×64 の基本モデルと 2 つの超解像モデル（256×256、1024×1024）すべての条件として用いる。全モデルで classifier-free guidance を使い、学習時にテキスト埋め込みを 10% の確率でゼロにして無条件学習も同時に行う。高い重みでは x 予測が [-1,1] の範囲を超えて学習時とのずれが生じ、飽和や発散が起こるため、各ステップで x 予測の絶対値の特定パーセンタイル s を求め、s>1 なら [-s,s] に制限して s で割る dynamic thresholding を導入した。超解像モデルにはノイズ条件付き拡張（noise conditioning augmentation）を用い、テキストの cross attention も使う。",
+        "validation": "COCO 検証セットでの zero-shot FID-30K は 7.27 で、GLIDE（12.24）や DALL-E 2（10.39）を上回り、COCO で学習した Make-A-Scene（7.55）よりも良かった。人手評価では、画像とテキストの整合性が参照画像と同等（Imagen 91.4 に対し参照 91.9）で、写実性の選好率は 39.5%（人物を除いたセットでは 43.9%）だった。また、200 プロンプト・11 カテゴリからなる DrawBench による比較で、人間の評価者は VQ-GAN+CLIP、Latent Diffusion Models、DALL-E 2 などよりも Imagen を好んだと報告されている。なお、提供された本文は DrawBench の結果の節の手前で途切れているため、その詳細な数値は確認できない。",
+        "discussion": "FID や CLIP スコアには限界があり、本文でも人物の生成能力には限界があると指摘されている（人物を除くと写実性の選好率が上がる）。また、訓練データには限界があるとも述べられているが、その詳細は提供された本文には含まれていない。モデルの学習は過学習していないため、さらに長く学習すれば性能が向上する可能性があると著者らは述べている。",
+        "next": [
+          {
+            "title": "Hierarchical Text-Conditional Image Generation with CLIP Latents",
+            "reason": "同時期の DALL-E 2 であり、CLIP 埋め込みを用いる方式と Imagen の言語モデル埋め込みを用いる方式を比較できるため。"
+          },
+          {
+            "title": "Classifier-Free Diffusion Guidance",
+            "reason": "Imagen の条件付けの根幹であり、ガイダンス重みの扱いと dynamic thresholding の動機を理解するのに役立つため。"
+          },
+          {
+            "title": "Cascaded Diffusion Models for High Fidelity Image Generation",
+            "reason": "Imagen の超解像段で使われているカスケード構成とノイズ条件付き拡張の元になった手法であるため。"
+          }
+        ]
+      },
+      "titleJa": "深い言語理解に基づく写実的なテキストから画像への拡散モデル（Imagen）",
+      "why": "Imagen は、凍結した大規模言語モデル T5-XXL のテキスト埋め込みを条件に、基本拡散モデルと 2 段の超解像拡散モデルで最大 1024×1024 の画像を生成する研究です。テキストのみで事前学習した言語モデルがエンコーダとして有効で、言語モデルを大きくするほうが画像拡散モデルを大きくするより画質と整合性を改善するという知見が注目されます。COCO 検証セットの zero-shot FID-30K は 7.27 で GLIDE や DALL-E 2 を上回り、人手評価でも画像とテキストの整合性が参照画像と同等でした。"
+    },
+    {
+      "title": "Elucidating the Design Space of Diffusion-Based Generative Models",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Tero Karras",
+        "Miika Aittala",
+        "Timo Aila",
+        "Samuli Laine"
+      ],
+      "url": "https://arxiv.org/abs/2206.00364",
+      "ochiai": {
+        "basis": "abstract",
+        "what": "拡散モデルに基づく生成モデルの理論と実装が不必要に複雑になっているという問題意識のもと、具体的な設計上の選択を明確に分離した「設計空間」を提示した研究。これにより、サンプリング、学習、スコアネットワークのプリコンディショニングそれぞれに対する改善点を特定している。",
+        "novelty": "個々の設計選択を切り分けて整理することで、サンプリング過程・学習過程・プリコンディショニングへの変更を個別かつモジュール的に検討できるようにした点が新しい。さらに、これらの改善は事前学習済みの既存スコアネットワークにも適用でき、再学習なしでも効率と品質を大きく向上させられる。",
+        "method": "拡散モデルの設計を、サンプリング、学習、スコアネットワークのプリコンディショニングという要素に分離して再検討し、それぞれに改善を加えている。これらの変更はモジュール的で、組み合わせて用いることも、既存の学習済みモデルに単独で適用することもできる。個々の改善の具体的な数式や手順は、アブストラクトのみからは確認できない。",
+        "validation": "CIFAR-10でFID 1.79（クラス条件付き）、1.97（無条件）という当時の最高水準（SOTA）を、1画像あたり35回のネットワーク評価という高速なサンプリングで達成したと報告している。また、既存のImageNet-64の学習済みモデルのFIDを2.07から1.55へ改善し、提案手法で再学習すると1.36の新SOTAを得た。",
+        "discussion": "アブストラクトからは、限界や課題、今後の展望について具体的な記述は読み取れない。提案した設計の効果が他のデータセットや高解像度の設定でどこまで一般化するかは、本文での確認が必要である。",
+        "next": []
+      },
+      "titleJa": "拡散モデルに基づく生成モデルの設計空間を解き明かす",
+      "why": "拡散モデルに基づく生成モデルの理論と実装が不必要に複雑になっているという問題意識から、具体的な設計上の選択を切り分けた「設計空間」を提示し、サンプリング・学習・スコアネットワークのプリコンディショニングそれぞれの改善点を個別かつモジュール的に検討できるようにした研究です。これらの改善は事前学習済みの既存スコアネットワークにも再学習なしで適用でき、効率と品質を大きく向上させられる点が注目されます。CIFAR-10で1画像あたり35回のネットワーク評価という高速なサンプリングでFID 1.79（クラス条件付き）・1.97（無条件）の当時のSOTAを達成し、ImageNet-64でも既存モデルのFIDを2.07から1.55へ改善、再学習により1.36の新SOTAを得ています。"
+    },
+    {
+      "title": "Training language models to follow instructions with human feedback",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Long Ouyang",
+        "Jeff Wu",
+        "Xu Jiang",
+        "Diogo Almeida",
+        "Carroll L. Wainwright",
+        "Pamela Mishkin",
+        "Chong Zhang",
+        "Sandhini Agarwal",
+        "Katarina Slama",
+        "Alex Ray",
+        "John Schulman",
+        "Jacob Hilton",
+        "Fraser Kelton",
+        "Luke Miller",
+        "Maddie Simens",
+        "Amanda Askell",
+        "Peter Welinder",
+        "Paul Christiano",
+        "Jan Leike",
+        "Ryan Lowe"
+      ],
+      "url": "https://arxiv.org/abs/2203.02155",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "大規模言語モデルは「次のトークン予測」を目的に学習されているため、ユーザーの意図に沿わず、事実の捏造や有害・無用な出力をすることがある。本研究は人間のフィードバックによる強化学習（RLHF）でGPT-3をファインチューニングし、幅広い指示に従うようにしたモデル InstructGPT を実現した。",
+        "novelty": "RLHFはこれまで要約など限られたタスクで用いられていたが、本研究はそれを多様な言語タスクの分布（実際のAPIプロンプト）に直接適用し、モデルをユーザー意図へアラインさせた。結果として、パラメータ数が100分の1以下の1.3B InstructGPTの出力が175B GPT-3より好まれるなど、規模拡大だけでは得られない改善を示した。また、FLANやT0のように公開NLPデータセットで指示チューニングする手法よりも、実際の利用分布では人間の選好データを使う方が優れることを示した。",
+        "method": "3段階で学習する。(1) ラベラーが書いたデモンストレーションで教師あり微調整（SFT）、(2) 同一プロンプトへの複数出力（K=4〜9）のラベラーによる順位付けから報酬モデル（RM、6B）を学習、(3) RMの出力を報酬として、SFTモデルからのトークンごとのKLペナルティ付きでPPOにより方策を最適化する。公開NLPデータセットでの性能低下（alignment tax）を抑えるため、PPOの勾配に事前学習分布の対数尤度の勾配を混ぜる PPO-ptx を導入した。RM学習では、1プロンプトの全 C(K,2) 比較を1バッチ要素として扱い、過学習を防ぎつつ計算効率を高めた。",
+        "validation": "APIプロンプト分布での人間評価では、175B InstructGPTの出力が175B GPT-3より85±3%、few-shotプロンプト付きGPT-3より71±4%の割合で好まれた。TruthfulQAでは真実かつ有益な回答がGPT-3の約2倍となり、クローズドドメインタスクでの幻覚率は21%対41%に低下した。RealToxicityPromptsでは、敬意を払うよう指示した場合に有害出力が約25%減ったが、WinogenderやCrowS-Pairsでのバイアスは有意に改善しなかった。held-outラベラーでも同様の選好が得られ、PPO-ptxによりSQuADやDROPなどでの性能低下も抑えられた。",
+        "discussion": "InstructGPTも指示無視、事実の捏造、単純な質問への冗長な回避的回答、誤った前提の見逃しといった単純な誤りを依然として起こす。アラインの対象は約40人のラベラーと研究者の選好であり、より広いユーザー層や、人間同士で意見が分かれる入力への一般化は今後の課題である。バイアスの改善が見られないことや、有害な要求に対する有用性と無害性の対立の扱いも未解決である。",
+        "next": [
+          {
+            "title": "Learning to summarize from human feedback",
+            "reason": "本研究が方法論の直接の土台としている、要約タスクでのRLHF（報酬モデル学習とPPO）の原型を理解できる。"
+          },
+          {
+            "title": "Deep reinforcement learning from human preferences",
+            "reason": "人間の選好比較から報酬モデルを学習して強化学習に用いる、RLHFの源流となる基礎論文である。"
+          },
+          {
+            "title": "A General Language Assistant as a Laboratory for Alignment",
+            "reason": "本研究が採用する「helpful・honest・harmless」というアラインメントの枠組みを提案した関連研究である。"
+          }
+        ]
+      },
+      "titleJa": "人間のフィードバックによる指示追従型言語モデルの訓練",
+      "why": "人間のフィードバックによる強化学習（RLHF）でGPT-3をファインチューニングし、実際のAPIプロンプトを含む幅広い指示に従う InstructGPT を実現した研究です。1.3B の InstructGPT の出力が175B の GPT-3 より好まれ、TruthfulQA で真実かつ有益な回答が約2倍、クローズドドメインでの幻覚率も41%から21%に低下するなど、規模拡大だけでは得られない改善を示した点が注目されます。一方で、WinogenderやCrowS-Pairsでのバイアスは有意に改善せず、課題も示されています。"
     }
   ],
   "sources": [
@@ -157,6 +309,10 @@
     {
       "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
       "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    },
+    {
+      "title": "Most Influential NIPS Papers（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-nips-papers-2026-03-version/"
     }
   ],
   "unreachable": [

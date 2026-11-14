@@ -86,6 +86,152 @@
           }
         ]
       }
+    },
+    {
+      "title": "Optimal Complexity in Decentralized Training",
+      "award": "Outstanding Paper Honorable Mention",
+      "authors": [
+        "Yucheng Lu",
+        "Christopher De Sa"
+      ],
+      "url": "https://arxiv.org/abs/2006.08085",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "確率的・非凸設定における分散（decentralized）学習の反復計算量について、アプリケーション・プロトコル・トポロジーの3層で整理した上で、初めてタイトな下界を証明した研究。さらに、その下界を達成する理論的アルゴリズムDeFactoと、実用的なgossip型アルゴリズムDeTAGを提案している。",
+        "novelty": "従来は非確率的または（強）凸設定に限られていた下界を、確率的非凸設定でグラフ直径Dやgossip行列のスペクトルギャップ1−λと結びつけて示した。D-PSGD、SGP、D2、DSGT、GT-DSGDなど既存手法は通信計算量で下界とギャップがあり（例えばサイクル/線形グラフで最大O(n^6)）、DeTAGはこれを対数因子まで縮めた。また外部分散ς（式5）への依存を、0点での弱い仮定ς0（式6）に置き換え、ς0はlogの中にのみ現れる。",
+        "method": "下界は確率的ゼロチェーンモデルの鎖を各ワーカーに分割して構成し、Ω(ΔLσ²/(nBε⁴) + ΔLD/ε²)を得る（Theorem 1）。gossip限定ではDの項がΔL/(ε²√(1−λ))になる（Corollary 1）。DeFactoはR回の勾配計算とR回の通信を交互に行い、通信ではLemma 1の行列分解で厳密な平均合意を達成する。DeTAGは分解行列の代わりに固定のgossip行列Wを用い、勾配トラッカーと加速gossip（Algorithm 3）を組み合わせ、位相長Rを調整して上界を達成する。",
+        "validation": "理論面では、DeFactoが上界O(ΔLσ²/(nBε⁴)+ΔLD/ε²)を達成して下界の最適性を示し（Theorem 2）、DeTAGは下界に対して対数因子のみのギャップを達成する（Theorem 3）。実験ではCIFARの画像分類でDeTAGを他の分散学習ベースラインと比較し、特にシャッフルなしデータや疎なネットワークで収束が速いと報告されている。ただし提供された本文には実験の詳細な数値は含まれていない。",
+        "discussion": "DeTAGは下界に対して対数因子のギャップが残り、位相長Rのチューニングが必要である（本文はRの解説部分が中略されている）。解析は同期アルゴリズムとゼロ尊重型の一階法が前提で、非同期への拡張は補足資料で扱われている。",
+        "next": [
+          {
+            "title": "Lower bounds for non-convex stochastic optimization",
+            "reason": "本論文の下界構成の基礎となる確率的ゼロチェーンモデルを理解するため。"
+          },
+          {
+            "title": "Decentralized Stochastic Gradient Tracking for Empirical Risk Minimization",
+            "reason": "DeTAGの基となる勾配トラッキング手法で、R=1,η=0の特殊ケースに相当するDSGTを確認するため。"
+          },
+          {
+            "title": "D2: Decentralized Training over Decentralized Data",
+            "reason": "外部分散への依存を除く既存手法で、DeTAGの改善点との比較に有用なため。"
+          }
+        ]
+      },
+      "titleJa": "分散学習における最適な計算量",
+      "why": "確率的・非凸設定の分散学習について、アプリケーション・プロトコル・トポロジーの3層で整理した上で、反復計算量の初のタイトな下界をグラフ直径やgossip行列のスペクトルギャップと結びつけて証明した研究です。下界を達成する理論的アルゴリズムDeFactoと、対数因子を除いて下界に迫る実用的なgossip型アルゴリズムDeTAGも提案しており、D-PSGDやD2など既存手法との通信計算量のギャップ（サイクル/線形グラフで最大O(n^6)）を縮めた点が注目されます。CIFARの画像分類実験では、シャッフルなしデータや疎なネットワークでDeTAGの収束が速いと報告されています。"
+    },
+    {
+      "title": "Oops I Took A Gradient: Scalable Sampling for Discrete Distributions",
+      "award": "Outstanding Paper Honorable Mention",
+      "authors": [
+        "Will Grathwohl",
+        "Kevin Swersky",
+        "Milad Hashemi",
+        "David Duvenaud",
+        "Chris J. Maddison"
+      ],
+      "url": "https://arxiv.org/abs/2102.04509",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "離散変数を持つ確率モデルに対し、尤度関数の離散入力に関する勾配を使って Metropolis-Hastings の提案分布を作る、汎用かつスケーラブルな近似サンプラー Gibbs-With-Gradients (GWG) を提案した研究。Ising・Potts・RBM・FHMM などでのサンプリングと、高次元離散データ上の深層エネルギーベースモデル (EBM) の学習に応用している。",
+        "novelty": "従来の局所情報付き提案 (Zanella, 2020) は近傍の全候補について f(x')−f(x) を計算する必要があり O(D) 回の評価が必要だったが、GWG は勾配によるテイラー近似でこれを O(1) 回に削減する。連続緩和を介する勾配ベース手法 (D-SVGD、緩和 HMC など) と異なり離散空間上で直接動作し、追加のハイパーパラメータがなく、高次元でも性能が劣化しない。また局所提案の範囲で理論的にほぼ最適であることを境界で示している。",
+        "method": "対数確率 f(x) を実数入力の微分可能関数とみなし、二値データでは d̃(x) = −(2x−1)⊙∇f(x)、カテゴリカルデータでは対応する式により、各次元を反転・変更したときの対数尤度比を一次近似する。ハミング窓サイズ1の提案 q(i|x) = Softmax(d̃(x)/2) で変更する次元を選び、反転後に通常の MH 受理確率で受理する。温度 τ=2 は局所バランス提案の最適値に対応する。理論面では、f の勾配が L-スムーズなら、漸近分散とスペクトルギャップが厳密な局所バランス提案に対し定数 c = exp(−L·D_H²/2) 倍以内に収まることを示している。",
+        "validation": "RBM (MNIST 学習済み、500隠れ層) では GWG が MMD で構造利用型の Block-Gibbs に一致し、ESS は非構造のベースラインより明確に高かった。Ising モデルでは特に結合が強い（難しい）設定で ESS が向上し、FHMM では構造を利用するブロック Hamming Ball サンプラーも上回った。Ising の構造学習では Gibbs より良い解を低コストで得て、Potts モデルによるタンパク質コンタクト予測では 276・526 残基の大きなタンパク質で Gibbs や PLM を上回る再現率を得た。深層 EBM の学習では Gibbs が 800 ステップ必要なところ GWG は 40 ステップで済み (約9.52倍高速)、静的 MNIST・Omniglot・Caltech Silhouettes などで VAE や既存 EBM を上回る対数尤度を示した（Dynamic MNIST では Conv VAE がわずかに上回る）。",
+        "discussion": "今回はウィンドウサイズ1（1変数のみ更新）に限定しており、窓を広げれば改善が見込まれるが、より大きな提案分布から効率的にサンプリングするアルゴリズムが必要になる。理論保証は f の勾配が L-スムーズであることを仮定しており、同じ離散分布でも連続関数表現の選び方で効率が変わる。今後はスコアマッチングや Stein 離散度に基づく EBM 学習法を離散データへ拡張することが展望として挙げられている。",
+        "next": [
+          {
+            "title": "Informed proposals for local MCMC in discrete spaces",
+            "reason": "GWG が近似対象とする局所バランス提案の理論的基盤で、Theorem 1 の証明にも直接使われている。"
+          },
+          {
+            "title": "The Hamming Ball Sampler",
+            "reason": "本論文の主要な比較対象である汎用の離散サンプラーであり、GWG との違いを理解できる。"
+          },
+          {
+            "title": "Implicit generation and generalization in energy-based models",
+            "reason": "深層 EBM を PCD とリプレイバッファで学習する手法で、本論文の離散データ向け EBM 学習の土台になっている。"
+          }
+        ]
+      },
+      "titleJa": "しまった、勾配を取ってしまった:離散分布のためのスケーラブルなサンプリング",
+      "why": "離散変数の確率モデルに対し、尤度の離散入力に関する勾配から Metropolis-Hastings の提案分布を作る汎用的な近似サンプラー Gibbs-With-Gradients (GWG) を提案した研究です。従来の局所情報付き提案で O(D) 回必要だった評価をテイラー近似により O(1) 回に減らし、連続緩和を使わず離散空間上で直接動作し、追加のハイパーパラメータもありません。Ising・Potts・RBM・FHMM でのサンプリングやタンパク質コンタクト予測で有効性を示し、深層 EBM の学習では Gibbs の800ステップに対し40ステップで済み (約9.52倍高速)、ICML 2021 の Outstanding Paper Honorable Mention に選ばれています。"
+    },
+    {
+      "title": "Understanding self-supervised learning dynamics without contrastive pairs",
+      "award": "Outstanding Paper Honorable Mention",
+      "authors": [
+        "Yuandong Tian",
+        "Xinlei Chen",
+        "Surya Ganguli"
+      ],
+      "url": "https://arxiv.org/abs/2102.06810",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "BYOL や SimSiam のような、負例ペアを使わない非対照的自己教師あり学習（SSL）がなぜ自明な表現への崩壊を起こさないのかを、単純な線形ネットワークの学習ダイナミクスとして理論的に解析した研究。この理論から、線形予測器を勾配学習せずに入力の統計量から直接設定する手法 DirectPred も提案している。",
+        "novelty": "非対照的 SSL の非線形な学習ダイナミクスを解析した最初の試みとして、予測器・stop-gradient・EMA・重み減衰・予測器の相対学習率といった要因の相互作用を一つの簡潔な理論で説明している。さらに、その理論から導かれた予測器の固有空間アラインメントを利用して、勾配学習を使わない DirectPred を導出し、実際に性能向上を示した点が新しい。",
+        "method": "バイアスなし線形の online・予測器・target ネットワークを仮定し、BYOL の学習則を勾配流として定式化した。比例 EMA、等方的データ・拡張、対称予測器という仮定の下で、予測器 W_p と予測器入力の相関行列 F の固有空間が整列することを示し（定理3）、各固有モードを3次元（SimSiam は2次元）の分離ダイナミクスに落とし込んで固定点と崩壊の吸引域を解析している。DirectPred は F の移動平均を固有値分解し、固有値 s_j に対して p_j=√s_j+ε·max s_j として W_p=U diag(p_j) U^T を直接設定する。",
+        "validation": "STL-10、CIFAR-10、ImageNet で、ResNet-18 などを用いた線形評価の Top-1 精度で検証した。STL-10（100エポック）では DirectPred が 76.77%（ε 調整で 77.86%）となり、勾配学習の線形予測器（74.51%）を上回った。ImageNet（300エポック）では Top-1/Top-5 が 72.4%/91.0% で、線形予測器の BYOL（69.9%/89.6%）より 2.5 ポイント高く、2層予測器の標準 BYOL（72.5%/90.8%）と同等だった。また、対称予測器は EMA なしでは失敗するが α_p>1 で改善するといった理論予測を、アブレーション実験で確認している。",
+        "discussion": "理論は等方的データ、比例 EMA、対称予測器といった強い仮定に依存しており、非対称予測器の場合の解析は将来課題として残されている。また、DirectPred は固有値分解の計算コストがかかり、freq を上げて勾配更新と併用する工夫が必要で、2層の非線形予測器との性能差を完全に埋めるには特徴依存の予測器などの拡張が必要である。",
+        "next": [
+          {
+            "title": "Bootstrap your own latent: A new approach to self-supervised learning",
+            "reason": "本論文が解析対象とする BYOL の原論文で、予測器・EMA・重み減衰のアブレーション結果を確認できる。"
+          },
+          {
+            "title": "Exploring simple siamese representation learning",
+            "reason": "SimSiam の原論文で、stop-gradient と予測器の更新頻度が崩壊回避に果たす役割に関する実験結果を参照できる。"
+          },
+          {
+            "title": "Exact solutions to the nonlinear dynamics of learning in deep linear neural networks",
+            "reason": "本論文の解析の基盤となる深層線形ネットワークの学習ダイナミクス理論を理解するのに役立つ。"
+          }
+        ]
+      },
+      "titleJa": "対照ペアなしの自己教師あり学習のダイナミクスを理解する",
+      "why": "BYOL や SimSiam のように負例ペアを使わない自己教師あり学習が、なぜ自明な表現に崩壊しないのかを、単純な線形ネットワークの学習ダイナミクスとして理論的に解析した研究です。予測器・stop-gradient・EMA・重み減衰・予測器の相対学習率の相互作用を一つの簡潔な理論で説明し、そこから線形予測器を勾配学習せず入力の統計量から直接設定する DirectPred も導いています。ImageNet（300エポック）では Top-1 が 72.4% となり、勾配学習の線形予測器を用いた BYOL（69.9%）を上回り、2層予測器の標準 BYOL（72.5%）と同等だった点が注目されます。"
+    },
+    {
+      "title": "Learning Transferable Visual Models From Natural Language Supervision",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Alec Radford",
+        "Jong Wook Kim",
+        "Chris Hallacy",
+        "Aditya Ramesh",
+        "Gabriel Goh",
+        "Sandhini Agarwal",
+        "Girish Sastry",
+        "Amanda Askell",
+        "Pamela Mishkin",
+        "Jack Clark",
+        "Gretchen Krueger",
+        "Ilya Sutskever"
+      ],
+      "url": "https://arxiv.org/abs/2103.00020",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "インターネットから集めた4億組の（画像, テキスト）ペアを用い、自然言語を教師信号として画像表現を学習するCLIP（Contrastive Language-Image Pre-training）を提案した研究。事前学習後は、クラス名や説明文をテキストで与えるだけで、データセット固有の学習なしに多様な下流タスクへゼロショット転移できる。",
+        "novelty": "従来の自然言語による画像表現学習（Visual N-Grams、VirTex、ICMLM、ConVIRTなど）は小規模で性能が低かったが、本研究は大規模データ（WIT）と計算資源で規模を拡大し、ImageNetゼロショット精度を11.5%から76.2%へ引き上げた。固定クラスのsoftmax分類器を持つ弱教師あり手法と異なり、テキストエンコーダで分類器を動的に生成できるため、任意の視覚概念を扱える。",
+        "method": "バッチ内のN組の（画像, テキスト）について、N×N通りの組み合わせのうち正しいペアを当てるよう、画像エンコーダ（ResNetまたはViT）とテキストエンコーダ（Transformer）を同時に学習する。正ペアのコサイン類似度を最大化、N²−N個の誤ペアを最小化する対称クロスエントロピー損失を用い、温度パラメータτも学習する。テキストの単語を正確に予測する生成的・予測的目的より、対照学習のほうが効率が良い（BoWベースラインに対し約4倍）ことが設計の根拠。推論時はクラス名を「A photo of a {label}.」のようなプロンプトでテキストエンコーダに通し、線形分類器の重みとして使う。複数プロンプトの埋め込み空間でのアンサンブルも併用する。",
+        "validation": "30以上のデータセット、50以上の既存モデルとの比較で評価した。ImageNetのゼロショット精度は76.2%で、1.28M枚の学習画像を使わずに元のResNet-50と同等であり、27データセットのうち16でResNet-50特徴量の教師あり線形分類器を上回った。ゼロショットCLIPは4-shot線形分類器の平均性能に並び、プロンプト設計とアンサンブルでImageNet精度が約5ポイント向上した。計算量44倍の範囲でゼロショット誤差は対数-対数で滑らかに改善した。",
+        "discussion": "EuroSAT、PatchCamelyon、CLEVRCounts、GTSRBなど、専門的・複雑・抽象的なタスクでは性能が弱く、多くのデータセットでゼロショットは教師あり線形分類器より10〜25ポイント低い。ゼロショットと少数ショット学習の強みを組み合わせる方法も未解決であり、今後の課題として挙げられている。また、本文では方針や倫理への影響（第7章）も論じているが、提示された範囲ではその詳細は確認できない。",
+        "next": [
+          {
+            "title": "Contrastive Learning of Medical Visual Representations from Paired Images and Text (ConVIRT)",
+            "reason": "CLIPが「簡略化版」として直接の土台にした、画像とテキストの対照学習手法である。"
+          },
+          {
+            "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+            "reason": "CLIPの画像エンコーダの一つとして使われたVision Transformerの原論文である。"
+          },
+          {
+            "title": "Learning Visual N-Grams from Web Data",
+            "reason": "標準的な画像分類データセットへのゼロショット転移を先行して扱い、CLIPの比較基準となっている。"
+          }
+        ]
+      },
+      "titleJa": "自然言語による教師信号から転移可能な視覚モデルを学習する（CLIP）",
+      "why": "インターネットから集めた4億組の（画像, テキスト）ペアで、自然言語を教師信号に画像表現を学習するCLIPを提案した研究です。クラス名や説明文をテキストで与えるだけで、データセット固有の学習なしに多様な下流タスクへゼロショット転移でき、ImageNetのゼロショット精度は従来の11.5%から76.2%に向上し、1.28M枚の学習画像を使わずに元のResNet-50と同等になりました。30以上のデータセットで評価され、27データセット中16でResNet-50特徴量の教師あり線形分類器を上回った点に加え、ICML 2021で被引用数1位（Paper Digest集計）という影響力も注目される理由です。"
     }
   ],
   "sources": [
@@ -104,6 +250,10 @@
     {
       "title": "ICML 2021: Test of Time(ly) Award（Talking Machines）",
       "url": "https://thetalkingmachines.com/node/35293"
+    },
+    {
+      "title": "Most Influential ICML Papers 2025-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2025/03/most-influential-icml-papers-2025-03-version/"
     }
   ],
   "unreachable": [

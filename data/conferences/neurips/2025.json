@@ -147,6 +147,148 @@
           }
         ]
       }
+    },
+    {
+      "title": "Why Diffusion Models Don't Memorize: The Role of Implicit Dynamical Regularization in Training",
+      "award": "Best Paper",
+      "authors": [
+        "Tony Bonnaire",
+        "Raphaël Urfin",
+        "Giulio Biroli",
+        "Marc Mézard"
+      ],
+      "url": "https://arxiv.org/abs/2505.17638",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "拡散モデルが過剰パラメータ化された状況でも訓練データを記憶せず汎化できる理由を、訓練ダイナミクスの観点から説明した研究。高品質な生成が始まる時間 τ_gen と、記憶が現れ始める時間 τ_mem という2つの時間スケールを特定し、その間の早期停止区間で汎化することを示した。実験（U-Net）と理論（ランダム特徴量モデル）の両面から裏付けている。",
+        "novelty": "従来は正則化、アーキテクチャの帰納バイアス、有限学習率などが記憶回避の説明に挙げられていたが、本研究は「暗黙的な動的正則化」という訓練時間そのものの役割を示した。τ_gen は n に依存せず一定で、τ_mem は n にほぼ線形に比例するため、汎化の窓が n とともに広がることを明らかにした。先行研究のランダム特徴量解析（τ→∞ の漸近損失）を、訓練ダイナミクスと早期停止へ拡張した点も新しい。",
+        "method": "CelebA（32×32のグレースケール）で、時間条件付きのU-Netスコアモデルを SGD で訓練し、訓練セットサイズ n とU-Netの基底幅 W（パラメータ数 p）を変えた。生成品質は FID、記憶は生成サンプルの最近傍距離と第2近傍距離の比（閾値 k=1/3）で測り、τ_gen と τ_mem を同定している。理論面では、第1層を固定して第2層のみを学習するランダム特徴量ネットワークの勾配流を解き、時間スケールを行列 U の固有値の逆数に対応させた。レプリカ法で U のスペクトル密度を導出し、過剰パラメータ領域で分離した2つのバルク ρ1 と ρ2 が τ_mem と τ_gen に対応することを示した。",
+        "validation": "U-Net実験では、FID が最小になる τ_gen は約100K ステップで n に依存せず、記憶割合を τ/n で再スケールすると曲線が collapse して τ/n ≈ 300 付近で立ち上がり、τ_mem ∝ n が確認された。またバッチ全体の更新でも τ_mem ∝ n が成り立ち、データの反復回数が原因ではないことも示された。幅 W に対しては τ_gen ∝ W⁻¹、τ_mem ∝ nW⁻¹ のスケーリングが得られ、n=32768 では約1100万ステップ後も訓練損失とテスト損失の差が小さいままだった。ランダム特徴量モデルでも、同様の時間スケール分離と、n > p での過学習の低減が再現された。",
+        "discussion": "理論解析は固定の拡散時刻 t を扱う簡略化されたランダム特徴量モデルに基づくもので、実用的な単一の時間条件付きモデルとは差がある。実験は主に SGD で行われ、Adam でも同様の時間スケールが現れるものの、最適化手法の違いの影響は今後の課題である。また、フローマッチングなど他のスコアベース手法への一般化は予想にとどまり、検証されていない。",
+        "next": [
+          {
+            "title": "Denoising score matching with random features: Insights on diffusion models from precise learning curves",
+            "reason": "本研究の理論部分が拡張しているランダム特徴量モデルの先行研究で、τ→∞ での訓練損失・テスト損失の漸近解析が書かれている。"
+          },
+          {
+            "title": "Bigger isn't always memorizing: Early stopping overparameterized diffusion models",
+            "reason": "過剰パラメータ化した拡散モデルでの早期停止による記憶回避を扱っており、本研究の主張と直接関係する。"
+          },
+          {
+            "title": "Dynamical regimes of diffusion models",
+            "reason": "経験的スコアによる記憶と汎化の遷移を高次元理論で整理した論文で、本研究の問題設定の背景を理解できる。"
+          }
+        ]
+      },
+      "titleJa": "拡散モデルはなぜ記憶しないのか：訓練における暗黙的な動的正則化の役割",
+      "why": "過剰パラメータ化された拡散モデルが訓練データを記憶せず汎化できる理由を、訓練ダイナミクスの観点から説明した研究である。高品質な生成が始まる時間 τ_gen は n に依存せず、記憶が現れ始める時間 τ_mem は n にほぼ比例するため、その間の早期停止区間で汎化することを、U-Net 実験とランダム特徴量モデルの理論の両面で示した。従来の正則化やアーキテクチャの帰納バイアスといった説明に対し、訓練時間そのものが「暗黙的な動的正則化」として働くことを示した点が評価され、NeurIPS 2025 の Best Paper に選ばれた。"
+    },
+    {
+      "title": "Artificial Hivemind: The Open-Ended Homogeneity of Language Models (and Beyond)",
+      "award": "Best Paper（Datasets & Benchmarks）",
+      "authors": [
+        "Liwei Jiang",
+        "Yuanjun Chai",
+        "Margaret Li",
+        "Mickel Liu",
+        "Raymond Fok",
+        "Nouha Dziri",
+        "Yulia Tsvetkov",
+        "Maarten Sap",
+        "Alon Albalak",
+        "Yejin Choi"
+      ],
+      "url": "https://arxiv.org/abs/2510.22954",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "実世界のオープンエンドなユーザークエリ26K件からなるデータセット Infinity-Chat と、そのクエリの分類体系（6大カテゴリ・17サブカテゴリ）を提案した研究。これを用いて70以上のLMの出力を調べ、単一モデル内の反復（intra-model repetition）とモデル間の均質性（inter-model homogeneity）からなる「Artificial Hivemind」効果を示した。あわせて、25名による密な人手評価（計31,250件）を収集し、LM・報酬モデル・LMジャッジが人間の評価とどの程度整合するかを分析した。",
+        "novelty": "従来の多様性評価は乱数・名前生成、詩や比喩など限定的なタスクか、単一モデルの繰り返しサンプリングに限られていた。本研究はWildChat由来の実利用クエリで、70以上のモデルを横断した大規模なモデル内・モデル間の均質性分析を行った点が新しい。また、同一クエリへの代替応答に対して1項目あたり25名という密な人手ラベル（絶対評価と対比較）を備えた初の大規模リソースだと主張している（先行データセットは例として1項目3名程度）。",
+        "method": "WildChatの単一ターンGPT-4クエリ37,426件（英語・非有害・15〜200文字）をGPT-4oで分類・曖昧なものは修正し、オープンエンドなクエリ26,070件を得た。分類体系は約100件の手動ラベル付けから階層化し、GPT-4oで全件にラベル付けして新規カテゴリ314件も検出した。均質性は、Infinity-Chat100（人手で確認した100クエリ）について各モデルから50応答をサンプリングし、OpenAI text-embedding-3-smallによる文埋め込みの平均ペア類似度で測定した。人間との整合性は、LM（パープレキシティ）、報酬モデル、LMジャッジのスコアと人間の平均評価との相関を、全体、類似品質サブセット（Tukey's fencesなど）、高不一致サブセット（Shannonエントロピーなど）で比較した。",
+        "validation": "top-p=0.9・温度1.0では、同一モデル内の平均ペア類似度が0.8を超えるクエリが79%あった。min-p（温度2.0）でも、応答ペアの81%が類似度0.7超、61.2%が0.8超だった。モデル間の平均類似度は71〜82%で、DeepSeek-V3とqwen-max-2025-01-25は0.82、DeepSeek-V3とgpt-4o-2024-11-20は0.81だった。上位50類似応答には平均約8モデルが含まれ、一部の指示では逐語的に同一の応答もあった。人手評価（絶対18,750件・対比較12,500件）では、LM（56モデル）・報酬モデル（6）・LMジャッジ（4）のいずれも、品質が近い応答や評価者間の不一致が大きい応答で人間との相関が大きく低下した。",
+        "discussion": "著者らは、均質性の原因（事前学習データ、アライメント、記憶、汚染、合成データなど）の因果分析は本研究の範囲外とし、今後の課題としている。分析は100クエリのサブセットと文埋め込み類似度に基づく点、1.0〜2.0の限られたサンプリング設定である点に留意が必要である。人間評価の不一致を考慮した報酬モデルや学習時の多様性維持手法の開発が今後の方向性として示されている。",
+        "next": [
+          {
+            "title": "Min-p Sampling: Balancing Creativity and Coherence at High Temperature (Nguyen et al., 2025)",
+            "reason": "本論文で多様性志向のデコーディングとして評価されたmin-pの原論文で、それでも残る反復の背景を理解できる。"
+          },
+          {
+            "title": "WildChat: 1M ChatGPT Interaction Logs in the Wild (Zhao et al., 2024)",
+            "reason": "Infinity-Chatのクエリの元データであり、収集方法や特性を知ることでデータセットの前提を把握できる。"
+          },
+          {
+            "title": "Modifying Large Language Model Post-Training for Diverse Creative Writing (Chung et al., 2025)",
+            "reason": "学習時の介入で出力多様性を維持する手法を扱っており、本論文が提起した課題への対処策を読める。"
+          }
+        ]
+      },
+      "titleJa": "Artificial Hivemind：言語モデルのオープンエンドな出力における均質性（とその先）",
+      "why": "実世界のオープンエンドなクエリ26K件からなる Infinity-Chat とその分類体系を作り、70以上の言語モデルの出力を調べて、モデル内の反復とモデル間の均質性からなる「Artificial Hivemind」効果を示した研究です。top-p=0.9・温度1.0では79%のクエリで同一モデル内の平均ペア類似度が0.8を超え、モデル間の平均類似度も71〜82%に達し、逐語的に同一の応答も見られました。さらに1項目あたり25名による密な人手評価（計31,250件）を備え、LM・報酬モデル・LMジャッジが、品質の近い応答や評価者間で意見が割れる応答で人間との相関が大きく下がることも示した点が注目されます。"
+    },
+    {
+      "title": "DAPO: An Open-Source LLM Reinforcement Learning System at Scale",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Qiying Yu",
+        "Zheng Zhang",
+        "Ruofei Zhu",
+        "Yufeng Yuan",
+        "Xiaochen Zuo",
+        "Yu Yue",
+        "Weinan Dai",
+        "Tiantian Fan",
+        "Gaohong Liu",
+        "Lingjun Liu",
+        "Xin Liu",
+        "Haibin Lin",
+        "Zhiqi Lin",
+        "Bole Ma",
+        "Guangming Sheng",
+        "Yuxuan Tong",
+        "Chi Zhang",
+        "Mofan Zhang",
+        "Wang Zhang",
+        "Hang Zhu",
+        "Jinhua Zhu",
+        "Jiaze Chen",
+        "Jiangjie Chen",
+        "Chengyi Wang",
+        "Hongli Yu",
+        "Yuxuan Song",
+        "Xiangpeng Wei",
+        "Hao Zhou",
+        "Jingjing Liu",
+        "Wei-Ying Ma",
+        "Ya-Qin Zhang",
+        "Lin Yan",
+        "Mu Qiao",
+        "Yonghui Wu",
+        "Mingxuan Wang"
+      ],
+      "url": "https://arxiv.org/abs/2503.14476",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "長いChain-of-Thought（long-CoT）を伴う大規模LLM強化学習で、実績のある推論モデルの訓練詳細が非公開で再現が難しい問題に対し、アルゴリズム DAPO（Decoupled Clip and Dynamic sAmpling Policy Optimization）と学習コード、データセットを完全公開した研究。Qwen2.5-32Bベースモデルから AIME 2024 で 50 点（avg@32）を達成した。",
+        "novelty": "素朴な GRPO ではエントロピー崩壊・報酬ノイズ・学習不安定が生じ AIME で 30 点にとどまったが、4つの技術でこれを解消した。DeepSeek-R1-Zero-Qwen-32B（47 点）を、学習ステップ数 50% で上回ったと報告している。アルゴリズム・コード（verl ベース）・データ（DAPO-Math-17K）をすべて公開し、再現性を高めた点も特徴である。",
+        "method": "(1) Clip-Higher：クリップ範囲を ε_low=0.2 と ε_high=0.28 に分離し、低確率の探索トークンの確率上昇余地を広げてエントロピー崩壊を防ぐ。(2) Dynamic Sampling：正答率が 0 または 1 のプロンプトを除外し、勾配が有効なプロンプトでバッチを埋めるまでサンプリングを続ける。(3) Token-Level Policy Gradient Loss：サンプル単位の平均ではなく全トークンで正規化し、長い応答のトークンにも十分な重みを与える。(4) Overlong Reward Shaping：切り捨てられた応答の損失をマスクする Overlong Filtering と、長さに応じた段階的ペナルティを与える Soft Overlong Punishment を用いる。KL項は除去し、ルールベース報酬（正解 +1、不正解 −1）を使う。答えを整数に変換した問題を用いて報酬判定を簡素化している。",
+        "validation": "AIME 2024 で avg@32 を評価し、Naive GRPO 30 → +Overlong Filtering 36 → +Clip-Higher 38 → +Soft Overlong Punishment 41 → +Token-level Loss 42 → +Dynamic Sampling（DAPO）50 と、各技術が段階的に精度を押し上げることを示した。Dynamic Sampling はサンプル数が増えても必要な学習ステップ数が減り、収束時間は短縮されたと報告している。学習中の応答長・報酬・エントロピー・生成確率の推移も監視し、学習の健全性の指標として分析している。",
+        "discussion": "評価は数学タスク（AIME 2024）と Qwen2.5-32B に限られ、他タスクへの転用は「容易に移せる」と述べるにとどまり、本文中では検証していない。学習データ上の最終報酬と検証精度の相関が低く、過学習の兆候が見られること、また RL 中に出現する反省・バックトラッキングといった推論行動の仕組みの解明は今後の課題とされている。",
+        "next": [
+          {
+            "title": "DeepSeek-R1: Incentivizing reasoning capability in LLMs via reinforcement learning",
+            "reason": "DAPO が比較・改善の対象とした DeepSeek-R1-Zero-Qwen-32B の手法と結果の出典であり、背景理解に不可欠。"
+          },
+          {
+            "title": "DeepSeekMath: Pushing the limits of mathematical reasoning in open language models",
+            "reason": "DAPO のベースラインである GRPO の原典で、DAPO の改良点を理解する前提となる。"
+          },
+          {
+            "title": "HybridFlow: A flexible and efficient RLHF framework",
+            "reason": "DAPO の実装基盤である verl の設計を説明しており、学習インフラを再現する際に役立つ。"
+          }
+        ]
+      },
+      "titleJa": "DAPO: 大規模なオープンソースLLM強化学習システム",
+      "why": "長いChain-of-Thoughtを用いるLLM強化学習では、実績ある推論モデルの訓練詳細が非公開で再現が難しいという課題があり、本研究はアルゴリズム DAPO、学習コード(verlベース)、データセット DAPO-Math-17K をすべて公開した。素朴な GRPO で30点だった AIME 2024 の精度(avg@32)を、4つの技術と Dynamic Sampling により Qwen2.5-32B ベースで50点まで引き上げ、DeepSeek-R1-Zero-Qwen-32B(47点)を学習ステップ数50%で上回ったと報告している。各技術の寄与を段階的に示し、再現性を重視した点に加え、同年の被引用数1位(Paper Digest集計)という点でも注目される。"
     }
   ],
   "sources": [
@@ -161,6 +303,10 @@
     {
       "title": "NeurIPS Announces Second Physical Location in Mexico City（NeurIPS Blog）",
       "url": "https://blog.neurips.cc/2025/07/16/neurips-announces-second-physical-location-in-mexico-city/"
+    },
+    {
+      "title": "Most Influential NIPS Papers（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-nips-papers-2026-03-version/"
     }
   ],
   "unreachable": [

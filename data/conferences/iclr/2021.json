@@ -101,6 +101,152 @@
           }
         ]
       }
+    },
+    {
+      "title": "EigenGame: PCA as a Nash Equilibrium",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Ian Gemp",
+        "Brian McWilliams",
+        "Claire Vernade",
+        "Thore Graepel"
+      ],
+      "url": "https://arxiv.org/abs/2010.00554",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "主成分分析（PCA）を、各固有ベクトルを担当するプレイヤーが自分の効用関数を最大化する競争ゲームとして定式化し、そのナッシュ均衡として主成分を求める研究。この見方から、Oja則と一般化Gram-Schmidt直交化を組み合わせた分散並列可能なアルゴリズム「EigenGame」を導出した。",
+        "novelty": "従来のk-PCA手法は部分空間の復元に主眼があり、主成分そのものの復元や、QR分解などの集中的な直交化を必要とする点が課題だった。本研究は上位k個の固有ベクトルが唯一の狭義ナッシュ均衡となる非対称な効用関数を新たに構成し、集中的な直交化なしにメッセージパッシングで分散実行できる。また、GHAの更新は効用の勾配ではなくゲーム解釈ができないが、本手法はそれが可能である点でも異なる。",
+        "method": "プレイヤーiの効用は u_i = ||Xv_i||² − Σ_{j<i} ⟨Xv_i,Xv_j⟩²/⟨Xv_j,Xv_j⟩ で、親（j<i）との整列をペナルティとする階層的（DAG）構造を持つ。その勾配は一般化Gram-Schmidtの1ステップに、べき乗法やOja則と同じ行列積を施した形になる。単位球面上のリーマン勾配上昇で更新し、親を順次学習するAlgorithm 1では大域収束が示される。実用版のAlgorithm 2では全ベクトルを並列に更新し、各更新を別デバイスに割り当てて v_i をブロードキャストする。",
+        "validation": "50×50の合成行列（線形・指数減衰スペクトル）とMNIST（60,000×784）で、GHA、Matrix Krasulina、Oja法と比較し、角度誤差π/8以内の最長連続成分数（longest streak）と部分空間距離で評価した。EigenGameは合成データの指数減衰スペクトルで良好で、MNISTでは大バッチ（1024）でOja法と競合したが、バッチを小さくすると差が縮まった。スケール実証として、ImageNet上のResNet-200の活性化（n≈1.2M、d≈20M）の上位32主成分を、32個のTPUv3で約9時間で計算し、浅い層の主成分がエッジ系フィルタ（Gabor、LoGなど）になることを示した。",
+        "discussion": "確率的勾配にバイアスがあり、小バッチでは性能が下がる。収束定理は全バッチ設定かつ親を逐次学習する場合に限られ、並列版（実用版）の収束証明や、固有値が重複する場合の証明（実験では支持）は今後の課題である。DAGの固定階層が最適とは限らず、DAGの適応、通信ラグやドロップアウトによる効率化、フェデレーテッド学習への応用なども今後の方向として挙げられている。",
+        "next": [
+          {
+            "title": "Exponentially convergent stochastic k-PCA without variance reduction",
+            "reason": "比較対象のMatrix Krasulinaを提案しており、部分空間収束保証の枠組みと本手法の理論的主張を比較できる。"
+          },
+          {
+            "title": "First efficient convergence for streaming k-PCA: a global, gap-free, and near-optimal rate",
+            "reason": "主成分そのものを復元するOja法のストリーミングk-PCA収束解析で、本論文の主要ベースラインの理論的背景を押さえられる。"
+          },
+          {
+            "title": "Optimal unsupervised learning in a single-layer linear feedforward neural network",
+            "reason": "GHA（Sanger法）を提案した原論文で、EigenGameとの関係（Prop. K.1）や、効用の勾配ではない点の違いを理解できる。"
+          }
+        ]
+      },
+      "titleJa": "EigenGame：ナッシュ均衡としての主成分分析（PCA）",
+      "why": "主成分分析（PCA）を、各固有ベクトルを担当するプレイヤーが効用を最大化するゲームとして定式化し、上位k個の固有ベクトルが唯一の狭義ナッシュ均衡になることを示した研究である。そこから、集中的な直交化を必要とせずメッセージパッシングで分散実行できるアルゴリズム「EigenGame」を導き、GHAでは不可能だったゲームとしての解釈も可能にした点が新しい。ImageNet上のResNet-200の活性化（n≈1.2M、d≈20M）の上位32主成分を32個のTPUv3で約9時間で計算するというスケールでの実証も示されている。"
+    },
+    {
+      "title": "Learning Mesh-Based Simulation with Graph Networks",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Tobias Pfaff",
+        "Meire Fortunato",
+        "Alvaro Sanchez-Gonzalez",
+        "Peter W. Battaglia"
+      ],
+      "url": "https://arxiv.org/abs/2010.03409",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "メッシュ上のグラフニューラルネットワーク「MeshGraphNets」を提案し、空力・構造力学・布・流体など多様な物理系のメッシュベースシミュレーションをデータから学習できることを示した研究。メッシュ解像度を推論中に適応的に変える学習型リメッシングも実現し、学習元のシミュレータより1〜2桁高速に動作する。",
+        "novelty": "従来の学習型シミュレータの多くは格子（CNN）や粒子（GNS）表現に依存していたが、本手法は不規則・適応的なメッシュ表現を直接扱い、メッシュ空間とワールド空間の二つの空間でメッセージパッシングを行う。これにより、静止状態を持つ弾性体や布をGNSより安定に扱え、GCNベースやU-Net（格子）ベースラインを上回り、学習時より大きく複雑な系へも推論時にスケールできる。メッシュ間隔を決めるsizing fieldを学習し、汎用リメッシャーと組み合わせる点も新しい。",
+        "method": "Encode-Process-Decode構造のGNNで、メッシュ辺（メッシュ空間）に加え、ワールド空間で近接するノード間にワールド辺を追加して衝突・接触などの外力的な相互作用を扱う。位置情報は相対変位として辺特徴に入れて空間的等変性を確保し、ノードと辺は128次元の潜在ベクトルに符号化される。処理部では残差付きMLPによるメッセージパッシングブロックを繰り返し（15ブロックが効率と精度のバランスが良いとされる）、デコーダ出力を前進オイラー法で1階または2階積分して次ステップの状態を得る。リメッシングでは、各ノードのsizing fieldをデコーダで予測し、汎用ローカルリメッシャーでメッシュを更新する。学習は1ステップ先予測のL2損失で行う。",
+        "validation": "布（FlagSimple, FlagDynamic, SphereDynamic）、構造力学（DeformingPlate）、非圧縮流体（CylinderFlow）、圧縮流体（Airfoil）の6データセットで評価した。1ステップ予測と長期ロールアウトの誤差は低く、400ステップで学習したモデルを40000ステップまで安定してロールアウトできた。推論は正解シミュレータより1〜2桁高速で、GNS、GCN、格子ベースU-Netを上回った。Airfoilでは学習範囲外の迎え角・流入速度でもRMSEは11.5から12.4および13.1に増えるだけで、学習時の約20倍の平均2万ノードの風速計（windsock）への外挿も確認した。",
+        "discussion": "著者らは、物理ベースの補助損失やエネルギー保存型積分スキームなど、ドメイン特化の拡張で性能がさらに向上しうると述べている。また、リメッシングを正解データから学習する代わりに、予測精度や下流タスクの性能を直接最適化する離散化を学習する方向を今後の課題として挙げている。微分可能性を活かした設計最適化や最適制御への応用も展望として示されている。",
+        "next": [
+          {
+            "title": "Learning to Simulate Complex Physics with Graph Networks",
+            "reason": "MeshGraphNetsの直接の前身である粒子ベースGNSであり、本論文で比較・拡張されている基礎手法を理解できる。"
+          },
+          {
+            "title": "Combining Differentiable PDE Solvers and Graph Neural Networks for Fluid Flow Prediction",
+            "reason": "メッシュ上でGCNと微分可能ソルバを組み合わせた関連手法で、本論文がGCNベースラインとして比較している。"
+          },
+          {
+            "title": "Adaptive Anisotropic Remeshing for Cloth Simulation",
+            "reason": "本論文が採用するsizing field方式と布シミュレーションデータ生成（ArcSim）の元になった適応リメッシングの基礎文献である。"
+          }
+        ]
+      },
+      "titleJa": "グラフネットワークによるメッシュベースシミュレーションの学習",
+      "why": "メッシュ上のグラフニューラルネットワーク「MeshGraphNets」を提案し、空力・構造力学・布・流体といった多様な物理系のメッシュシミュレーションをデータから学習できることを示した研究です。メッシュ空間とワールド空間の二つでメッセージパッシングを行い、GCNや格子ベースU-Net、GNSを上回る精度を達成したうえ、sizing fieldを学習してメッシュ解像度を推論中に適応的に変えることもでき、元のシミュレータより1〜2桁高速です。400ステップで学習したモデルを40000ステップまで安定してロールアウトでき、学習時の約20倍のノード数を持つ風速計（windsock）への外挿も確認されており、ICLR 2021のOutstanding Paperに選ばれています。"
+    },
+    {
+      "title": "Optimal Rates for Averaged Stochastic Gradient Descent under Neural Tangent Kernel Regime",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Atsushi Nitanda",
+        "Taiji Suzuki"
+      ],
+      "url": "https://arxiv.org/abs/2006.12297",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "回帰問題における過剰パラメータ化された2層ニューラルネットワークに対し、平均化確率的勾配降下法（averaged SGD）がNTK領域でミニマックス最適な汎化収束率を達成することを示した研究。目的関数の複雑さ（r）とNTKのRKHSの複雑さ（固有値減衰β）を明示的に使い、O(T^{-2rβ/(2rβ+1)})の収束率を得る。さらにReLUの滑らかな近似（swish等）では、明示的な最適率O(T^{-2rd/(2rd+d-1)})を示した。",
+        "novelty": "従来のNTK理論はグラム行列の正値性に依存し、固有値が0に収束するため汎化率がO(T^{-1/2})より遅くなっていた。本研究は正値性に依らず、ネットワークとNTKの動力学の差を母集団リスクに有用なL∞(ρ_X)ノルムで評価する新しい接続（Proposition A）を確立し、NTK文脈で初めて最適率を達成した。これによりニューラルネットワーク理論とカーネル法理論のギャップを埋めた。",
+        "method": "初期値を中心としたL2正則化付き期待リスクを、対称初期化（初期関数が0）した2層ネットワークに対して一定学習率の平均化SGD（一様平均）で最小化する。まず幅Mの中間NTKとの動力学の差をL∞(ρ_X)で抑え、その汎化界を導出し、次にMへの依存を除去する。仮定として目的関数がΣ∞^rの像に入る（A3）こと、固有値がλ_i=Θ(i^{-β})で減衰する（A4）ことを置き、正則化パラメータをλ=T^{-β/(2rβ+1)}と選んでバイアスと自由度（分散）項を釣り合わせる。",
+        "validation": "理論面では、定理1・系1・系2により収束率を導出し、既知のミニマックス下界と一致することを示した。実験では単位円周上（2次元）の一様分布で、出力層のみ・入力層のみ・両層を学習するswishネット（s=10）に対しAlgorithm 1を10回実行し、テスト誤差の平均と標準偏差を比較した。目的関数を規定する層、および両層の学習が速く収束し、目的関数の仕様の誤り（misspecification）が収束を大きく遅らせることを確認した（具体的な数値は本文にない）。",
+        "discussion": "必要な幅Mが反復数Tに対し指数的に依存するとされ、幅の削減は本研究の主眼ではなく実用的な過剰パラメータ化の規模には課題が残る。また、結果はNTK領域でRKHSに目的関数が含まれる設定に限られ、ReLUそのものではなく滑らかな近似に対する結果であり、特徴学習を伴うNTK領域外の優位性とは別問題である。",
+        "next": [
+          {
+            "title": "Optimal Rates for the Regularized Least-Squares Algorithm",
+            "reason": "本論文が依拠するミニマックス最適率と有効次元（自由度）に関する基礎理論を理解するため。"
+          },
+          {
+            "title": "Nonparametric Stochastic Approximation with Large Step-Sizes",
+            "reason": "RKHSにおける平均化SGDの最適収束率O(T^{-2rβ/(2rβ+1)})の直接の出発点となる結果が示されているため。"
+          },
+          {
+            "title": "Fine-Grained Analysis of Optimization and Generalization for Overparameterized Two-Layer Neural Networks",
+            "reason": "グラム行列の正値性に基づくNTK汎化界O(T^{-1/2})という、本論文が改善した先行結果を把握するため。"
+          }
+        ]
+      },
+      "titleJa": "ニューラルタンジェントカーネル領域における平均化確率的勾配降下法の最適収束率",
+      "why": "過剰パラメータ化された2層ニューラルネットワークの回帰において、平均化SGDがNTK領域でミニマックス最適な汎化収束率を達成することを示した研究です。従来のNTK理論はグラム行列の正値性に依存して収束率がO(T^{-1/2})より遅くなっていましたが、本研究は正値性に依らずネットワークとNTKの動力学の差をL∞(ρ_X)ノルムで評価する新しい接続を示し、NTKの文脈で初めて最適率を得ました。これによりニューラルネットワーク理論とカーネル法理論のギャップを埋めた点が評価され、ICLR 2021でOutstanding Paperに選ばれています。"
+    },
+    {
+      "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Alexey Dosovitskiy",
+        "Lucas Beyer",
+        "Alexander Kolesnikov",
+        "Dirk Weissenborn",
+        "Xiaohua Zhai",
+        "Thomas Unterthiner",
+        "Mostafa Dehghani",
+        "Matthias Minderer",
+        "Georg Heigold",
+        "Sylvain Gelly",
+        "Jakob Uszkoreit",
+        "Neil Houlsby"
+      ],
+      "url": "https://arxiv.org/abs/2010.11929",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "画像を固定サイズのパッチ列に分割し、畳み込みを使わず標準的なTransformerエンコーダだけで画像分類を行うVision Transformer（ViT）を提案した研究。大規模データで事前学習し、中小規模の画像認識ベンチマークへ転移することで、最先端のCNNに匹敵または上回る精度を、より少ない事前学習計算量で達成することを示した。",
+        "novelty": "従来の視覚向けself-attention研究はCNNと併用するか、特殊な注意パターンで畳み込みを置き換えており、ハードウェア上で効率的にスケールしにくかった。本研究は最初のパッチ抽出を除き画像特有の帰納バイアスを入れず、NLPの標準Transformerをほぼそのまま使う。また、Cordonnier et al.（2×2パッチ）に近い構成だが、大規模事前学習により素のTransformerがSOTAのCNNと競合できることを実証した点が新しい。",
+        "method": "画像を P×P のパッチに分割・平坦化し、学習可能な線形射影で D 次元のパッチ埋め込みにする。BERTの[class]トークンに倣った学習可能なクラス埋め込みと1次元の学習可能な位置埋め込みを加え、LayerNormを前置したMSAとMLP（GELU）の交互層からなる標準Transformerエンコーダに入力し、クラストークンの出力を分類ヘッドに渡す。ファインチューニング時は予測ヘッドを零初期化の線形層に置き換え、高解像度ではパッチサイズを保ったまま事前学習済み位置埋め込みを2D補間する。ResNetの特徴マップをパッチ化するハイブリッド構成も比較している。",
+        "validation": "ImageNet、ImageNet-ReaL、CIFAR-10/100、Oxford-IIIT Pets、Flowers-102、VTAB（19タスク）で、BiTやNoisy Studentと比較した。JFT-300Mで事前学習したViT-H/14はImageNet 88.55%、ReaL 90.72%、CIFAR-100 94.55%、VTAB 77.63%を達成し、事前学習計算量は2.5k TPUv3-core-daysで、BiT-Lの9.9k、Noisy Studentの12.3kより少ない。データ規模の実験では、小規模データ（ImageNetやJFTの9Mサブセット）ではResNetが優れ、大規模になるとViTが上回った。また、同じ性能を達成するのに必要な計算量はResNetの約2〜4分の1であった。",
+        "discussion": "検出やセグメンテーションなど他の視覚タスクへの適用が今後の課題である。自己教師あり事前学習（マスクパッチ予測）はViT-B/16でImageNet 79.9%と、教師あり事前学習より約4%低く、まだ大きな差が残る。また、ViTは性能が飽和しておらず、さらなるスケーリングで向上する可能性がある。一方で、効率性の比較は学習スケジュールやオプティマイザなどの条件の影響も受けると著者自身が述べている。",
+        "next": [
+          {
+            "title": "Big Transfer (BiT): General Visual Representation Learning",
+            "reason": "ViTが主な比較対象とした大規模ResNetの転移学習ベースラインで、ViTの優位性を評価する基準になるため。"
+          },
+          {
+            "title": "Attention Is All You Need",
+            "reason": "ViTがほぼそのまま採用しているTransformerアーキテクチャの原典で、基本構造を理解できるため。"
+          },
+          {
+            "title": "End-to-End Object Detection with Transformers",
+            "reason": "論文が今後の課題として挙げる検出タスクへのTransformer適用の代表例であるため。"
+          }
+        ]
+      },
+      "titleJa": "一枚の画像は16×16語に値する：大規模画像認識のためのTransformers",
+      "why": "画像を固定サイズのパッチ列に分割し、畳み込みを使わず標準的なTransformerエンコーダだけで画像分類を行うVision Transformer（ViT）を提案した研究です。大規模データで事前学習すると、最先端のCNNに匹敵または上回る精度を、BiTやNoisy Studentより少ない事前学習計算量（ViT-H/14は2.5k TPUv3-core-days）で達成しました。画像特有の帰納バイアスをほぼ入れずNLPのTransformerをそのまま使える点が新しく、被引用数でも同年1位（Paper Digest集計）となった注目度の高い論文です。"
     }
   ],
   "sources": [
@@ -119,6 +265,10 @@
     {
       "title": "International Conference on Learning Representations（Wikipedia・開催地と投稿数の表）",
       "url": "https://en.wikipedia.org/wiki/International_Conference_on_Learning_Representations"
+    },
+    {
+      "title": "Most Influential ICLR Papers 2024-09（Paper Digest・被引用数の集計）",
+      "url": "https://resources.paperdigest.org/2024/09/most-influential-iclr-papers-2024-09/"
     }
   ],
   "unreachable": [

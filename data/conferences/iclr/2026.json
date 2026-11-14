@@ -84,6 +84,109 @@
           }
         ]
       }
+    },
+    {
+      "title": "Transformers are Inherently Succinct",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Pascal Bergsträßer",
+        "Ryan Cotterell",
+        "Anthony W. Lin"
+      ],
+      "url": "https://arxiv.org/abs/2510.19315",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "固定精度のトランスフォーマー（unique-hard attention transformer: UHAT）の表現力を「簡潔さ（succinctness）」という観点から分析した研究。多項式サイズのトランスフォーマーで記述できる言語族が、LTLやRNN（ひいてはSSM）では指数サイズ、有限オートマトンでは二重指数サイズを必要とすることを示した。その帰結として、トランスフォーマーの空性判定や等価性判定がEXPSPACE完全であることも示している。",
+        "novelty": "従来のトランスフォーマーの表現力研究は「どの言語クラスを認識できるか」（星なし言語などの部分正則言語）が中心で、RNNより表現力が弱いとされてきた。本論文は記述サイズの観点で逆にトランスフォーマーが指数〜二重指数的に簡潔であることを示した点が新しい。また、UHATからLTLへの変換を、先行研究（Yang et al., 2024）の二重指数から指数サイズに改善し、上界と下界を一致させている。",
+        "method": "注意機構を用いて0から2^(2^N)まで数える二重指数長のカウンタを実装する符号化が中核である。具体的には、2^N-タイリング問題（EXPSPACE完全）からBoolean RASP（B-RASP）プログラムへの多項式時間還元を構成し、strict future masking と rightmost tie-breaking により、同じ行内の隣接タイルと、同じ列の直前の行のタイルの両方の制約を検査する。得られたB-RASPを多項式時間でUHATに変換する。上界側では、UHAT計算中の有理数値のビット長が多項式で抑えられることを示し、層ごとに値を列挙して指数時間でLTLに変換する。これにSistla–ClarkeによるLTL充足可能性のPSPACE上界を組み合わせてEXPSPACE所属を示す。",
+        "validation": "実験ではなく理論的証明による検証である。B-RASPおよびUHATの空性判定がEXPSPACE完全であること（Theorem 4）、UHATからLTLへの指数時間変換（Proposition 13）、それに伴う指数・二重指数の簡潔さの差を示した。提供された本文は第4節の途中で切れているため、LTL・RNN・オートマトンに対する簡潔さの個別定理の詳細な証明までは確認できない。",
+        "discussion": "結果は、固定精度の算術について決定的な評価順序を仮定した上で成り立つ（浮動小数点は結合則が成り立たないため、他の評価順序では証明の再確認が必要）。また対象は理論的な抽象モデルであるUHATで、実際のsoftmaxトランスフォーマーへの含意はJerad et al. (2025)の結果に依存する。簡潔さが実際の学習のしやすさにどう結び付くかや、検証の実用的な手法は今後の課題である。",
+        "next": [
+          {
+            "title": "Masked hard-attention transformers recognize exactly the star-free languages",
+            "reason": "UHATとLTL・B-RASPの表現力の等価性を示した基盤的な論文で、本論文が改善した二重指数変換の出典でもある。"
+          },
+          {
+            "title": "The complexity of propositional linear temporal logics",
+            "reason": "LTLの簡潔さと充足可能性判定の計算複雑性（PSPACE等）を扱い、本論文の上界証明に直接使われている。"
+          },
+          {
+            "title": "Unique hard attention: A tale of two sides",
+            "reason": "UHATの結果がsoftmaxトランスフォーマーへ及ぶことや、LTLの部分断片との対応を示しており、本論文の実用的な含意を理解するのに役立つ。"
+          }
+        ]
+      },
+      "titleJa": "トランスフォーマーは本質的に簡潔である",
+      "why": "固定精度のunique-hard attention transformer（UHAT）の表現力を、記述サイズの「簡潔さ」という観点から分析した理論研究です。多項式サイズのUHATで記述できる言語族が、LTLやRNN（ひいてはSSM）では指数サイズ、有限オートマトンでは二重指数サイズを要することを示し、空性判定・等価性判定がEXPSPACE完全であることも導きました。従来は「認識できる言語クラス」でRNNより弱いとされてきたトランスフォーマーが、記述の簡潔さでは逆に優位だと示した点や、UHATからLTLへの変換を二重指数から指数サイズに改善して上界と下界を一致させた点が注目され、ICLR 2026でOutstanding Paperに選ばれました。"
+    },
+    {
+      "title": "The Polar Express: Optimal Matrix Sign Methods and their Application to the Muon Algorithm",
+      "award": "Honorable Mention",
+      "authors": [
+        "Noah Amsel",
+        "David Persson",
+        "Christopher Musco",
+        "Robert M. Gower"
+      ],
+      "url": "https://arxiv.org/abs/2505.16932",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "Muonオプティマイザ内で使われる極分解（行列符号関数）の因子 polar(M) を、行列積のみで高速かつGPU向けに近似する手法 Polar Express を提案した研究。反復ごとに多項式を適応的に変え、worst-case誤差を最小化する。bfloat16でも安定に動くよう工夫し、GPT-2の学習でMuonの検証損失を改善した。",
+        "novelty": "Newton-Schulzは初期収束が遅く、Jordan法やYou法はヒューリスティック探索による多項式で、誤差が約0.3で頭打ちとなり収束しない。本手法は各反復の多項式をminimax最適化で選び、合成多項式がL∞ノルムで最適であること（Theorem 3.1）と超指数収束（Theorem 3.3）を証明した。Chen & ChowやNakatsukasa & Freundの発想を、深層学習向けの低精度・高スループット用途に発展させた点が新しい。",
+        "method": "特異値の範囲[ℓ,u]を仮定し、各反復で奇数次多項式 p_t を、1への一様近似（minimax）として貪欲に選ぶ。貪欲選択が全体の最適解になることを証明し、次区間は ℓ_{t+1}=p_t(ℓ_t)、u_{t+1}=2-ℓ_{t+1} で更新する。d=3は閉形式、d=5は等振動定理に基づくRemez同等の簡易アルゴリズムで解く。係数はfloat64でオフライン事前計算し、オンラインではbfloat16でHorner則により行列積のみで適用する。有限精度対策として p_t(x/1.01) への置換と、初期反復で振動の少ない準最適多項式を使う工夫を入れる。入力はFrobeniusノルムで正規化し、u=1、ℓ=10^-3、d=5、T=5か6を推奨する。",
+        "validation": "特異値が10^-6〜1の合成行列とGPT-2勾配行列で、d=5のNewton-Schulz、Jordan法、You法と収束を比較した。ℓをσ_minに合わせたPolar Expressは全反復で他手法を上回り、Newton-Schulzの約2倍速く収束した。FineWebの1Bトークンで学習したGPT-2-Largeでは、最良の検証損失が muon-Jordan 3.398、muon-You 3.399 に対し muon-PolarExp 3.340 だった。GPT-2-Smallでは muon-PolarExp 3.588（muon-Jordan 3.639、muon-You 3.629、AdamW 4.197）となり、10Bトークンでも小さいが一貫した優位が得られた。",
+        "discussion": "特異値の下限ℓは効率よく求められず推測に頼る。ℓが数桁ずれると収束が遅れ、GPT-2勾配の実験では、ℓを小さく設定しすぎると収束が遅れた。また、5〜6反復を超えて精度を上げたりSVDで厳密に計算したりしても最適化性能は向上せず（SVDは1ステップの時間が約2倍）、近似精度の改善はMuonでは頭打ちである。10Bトークンでの改善幅は小さく、より大規模な設定での効果は本文からは確認できない。",
+        "next": [
+          {
+            "title": "A stable scaling of Newton-Schulz for improving the sign function computation of a Hermitian matrix",
+            "reason": "反復ごとに多項式を適応させるPolar Expressの直接の着想元で、d=3の閉形式解や有限精度対策の根拠が書かれているため。"
+          },
+          {
+            "title": "Computing fundamental matrix decompositions accurately via the matrix sign function in two iterations: the power of Zolotarev's functions",
+            "reason": "有理関数による最適近似を用いた行列符号関数計算の代表例で、本手法の多項式ベースのアプローチと対比できるため。"
+          },
+          {
+            "title": "Old optimizer, new norm: an anthology",
+            "reason": "Muonの理論的動機（スペクトルノルムでの最急降下）を扱っており、極分解を計算する必要性を理解できるため。"
+          }
+        ]
+      },
+      "titleJa": "Polar Express：最適な行列符号関数の手法とMuonアルゴリズムへの応用",
+      "why": "Muonオプティマイザで使う極分解の因子 polar(M) を、行列積のみでGPU向けに高速近似する Polar Express を提案した研究です。反復ごとに多項式をminimax最適化で選び、合成多項式のL∞ノルムでの最適性と超指数収束を証明しており、ヒューリスティックなJordan法やYou法が誤差約0.3で頭打ちになる点を克服しています。FineWebで学習したGPT-2-Largeの最良検証損失は muon-PolarExp 3.340 で、muon-Jordan 3.398、muon-You 3.399 を上回り、ICLR 2026でHonorable Mentionを受賞しました。"
+    },
+    {
+      "title": "Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks（DCGAN）",
+      "award": "Test of Time",
+      "authors": [
+        "Alec Radford",
+        "Luke Metz",
+        "Soumith Chintala"
+      ],
+      "url": "https://arxiv.org/abs/1511.06434",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "画像の教師なし表現学習を目的に、畳み込みGANの安定した学習を可能にするアーキテクチャ制約の集合を提案し、DCGANと名付けた研究。学習済みの識別器を特徴抽出器として教師あり分類に再利用でき、生成器の潜在空間が意味的な構造を持つことも示した。",
+        "novelty": "従来、CNNを使ったGANのスケールアップは不安定で成功例が少なく、LAPGANのように反復的にアップスケールする別手法に頼っていた。本研究は、安定して学習できるCNN構成の指針を示し、より高解像度・深い生成モデルの学習を可能にした。さらに識別器・生成器の内部表現の可視化や、潜在ベクトルの算術演算が可能なことを純粋な教師なしモデルで初めて示したと主張している。",
+        "method": "プーリングを廃し、識別器はストライド畳み込み、生成器は分数ストライド畳み込みで置き換える。両ネットワークにバッチ正規化を使う（生成器の出力層と識別器の入力層は除く）。深い構成では全結合の隠れ層を除き、生成器はReLU（出力層はTanh）、識別器はLeakyReLU（傾き0.2）を使う。最適化はAdam（学習率0.0002、β1=0.5）、ミニバッチ128、重みは標準偏差0.02の正規分布で初期化する。",
+        "validation": "Imagenet-1kで学習した識別器の全層特徴（28672次元）にL2-SVMを適用し、CIFAR-10で82.8%の精度を得て、K-means系手法（80.6〜82.0%）を上回った（Exemplar CNNの84.3%には及ばない）。SVHN（ラベル1000件）では誤り率22.48%で、比較手法の中で最良だった。LSUN寝室・顔データでは、潜在空間の補間が滑らかであること、識別器特徴がベッドや窓に反応すること、窓に対応する特徴マップを落とすと窓が描画されなくなること、顔サンプルの潜在ベクトル演算が意味的に成立することを定性的に示した。",
+        "discussion": "長く学習するとフィルタの一部が単一の振動モードに崩壊する不安定性が残っており、さらなる対処が必要だと述べている。今後はビデオ（フレーム予測）や音声（音声合成用の事前学習特徴）への拡張と、潜在空間の性質のさらなる調査が挙げられている。ベクトル演算は単一サンプルでは不安定で、3例の平均が必要だった。",
+        "next": [
+          {
+            "title": "Generative Adversarial Nets",
+            "reason": "DCGANの土台となるGANの原論文で、敵対的学習の枠組みを理解するために必要。"
+          },
+          {
+            "title": "Deep generative image models using a laplacian pyramid of adversarial networks",
+            "reason": "DCGAN以前の代表的な画像生成GANで、本研究が動機づけとして挙げる手法として比較できる。"
+          },
+          {
+            "title": "Batch normalization: Accelerating deep network training by reducing internal covariate shift",
+            "reason": "DCGANの学習安定化に重要だったバッチ正規化の仕組みを理解できる。"
+          }
+        ]
+      },
+      "titleJa": "深層畳み込み敵対的生成ネットワーク(DCGAN)による教師なし表現学習",
+      "why": "画像の教師なし表現学習を目的に、畳み込みGANを安定して学習させるアーキテクチャ上の制約をまとめ、DCGANとして提案した研究です。学習済みの識別器を特徴抽出器として分類に再利用でき、Imagenet-1kで学習した特徴でCIFAR-10は82.8%、SVHN(ラベル1000件)は誤り率22.48%を得ています。また、潜在空間の滑らかな補間や潜在ベクトルの算術演算が可能なことを純粋な教師なしモデルで初めて示したと主張しており、ICLR 2026のTest of Time賞を受けた点でも注目されます。"
     }
   ],
   "sources": [

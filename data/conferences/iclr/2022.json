@@ -108,6 +108,146 @@
           }
         ]
       }
+    },
+    {
+      "title": "Expressiveness and Approximation Properties of Graph Neural Networks",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Floris Geerts",
+        "Juan L. Reutter"
+      ],
+      "url": "https://arxiv.org/abs/2204.04661",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "GNNの計算を手続き的なテンソル言語（TL）の式として記述し、式の添字数と総和のネスト深さを調べるだけで、そのGNNの識別能力をWLテストで上から抑える枠組みを提案した研究。あわせて、TLを使って高次メッセージパッシングNN（k-MPNN）を定義し、近似能力・万能性（universality）の結果も導いている。個別アーキテクチャごとに複雑な証明をしなくてよい、設計者向けのツールボックスを目指している。",
+        "novelty": "従来のGNNの識別能力の解析は個別アーキテクチャ向けで、MATLANGを用いた先行研究（Balcilar et al.）は行列に限られ2-WLまでしか扱えなかった。本研究のテンソル言語は任意次数のテンソルを扱え、添字数・木幅・総和深さに基づいて任意のk-WLやラウンド数との対応が得られる。また、k-IGNの識別能力が(k-1)-WLで上から抑えられるというMaronらの未解決問題に答え、CayleyNetが2-WL以下であること、CRに対する万能性など新しい結果も示した。",
+        "method": "TL(Ω)はE(x,y)、P_s(x)、等号述語、加算・乗算、スカラー倍、関数適用、総和∑_xからなる文法を持ち、GNNの各層を添字付きの式として書き下す。k+1個の添字変数だけを使うTL_{k+1}の式はk-WLと、総和深さtの式はtラウンドと対応する（定理4.1, 4.2）。隣接頂点上の総和のみを許す「ガード付き」断片GTLはカラーリファインメント（CR）と同じ識別能力を持つ（定理4.3）。さらに木幅kの式はk+1個の添字の式に書き換えられ（命題4.5）、総和の順序入れ替え（変数消去）により添字数を減らして、より強い上界が得られる。",
+        "validation": "実験ではなく理論的な証明が中心で、提示した枠組みを使ってGIN、GCN、Folklore GNN、k-GNNなど既知の結果を再導出している。新しい結果として、k-IGNが(k-1)-WLで上から抑えられること、k-IGNが(k-1)-WLより識別力の低い任意のグラフ関数を近似できること、CayleyNetが2-WLで抑えられること、CRに対応するガード付きTLの万能性を示した。本文（抜粋）には数値実験の記載はない。",
+        "discussion": "TLは理論解析用であり、実用的なGNN記述言語を意図したものではない。グラフ全体の埋め込みでは、k=1の場合を除き総和深さとWLラウンド数の間にきれいな対応がなく、現状は上下界のずれ（t+kとt+1）が残る。また、得られるのは識別能力の上界と近似可能性であり、学習のしやすさや汎化は扱わない。さらに、添字数を最小化する式の探索（木幅の最小化）が設計上の鍵になる。",
+        "next": [
+          {
+            "title": "Expressive power of invariant and equivariant graph neural networks",
+            "reason": "本論文が直接拡張・精緻化している万能性の先行研究であり、比較して読むと貢献が明確になる。"
+          },
+          {
+            "title": "Weisfeiler and Leman go neural: Higher-order graph neural networks",
+            "reason": "GNNとk-WLの対応を築いた基礎的論文で、本論文の背景として重要。"
+          },
+          {
+            "title": "Provably powerful graph networks",
+            "reason": "Folklore GNNとk-IGNを導入しており、本論文が識別能力の上界を示す対象の定義を確認できる。"
+          }
+        ]
+      },
+      "titleJa": "グラフニューラルネットワークの表現力と近似特性",
+      "why": "GNNの計算を手続き的なテンソル言語（TL）の式で記述し、式の添字数と総和のネスト深さを調べるだけで、そのGNNの識別能力をWLテストで上から抑える枠組みを示した理論研究です。k-IGNの識別能力が(k-1)-WLで上から抑えられるというMaronらの未解決問題に答え、CayleyNetが2-WL以下であることや、CRに対応するガード付きTLの万能性など新しい結果も導いています。個別アーキテクチャごとに複雑な証明をせずに済む設計者向けのツールボックスを目指している点が注目されます。"
+    },
+    {
+      "title": "Hyperparameter Tuning with Renyi Differential Privacy",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Nicolas Papernot",
+        "Thomas Steinke"
+      ],
+      "url": "https://arxiv.org/abs/2110.03620",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "差分プライバシー(DP)で学習する際のハイパーパラメータ調整が持つプライバシー漏洩を分析し、その漏洩を抑える手法を提案した研究。非プライベートな調整が情報を漏らしうることを示したうえで、各候補の学習がDPであれば、最良の結果を返す調整手順全体もRényi DPの枠組みで低コストにDPとなることを証明している。",
+        "novelty": "Liu & Talwar (2019) は(ε,0)-DPかつ繰り返し回数が幾何分布の場合に3εを示したが、本研究は対数分布(η=0)で2ε、一般の切断負の二項分布で(2+η)εに改善・一般化した。さらにRényi DPへ拡張し、DP-SGDのようなモダンな学習系に適用しやすくした。プライバシー損失は繰り返し回数に依存しないか対数的にしか増えず、素朴な合成の線形増加より鋭い。",
+        "method": "繰り返し回数Kを分布(切断負の二項分布またはポアソン分布)からランダムに引き、各回でハイパーパラメータ候補を一様ランダムに選んで基底アルゴリズムQを実行し、最良の出力を返す。解析の核は一般補題(Lemma 7)で、Kの確率母関数fの導関数f'を用いて繰り返しアルゴリズムのRényi発散を基底アルゴリズムのRényi発散+log(f'(q)^λ f'(q')^(1-λ))/(λ-1)で上から抑える。この補題から定理2(負の二項分布)と定理6(ポアソン分布)、純DPおよびzCDPの系が導かれる。",
+        "validation": "合成データのSVMで、外れ値8点の有無によって精度を最大化するαが変わり、ハイパーパラメータ選択からメンバーシップ推論的な漏洩が起こりうることを示した。0.1-zCDPの基底アルゴリズムでは、理論的なプライバシー保証が素朴な合成より大幅に良いことを図で比較した。MNISTのCNNに対するDP-SGDの学習率探索(0.025〜1、500試行平均)では、ポアソン分布が最も良いプライバシー・精度のトレードオフを示した。また期待分位数の解析では、ε=4程度以上の大きなプライバシー予算では η=0.5 の負の二項分布が高い効用を示した。",
+        "discussion": "ハイパーパラメータ調整にはプライバシーコストがあり、本設定ではプライバシーパラメータが2倍〜3倍になりうるため、調整を含む場合と含まない場合の両保証を併記するのが妥協案とされる。結果は非適応的なランダム探索にのみ直接適用でき、適応的に候補を選ぶ手法には追加の解析が必要である。回数Kの最適な分布は設定に依存し、利用者が選ぶ余地が残る。",
+        "next": [
+          {
+            "title": "Private selection from private candidates (Liu & Talwar)",
+            "reason": "本研究が直接改善・拡張している出発点の結果(幾何分布で3ε-DP)を理解するため。"
+          },
+          {
+            "title": "Rényi differential privacy (Mironov)",
+            "reason": "本研究の解析枠組みであるRényi DPの定義と合成性を押さえるため。"
+          },
+          {
+            "title": "The role of adaptive optimizers for honest private hyperparameter selection (Mohapatra et al.)",
+            "reason": "本研究が扱わない適応的なハイパーパラメータ調整をDPの下で扱う独立の研究であるため。"
+          }
+        ]
+      },
+      "titleJa": "Rényi差分プライバシーによるハイパーパラメータ調整",
+      "why": "差分プライバシーで学習する際、ハイパーパラメータ調整そのものが情報を漏らしうることを示し、各候補の学習がDPであれば最良の結果を返す調整手順全体もRényi DPの枠組みで低コストにDPとなることを証明した研究です。Liu & Talwar (2019) の3εを、対数分布で2ε、一般の切断負の二項分布で(2+η)εに改善・一般化し、Rényi DPへの拡張でDP-SGDのような現代的な学習系にも適用しやすくした点が評価され、ICLR 2022のOutstanding Paperに選ばれました。プライバシー損失が繰り返し回数に依存しないか対数的にしか増えないため、素朴な合成の線形増加より鋭い保証が得られる点も注目されます。"
+    },
+    {
+      "title": "Analytic-DPM: an Analytic Estimate of the Optimal Reverse Variance in Diffusion Probabilistic Models",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Fan Bao",
+        "Chongxuan Li",
+        "Jun Zhu",
+        "Bo Zhang"
+      ],
+      "url": "https://arxiv.org/abs/2201.06503",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "拡散確率モデル（DPM）の逆過程における各タイムステップの分散について、最適値とそのときの最適KLダイバージェンスがスコア関数の解析的な式で書けることを示した研究。これを利用し、追加学習なしで事前学習済みDPMの推論を高速化・改善する枠組みAnalytic-DPMを提案している。",
+        "novelty": "従来は逆過程の分散を手作りの値（β_nやβ~_nなど）に固定するか、ニューラルネットワークで学習していた。本研究は最適分散をスコア関数の二乗ノルムの期待値で解析的に表し、学習なしで推定できる点が新しい。また、最適分散の上下界を導出して推定値をクリップし、スコアモデルの誤差によるバイアスを抑えている。さらに、モーメントマッチングとDPMの関係や、スコア関数とデータ共分散行列の関係も明らかにしている。",
+        "method": "最適分散σ_n*²は、λ_n²に、スコアの平均二乗ノルムを含む項を加えた形（式7）で表される。事前学習済みのスコアモデルを使い、Monte Carlo標本でΓ_n=(1/M)Σ‖s_n(x_{n,m})‖²/dを一度だけ計算し、式9で分散を推定する。推定値は、データに依存しない上下界（式11、データが有界なら式12も）でクリップする。また最適KLはタイムステップ間のコスト J=log(σ*²/λ²) の和に分解されるため、動的計画法（Watson et al., 2021）で最適な短い軌道（OT）を求める。連続時間のDPMへの拡張も示している。",
+        "validation": "CIFAR10（線形・コサインスケジュール）、CelebA 64x64、ImageNet 64x64、LSUN Bedroomで、DDPM・DDIMと比較した。尤度では、全データセットでAnalytic-DDPMがETとOTの両方で元のDDPMのNLLを改善し、少ないタイムステップで全ステップのベースラインを上回り、20〜40倍の高速化を示した。ImageNet 64x64では全ステップでNLL 3.61を達成し、Nichol & Dhariwal (2021)の学習分散での3.57に近い。FIDではAnalytic-DDIMが元のDDIMを一貫して改善し、約50ステップ以下で同等の品質を達成して20〜80倍の高速化となった。Table 3ではFID約6に必要な最小ステップ数がCIFAR10で25、CelebAで55、LSUN Bedroomで100だった。",
+        "discussion": "Analytic-DDPMのFIDは常にベースラインを上回るわけではなく、尤度の結果と一致しない場合がある。ステップ数を増やしてもFIDが必ずしも改善せず、OTが必ずしもFIDを改善しないことも報告されている。推定値にはスコアモデルの近似誤差に由来する削減不能なバイアスが残り、短い軌道ではその係数が大きくなる。スコア関数とデータ共分散の関係は理論的なものにとどまり、実用上の意味は不明と述べられている。",
+        "next": [
+          {
+            "title": "Denoising Diffusion Implicit Models",
+            "reason": "Analytic-DDIMの土台となる非マルコフ過程とλ_nの一般化、および少ステップサンプリングの基本を理解するため。"
+          },
+          {
+            "title": "Improved Denoising Diffusion Probabilistic Models",
+            "reason": "ニューラルネットで分散を学習する主要な比較対象で、尤度やETによる短軌道の議論を確認できるため。"
+          },
+          {
+            "title": "Learning to Efficiently Sample from Diffusion Probabilistic Models",
+            "reason": "本研究が最適軌道の探索に使う動的計画法の原典であるため。"
+          }
+        ]
+      },
+      "titleJa": "Analytic-DPM：拡散確率モデルにおける最適な逆過程分散の解析的推定",
+      "why": "拡散確率モデルの逆過程の最適分散と最適KLダイバージェンスがスコア関数の解析的な式で書けることを示し、追加学習なしで事前学習済みモデルの推論を高速化・改善する枠組みAnalytic-DPMを提案した研究です。従来は手作りの値に固定するかニューラルネットワークで学習していた分散を、学習なしで推定でき、上下界によるクリップでスコアモデルの誤差によるバイアスも抑えています。CIFAR10やImageNet 64x64などの実験で、尤度では20〜40倍、FIDでは20〜80倍の高速化を示しており、ICLR 2022のOutstanding Paperに選ばれています。"
+    },
+    {
+      "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Edward J. Hu",
+        "Yelong Shen",
+        "Phillip Wallis",
+        "Zeyuan Allen-Zhu",
+        "Yuanzhi Li",
+        "Shean Wang",
+        "Lu Wang",
+        "Weizhu Chen"
+      ],
+      "url": "https://arxiv.org/abs/2106.09685",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "GPT-3 175Bのような巨大な事前学習済み言語モデルを下流タスクに適応する際、全パラメータのファインチューニングが保存・デプロイの面で非現実的になる問題に対し、事前学習済み重みを凍結して低ランク分解行列だけを学習するLoRA（Low-Rank Adaptation）を提案した研究。学習可能パラメータ数を最大10,000分の1、GPUメモリを3分の1に削減しつつ、ファインチューニングと同等以上の品質を達成する。",
+        "novelty": "アダプタ法は推論時に追加の層が必要で遅延が増え、プレフィックス系は系列長を消費し最適化も難しいという課題があった。LoRAは重み更新ΔWが低い「intrinsic rank」を持つという仮説に基づき、学習後に低ランク行列を元の重みへ統合できるため、推論遅延を追加せずに効率と品質を両立する。また、低ランク構造を持つ更新を凍結モデルに対する適応として用いる点は、本文によれば先行研究にない。",
+        "method": "事前学習済み重みW0 ∈ R^{d×k}を凍結し、更新をΔW = BA（B ∈ R^{d×r}, A ∈ R^{r×k}, r ≪ min(d,k)）と表して順伝播をh = W0x + BAxとする。Aはガウス初期化、Bはゼロ初期化で学習開始時にΔW=0となり、ΔWxはα/rでスケールされる。主にTransformerの自己注意の重みWq, Wvに適用し、MLPは凍結する。デプロイ時はW = W0 + BAとして統合でき、タスク切替はBAの差し替えだけで済む。",
+        "validation": "RoBERTa base/large、DeBERTa XXLのGLUE、GPT-2のE2E NLG、GPT-3 175BのWikiSQL・MNLI・SAMSumで評価した。GPT-3 175Bでは4.7M〜37.7Mの学習パラメータでWikiSQL 73.4〜74.0%、MNLI-m 91.6〜91.7%と、ファインチューニング（73.8%、89.5%）と同等以上だった。r=4、WqとWvのみ適用でチェックポイントは350GBから35MB、学習時VRAMは1.2TBから350GBに減り、学習スループットも約25%向上した。GPT-2 MのE2EでもBLEU 70.4でFT（68.2）やアダプタを上回った。",
+        "discussion": "統合した重みを使う場合、異なるLoRAを持つ複数タスクの入力を1回の順伝播でバッチ処理するのは容易でない。また、事前学習と異なる言語のタスクなど、小さいrでは足りないケースもあると著者らは述べている。MLP層、LayerNorm、バイアスへの適用や、LoRA適用対象の選び方の原理的解明は今後の課題として残されている。",
+        "next": [
+          {
+            "title": "Intrinsic Dimensionality Explains the Effectiveness of Language Model Fine-Tuning",
+            "reason": "LoRAの「更新は低ランク」という仮説の直接の着想元であり、理論的背景を理解できる。"
+          },
+          {
+            "title": "Parameter-Efficient Transfer Learning for NLP",
+            "reason": "LoRAが主な比較対象とし、推論遅延の問題を指摘したアダプタ法の原典である。"
+          },
+          {
+            "title": "Prefix-Tuning: Optimizing Continuous Prompts for Generation",
+            "reason": "もう一つの主要な効率的適応手法であり、GPT-2での比較実験の設定元でもある。"
+          }
+        ]
+      },
+      "titleJa": "LoRA: 大規模言語モデルの低ランク適応",
+      "why": "GPT-3 175Bのような巨大モデルの全パラメータ・ファインチューニングは保存やデプロイの面で非現実的という問題に対し、事前学習済み重みを凍結して低ランク分解行列だけを学習するLoRAを提案した研究です。学習後に低ランク行列を元の重みへ統合できるため推論遅延が増えず、GPT-3 175Bでチェックポイントを350GBから35MBに、学習時VRAMを1.2TBから350GBに削減しつつ、ファインチューニングと同等以上の品質を示しました。ICLR 2022で被引用数が同年1位（Paper Digest集計）という点も、注目度の高さを裏付けています。"
     }
   ],
   "sources": [
@@ -126,6 +266,10 @@
     {
       "title": "International Conference on Learning Representations（Wikipedia・開催地と投稿数の表）",
       "url": "https://en.wikipedia.org/wiki/International_Conference_on_Learning_Representations"
+    },
+    {
+      "title": "Most Influential ICLR Papers 2025-09（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2025/09/most-influential-iclr-papers-2025-09-version/"
     }
   ],
   "unreachable": [

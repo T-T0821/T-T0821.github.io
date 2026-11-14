@@ -83,6 +83,136 @@
           }
         ]
       }
+    },
+    {
+      "title": "Tuning-free Plug-and-Play Proximal Algorithm for Inverse Imaging Problems",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Kaixuan Wei",
+        "Angelica Aviles-Rivero",
+        "Jingwei Liang",
+        "Ying Fu",
+        "Carola-Bibiane Schönlieb",
+        "Hua Huang"
+      ],
+      "url": "https://arxiv.org/abs/2002.09611",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "Plug-and-play (PnP) 近接アルゴリズムで手動調整が必要だったペナルティパラメータ μ、ノイズ除去強度 σ、終了時刻 τ を、画像ごとに自動決定する tuning-free な PnP-ADMM を提案した研究。パラメータ選択を逐次意思決定問題として定式化し、強化学習で学習したポリシーネットワークで決定する。圧縮センシングMRIと位相回復で有効性を示している。",
+        "novelty": "従来の手動調整や、σを単調減少させるなどの手作り基準に代わり、画像・測定条件ごとに異なるパラメータを学習ポリシーで自動設定する点が新しい。離散の終了時刻（モデルフリーRL）と連続のσ・μ（微分可能な環境を使うモデルベースRL）を同時に最適化する混合型RLを導入した。深層展開(unrolling)と異なり、反復回数を固定せず市販のデノイザーをそのまま使える。",
+        "method": "状態を最適化変数 (x, z, u)、行動を (終了判断, σ, μ) とするMDPで定式化し、1ステップを5回のPnP-ADMM反復、最大6ステップ（最大30反復）とした。報酬はPSNRの増分から打ち切りペナルティ η=0.05 を引いたもの。デノイザーにはノイズレベルマップ付き残差U-Netを用い環境を微分可能にした。アクター・クリティック構成で、終了判断 π1 は方策勾配（尤度推定）で、σ・μ を出す決定論的 π2 は報酬・価値ネットワーク・遷移関数を通した逆伝播（決定論的方策勾配）で学習する。",
+        "validation": "CS-MRI（Medical7とMICCAI 2013、加速率x2/x4/x8、ノイズ5/10/15）でRecPF、FCSA、ADMMNet、ISTANet、BM3D-MRI、IRCNNと比較し、例えばMedical7のx8・ノイズ15で26.41dBと最良だった。IRCNNより大差で優れ、x2では5反復で到達した（IRCNNは30反復、BM3D-MRIは70反復）。学習ポリシーはx2で正解画像を使うオラクル方策を上回る場合もあった。位相回復（CDP、4測定）でもprDeepなどを上回り、α=9/27/81でPSNR 40.33/33.90/27.23を達成した。",
+        "discussion": "検証はCS-MRIと位相回復の2タスクに限られ、デノイザーも主にU-Netである。ポリシーは設定ごとに学習され、本文中の限定的な範囲の条件（加速率・ノイズレベル）で一括学習されている。理論的な収束保証は扱っておらず、ハイパーパラメータ m, N, η の選び方は補足資料に委ねられている。",
+        "next": [
+          {
+            "title": "Plug-and-Play Priors for Model Based Reconstruction",
+            "reason": "PnPの原点となる枠組みで、本論文の前提であるADMMとデノイザーの置換を理解するため。"
+          },
+          {
+            "title": "Learning Deep CNN Denoiser Prior for Image Restoration",
+            "reason": "本論文が比較対象かつ手作りパラメータ基準の代表例として挙げるIRCNNであり、手動調整との差を把握できる。"
+          },
+          {
+            "title": "prDeep: Robust Phase Retrieval with a Flexible Deep Network",
+            "reason": "位相回復での主要な比較手法であり、非線形逆問題へのPnP適用を理解するのに役立つ。"
+          }
+        ]
+      },
+      "titleJa": "逆問題画像処理のためのチューニング不要なPlug-and-Play近接アルゴリズム",
+      "why": "Plug-and-play (PnP) 近接アルゴリズムで手動調整が必要だったペナルティパラメータ μ、ノイズ除去強度 σ、終了時刻 τ を、強化学習で学習したポリシーネットワークにより画像ごとに自動決定するtuning-freeなPnP-ADMMを提案した研究です。離散の終了時刻にはモデルフリーRL、連続のσ・μには微分可能な環境を使うモデルベースRLを組み合わせた混合型RLを導入し、深層展開と異なり反復回数を固定せず市販のデノイザーをそのまま使えます。圧縮センシングMRIでは例えばMedical7のx8・ノイズ15で26.41dBと最良を記録し、x2ではIRCNNの30反復に対して5反復で到達、位相回復でもprDeepなどを上回っており、ICML 2020のOutstanding Paperに選ばれました。"
+    },
+    {
+      "title": "Efficiently sampling functions from Gaussian process posteriors",
+      "award": "Outstanding Paper Honorable Mention",
+      "authors": [
+        "James T. Wilson",
+        "Viacheslav Borovitskiy",
+        "Alexander Terenin",
+        "Peter Mostowsky",
+        "Marc Peter Deisenroth"
+      ],
+      "url": "https://arxiv.org/abs/2002.09309",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ガウス過程（GP）の事後分布から関数サンプル（サンプルパス）を、テスト点数に対して線形時間で、かつ統計的に正確に生成する手法を提案した研究。疎GP（スパースGP）と組み合わせることで、学習時とテスト時の両方でスケーラブルになる。",
+        "novelty": "従来の関数空間法（疎GPなど）はテスト点数 * に対して O(*^3) のコストがかかり、重み空間法（ランダムフーリエ特徴, RFF）は高速だがデータが増えると分散飢餓（variance starvation）で事後分布を誤って表現する。本研究はMatheronの規則（pathwise update）で事後分布を「事前分布＋更新項」に分解し、両者の長所を併せ持つ decoupled sampling を実現した点が新しい。",
+        "method": "Matheronの規則により、事後サンプルを「事前サンプル＋データによる更新」の和として表す。事前分布は重み空間でフーリエ基底（ℓ個のRFF）により、更新項は関数空間で正準基底 k(·, z_j)（誘導点に対応）により別々に近似する（式13、DSGP）。これによりサンプルは任意の位置で評価可能かつ入力について微分可能な関数となり、事後共分散行列やその平方根の計算が不要になる。",
+        "validation": "厳密GPの既知ハイパーパラメータ下で、1024テスト点・10万サンプルに対する真の事後分布との2-Wasserstein距離を比較し、重み空間法は誘導点数増加で劣化するのに対し、decoupled samplingは精度を保ち改善することもあると示した。並列Thompson Samplingでは、多様な次元で同等以上の性能を示し、FitzHugh-Nagumoニューロンの動力学シミュレーションでは、逐次条件付け法で約10時間かかるものが約20秒で同程度の精度で実行できた。",
+        "discussion": "decoupled sampling は近似事前分布の誤差が残り、データから離れると事前分布に戻るため外挿時の誤差は事前の近似誤差で一定となる。また、誤差上界は定数C1〜C3に依存し、高次元で事前をRFFで近似する際の挙動の更なる検討が余地として残る。本文は結論部と付録の一部が省略されており、今後の展望の詳細は本文からは確認できない。",
+        "next": [
+          {
+            "title": "Random features for large-scale kernel machines",
+            "reason": "decoupled sampling の事前分布近似に用いられるランダムフーリエ特徴の基礎を理解するため。"
+          },
+          {
+            "title": "Maximizing acquisition functions for Bayesian optimization",
+            "reason": "サンプルパスの微分可能性を利用した獲得関数最大化とベイズ最適化への応用を理解するため。"
+          },
+          {
+            "title": "Orthogonally decoupled variational Gaussian processes",
+            "reason": "基底を分離して表現する decoupled GP の考え方の関連先行研究として比較するため。"
+          }
+        ]
+      },
+      "titleJa": "ガウス過程の事後分布から関数を効率的にサンプリングする手法",
+      "why": "ガウス過程の事後分布から関数サンプルを、テスト点数に対して線形時間かつ統計的に正確に生成する手法を提案した研究です。Matheronの規則（pathwise update）で事後分布を「事前分布＋更新項」に分解し、関数空間法の正確さと重み空間法の速さを併せ持つ decoupled sampling を実現した点が新しく、重み空間法で問題となる分散飢餓を避けられます。FitzHugh-Nagumoニューロンの動力学シミュレーションでは、逐次条件付け法で約10時間かかるものを同程度の精度で約20秒に短縮しており、ICML 2020のOutstanding Paper Honorable Mentionに選ばれました。"
+    },
+    {
+      "title": "Gaussian Process Optimization in the Bandit Setting: No Regret and Experimental Design",
+      "award": "Test of Time",
+      "authors": [
+        "Niranjan Srinivas",
+        "Andreas Krause",
+        "Sham M. Kakade",
+        "Matthias Seeger"
+      ],
+      "url": "https://arxiv.org/abs/0912.3995",
+      "ochiai": {
+        "basis": "abstract",
+        "what": "評価コストが高くノイズを含む未知関数の最適化を多腕バンディット問題として定式化し、報酬関数がガウス過程（GP）からのサンプル、またはRKHSノルムが小さい関数である場合を扱った研究である。GP最適化に対する後悔（regret）の上界を導出し、GP最適化の収束率を理論的に与えた。",
+        "novelty": "GP最適化における後悔上界の導出という未解決の重要問題を解決した点が新しい。累積後悔を「最大情報利得」で抑え、GP最適化と実験計画の間に新たな関係を示した。さらに最大情報利得を作用素のスペクトルで抑えることで、多くの一般的な共分散関数に対して明示的な劣線形の後悔上界を得ており、重要なケースでは次元への依存が驚くほど弱い。",
+        "method": "上限信頼境界（upper confidence bound）に基づく直感的なアルゴリズムGP-UCBを解析対象とする。累積後悔を最大情報利得で上から抑えるという枠組みで理論解析を行う。最大情報利得は共分散関数（カーネル）の作用素スペクトルで評価し、各共分散関数ごとの後悔の増加率を明示的に得ている。",
+        "validation": "実際のセンサーデータを用いた実験で、GP-UCBを他のヒューリスティックなGP最適化手法と比較し、GP-UCBが比較的良好な性能を示したと報告している。アブストラクトには具体的な数値は記載されていない。",
+        "discussion": "アブストラクトのみからは限界や今後の課題は明示されていないが、理論保証は報酬関数がGPサンプルまたは低RKHSノルムという仮定に依存する。また実験の詳細は本文がなく評価できないため、実用上の仮定の妥当性や実験規模は本文での確認が必要である。",
+        "next": []
+      },
+      "titleJa": "バンディット設定におけるガウス過程最適化：後悔の収束と実験計画",
+      "why": "評価コストが高くノイズを含む未知関数の最適化を多腕バンディット問題として定式化し、報酬関数がガウス過程からのサンプルまたはRKHSノルムが小さい関数である場合に、GP最適化の後悔上界を導出した研究です。累積後悔を「最大情報利得」で抑えることでGP最適化と実験計画の新たな関係を示し、多くの一般的な共分散関数で明示的な劣線形の後悔上界を得ており、重要なケースでは次元への依存が驚くほど弱い点が注目されます。ICML 2020でTest of Time賞を受賞しており、実センサーデータの実験ではGP-UCBが他のヒューリスティック手法と比べて比較的良好な性能を示したと報告されています。"
+    },
+    {
+      "title": "A Simple Framework for Contrastive Learning of Visual Representations",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Ting Chen",
+        "Simon Kornblith",
+        "Mohammad Norouzi",
+        "Geoffrey Hinton"
+      ],
+      "url": "https://arxiv.org/abs/2002.05709",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ラベルなしの画像から視覚表現を学ぶ、対照学習のシンプルなフレームワークSimCLRを提案した研究。専用アーキテクチャやメモリバンクを使わずに、自己教師あり学習・半教師あり学習で従来手法を上回る性能をImageNetで示した。",
+        "novelty": "既存の対照学習の構成要素はほぼ先行研究に現れているが、それらの組み合わせ方によって性能向上を実現した点が新しい。具体的には、データ拡張の合成（特にランダムクロップと色歪みの組み合わせ）、表現と損失の間への学習可能な非線形射影ヘッド、大バッチ・長時間学習を組み合わせている。メモリバンクや特殊なアーキテクチャを要する従来手法より単純な構成で、より高い精度を得た。",
+        "method": "1枚の画像から確率的拡張（ランダムクロップ＋リサイズ、色歪み、ガウスぼかし）で2つのビューを作り、ResNetエンコーダf(·)で表現h、2層MLPの射影ヘッドg(·)で射影zを得る。同一ミニバッチ内の他の2(N-1)個の拡張サンプルを負例とし、L2正規化と温度τを用いたNT-Xent損失で同じ画像由来のペアの一致を最大化する。学習後は射影ヘッドを捨て、hを下流タスクに使う。大バッチ（256〜8192）の学習はLARSオプティマイザで安定化し、デバイス間でBNの統計量を集約するGlobal BNで、同一デバイス内の情報漏洩による不正な精度向上を防ぐ。",
+        "validation": "ImageNetで線形評価、1%/10%ラベルでの半教師あり学習、12個の自然画像データセットへの転移学習で評価した。線形評価ではResNet-50（4×）でtop-1精度76.5%を達成し、従来SOTAに対し7%の相対改善で、教師あり学習のResNet-50に匹敵する。1%ラベルでのファインチューニングではtop-5精度85.8%で、転移学習では12データセット中10データセットで教師ありベースラインと同等以上だった。アブレーションでは、非線形ヘッドが線形ヘッドより約3%、ヘッドなしより10%超高く、NT-Xentは他の損失より優れていた。",
+        "discussion": "100エポックの設定では最大性能に達しておらず、大バッチや長時間学習への依存が大きい（32〜128 TPUコアで学習）ため、計算資源の面で負担が大きい。また、本文では対照学習の成功が相互情報量の最大化によるのか、損失の具体的な形によるのかは明確でないとされ、理論的な説明は今後の課題として残る。",
+        "next": [
+          {
+            "title": "Momentum Contrast for Unsupervised Visual Representation Learning",
+            "reason": "SimCLRが比較対象とし、メモリバンク（キュー）方式で負例を扱う代表的な対照学習手法であり、大バッチ方式との違いを理解できる。"
+          },
+          {
+            "title": "Representation Learning with Contrastive Predictive Coding",
+            "reason": "SimCLRが用いるInfoNCE系の対照損失の原点であり、近傍ビュー予測というタスク設定の背景を理解できる。"
+          },
+          {
+            "title": "Data-Efficient Image Recognition with Contrastive Predictive Coding",
+            "reason": "SimCLRが直接の比較対象とした先行SOTA（CPC v2）で、専用アーキテクチャを使う手法との差を確認できる。"
+          }
+        ]
+      },
+      "titleJa": "視覚表現の対照学習のためのシンプルなフレームワーク（SimCLR）",
+      "why": "ラベルなし画像から視覚表現を学ぶ対照学習の枠組みSimCLRを提案した研究で、メモリバンクや専用アーキテクチャを使わず、データ拡張の合成、学習可能な非線形射影ヘッド、大バッチ・長時間学習の組み合わせで性能を高めた。ImageNetの線形評価ではResNet-50（4×）でtop-1精度76.5%を達成し、従来SOTAに対し7%の相対改善で、教師あり学習のResNet-50に匹敵する。1%ラベルの半教師あり学習や12データセットへの転移学習でも高い性能を示し、Paper Digestの集計で同年の被引用数1位となった。"
     }
   ],
   "sources": [
@@ -97,6 +227,10 @@
     {
       "title": "International Conference on Machine Learning（Wikipedia・投稿数と採択数の表）",
       "url": "https://en.wikipedia.org/wiki/International_Conference_on_Machine_Learning"
+    },
+    {
+      "title": "Most Influential ICML Papers 2025-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2025/03/most-influential-icml-papers-2025-03-version/"
     }
   ],
   "unreachable": [
