@@ -3,14 +3,8 @@
 // Claude で日本語の技術要約を作成して VitePress 用 Markdown を出力する。
 //
 // 使い方: node scripts/trending/collect.mjs
-// 必要な環境変数（どちらか一方）:
-//   CLAUDE_CODE_OAUTH_TOKEN  Claude Pro/Max プランのトークン（`claude setup-token` で発行）。
-//                            Claude Code CLI 経由で要約し、プランの使用枠を消費する
-//   ANTHROPIC_API_KEY        Claude API キー。設定されていればこちらを優先し、従量課金で要約する
-//   （Claude Code のクラウドセッションなど、claude CLI が既にログイン済みの環境では
-//     SUMMARY_BACKEND=cli を指定すればどちらも不要）
-// その他:
-//   GITHUB_TOKEN       GitHub API 用トークン（Actions では自動付与）
+// 要約はログイン済みの Claude Code CLI（`claude -p`）で行う。
+// 毎朝 Claude Code のスケジュールタスクから実行され、Max プランの使用枠を消費する。
 // 任意の環境変数:
 //   CLAUDE_MODEL       既定 claude-sonnet-5-5
 //   TRENDING_LIMIT     要約するリポジトリ数（既定 15）
@@ -22,7 +16,6 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import os from 'node:os'
 import { spawn } from 'node:child_process'
-import Anthropic from '@anthropic-ai/sdk'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const DOCS_DIR = path.join(ROOT, 'docs/trending')
@@ -31,7 +24,6 @@ const DATA_DIR = path.join(ROOT, 'data/trending')
 const MODEL = process.env.CLAUDE_MODEL || 'claude-sonnet-5-5'
 const LIMIT = Number(process.env.TRENDING_LIMIT || 15)
 const SKIP_RECENT_DAYS = Number(process.env.SKIP_RECENT_DAYS || 7)
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN || ''
 const UA = 'trending-oss-digest (+https://github.com/T-T0821/T-T0821.github.io)'
 
 function todayJst() {
@@ -50,7 +42,6 @@ async function fetchText(url, headers = {}) {
 
 async function gh(pathname, accept = 'application/vnd.github+json') {
   const headers = { Accept: accept, 'X-GitHub-Api-Version': '2022-11-28' }
-  if (GITHUB_TOKEN) headers.Authorization = `Bearer ${GITHUB_TOKEN}`
   const res = await fetch(`https://api.github.com${pathname}`, {
     headers: { 'User-Agent': UA, ...headers },
   })
@@ -211,9 +202,6 @@ async function enrich(repo) {
 }
 
 // ---------- Claude による要約 ----------
-const FORCE_CLI = process.env.SUMMARY_BACKEND === 'cli'
-const USE_API = Boolean(process.env.ANTHROPIC_API_KEY) && !FORCE_CLI
-const client = USE_API ? new Anthropic() : null
 
 const SYSTEM = `あなたは日本のソフトウェアエンジニア向けに OSS の技術解説を書くテクニカルライターです。
 与えられたリポジトリ情報と README だけを根拠に、正確で簡潔な日本語の解説を書きます。
@@ -252,12 +240,8 @@ ${r.readme || '(README を取得できませんでした)'}
 **始め方:** （README にインストール手順があれば最小限のコマンドをコードブロックで。なければこの項目ごと省略）`
 }
 
-async function ask(prompt, maxTokens) {
-  return USE_API ? askApi(prompt, maxTokens) : askClaudeCode(prompt)
-}
-
-// Claude Code CLI（Pro/Max プランの OAuth トークン）で 1 回だけ応答させる。ツールはすべて無効化する。
-function askClaudeCode(prompt) {
+// Claude Code CLI で 1 回だけ応答させる。ツールはすべて無効化する。
+function ask(prompt) {
   return new Promise((resolve, reject) => {
     const args = [
       '-p',
@@ -267,7 +251,7 @@ function askClaudeCode(prompt) {
       '--system-prompt', SYSTEM,
       '--no-session-persistence',
     ]
-    const child = spawn(process.env.CLAUDE_BIN || 'claude', args, {
+    const child = spawn('claude', args, {
       cwd: os.tmpdir(), // リポジトリの設定ファイル等を読み込ませない
       env: process.env,
       stdio: ['pipe', 'pipe', 'pipe'],
@@ -291,33 +275,6 @@ function askClaudeCode(prompt) {
   })
 }
 
-async function askApi(prompt, maxTokens) {
-  const params = {
-    model: MODEL,
-    max_tokens: maxTokens,
-    system: SYSTEM,
-    output_config: { effort: 'medium' },
-    messages: [{ role: 'user', content: prompt }],
-  }
-  // Sonnet 5.5 / Opus 5.5 などでは、安全分類器による拒否時に別モデルへ自動フォールバックさせる
-  const useFallback = /^claude-(sonnet-5-5|opus-5|opus-5-5|fable-5)/.test(MODEL)
-  const res = useFallback
-    ? await client.beta.messages.create({
-        ...params,
-        betas: ['server-side-fallback-2026-07-01'],
-        fallbacks: 'default',
-      })
-    : await client.messages.create(params)
-  if (res.stop_reason === 'refusal') throw new Error('モデルが応答を拒否しました')
-  const text = res.content
-    .filter(b => b.type === 'text')
-    .map(b => b.text)
-    .join('')
-    .trim()
-  if (!text) throw new Error(`空の応答 (stop_reason=${res.stop_reason})`)
-  return text
-}
-
 async function summarizeOverview(repos) {
   const list = repos
     .filter(r => r.summary)
@@ -327,7 +284,6 @@ async function summarizeOverview(repos) {
     `今日注目を集めた OSS の一覧です。\n\n${list}\n\n` +
       `全体の傾向（どんな分野・技術が注目されているか）を日本語で 3〜5 文にまとめてください。` +
       `見出しや箇条書きは使わず、本文の段落だけを出力してください。`,
-    4000,
   )
 }
 
@@ -407,10 +363,7 @@ function slug(fullName) {
 
 // ---------- メイン ----------
 async function main() {
-  if (!FORCE_CLI && !process.env.ANTHROPIC_API_KEY && !process.env.CLAUDE_CODE_OAUTH_TOKEN) {
-    throw new Error('CLAUDE_CODE_OAUTH_TOKEN または ANTHROPIC_API_KEY を設定してください')
-  }
-  log(`要約バックエンド: ${USE_API ? 'Claude API' : 'Claude Code CLI (サブスクリプション)'} / モデル: ${MODEL}`)
+  log(`モデル: ${MODEL}`)
 
   const [trending, trendshift, search] = await Promise.all([
     safe('GitHub Trending', fromGithubTrending),
@@ -442,7 +395,7 @@ async function main() {
     await enrich(r)
     if (r.archived) continue
     try {
-      r.summary = await ask(repoPrompt(r), 8000)
+      r.summary = await ask(repoPrompt(r))
       log(`要約完了: ${r.fullName}`)
     } catch (e) {
       log(`要約失敗 ${r.fullName}: ${e.message}`)
