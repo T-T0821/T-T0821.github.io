@@ -1,0 +1,159 @@
+{
+  "conf": "acl",
+  "updated": "2026-11-14",
+  "year": 2022,
+  "headline": "ダブリンでハイブリッド開催。構文解析の学習済み表現を扱う研究が最優秀論文、プロンプトの並び順の研究も受賞",
+  "summary": "2022年5月22〜27日にアイルランドのダブリンで、現地とオンラインのハイブリッドで開催されました。この回から ACL Rolling Review（ARR）による査読が本格導入され、投稿3,378本に対し本会議に701本（長論文604・短論文97、採択率約20.8%）、Findings に331本が採択されました。最優秀論文は、文を左から1語ずつ読みながら構文を表す離散的な表現を学習する研究（カリフォルニア大学バークレー校）です。優秀論文には、少数例プロンプトで例の並び順によって性能が大きく変わる問題を扱った研究や、生成モデルの量子化が並びました。",
+  "stats": {
+    "submissions": 3378,
+    "accepted": 701,
+    "rate": "20.75%",
+    "note": "ARR でコミットされた1,918本を分母にすると36.54%。Findings は331本を掲載"
+  },
+  "keynotes": [
+    "Angela Friederici（基調講演）",
+    "Barbara Grosz・Yejin Choi（対談、司会 Rada Mihalcea）",
+    "Steven Bird（言語の多様性に関するパネル）"
+  ],
+  "trends": [
+    "構文の学習: 漸進的に読み進めるパーサの内部表現を学習で獲得",
+    "プロンプトの感度: 少数例の並び順だけで性能が大きく変わる問題と、その対処法",
+    "言語の多様性: 消滅の危機にある言語の音声合成（特別テーマ賞）、キニヤルワンダ語の BERT",
+    "評価の見直し: 対話型 QA の評価やテキスト簡略化の事実性の再検証"
+  ],
+  "implications": [
+    "プロンプトの細部で結果が変わるという指摘は、LLM を業務に使う際にプロンプトを評価・管理する必要性を早い段階で示した",
+    "低資源言語や言語復興を扱う研究が表彰されており、多言語対応は NLP の社会的責任として位置づけられている"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Learned Incremental Representations for Parsing",
+      "authors": "Nikita Kitaev, Thomas Lu, Dan Klein",
+      "url": "https://aclanthology.org/2022.acl-long.220"
+    },
+    {
+      "award": "Best Special Theme Paper",
+      "title": "Requirements and Motivations of Low-Resource Speech Synthesis for Language Revitalization",
+      "authors": "Aidan Pine, Dan Wells, Nathan Brinklow, Patrick William Littell, Korin Richmond"
+    },
+    {
+      "award": "Best Resource Paper",
+      "title": "DiBiMT: A Novel Benchmark for Measuring Word Sense Disambiguation Biases in Machine Translation",
+      "authors": "Niccolò Campolungo, Federico Martelli, Francesco Saina, Roberto Navigli"
+    },
+    {
+      "award": "Best Linguistic Insight Paper",
+      "title": "KinyaBERT: a Morphology-aware Kinyarwanda Language Model",
+      "authors": "Antoine Nzeyimana, Andre Niyongabo Rubungo"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Fantastically Ordered Prompts and Where to Find Them: Overcoming Few-Shot Prompt Order Sensitivity",
+      "authors": "Yao Lu, Max Bartolo, Alastair Moore, Sebastian Riedel, Pontus Stenetorp",
+      "url": "https://arxiv.org/abs/2104.08786"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Evaluating Factuality in Text Simplification",
+      "authors": "Ashwin Devaraj, William Berkeley Sheffield, Byron C Wallace, Junyi Jessy Li"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Online Semantic Parsing for Latency Reduction in Task-Oriented Dialogue",
+      "authors": "Jiawei Zhou, Jason Eisner, Michael Newman, Emmanouil Antonios Platanios, Sam Thomson"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Learning to Generalize to More: Continuous Semantic Augmentation for Neural Machine Translation",
+      "authors": "Xiangpeng Wei, Heng Yu, Yue Hu, Rongxiang Weng, Weihua Luo, Rong Jin"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Inducing Positive Perspectives with Text Reframing",
+      "authors": "Caleb Ziems, Minzhi Li, Anthony Zhang, Diyi Yang"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Ditch the Gold Standard: Re-evaluating Conversational Question Answering",
+      "authors": "Huihan Li, Tianyu Gao, Manan Goenka, Danqi Chen"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Active Evaluation: Efficient NLG Evaluation with Few Pairwise Comparisons",
+      "authors": "Akash Kumar Mohankumar, Mitesh M Khapra"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Compression of Generative Pre-trained Language Models via Quantization",
+      "authors": "Chaofan Tao, Lu Hou, Wei Zhang, Lifeng Shang, Xin Jiang, Qun Liu, Ping Luo, Ngai Wong"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Learned Incremental Representations for Parsing",
+      "titleJa": "構文解析のための漸進的表現の学習",
+      "award": "Best Paper",
+      "authors": [
+        "Nikita Kitaev",
+        "Thomas Lu",
+        "Dan Klein"
+      ],
+      "url": "https://aclanthology.org/2022.acl-long.220",
+      "why": "文を左から読みながら、各単語に少数の離散的なラベルを割り当てるだけで高精度な構文解析ができることを示しました。人手で設計した品詞や構文ラベルに頼らず、学習によって構文の「タグセット」を見つけ出した点が評価されました。"
+    },
+    {
+      "title": "Fantastically Ordered Prompts and Where to Find Them: Overcoming Few-Shot Prompt Order Sensitivity",
+      "titleJa": "少数例プロンプトの並び順への過敏さを克服する",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Yao Lu",
+        "Max Bartolo",
+        "Alastair Moore",
+        "Sebastian Riedel",
+        "Pontus Stenetorp"
+      ],
+      "url": "https://arxiv.org/abs/2104.08786",
+      "why": "同じ例を並べ替えるだけで、GPT 系モデルの少数例学習の精度が当て推量から最高水準まで大きく揺れることを示し、ラベルなしで良い並び順を選ぶ方法を提案しました。プロンプト設計の難しさを定量的に示した研究です。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "少数の訓練例だけをプロンプトに入れる In-context Learning において、例の並べ方（順序）だけで性能が最先端級からランダム並みまで大きく変わることを示した研究である。さらに、追加のアノテーション済み開発セットなしで性能の良い順序を自動選択する手法を提案している。",
+        "novelty": "テンプレートの影響は先行研究で調べられていたが、サンプル順序の感度を詳細に分析した研究は本論文が初めてと述べられている（モデルサイズ・サンプル数・ラベル順序などへの依存も分析）。また、言語モデル自身の生成能力で人工的な「probing set」を作り、ラベルなしで順序を評価する点が新しく、真の few-shot 設定を保てる。",
+        "method": "ランダムに選んだ n 個の訓練例の全順列（4例なら24通り）を候補プロンプトとし、各プロンプトを文脈として言語モデルから文を生成させ、生成ラベルは捨てて入力文のみを集めて probing set を構築する。各候補プロンプトが probing set に対して出す予測を使い、予測ラベル分布のエントロピー（GlobalE）と、各データ点の予測確率エントロピーの平均（LocalE）でスコア付けする。エントロピーが高い上位 K=4 の順序を性能の良いプロンプトとして採用する。これは性能の悪いプロンプトが予測ラベルの極端な偏りを示すという観察に基づく。",
+        "validation": "GPT-2（0.1B〜1.5B）と GPT-3（2.7B、175B）を用い、SST-2、SST-5、DBPedia、MR、CR、MPQA、Subj、TREC、AGNews、RTE、CB の11の分類タスクで評価した（各検証セットから256件をサブサンプル）。GlobalE は平均13%の相対改善、LocalE は平均9.6%の相対改善を示し、分散も低下した。また、訓練データを分割して開発セットにする方法より SST-2 で一貫して良い結果となり、4種類のテンプレートでも有効であった。",
+        "discussion": "GPT-2 の小型モデルでの CB・RTE のような文対タスクでは、良いプロンプト自体が存在しない可能性があり、順序選択の効果は限定的である（ランダム・多数決水準にとどまる）。また、手法はモデルにすでにある程度の分類能力があることを前提とし、全順列を評価するため候補数が増えると計算コストが課題になる（GPT-3 175B は費用の都合で2セット・12順列のみ）。",
+        "next": [
+          {
+            "title": "Calibrate Before Use: Improving Few-Shot Performance of Language Models",
+            "reason": "出力分布のキャリブレーションで few-shot の不安定さに対処する手法であり、本論文でも比較・議論されているため。"
+          },
+          {
+            "title": "True Few-Shot Learning with Language Models",
+            "reason": "開発セットを使わない真の few-shot 設定の評価を扱い、本論文の問題設定の背景となるため。"
+          },
+          {
+            "title": "What Makes Good In-Context Examples for GPT-3?",
+            "reason": "例の選び方と順序の影響について本論文と逆の結論を述べており、対比して読む価値があるため。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "ACL 2022 Best Paper Awards（公式）",
+      "url": "https://2022.aclweb.org/best-paper-awards"
+    },
+    {
+      "title": "ACL 2022 Proceedings（ACL Anthology・会議録の前付け、プログラム委員長の挨拶）",
+      "url": "https://aclanthology.org/2022.acl-long.0.pdf"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": [
+    "最優秀論文は arXiv に掲載がないため、落合フォーマットは作成していません"
+  ]
+}

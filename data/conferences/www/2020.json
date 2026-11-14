@@ -1,0 +1,79 @@
+{
+  "conf": "www",
+  "updated": "2026-11-14",
+  "year": 2020,
+  "headline": "台北開催予定から初のオンライン開催へ。対話から「未知の意図」を抽出する研究が最優秀論文に",
+  "summary": "台北で予定されていた The Web Conference 2020 は、COVID-19 のため2020年4月20〜24日にオンラインで開催されました。投稿1,129本・採択219本（19.4%）です。最優秀論文は、事前に決めた意図のカテゴリに頼らず、ユーザーの発話から新しい意図を抽出する研究でした。最優秀学生論文は、人気アプリに似せた名前で利用者をだます「アプリスクワッティング」の実態調査です。開会挨拶には台湾のオードリー・タン氏が登壇しました。",
+  "stats": {
+    "submissions": 1129,
+    "accepted": 219,
+    "rate": "19.4%"
+  },
+  "keynotes": [
+    "Yolanda Gil",
+    "Sir Nigel Shadbolt",
+    "Wei-Ying Ma"
+  ],
+  "trends": [
+    "対話システム: 事前定義なしにユーザーの意図を抽出する",
+    "モバイルのセキュリティ: 人気アプリに似せた偽アプリの実態（最優秀学生論文）",
+    "意見マイニング: 製品レビューの意見抽出が Seoul Test of Time 賞"
+  ],
+  "implications": [
+    "対話から意図を自動で見つける研究は、のちの LLM による意図理解やチャットボットの設計の先行例となった",
+    "Web の研究がセキュリティ・社会・言語にまたがる学際的な場であることを示す回だった"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Open Intent Extraction from Natural Language Interactions",
+      "authors": "Nikhita Vedula, Nedim Lipka, Pranav Maneriker, Srinivasan Parthasarathy"
+    },
+    {
+      "award": "Best Student Paper",
+      "title": "Mobile App Squatting",
+      "authors": "Yangyu Hu, Haoyu Wang, Ren He, Li Li, Gareth Tyson, Ignacio Castro, Yao Guo, Lei Wu, Guoai Xu"
+    },
+    {
+      "award": "Seoul Test of Time",
+      "title": "Mining the Peanut Gallery: Opinion Extraction and Semantic Classification of Product Reviews",
+      "authors": ""
+    },
+    {
+      "award": "Best Poster",
+      "title": "Edgify: Resource Allocation Optimization for Edge Clouds Using Stable Matching",
+      "authors": ""
+    }
+  ],
+  "featured": [
+    {
+      "title": "Open Intent Extraction from Natural Language Interactions",
+      "titleJa": "自然言語の対話からのオープンな意図抽出",
+      "award": "Best Paper",
+      "authors": [
+        "Nikhita Vedula",
+        "Nedim Lipka",
+        "Pranav Maneriker",
+        "Srinivasan Parthasarathy"
+      ],
+      "why": "対話システムの意図理解は、あらかじめ決めた意図のカテゴリに分類する方法が主流でした。カテゴリを決めずに発話から意図を抜き出す課題を設定し、未知の要望にも対応できる対話システムへの道を示しました。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "The Web Conference 2020（公式アーカイブ・受賞と基調講演）",
+      "url": "https://archives.iw3c2.org/www2020"
+    },
+    {
+      "title": "The Web Conference の採択率（myhuiban の集計）",
+      "url": "https://www.myhuiban.com/conference/137"
+    },
+    {
+      "title": "The Web Conference（Wikipedia・開催地）",
+      "url": "https://en.wikipedia.org/wiki/The_Web_Conference"
+    }
+  ],
+  "unreachable": [
+    "最優秀論文は arXiv に掲載が見つからなかったため、落合フォーマットは作成していません"
+  ]
+}

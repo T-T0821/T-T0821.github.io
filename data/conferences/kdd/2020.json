@@ -1,0 +1,69 @@
+{
+  "conf": "kdd",
+  "updated": "2026-11-14",
+  "year": 2020,
+  "headline": "サンディエゴ開催予定からオンラインへ。推薦の評価で使う「サンプリングした指標」の落とし穴を示した研究が最優秀論文に",
+  "summary": "サンディエゴで予定されていた KDD 2020 は、2020年8月23〜27日にオンラインで開催されました。研究トラックは投稿1,279本・採択216本（16.9%）で、応用データサイエンス（ADS）トラックを含めると投稿は2,000本超、採択は338本でした。研究トラックの最優秀論文は、推薦システムの評価で計算を省くために使われる「サンプリングした評価指標」が、本来の指標と食い違う順位を出しうることを示した研究（Google）です。ADS トラックでは、時間と文脈を考慮したリアルタイム推薦（Amazon）が選ばれました。",
+  "stats": {
+    "submissions": 1279,
+    "accepted": 216,
+    "rate": "16.9%",
+    "note": "研究トラックの数値。ADS トラックを含む全体では投稿2,000本超・採択338本"
+  },
+  "trends": [
+    "推薦システムの評価: サンプリングした指標は正確な指標と矛盾しうる",
+    "実運用の推薦: 時間と文脈に応じて手動調整なしで動くリアルタイム推薦",
+    "プライバシー: 中間表現を匿名化して未知のタスクにも使えるデータ収集（最優秀学生論文）"
+  ],
+  "implications": [
+    "推薦システムのオフライン評価の方法そのものが結論を左右することが示され、実務の A/B テストやオフライン評価の設計を見直すきっかけになった",
+    "研究トラックと ADS トラックの両輪で、企業の実データに基づく成果が学術的にも評価される KDD の特徴がはっきりした"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper（研究トラック）",
+      "title": "On Sampled Metrics for Item Recommendation",
+      "authors": "Walid Krichene, Steffen Rendle"
+    },
+    {
+      "award": "Best Paper（ADS トラック）",
+      "title": "Temporal-Contextual Recommendation in Real-Time",
+      "authors": "Yifei Ma, Murali Balakrishnan Narayanaswamy, Haibin Lin, Hao Ding"
+    },
+    {
+      "award": "Best Student Paper",
+      "title": "TIPRDC: Task-Independent Privacy-Respecting Data Crowdsourcing Framework for Deep Learning with Anonymized Intermediate Representations",
+      "authors": "Ang Li, Yixiao Duan, Huanrui Yang, Yiran Chen, Jianlei Yang"
+    }
+  ],
+  "featured": [
+    {
+      "title": "On Sampled Metrics for Item Recommendation",
+      "titleJa": "アイテム推薦におけるサンプリングした評価指標について",
+      "award": "Best Paper（研究トラック）",
+      "authors": [
+        "Walid Krichene",
+        "Steffen Rendle"
+      ],
+      "why": "推薦の評価では、全アイテムではなく少数の候補をサンプリングして順位を測ることが広く行われていました。この方法が本来の指標と矛盾する結論を導きうることを示し、補正方法を提案しました。"
+    }
+  ],
+  "sources": [
+    {
+      "title": "KDD 2020 Celebrates Recipients of the SIGKDD Best Paper Awards（insideHPC）",
+      "url": "https://insidehpc.com/2020/09/kdd-2020-celebrates-recipients-of-the-sigkdd-best-paper-awards/"
+    },
+    {
+      "title": "KDD の採択率（myhuiban・研究トラックの集計）",
+      "url": "https://www.myhuiban.com/conference/136"
+    },
+    {
+      "title": "SIGKDD（Wikipedia・開催地）",
+      "url": "https://en.wikipedia.org/wiki/Special_Interest_Group_on_Knowledge_Discovery_and_Data_Mining"
+    }
+  ],
+  "unreachable": [
+    "基調講演者の一覧は確認できなかったため省略しています",
+    "最優秀論文は arXiv に掲載が見つからなかったため、落合フォーマットは作成していません"
+  ]
+}

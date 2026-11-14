@@ -1,0 +1,144 @@
+{
+  "conf": "kdd",
+  "updated": "2026-11-14",
+  "year": 2023,
+  "headline": "ロングビーチ開催。グラフニューラルネットにプロンプト学習を持ち込んだ「All in One」が最優秀論文に",
+  "summary": "第29回となる KDD 2023 は、2023年8月6〜10日に米国ロングビーチで開催されました。研究トラックは投稿1,413本・採択313本（22.2%）です。研究トラックの最優秀論文は、NLP のプロンプト学習の考え方をグラフに持ち込み、ノード・エッジ・グラフ全体の異なるタスクを1つのプロンプトの形式に統一する「All in One」（香港中文大学ほか）でした。ADS トラックでは、YouTube などで使われる複数タスクのランキングモデルの学習を安定させる研究（Google）が選ばれ、Test of Time 賞は Auto-WEKA と Google の広告クリック予測でした。",
+  "stats": {
+    "submissions": 1413,
+    "accepted": 313,
+    "rate": "22.2%",
+    "note": "研究トラックの数値（myhuiban の集計）"
+  },
+  "trends": [
+    "グラフのプロンプト学習: 事前学習済み GNN を多様なタスクに転用する",
+    "推薦の大規模モデル: 複数タスクのランキングモデルの学習安定化（ADS 最優秀）",
+    "反事実説明: 多様でプライバシーに配慮した反事実説明の学習（最優秀学生論文）",
+    "AutoML: 学習アルゴリズムとハイパーパラメータの同時選択（Test of Time 賞の Auto-WEKA）"
+  ],
+  "implications": [
+    "LLM で成功した「事前学習＋プロンプト」の考え方がグラフにも広がり、グラフ基盤モデルの研究の出発点になった",
+    "大規模な推薦モデルの学習の不安定さは実運用での大きな課題で、学習を安定させる手法が ADS トラックで最高賞を得た"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper（研究トラック）",
+      "title": "All in One: Multi-task Prompting for Graph Neural Networks",
+      "authors": "Xiangguo Sun, Hong Cheng, Jia Li, Bo Liu, Jihong Guan",
+      "url": "https://arxiv.org/abs/2307.01504"
+    },
+    {
+      "award": "Best Paper（ADS トラック）",
+      "title": "Improving Training Stability for Multitask Ranking Models in Recommender Systems",
+      "authors": "Jiaxi Tang, Yoel Drori, Daryl Chang, Maheswaran Sathiamoorthy, Justin Gilmer, Li Wei, Xinyang Yi, Lichan Hong, Ed H. Chi",
+      "url": "https://arxiv.org/abs/2302.09178"
+    },
+    {
+      "award": "Best Student Paper（研究トラック）",
+      "title": "Feature-based Learning for Diverse and Privacy-Preserving Counterfactual Explanations",
+      "authors": "Vy Vo, Trung Le, Van Nguyen, He Zhao, Edwin Bonilla, Gholamreza Haffari, Dinh Phung",
+      "url": "https://arxiv.org/abs/2209.13446"
+    },
+    {
+      "award": "Test of Time（研究）",
+      "title": "Auto-WEKA: Combined Selection and Hyperparameter Optimization of Classification Algorithms",
+      "authors": "ブリティッシュコロンビア大学",
+      "url": "https://arxiv.org/abs/1208.3719"
+    },
+    {
+      "award": "Test of Time（ADS）",
+      "title": "Ad Click Prediction: a View from the Trenches",
+      "authors": "Google"
+    }
+  ],
+  "featured": [
+    {
+      "title": "All in One: Multi-task Prompting for Graph Neural Networks",
+      "titleJa": "All in One: グラフニューラルネットワークのためのマルチタスク・プロンプト",
+      "award": "Best Paper（研究トラック）",
+      "authors": [
+        "Xiangguo Sun",
+        "Hong Cheng",
+        "Jia Li",
+        "Bo Liu",
+        "Jihong Guan"
+      ],
+      "url": "https://arxiv.org/abs/2307.01504",
+      "why": "グラフの事前学習は、ノード・エッジ・グラフ単位とタスクの種類が多様なため、下流タスクで逆効果（負の転移）になることがありました。タスクをグラフ単位の形式にそろえ、学習可能な「プロンプトグラフ」で事前学習モデルとタスクの溝を埋める方法を示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "グラフのノード・エッジ・グラフレベルの多様なタスクに対し、事前学習済みGNNを凍結したまま、軽量なプロンプトグラフで下流タスクを事前学習の形式に合わせるマルチタスク・プロンプト手法（All in One）を提案した研究。NLPのプロンプト学習の考えをグラフに導入し、事前学習と下流タスクのギャップや負の転移を緩和することを目指す。",
+        "novelty": "従来のグラフプロンプト研究GPPTはノード分類のみ、かつエッジ予測を事前学習に限定していたが、本手法はノード・エッジ・グラフの各タスクに対応し、GraphCLやSimGRACEなどのグラフレベル事前学習とも互換性がある。また、プロンプトをトークン・トークン構造・挿入パターンの3要素で定義してNLPとグラフのプロンプトを統一的に扱い、メタ学習でプロンプトの初期化を学習する点が新しい。",
+        "method": "ノード・エッジのタスクを、対象ノードや対象ノード対のτ-ego（誘導部分）グラフを作ってそのラベルを付与することで、グラフレベルのタスクに再定式化する。プロンプトグラフG_p=(P,S)は学習可能なトークン、トークン間構造（学習パラメータ・内積による枝刈り・独立の3方式）、挿入パターン（トークンと入力ノード特徴の内積による重み付き加算）からなり、入力ノード特徴に加算して凍結済み事前学習モデルに入力する。さらに、ノード・エッジ・グラフ分類を混ぜたマルチタスクのエピソードでMAML型メタ学習（内側で適応、外側で二次勾配更新）を行い、プロンプトとタスクヘッドの初期値を学習する。タスクヘッドなしで、ノードクラスごとのサブプロンプトで生成したビューのうち誘導グラフに最も近いものでクラスを決める方式も示している。",
+        "validation": "Cora、CiteSeer、Reddit、Amazon、Pubmedの5データセットで、教師あり（GAT/GCN/GT）、事前学習＋ファインチューニング（GraphCL/SimGRACE）、プロンプトの3方式を、各クラス100サンプルのfew-shot設定でAcc・F1・AUCにより比較した。事前学習＋ファインチューニングに対する改善は、ノードレベルで1.10%〜8.81%、エッジレベルで1.28%〜12.26%、グラフレベルで0.14%〜10.77%と報告されている。ノード分類ではラベル比率50%のGPPTの報告値より少ないラベル量（約1.5〜25%）でも比較している。付録ではマルチクラス設定（Cora/CiteSeer）や回帰・リンク予測などの追加実験も行っている。",
+        "discussion": "提供された本文は転移性分析（RQ2）以降が途中で省略されており、転移性、アブレーション、効率性の実験結果は確認できない。理論的な柔軟性の議論はFang et al.の結果に依存しており、誤差上界O_pφはモデルの非線形層にも左右される。また、二次勾配を用いるメタ学習の計算コストや、グラフレベル事前学習への依存、誘導グラフ化の設計が性能に与える影響は議論の余地がある。",
+        "next": [
+          {
+            "title": "GPPT: Graph pre-training and prompt tuning to generalize graph neural networks",
+            "reason": "本論文が直接の比較対象かつ特殊ケースと位置づける先行のグラフプロンプト手法で、差分を理解するのに必須である。"
+          },
+          {
+            "title": "Prompt Tuning for Graph Neural Networks",
+            "reason": "プロンプトトークンで任意のグラフ操作を模倣できるという、本論文の柔軟性の議論の根拠となる理論を扱っている。"
+          },
+          {
+            "title": "Graph contrastive learning with augmentations (GraphCL)",
+            "reason": "本論文が標準の事前学習戦略として使うグラフレベル対照学習の基盤となる手法である。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Improving Training Stability for Multitask Ranking Models in Recommender Systems",
+      "titleJa": "推薦システムにおけるマルチタスク・ランキングモデルの学習安定化",
+      "award": "Best Paper（ADS トラック）",
+      "authors": [
+        "Jiaxi Tang",
+        "Yoel Drori",
+        "Daryl Chang",
+        "Maheswaran Sathiamoorthy"
+      ],
+      "url": "https://arxiv.org/abs/2302.09178",
+      "why": "実運用の大規模な推薦モデルで起きる学習の発散（損失の急上昇）の原因を分析し、最適化手法の改良で安定させました。研究論文では扱われにくい、実際の製品で起きる問題に正面から取り組んだ点が評価されました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "YouTubeの実運用マルチタスクランキングモデルで頻発する学習不安定性（損失発散）の原因を整理し、その対策として新しい最適化手法Clippyを提案した研究。大きな学習率やモデル容量増大でも収束を損なわずに学習を安定させることを目指している。実装はTensorFlow Recommendersで公開されている。",
+        "novelty": "レコメンドモデルの学習安定性という未開拓の課題に対し、データ分布の変化、モデルの大規模化・複雑化、複数目的による共有層の不安定化という原因仮説を示した。さらにGC/AGCが発散直前に十分小さなクリッピング係数を出せない点を学習ダイナミクスの観察から指摘し、感度の高い手法で解決した。",
+        "method": "ClippyはAdagradの勾配ではなく実際の更新量 r_t = g_t·G_t^{-1/2} を対象に、L2ノルムではなくL∞ノルム（要素ごとの最大値）で更新量とパラメータの比を測り、更新をスケールダウンする。クリッピング係数は min{1, (λ_rel|w|+λ_abs)/(η_t|r_t|)} で、絶対閾値λ_absによりパラメータがゼロ付近では初期にGC的、後半はAGC的に振る舞う。学習率を分母に入れてウォームアップに対応し、クリッピングは層ごとに適用する。他のオプティマイザにも更新量 r_t を差し替えれば適用できる。",
+        "validation": "YouTube本番データで、Small（7.5M）、Large（57.0M）、Large+DCN（68.0M）の3構成を用い、AUCとRMSEを評価した。何も対策しないNaive手法は全構成で発散し、GC・AGC・LAMBは学習率が制限されるか収束が劣った。Clippyは全構成で2倍の学習率で学習でき、Large+DCNではAUC 72.37に対しGCは72.27、RMSEは1.047に対し1.051と最良だった。付録のTransformer翻訳タスクでもAdagrad+Clippyは発散しなかった（ただしAdamWの検証誤差率31.6%に対し33.4%）。",
+        "discussion": "Clippyの理論的な収束解析は今後の課題とされている。また学習安定性を事前に定量評価する信頼できる指標がなく、評価は複数回の学習による経験的なものにとどまる。さらに実験は簡略化したモデルが中心で、検証も3回の繰り返しと限られている。",
+        "next": [
+          {
+            "title": "A Loss Curvature Perspective on Training Instability in Deep Learning",
+            "reason": "学習不安定性の原因を損失曲率（シャープネス）の観点から説明しており、本論文の理論的背景を理解できる。"
+          },
+          {
+            "title": "High-performance large-scale image recognition without normalization",
+            "reason": "比較対象であるAdaptive Gradient Clipping (AGC) の原論文で、Clippyとの違いを正確に把握できる。"
+          },
+          {
+            "title": "Recommending what video to watch next: a multitask ranking system",
+            "reason": "本論文が対象とするYouTubeのマルチタスクランキングモデルの詳細が書かれている。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "KDD 2023 受賞論文の発表（智源社区）",
+      "url": "https://hub.baai.ac.cn/view/28475"
+    },
+    {
+      "title": "KDD の採択率（myhuiban・研究トラックの集計）",
+      "url": "https://www.myhuiban.com/conference/136"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": [
+    "基調講演者の一覧は確認できなかったため省略しています"
+  ]
+}

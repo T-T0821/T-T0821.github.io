@@ -1,0 +1,96 @@
+{
+  "conf": "www",
+  "updated": "2026-11-14",
+  "year": 2022,
+  "headline": "リヨン主催でハイブリッド開催。動画推薦が人を過激なコンテンツへ導く経路を減らす研究が最優秀論文に",
+  "summary": "フランスのリヨンが主催し、2022年4月に現地とオンラインで開催されました。研究トラックは投稿1,822本・採択323本（17.7%）で、1,700人以上のプログラム委員が6,300件以上の査読を行いました。最優秀論文は、「次に見る動画」の推薦がユーザーを過激なコンテンツへ導く「過激化の経路」を、推薦グラフのつなぎ替えで減らす研究（ヘルシンキ大学ほか）です。基調講演は Prabhakar Raghavan（Google）と Virginia Dignum（ウメオ大学）の両氏でした。",
+  "stats": {
+    "submissions": 1822,
+    "accepted": 323,
+    "rate": "17.7%",
+    "note": "研究トラックの数値。投稿数は myhuiban の集計、採択数と採択率は公式ニュースレター"
+  },
+  "keynotes": [
+    "Prabhakar Raghavan（Google）",
+    "Virginia Dignum（ウメオ大学）"
+  ],
+  "trends": [
+    "推薦と社会: 推薦アルゴリズムが過激化を助長する経路の分析と緩和",
+    "グラフアルゴリズム: 推薦を有向グラフとして扱い、つなぎ替えで分断を減らす",
+    "開催形式: 3年ぶりの現地開催を含むハイブリッド"
+  ],
+  "implications": [
+    "推薦アルゴリズムの社会的影響を測り、設計で緩和する研究が最高賞を得ており、プラットフォームには精度だけでなく社会的な副作用への配慮が求められる"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Rewiring What-to-Watch-Next Recommendations to Reduce Radicalization Pathways",
+      "authors": "Francesco Fabbri, Yanhao Wang, Francesco Bonchi, Carlos Castillo, Michael Mathioudakis",
+      "url": "https://arxiv.org/abs/2202.00640"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Rewiring What-to-Watch-Next Recommendations to Reduce Radicalization Pathways",
+      "titleJa": "過激化の経路を減らすための「次に見る動画」推薦のつなぎ替え",
+      "award": "Best Paper",
+      "authors": [
+        "Francesco Fabbri",
+        "Yanhao Wang",
+        "Francesco Bonchi",
+        "Carlos Castillo",
+        "Michael Mathioudakis"
+      ],
+      "url": "https://arxiv.org/abs/2202.00640",
+      "why": "推薦を、コンテンツをノード、推薦をリンクとする有向グラフで表し、過激なコンテンツに閉じ込められやすさを「分断スコア」として測りました。推薦の質を大きく落とさずに、少数のリンクのつなぎ替えで分断を減らすアルゴリズムを示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "What-to-Watch-Next（次に見る動画）型レコメンダーを、コンテンツをノード、推薦リンクをエッジとするd-正則有向グラフとしてモデル化し、ユーザーが過激化コンテンツの連鎖（radicalization pathway）に閉じ込められる度合いを減らす手法を提案した研究。有害ノードから中立ノードに到達するまでのランダムウォークの期待長を「segregation」スコアとし、その最大値を小さくするよう少数の推薦リンクを付け替え（rewiring）る。推薦の質（nDCG）は閾値以上に保つ。",
+        "novelty": "類似研究のRePBubLik（Haddadan et al., 2021）は新規リンクの挿入を行い、全ノードのバブル半径の和を対象とする。本研究は既存の推薦を付け替える操作を扱い、有害ノードから中立ノードへの一方向のみを許し、最悪ケース（最大segregation）を最小化する点が異なる。また、問題がNP困難であり、任意の係数での近似もNP困難であることを証明している。",
+        "method": "吸収マルコフ連鎖の理論を用い、中立ノードを吸収状態とした基本行列F=(I−M_hh)^-1から、segregationベクトルzを求める。1回の付け替え後のFとzはSherman-Morrison公式で更新でき、有害ノードごとの減少量はO(1)で計算できる。1-Rewiringは多項式時間で最適に解け、候補生成（nDCG制約を満たす操作のみ）とsegregation上位ノードのソート・枝刈りで探索を効率化する。k-Rewiringはこの最適1-Rewiringをk回貪欲に繰り返すヒューリスティックで解く。初期のFとzはべき乗法で近似する。",
+        "validation": "YouTube（Ribeiro et al., 2020、33万本超の動画）とNELA-GT（ニュース71万件）から、d=5/10/20の推薦グラフ計6個とニュースの月別グラフ4個を作成し、τ=0.9で評価した。提案法（HEU）はベースライン（BSL-1、BSL-2、RND）とRePBubLikを全グラフで上回った。YouTubeのd=5では10回の付け替えでZを40%以上減らし、d=10では約80%減らした。NELA-GTでは20回の付け替えで少なくとも60%減らし、NEWS-3では4回で80%超減らした。BSL-1はHEUとほぼ同等の精度だった。RePBubLikはYouTubeの大きなグラフで24時間以内に終わらなかった。",
+        "discussion": "本文で確認できる範囲では、付け替え先を中立ノードに限り、確率pを元のエッジと同じにするなどの単純化があり、実際のユーザー行動や長期的な影響は実サービスで検証されていない。また、推薦グラフは静的でオフラインの実験にとどまる。貪欲法の理論保証はなく、近似不可能性から最適性は保証されない。残りの議論と今後の展望は、本文が途中で切れているため確認できない。",
+        "next": [
+          {
+            "title": "RePBubLik: Reducing Polarized Bubble Radius with Link Insertions",
+            "reason": "最も近い先行研究で、本論文の比較対象（RBL）であり、リンク挿入による構造バイアス削減との違いを理解できる。"
+          },
+          {
+            "title": "Absorbing Random-Walk Centrality: Theory and Algorithms",
+            "reason": "本手法の基盤である吸収ランダムウォークと基本行列・べき乗法による効率的計算の理論を学べる。"
+          },
+          {
+            "title": "Auditing radicalization pathways on YouTube",
+            "reason": "本論文が使用するYouTubeデータセットとラベルの出典で、過激化経路の実証的背景を理解できる。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "A study proposing better algorithms to avoid radicalization won Best Paper Award（ヘルシンキ大学）",
+      "url": "https://www.helsinki.fi/en/news/digitalisation/study-proposing-better-algorithms-avoid-radicalization-won-best-paper-award"
+    },
+    {
+      "title": "TheWebConf 2022 Newsletter 06（公式アーカイブ）",
+      "url": "https://archives.iw3c2.org/www2022/newsletter-06"
+    },
+    {
+      "title": "The Web Conference の採択率（myhuiban の集計）",
+      "url": "https://www.myhuiban.com/conference/137"
+    },
+    {
+      "title": "The Web Conference（Wikipedia・開催地）",
+      "url": "https://en.wikipedia.org/wiki/The_Web_Conference"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": [
+    "開催日程（日付）は確認できなかったため月のみ表示しています"
+  ]
+}

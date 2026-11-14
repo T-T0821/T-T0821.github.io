@@ -1,0 +1,93 @@
+{
+  "conf": "kdd",
+  "updated": "2026-11-14",
+  "year": 2022,
+  "headline": "ワシントン D.C. で3年ぶりの現地開催。ハイパーグラフ上の因果効果推定が研究トラックの最優秀論文に",
+  "summary": "2022年8月にワシントン D.C. で3年ぶりに現地開催され、オンライン参加なしで2,090人が登録しました。研究トラックは採択254本（15.3%）、ADS トラックは採択196本（26%）です。研究トラックの最優秀論文は、複数の人が同時につながるハイパーグラフの上で、ある介入（マスク着用など）が個人の結果（感染など）に与える因果効果を、他者からの影響も考慮して推定する研究（バージニア大学・Microsoft）でした。ADS トラックでは、Alibaba の連合学習によるグラフ学習の汎用基盤が選ばれています。",
+  "stats": {
+    "submissions": 1695,
+    "accepted": 254,
+    "rate": "15.3%",
+    "note": "研究トラックの数値（投稿数は myhuiban の集計、採択数と採択率は参加報告）。ADS トラックは採択196本（26%）"
+  },
+  "attendees": "2,090人（現地のみ）",
+  "keynotes": [
+    "Lise Getoor（UC サンタクルーズ）",
+    "Milind Tambe（ハーバード大学）",
+    "Shang-Hua Teng"
+  ],
+  "trends": [
+    "因果推論: ハイパーグラフ上の干渉を考慮した個別の処置効果の推定",
+    "連合学習: 企業間でデータを共有せずにグラフを学習する基盤（ADS 最優秀）",
+    "応用志向: ADS トラックで実製品のデータに基づく発表が多数",
+    "理論研究の重視: 研究トラックでは最適化などの理論研究も評価"
+  ],
+  "implications": [
+    "集団内の相互作用を考慮した因果推論は、マーケティング施策や公衆衛生の効果測定に直結し、相関ではなく因果を問う分析が実務でも重要になっている"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper（研究トラック）",
+      "title": "Learning Causal Effects on Hypergraphs",
+      "authors": "Jing Ma, Mengting Wan, Longqi Yang, Jundong Li, Brent Hecht, Jaime Teevan",
+      "url": "https://arxiv.org/abs/2207.04049"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Learning Causal Effects on Hypergraphs",
+      "titleJa": "ハイパーグラフ上の因果効果の学習",
+      "award": "Best Paper（研究トラック）",
+      "authors": [
+        "Jing Ma",
+        "Mengting Wan",
+        "Longqi Yang",
+        "Jundong Li",
+        "Brent Hecht",
+        "Jaime Teevan"
+      ],
+      "url": "https://arxiv.org/abs/2207.04049",
+      "why": "従来の因果推論は「ある人の結果は他人の処置に影響されない」と仮定しがちでした。グループ単位のつながり（ハイパーエッジ）を通じた影響を考慮して、マスク着用が感染に与える効果のような個別の因果効果を推定する枠組みを示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ハイパーグラフ上で、各ノードへの介入（例：マスク着用）が結果（例：COVID-19感染）に与える個別処置効果（ITE）を観察データから推定する問題を定式化し、フレームワーク HyperSCI を提案した研究。グループ相互作用に起因する高次の干渉（スピルオーバー効果）を考慮する点が特徴。この問題設定を扱った初の研究だと著者らは述べている。",
+        "novelty": "従来のITE推定は干渉なし（SUTVA）を仮定するか、通常グラフ上のペア間（1次）の干渉のみを扱っていた。本研究はハイパーエッジ内の複数ノードの相互作用による高次干渉を明示的にモデル化し、ハイパーグラフを通常グラフへ射影した場合に失われる情報を活用できる点が新しい。",
+        "method": "MLPでノード特徴から交絡因子表現 z_i を学習し、処置群と対照群の表現分布の差をWasserstein-1距離で抑える表現バランシングを行う。干渉モデリングでは、処置で マスクした表現 t_i*z_i をハイパーグラフ畳み込み（ラプラシアン L=D^-1/2 H B^-1 H^T D^-1/2）で伝播し、ノードとハイパーエッジ間のアテンション重みで入射行列を重み付けして干渉表現 p_i を得る。最後に [z_i‖p_i] から処置ごとの2つのMLP（f1, f0）で潜在的結果を予測し、MSE＋バランシング損失＋正則化で学習、ITEは y1−y0 で推定する。同定可能性は、要約関数の表現力と、無交絡性（unconfoundedness）の2つの仮定の下で示している。",
+        "validation": "実ハイパーグラフに基づく3つの半合成データ（Contact: 327ノード/7,818ハイパーエッジ、GoodReads: 57,031ノード/12,709ハイパーエッジ、Microsoft Teams: 91,391人）で、線形・二次の2種類の結果生成設定により評価した。指標は √ε_PEHE と ε_ATE。LR、CEVAE、CFR、Netdeconf、GNN-HSIC、GCN-HSICと比較し、全データ・全設定でHyperSCIが最良だった（例：Contact線形で √ε_PEHE 3.45、最良のベースライン GCN-HSIC は 7.28）。またスピルオーバーの強さ β を上げるほど、ベースラインに対する優位性が大きくなることも確認した。アブレーション等も行われているが、本文は途中が省略されており詳細は確認できない。",
+        "discussion": "評価は半合成データ（結果をシミュレーション生成）に限られ、実際の因果効果の真値での検証ではない。また、干渉は処置が非ゼロの隣接ノードからのみ生じる、同一ハイパーエッジ内のノード表現は似ている、といった単純化の仮定があり、ハイパーエッジの時間情報も未考慮で、今後の課題とされている。サイズが50を超える大きなハイパーエッジを除外している点も適用範囲の制約となりうる。",
+        "next": [
+          {
+            "title": "Estimating individual treatment effect: generalization bounds and algorithms",
+            "reason": "本手法が採用する表現バランシング（CFR）の理論的基礎と、主要ベースラインの原典である。"
+          },
+          {
+            "title": "Causal Inference under Networked Interference and Intervention Policy Enhancement",
+            "reason": "通常グラフ上のペア干渉下でのITE推定（GNN/GCN+HSIC）で、本研究が直接拡張・比較している先行手法である。"
+          },
+          {
+            "title": "Hypergraph convolution and hypergraph attention",
+            "reason": "HyperSCIの干渉モデリングの基盤であるハイパーグラフ畳み込みとアテンションの原典である。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "ACM SIGKDD 2022 Conference Highlight（Megagon Labs）",
+      "url": "https://megagon.ai/?p=8163"
+    },
+    {
+      "title": "KDD の採択率（myhuiban・研究トラックの集計）",
+      "url": "https://www.myhuiban.com/conference/136"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": [
+    "研究トラック次点・最優秀学生論文・ADS トラックの受賞論文は、出典に題名の記載がなかったため所属のみ本文で紹介しています",
+    "開催日程（日付）は確認できなかったため月のみ表示しています"
+  ]
+}

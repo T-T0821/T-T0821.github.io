@@ -1,0 +1,146 @@
+{
+  "conf": "acl",
+  "updated": "2026-11-14",
+  "year": 2023,
+  "headline": "トロント開催。LLM が主要分野に加わり、ユーモア理解のベンチマークや政治的偏りの追跡が最優秀論文に",
+  "summary": "2023年7月9〜14日にカナダのトロントでハイブリッド開催されました。投稿は4,864本で、本会議に1,074本（22.08%）、Findings に901本が採択されています。250本以上の投稿を集めた分野に「大規模言語モデル」が初めて加わり、対話・情報抽出・機械学習・応用と並ぶ主要分野になりました。最優秀論文は4本で、確認できたものは The New Yorker の漫画キャプションでユーモア理解を測るベンチマークと、事前学習データの政治的偏りが下流タスクの不公平さにつながる経路を追った研究です。特別テーマ賞は、弱教師あり学習の効果が過大評価されていると指摘した研究でした。",
+  "stats": {
+    "submissions": 4864,
+    "accepted": 1074,
+    "rate": "22.08%",
+    "note": "Findings は901本"
+  },
+  "trends": [
+    "LLM の台頭: 「大規模言語モデル」が250本超の投稿を集める主要分野に",
+    "LLM の能力の限界: ユーモアのような高度な理解はまだ人間に遠く及ばない",
+    "偏りと公平性: 事前学習データ → モデル → 下流タスクへと伝わる政治的偏り",
+    "評価の厳密さ: 弱教師あり学習の利点は、きれいな検証データの存在に依存していた"
+  ],
+  "implications": [
+    "ChatGPT 登場後の最初の ACL で、LLM の能力を測り、その偏りを追跡する研究が最高賞を得た。以後、LLM の評価と社会的影響は NLP の中心テーマになる",
+    "事前学習データの性質がモデルの偏りに直結することが示され、データの選別・記録（データシート）の重要性が増した"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Do Androids Laugh at Electric Sheep? Humor \"Understanding\" Benchmarks from The New Yorker Caption Contest",
+      "authors": "Jack Hessel, Ana Marasović, Jena D. Hwang, Lillian Lee, Jeff Da, Rowan Zellers, Robert Mankoff, Yejin Choi",
+      "url": "https://arxiv.org/abs/2209.06293"
+    },
+    {
+      "award": "Best Paper",
+      "title": "From Pretraining Data to Language Models to Downstream Tasks: Tracking the Trails of Political Biases Leading to Unfair NLP Models",
+      "authors": "Shangbin Feng, Chan Young Park, Yuhan Liu, Yulia Tsvetkov",
+      "url": "https://arxiv.org/abs/2305.08283"
+    },
+    {
+      "award": "Best Special Theme Paper",
+      "title": "Weaker Than You Think: A Critical Look at Weakly Supervised Learning",
+      "authors": "Dawei Zhu, Xiaoyu Shen, Marius Mosbach, Andreas Stephan, Dietrich Klakow",
+      "url": "https://arxiv.org/abs/2305.17442"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Minding Language Models' (Lack of) Theory of Mind: A Plug-and-Play Multi-Character Belief Tracker",
+      "authors": ""
+    }
+  ],
+  "featured": [
+    {
+      "title": "Do Androids Laugh at Electric Sheep? Humor \"Understanding\" Benchmarks from The New Yorker Caption Contest",
+      "titleJa": "アンドロイドは電気羊で笑うか? ニューヨーカー誌のキャプションコンテストによるユーモア理解ベンチマーク",
+      "award": "Best Paper",
+      "authors": [
+        "Jack Hessel",
+        "Ana Marasović",
+        "Jena D. Hwang",
+        "Lillian Lee",
+        "Jeff Da",
+        "Rowan Zellers",
+        "Robert Mankoff",
+        "Yejin Choi"
+      ],
+      "url": "https://arxiv.org/abs/2209.06293",
+      "why": "漫画とキャプションの組み合わせ判定、優劣判定、なぜ面白いかの説明という3課題で、画像と言語のモデルのユーモア理解を測りました。GPT-4 でも人間に大きく劣り、LLM の「理解」の限界を具体的に示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "The New Yorker Cartoon Caption Contest を題材に、AI のユーモア「理解」を測る3つの課題（キャプションと漫画のマッチング、優勝キャプションの品質ランキング、ジョークがなぜ面白いかの説明生成）を提案したベンチマーク研究。漫画画像のみを入力とする From Pixels 設定と、人手の記述を与える From Description 設定の両方でマルチモーダル/言語モデルを評価している。",
+        "novelty": "マッチングと説明生成は新規課題で、品質ランキングは Shahaf et al. (2015) や Radev et al. (2016) の定式化を拡張したもの。704枚の漫画に対し、場面設定・場面の記述・不自然さの記述・関連Wikipediaリンクという多面的な新規アノテーションと、651件の人手によるジョーク説明を整備して公開した。品質ランキングでは New Yorker 編集者の選択と観客（クラウド）の評価という2種類の嗜好を区別して評価している。",
+        "method": "各コンテストを丸ごとテストに回す5分割交差検証を用いた。From Pixels では CLIP ViT-L/14@336px を InfoNCE で微調整し、OFA-Huge で画像から記述を生成して言語モデルに渡す構成（Socratic Model 的な OFA→LM）も試した。From Description では人手の記述とキャプションを連結してテキスト化し、T5-Large/11B の微調整と、GPT-3/3.5/4 のゼロショット・5-shot・（GPT-3 のみ）微調整を比較した。説明生成は、人手の説明との組ごとの人間評価（3人の多数決）で判定した。",
+        "validation": "マッチング（5択）では、微調整 CLIP が 62.3%、人間は From Pixels 設定で 94.0%、From Description 設定の最良は 5-shot GPT-4 の 84.5%。品質ランキングでは、5-shot GPT-4 が CrowdAcc 73.3%（人間推定 83.7%）、NYAcc は微調整 GPT-3 が 69.8% で人間推定 64.6% を上回った。説明生成の人間評価では、5-shot GPT-4 は 5-shot GPT-3 に 93.0% の割合で好まれたが、人手の説明は 5-shot GPT-4 に対し 67.7% で選好された。",
+        "discussion": "対象は特定の言語・地域・文化に根ざしたユーモアの一部に限られ、「面白さ」は主観的なので編集者の選択を正解とみなすべきではない。説明コーパスは主に著者1名が書いており、書き手による説明の個人差の検討が今後の課題である。モデルの誤りには画像の誤解釈が多く、どの漫画が難しいかは事前に予測しにくいことも示された。",
+        "next": [
+          {
+            "title": "Inside Jokes: Identifying Humorous Cartoon Captions",
+            "reason": "品質ランキング課題の直接の先行研究で、キャプションの面白さを予測する特徴量と「文脈」「不自然さ」タグの出発点を確認できる。"
+          },
+          {
+            "title": "Humor in Collective Discourse: Unsupervised Funniness Detection in the New Yorker Cartoon Caption Contest",
+            "reason": "本論文が使うデータの元になった研究の一つで、投稿キャプション集合から面白さを教師なしで検出する手法を学べる。"
+          },
+          {
+            "title": "Socratic Models: Composing Zero-Shot Multimodal Reasoning with Language",
+            "reason": "本論文の OFA→LM 構成の考え方の元になっており、画像を言語記述に変換して言語モデルに渡す手法の背景を理解できる。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "From Pretraining Data to Language Models to Downstream Tasks: Tracking the Trails of Political Biases Leading to Unfair NLP Models",
+      "titleJa": "事前学習データから言語モデル、下流タスクへ: 不公平な NLP モデルにつながる政治的偏りの追跡",
+      "award": "Best Paper",
+      "authors": [
+        "Shangbin Feng",
+        "Chan Young Park",
+        "Yuhan Liu",
+        "Yulia Tsvetkov"
+      ],
+      "url": "https://arxiv.org/abs/2305.08283",
+      "why": "言語モデルの政治的傾向を測り、偏りのあるニュース・SNS データで追加学習するとその傾向が移ること、さらにヘイトスピーチ検出などの性能が対象集団によって偏ることを示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "事前学習データに含まれる政治的偏り（社会軸・経済軸）が、言語モデル（LM）の政治的傾向、さらにヘイトスピーチ検出や誤情報検出といった下流タスクの公平性へどう伝播するかを、パイプライン全体で追跡した研究。LMの政治的立場を測る新しい手法と、偏りが下流タスクに及ぼす影響の実証分析を提示している。",
+        "novelty": "従来研究は特定の政治家など個人に焦点を当てたLM分析や、人工的に作ったステレオタイプ指標に基づく分析が中心だった。本研究は政治学理論とPolitical Compass Testに基づきエンコーダ型・生成型の両方のLMに適用できる測定枠組みを示し、事前学習データ→LM→下流タスクという一連の流れを統制実験で結びつけた点が新しい。また、ヘイトスピーチだけでなく誤情報検出の公平性も扱っている。",
+        "method": "62個の政治的主張に対するLMの賛否を測り、社会軸・経済軸の2次元スコア（-10〜10）にマッピングする。エンコーダ型は「I <MASK> with this statement」のマスク補完で賛成語・反対語の確率を比較し、生成型は生成した応答をBARTベースの立場検出器で判定する。さらにRoBERTaとGPT-2を、左・中央・右×ニュース・Reddit の6種の党派コーパス（ヘイト内容は除去）で追加事前学習し、立場の変化を見る。その後、同一条件で各党派版RoBERTaをヘイトスピーチ・誤情報検出にファインチューニングし、全体性能と、標的となる属性グループや情報源ごとの性能を比較する。",
+        "validation": "14種のLMで立場を測定したところ、四象限すべてに分布し、BERT系はGPT系より社会的に保守的で、社会軸の偏りは経済軸より大きかった（平均の大きさ2.97対0.87）。党派コーパスでの追加事前学習では、左寄りコーパスは左・リベラル方向、右寄りコーパスは右・保守方向へ動き、RoBERTaをReddit-leftで追加事前学習すると社会スコアが2.97から-3.03へ変化した。下流タスクでは全体性能は概ね近く左寄りLMがやや優位だったが、グループ別では左寄りLMはLGBTQ+や黒人を標的としたヘイトに強く、右寄りLMは男性や白人を標的としたヘイトに強いなど差があった。党派アンサンブルにより、誤情報検出でBACC 90.88（単体最良88.61）と性能向上も確認した。",
+        "discussion": "Political Compass Testは西洋中心で採点方式への批判もあり、2軸に押し込む評価は細かな論点別の傾向を捉えきれない。党派的LMの悪用（ハイパーパーティザンLMの作成）の懸念があり、データの多さやエポック数を増やすだけでは極端化しなかったものの、将来の悪用の可能性は排除できない。アンサンブルは計算コストや人手による調整が必要であり、戦略的事前学習も目的に合ったコーパスの選定が課題である。",
+        "next": [
+          {
+            "title": "Language (technology) is power: A critical survey of \"bias\" in NLP",
+            "reason": "NLPにおけるバイアス研究の枠組みと問題点を整理した基礎文献で、本研究の位置づけを理解するのに役立つ。"
+          },
+          {
+            "title": "Documenting large webtext corpora: A case study on the colossal clean crawled corpus",
+            "reason": "Webコーパスの内容とフィルタリングが下流に与える影響を扱っており、事前学習データのバイアスを理解する関連文献である。"
+          },
+          {
+            "title": "The Risk of Racial Bias in Hate Speech Detection",
+            "reason": "アノテータの偏りがヘイトスピーチ検出の不公平性を生むことを示した先行研究で、本研究の下流タスク分析と対比できる（本文ではSap et al., 2019として言及）。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "ACL 2023 Proceedings（ACL Anthology・会議録の前付け、プログラム委員長の挨拶）",
+      "url": "https://aclanthology.org/2023.acl-long.0.pdf"
+    },
+    {
+      "title": "Best NLP papers to read（Flitto DataLab・ACL 2023 受賞論文の紹介）",
+      "url": "https://datalab.flitto.com/en/company/blog/?p=100"
+    },
+    {
+      "title": "Bowers CIS research shines at ACL 2023（コーネル大学）",
+      "url": "https://bowers.cornell.edu/news-stories/bowers-cis-research-shines-acl-2023"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": [
+    "最優秀論文4本のうち2本と、特別賞（社会的影響・リソース・再現）の題名は確認できた出典に記載がなかったため省略しています",
+    "基調講演者の一覧は確認できなかったため省略しています"
+  ]
+}

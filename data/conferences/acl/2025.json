@@ -1,0 +1,146 @@
+{
+  "conf": "acl",
+  "updated": "2026-11-14",
+  "year": 2025,
+  "headline": "ウィーン開催・投稿8,360本で過去最多。DeepSeek の Native Sparse Attention など4本が最優秀論文に",
+  "summary": "2025年7月27日〜8月1日にオーストリアのウィーンで開催されました。投稿は8,360本と前年のほぼ2倍に増え、本会議に1,699本（20.3%）、Findings に1,392本（16.7%）が採択されています。第一著者の国・地域の51.3%を中国が占め、前年の30.6%から急増しました。最優秀論文は4本で、GPU に合わせて設計し学習時から使える疎なアテンション（DeepSeek・北京大学）、LLM がアラインメント後も事前学習時の振る舞いに戻ろうとする「弾性」の研究（北京大学）、LLM の応答のサンプリングが規範的な理想に引っ張られることを示した理論、集団間の違いを認識すべき場面での公平性の測定でした。",
+  "stats": {
+    "submissions": 8360,
+    "accepted": 1699,
+    "rate": "20.3%",
+    "note": "Findings は1,392本（16.7%）"
+  },
+  "keynotes": [
+    "Luke Zettlemoyer（ワシントン大学・Meta）「Rethinking Pretraining: Data and Architecture」",
+    "Verena Rieser（Google DeepMind）「Whose Gold? Re-imagining Alignment for Truly Beneficial AI」"
+  ],
+  "trends": [
+    "長文脈の効率化: ハードウェアに合わせた学習可能な疎なアテンション（NSA）",
+    "アラインメントの限界: 微調整によるアラインメントは事前学習の分布へ戻りやすい",
+    "LLM の価値観と公平性: 応答の偏りの理論、「違いを認識する」公平性の測定",
+    "研究の担い手の変化: 第一著者の過半数が中国から",
+    "特別テーマ: NLP モデルの汎化"
+  ],
+  "implications": [
+    "DeepSeek のような企業研究所の効率化技術が言語系の最高峰会議で最高賞を得ており、推論コストの削減が研究と製品の両方で最重要課題になっている",
+    "アラインメントが「浅い」「戻りやすい」ことを示す研究が ICLR 2025 に続いて評価されており、安全対策は微調整だけに頼れないという認識が広がっている"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention",
+      "authors": "Jingyang Yuan, Huazuo Gao, Damai Dai ほか（DeepSeek・北京大学・ワシントン大学）",
+      "url": "https://arxiv.org/abs/2502.11089"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Language Models Resist Alignment: Evidence From Data Compression",
+      "authors": "Jiaming Ji, Kaile Wang, Tianyi Qiu, Boyuan Chen, Jiayi Zhou ほか",
+      "url": "https://arxiv.org/abs/2406.06144"
+    },
+    {
+      "award": "Best Paper",
+      "title": "A Theory of Response Sampling in LLMs: Part Descriptive and Part Prescriptive",
+      "authors": "Sarath Sivaprasad, Pramod Kaushik, Sahar Abdelnabi, Mario Fritz",
+      "url": "https://arxiv.org/abs/2402.11005"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Fairness through Difference Awareness: Measuring Desired Group Discrimination in LLMs",
+      "authors": "Angelina Wang, Michelle Phan, Daniel E. Ho, Sanmi Koyejo",
+      "url": "https://arxiv.org/abs/2502.01926"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention",
+      "titleJa": "ネイティブ疎アテンション: ハードウェアに合わせた、学習時から使える疎なアテンション",
+      "award": "Best Paper",
+      "authors": [
+        "Jingyang Yuan",
+        "Huazuo Gao",
+        "Damai Dai",
+        "Junyu Luo"
+      ],
+      "url": "https://arxiv.org/abs/2502.11089",
+      "why": "粗い圧縮・重要ブロックの選択・近傍の窓という3つの経路を組み合わせ、GPU で効率よく動く疎なアテンションを事前学習から使えるようにしました。長文脈で密なアテンションと同等以上の性能を保ちつつ、学習と推論を大幅に高速化しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "長文脈モデリングにおける標準Attentionの計算コストを下げるため、学習時から使えるスパースAttention機構「NSA（Natively trainable Sparse Attention）」を提案した研究。アルゴリズム設計とハードウェアに整合したカーネル実装を組み合わせ、事前学習から推論（prefill/decoding）まで一貫して効率化することを目指している。",
+        "novelty": "既存のスパースAttentionは推論時のみに適用されることが多く、prefillとdecodingの片方しか高速化できない、GQA/MQAと相性が悪い、選択操作が微分不可能で学習できない、といった課題があった。NSAは階層的スパース構造をエンドツーエンドで学習可能にし、GQAグループ単位のブロック選択とArithmetic Intensityを考慮したカーネル設計で、理論上の削減を実際の高速化につなげている点が新しい。",
+        "method": "各クエリに対し、(1)ブロック圧縮（学習可能なMLPでキー・バリューをブロック単位に圧縮）、(2)選択（圧縮Attentionのスコアからブロック重要度を導出し、上位nブロックの細粒度トークンを保持）、(3)スライディングウィンドウ（局所文脈）の3経路でAttentionを計算し、MLPとsigmoidによるゲートで統合する。局所パターンによるショートカット学習を防ぐため、3経路に独立したキー・バリューを与える。GQAグループ内のヘッドでブロック選択を共有し、グループ単位でクエリをSRAMへロードするTritonカーネルを実装して、KV転送の重複を排除し連続メモリアクセスを実現している。",
+        "validation": "27B（アクティブ3B）のGQA+MoEモデルを260B〜270Bトークンで事前学習し、Full Attentionと比較した。一般ベンチマークでは9指標中7指標でFull Attentionを上回り（平均0.456 vs 0.443）、LongBenchの平均は0.469でFull Attentionを+0.032、Exact-Topを+0.046上回り、64kのNeedle-in-a-Haystackでは全位置で完全な検索精度を示した。AIME 24（DeepSeek-R1蒸留SFT後）では8k生成で0.121 vs 0.046、16kで0.146 vs 0.092。速度面では64k長でFlashAttention-2比で順伝播最大9.0倍、逆伝播最大6.0倍、decodingでは最大11.6倍の期待高速化を示した。",
+        "discussion": "検証はA100上のTriton実装と単一スケール（27Bモデル）が中心であり、decodingの高速化はメモリアクセス量に基づく期待値である。他のスケール、アーキテクチャ、ハードウェアでの再現性は本文からは確認できない。また、ブロック間の注意パターンがなぜブロック状にクラスタ化するかについては、著者自身が詳細な調査が必要としている。",
+        "next": [
+          {
+            "title": "SeerAttention: Learning Intrinsic Sparse Attention in Your LLMs",
+            "reason": "補助損失でブロック重要度を学習する関連手法で、NSAが比較・批判した選択戦略との違いを理解できる。"
+          },
+          {
+            "title": "Quest: Query-Aware Sparsity for Efficient Long-Context LLM Inference",
+            "reason": "ブロック単位のクエリ依存KV選択の代表的ベースラインで、GQAとの非互換性などNSAが指摘した課題の背景を把握できる。"
+          },
+          {
+            "title": "H2O: Heavy-Hitter Oracle for Efficient Generative Inference of Large Language Models",
+            "reason": "KVキャッシュ削除型スパース化の代表例で、NSAが対象とするphase-restricted sparsityの問題を理解するのに役立つ。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Language Models Resist Alignment: Evidence From Data Compression",
+      "titleJa": "言語モデルはアラインメントに抵抗する: データ圧縮からの証拠",
+      "award": "Best Paper",
+      "authors": [
+        "Jiaming Ji",
+        "Kaile Wang",
+        "Tianyi Qiu",
+        "Boyuan Chen",
+        "Jiayi Zhou"
+      ],
+      "url": "https://arxiv.org/abs/2406.06144",
+      "why": "アラインメント済みのモデルが少量の追加学習で事前学習時の振る舞いに戻りやすい「弾性」を、圧縮の理論と実験で示しました。モデルが大きく事前学習データが多いほど戻りやすく、安全対策の設計に課題を投げかけました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "アライメント済みLLMが追加のファインチューニングで容易に事前学習時の挙動分布へ戻ってしまう現象を「弾性（elasticity）」と名付け、圧縮理論に基づいて理論的・実証的に示した研究。弾性が、モデルがアライメントに抵抗する（resistance）ことや、アライメントを元に戻す逆アライメント（inverse alignment）が可能になることの原因であると主張している。",
+        "novelty": "アライメントの脆弱性を、LLMを可逆圧縮プロトコルとみなす圧縮理論の枠組みで説明しようとした初の試みと位置づけている。複数データセットに対する正規化圧縮率の変化がデータ量に反比例する（直列バネのフックの法則に類似）という不変量を導出し、事前学習データとアライメントデータの規模差から、アライメントが桁違いに崩れやすいことを示した点が新しい。",
+        "method": "LLMを、トークン木を深さdで剪定しハフマン符号化する可逆圧縮プロトコルとしてモデル化し（モデルサイズが大きいほど扱える木の深さが増すと仮定）、圧縮率を学習損失の代理指標とする。事前学習データD_p、アライメントデータD_a、摂動データD_tを合わせて圧縮する状況で、各データがパレート質量分布に従うと仮定し、摂動量に対する正規化圧縮率の変化率がデータ量に反比例することを定理4.2として導出した。これをバネ定数と伸びの関係に対応づけ、弾性を F ∝ |D_i|·ΔD_KL として定式化している。",
+        "validation": "抵抗性の検証では、Llama2-7B/13B、Llama3-8Bを Alpaca・TruthfulQA・Beavertails でSFTしたスライス間で、逆向きの学習損失が順向きより一貫して低いことを確認した（例：Alpaca・Llama2-7Bで0.1589対0.2018）。反発（rebound）の検証では、Llama2-7BとGemma-2BをIMDbとBeavertailsで学習し、正例データが多いモデルほど少量の負例ファインチューニングで性能が急落し、その後は低下が緩やかになることを示した。また Qwen（0.5B/4B/7B）やTinyLlama（事前学習2.0T/2.5T/3.0T）の実験で、モデルサイズと事前学習データ量が増えるほど反発が強まる傾向を確認した。",
+        "discussion": "理論面ではデータの質量分布（パレート分布）の仮定が主な限界で、その実際の形を調べる実証研究が必要とされている。実験面では事前学習とアライメントの全ライフサイクルにわたる検証はコスト上できておらず、マルチモーダルモデルへの適用やスケーリング則との関係解明が今後の課題である。また、逆アライメントによるオープンソースモデルの安全性低下を防ぐため、ファインチューニング耐性のある頑健なアライメント手法が求められると論じている。",
+        "next": [
+          {
+            "title": "Safety Alignment Should Be Made More Than Just a Few Tokens Deep",
+            "reason": "本文で言及されている浅い安全性アライメント（shallow safety alignment）の概念を扱っており、アライメントの脆さの別の説明として本研究と比較できる。"
+          },
+          {
+            "title": "Language Modeling Is Compression",
+            "reason": "本研究の理論的基盤である、言語モデルの予測と可逆圧縮の等価性を示した論文である。"
+          },
+          {
+            "title": "Alignment Faking in Large Language Models",
+            "reason": "モデルが学習目的に選択的に従い元の選好を保とうとする現象を扱っており、本研究の抵抗性の議論と関連が深い。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "ACL 2025 Proceedings（ACL Anthology・会議録の前付け、プログラム委員長の挨拶）",
+      "url": "https://aclanthology.org/2025.acl-long.0.pdf"
+    },
+    {
+      "title": "2025Q3 Reports: Program Chairs（ACL Admin Wiki）",
+      "url": "https://www.aclweb.org/adminwiki/index.php/2025Q3_Reports:_Program_Chairs"
+    },
+    {
+      "title": "ACL 2025 最優秀論文の紹介（36Kr）",
+      "url": "https://eu.36kr.com/en/p/3401632759482502"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": []
+}

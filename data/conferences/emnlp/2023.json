@@ -1,0 +1,119 @@
+{
+  "conf": "emnlp",
+  "updated": "2026-11-14",
+  "year": 2023,
+  "headline": "シンガポール開催・投稿4,909本。文脈内学習の仕組みを「ラベル語が錨になる」と説明した研究が最優秀長論文に",
+  "summary": "2023年12月6〜10日にシンガポールでハイブリッド開催され、投稿は過去最多の4,909本、本会議に1,047本（21.3%）、Findings に1,060本が採択されました。最優秀長論文は、LLM の文脈内学習（プロンプト内の例から学ぶ能力）で、例のラベルを表す単語が情報を集める「錨」の役割を果たすことを情報の流れから示した研究（北京大学・WeChat AI）です。最優秀短論文は最小ベイズリスク復号の高速化（ケンブリッジ大学）、優秀論文には ChatGPT を検索の並べ替えに使う研究や、LLM と一階述語論理の定理証明器を組み合わせる LINC などが選ばれました。基調講演では Christopher Manning 氏が LLM 時代の大学の NLP 研究を論じました。",
+  "stats": {
+    "submissions": 4909,
+    "accepted": 1047,
+    "rate": "21.3%",
+    "note": "長論文23.3%、短論文14.0%。Findings は1,060本"
+  },
+  "keynotes": [
+    "Jong Park（KAIST）「Human-Centric Natural Language Processing」",
+    "Emily M. Provost（ミシガン大学）",
+    "Christopher Manning（スタンフォード大学）"
+  ],
+  "trends": [
+    "文脈内学習の解明: ラベル語が情報の集約点になるという内部メカニズムの分析",
+    "LLM の応用: 検索の再ランキング、論理推論器との組み合わせ（LINC）",
+    "対話データの合成: LLM で社会的常識を含む百万規模の対話を生成（SODA）",
+    "主要トラック: リソースと評価、NLP 応用、対話、情報抽出、テーマトラック"
+  ],
+  "implications": [
+    "LLM の内部で何が起きているかを説明する解釈性研究が最高賞を得ており、プロンプト設計を経験則から根拠のある方法に変える手がかりになっている",
+    "LLM を検索や論理推論器など既存の仕組みと組み合わせる研究が増え、のちの RAG やツール利用・エージェントの流れにつながった"
+  ],
+  "awards": [
+    {
+      "award": "Best Long Paper",
+      "title": "Label Words are Anchors: An Information Flow Perspective for Understanding In-Context Learning",
+      "authors": "Lean Wang, Lei Li, Damai Dai, Deli Chen, Hao Zhou, Fandong Meng, Jie Zhou, Xu Sun",
+      "url": "https://arxiv.org/abs/2305.14160"
+    },
+    {
+      "award": "Best Short Paper",
+      "title": "Faster Minimum Bayes Risk Decoding with Confidence-based Pruning",
+      "authors": "Julius Cheng, Andreas Vlachos"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Is ChatGPT Good at Search? Investigating Large Language Models as Re-Ranking Agents",
+      "authors": ""
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "SODA: Million-scale Dialogue Distillation with Social Commonsense Contextualization",
+      "authors": ""
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "LINC: A Neurosymbolic Approach for Logical Reasoning by Combining Language Models with First-Order Logic Provers",
+      "authors": ""
+    },
+    {
+      "award": "Best Demo Paper",
+      "title": "PaperMage: A Unified Toolkit for Processing, Representing, and Manipulating Visually-Rich Scientific Documents",
+      "authors": "Kyle Lo ほか（Allen Institute for AI ほか）"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Label Words are Anchors: An Information Flow Perspective for Understanding In-Context Learning",
+      "titleJa": "ラベル語は錨である: 情報の流れから見た文脈内学習の理解",
+      "award": "Best Long Paper",
+      "authors": [
+        "Lean Wang",
+        "Lei Li",
+        "Damai Dai",
+        "Deli Chen",
+        "Hao Zhou",
+        "Fandong Meng",
+        "Jie Zhou",
+        "Xu Sun"
+      ],
+      "url": "https://arxiv.org/abs/2305.14160",
+      "why": "浅い層で例の情報がラベル語に集まり、深い層で最終予測がラベル語から情報を引き出す、という2段階の仕組みを示しました。この知見から、精度を上げる重み付けや推論の高速化、誤りの分析手法も提案しています。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "In-context learning (ICL) の内部動作を情報フローの観点から分析し、デモンストレーション中のラベル語が「アンカー」として働くという仮説を提案・検証した研究。浅い層でラベル語にデモ情報が集約され、深い層でその情報が最終予測に参照されることを示した。この理解に基づき、ICL精度向上、推論高速化、誤り診断の3つの応用も示している。",
+        "novelty": "ICLを勾配降下やベイズ推論になぞらえる従来の概念的説明に対し、サリエンシースコアに基づく3つの指標（S_wp, S_pq, S_ww）とアテンション遮断によって、トークン間の情報の流れを層ごとに定量的に捉えた点が新しい。さらに、得られた機構理解を実際の手法（アンカー再重み付け、圧縮、誤り診断）に結びつけ、仮説の妥当性を応用面からも裏付けている。",
+        "method": "サリエンシースコア I_l（アテンション行列と損失勾配の要素積の絶対値）から、テキスト部→ラベル語の流れ S_wp、ラベル語→予測位置の流れ S_pq、その他の流れ S_ww を定義した。浅層での集約は、ラベル語から先行テキストへのアテンションを0にする遮断で検証し、深層での抽出は、予測位置からラベル語へのアテンション分布とモデル出力のAUC-ROC（および累積寄与R_l）で検証した。応用として、ICLをロジスティック回帰に見立て各ラベル語のアテンションに学習可能な係数 exp(β) を掛けるアンカー再重み付け、ラベル語とフォーマット部分の隠れ状態のみを各層で先頭に連結するHidden_anchor圧縮、ラベル語のキーベクトル間距離から混同を予測する誤り診断を提案している。",
+        "validation": "GPT2-XL（1.5B）とGPT-J（6B）を用い、SST-2、TREC、AGNews、EmoCで評価した。S_wpは浅層で、S_pqは深層で支配的になり、最初の5層でラベル語を遮断すると出力が大きく変化する一方、最後の5層や非ラベル語の遮断では影響が小さかった。深層のAUC-ROCは約0.8に達した。アンカー再重み付けは平均精度で1-shot ICLの51.90から68.64に向上し、アブストラクトや導入では平均16.7%の向上と述べられている。Hidden_anchor圧縮はGPT-Jで精度低下が1.5ポイントにとどまり、1.1〜2.9倍の高速化を示した。TRECでは、キーベクトル間距離から予測した混同行列が実際の混同（Description-Entityなど）とよく対応した。",
+        "discussion": "分類タスクのみが対象で生成タスクや思考連鎖（CoT）などの他のICLの枠組みは未検証であり、ハードウェアの制約から約6Bパラメータまでのモデルしか調べていないため、より大規模なモデルでの再現が今後の課題と著者は述べている。また、アンカー再重み付けの実験は計算上の制約でGPT2-XLのみで行われている。",
+        "next": [
+          {
+            "title": "Why Can GPT Learn In-Context? Language Models Secretly Perform Gradient Descent as Meta-Optimizers",
+            "reason": "ICLを勾配降下になぞらえる代表的な説明で、本論文の情報フロー的な説明と比較する基盤になるため。"
+          },
+          {
+            "title": "An Explanation of In-Context Learning as Implicit Bayesian Inference",
+            "reason": "ICLをベイズ推論として捉えるもう一つの主要な理論的説明で、本論文の機構的アプローチとの違いを理解できるため。"
+          },
+          {
+            "title": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?",
+            "reason": "フォーマットやラベル空間がICLで果たす役割を扱っており、本論文でフォーマット情報が圧縮に必要だった点の背景理解に役立つため。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "EMNLP 2023 Proceedings（ACL Anthology・会議録の前付け、プログラム委員長の挨拶）",
+      "url": "https://aclanthology.org/2023.emnlp-main.0.pdf"
+    },
+    {
+      "title": "EMNLP 2023 受賞論文の発表（智源社区）",
+      "url": "https://hub.baai.ac.cn/view/33369"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": [
+    "優秀論文の一部は著者名が出典に記載されていなかったため省略しています"
+  ]
+}

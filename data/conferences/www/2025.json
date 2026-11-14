@@ -1,0 +1,77 @@
+{
+  "conf": "www",
+  "updated": "2026-11-14",
+  "year": 2025,
+  "headline": "シドニー開催。逆強化学習で Reddit ユーザーの「振る舞いの似かより」を測る研究が最優秀論文に",
+  "summary": "The Web Conference 2025 は、2025年4月28日〜5月2日にオーストラリアのシドニーで、シドニー工科大学の主催により開催されました。最優秀論文は、交流のネットワークを作りにくいプラットフォームでも、逆強化学習でユーザーの行動方針を推定して「振る舞いの似かより（ホモフィリー）」を測る方法を示した研究（シドニー工科大学・EPFL）です。Reddit の6年分・590万件のやり取りを分析し、サッカーと e スポーツのように話題が違っても振る舞いがよく似たユーザーがいることを明らかにしました。",
+  "stats": {},
+  "trends": [
+    "エコーチェンバーの分析: 話題や交流ではなく「振る舞い」の似かよりを測る",
+    "逆強化学習の社会への応用: ユーザーの行動方針を推定して比較する"
+  ],
+  "implications": [
+    "分断や偏りの分析が、投稿内容やつながりだけでなく行動パターンにも広がっており、プラットフォームの健全性を測る新しい指標につながる"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Behavioral Homophily in Social Media via Inverse Reinforcement Learning: A Reddit Case Study",
+      "authors": "Lanqin Yuan, Philipp J. Schneider, Marian-Andrei Rizoiu",
+      "url": "https://arxiv.org/abs/2502.02943"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Behavioral Homophily in Social Media via Inverse Reinforcement Learning: A Reddit Case Study",
+      "titleJa": "逆強化学習によるソーシャルメディアの振る舞いの同類性: Reddit の事例研究",
+      "award": "Best Paper",
+      "authors": [
+        "Lanqin Yuan",
+        "Philipp J. Schneider",
+        "Marian-Andrei Rizoiu"
+      ],
+      "url": "https://arxiv.org/abs/2502.02943",
+      "why": "同類の人同士がつながるホモフィリーはエコーチェンバーの形成に関わりますが、従来は交流ネットワークや話題の分析に頼っていました。逆強化学習で各ユーザーの行動方針を推定して比べる新しい方法で、交流が見えにくい場でも似かよりを測れるようにしました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "Redditのように明示的なフォロー関係がなく、トピック単位で構成されるプラットフォームでユーザー間のホモフィリーを測るため、逆強化学習（IRL）でユーザーの行動方策を推定し、方策の類似度を「行動的ホモフィリー」として定量化する手法を提案した研究。2015〜2022年のReddit全データから抽出した662ユーザーを対象にケーススタディを行い、トピック的ホモフィリーとの違いやユーザーの行動ペルソナを分析した。",
+        "novelty": "従来のホモフィリー測定はフォローネットワークやハッシュタグ、トピック・コンテンツの類似性に依存しており、Redditのような構造では限界があった。本研究は階層的なスレッド構造に合わせた状態・行動空間（賛成・中立・反対の区別を含む）を設計したIRLを適用し、方策の類似度から行動に基づくホモフィリーを測る点が新しい。また、状態の訪問頻度で重み付けした対称KLダイバージェンス（SWKL）を導入している。",
+        "method": "ユーザーをReddit全体を環境とするエージェントとみなし、最大エントロピー深層IRLで報酬関数を学習して価値反復により方策（12状態×6行動の行列）を得る。状態は初回スレッド作成・初回ルートコメント・返信（賛成/中立/反対）・返信受信などの12種、行動はスレッド作成・ルートコメント・返信（賛成/中立/反対）・返信待ちなどの6種で、賛否はDeBERTaV3をDEBAGREEMENTでファインチューニングして分類した。2ユーザー間の方策の差は状態訪問割合で重み付けしたSWKLで測り、比較基準としてBERTopic（484トピック）のトピックベクトルのコサイン距離によるトピック的ホモフィリーを用いた。",
+        "validation": "15のホームサブレディット（最もコメント活動が多いサブレディット）から各45人、計662ユーザーを対象に、トピックと行動のホモフィリーをサブレディット間で比較した。トピック的ホモフィリーはサブレディット内で強い一方、行動的ホモフィリーは弱く重なりが大きかった。サブレディット対でのSpearman相関（Bonferroni補正、有意水準5%）では多くが正の相関だったが、r/soccerとr/leagueoflegendsは負の相関（トピックのコサイン距離0.944で重なりは小さいが行動は類似）を示した。k-meansで5つのペルソナ（Thread Creators 25人、Root Only 114人、Root Favored 263人、Balanced 136人、Disagreers 124人）が得られ、政治系サブレディットでDisagreersが多かった。",
+        "discussion": "本文で確認できる範囲では、結論として行動的ホモフィリーは従来のトピック型と概ね整合しつつ、ユーザーの役割など別の側面も捉えるとされている。一方でサンプルは662ユーザーと小規模で、間接的活動は第一世代の子のみに限定され、各ペルソナの解釈には定性的な確認（100コメントや20スレッドの目視など）が含まれる。なお、本文は結論部以降が省略されており、限界や今後の展望についての詳細な記述は確認できなかった。",
+        "next": [
+          {
+            "title": "Maximum Entropy Inverse Reinforcement Learning",
+            "reason": "本研究の方策推定の基盤である最大エントロピーIRLの原理を理解するため。"
+          },
+          {
+            "title": "Maximum entropy deep inverse reinforcement learning",
+            "reason": "報酬関数をニューラルネットで表現する深層IRLの拡張で、本研究が実際に用いた手法の詳細がわかる。"
+          },
+          {
+            "title": "Detecting Troll Behavior via Inverse Reinforcement Learning: A Case Study of Russian Trolls in the 2016 US Election",
+            "reason": "ソーシャルメディアのユーザー行動分析にIRLを適用した代表的な先行研究で、本研究との比較に役立つ。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Philipp Schneider wins 2025 Web Conference Best Paper Award（EPFL）",
+      "url": "https://actu.epfl.ch/news/philipp-schneider-wins-2025-web-conference-best--2"
+    },
+    {
+      "title": "The Web Conference 2025（公式アーカイブ・日程と会場）",
+      "url": "https://archives.iw3c2.org/www2025/the-web-conference"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": [
+    "投稿数・採択率は公式の発表を確認できなかったため省略しています",
+    "基調講演者の一覧は確認できなかったため省略しています"
+  ]
+}
