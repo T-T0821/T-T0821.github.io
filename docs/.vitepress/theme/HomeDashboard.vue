@@ -17,19 +17,6 @@
         </div>
       </div>
     </section>
-
-    <section v-if="research.length">
-      <h2 class="home-heading">📖 Deep Research 記事</h2>
-      <p class="home-lead">指定したトピックを GitHub Copilot が深く調べてまとめた解説記事です。</p>
-      <ul class="research-list">
-        <li v-for="a in research" :key="a.url">
-          <a :href="withBase(a.url)">
-            <span class="research-cat">{{ categoryOf(a.category)?.icon }} {{ categoryOf(a.category)?.label }}</span>
-            <span class="research-title">{{ a.title }}</span>
-          </a>
-        </li>
-      </ul>
-    </section>
   </div>
 </template>
 
@@ -37,10 +24,10 @@
 import { computed } from 'vue'
 import { withBase } from 'vitepress'
 import { data as articles } from '../../articles.data'
-import { CATEGORIES, categoryOf, shortDate } from '../categories'
+import { CATEGORIES, shortDate } from '../categories'
 
 const digests = computed(() =>
-  CATEGORIES.filter(c => c.group === 'daily').map(cat => ({
+  CATEGORIES.map(cat => ({
     cat,
     latest: articles.find(a => a.category === cat.key),
   })),
@@ -48,10 +35,6 @@ const digests = computed(() =>
 
 const latestDate = computed(() =>
   digests.value.map(d => d.latest?.date ?? '').sort().pop() ?? '',
-)
-
-const research = computed(() =>
-  articles.filter(a => categoryOf(a.category)?.group === 'research').slice(0, 8),
 )
 
 // 「〜を日本語で要約。」の定型部分を落として、話題だけを見せる
