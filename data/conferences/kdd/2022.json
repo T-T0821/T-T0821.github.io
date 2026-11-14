@@ -70,6 +70,114 @@
           }
         ]
       }
+    },
+    {
+      "title": "GraphMAE: Self-Supervised Masked Graph Autoencoders",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Zhenyu Hou",
+        "Xiao Liu",
+        "Yukuo Cen",
+        "Yuxiao Dong",
+        "Hongxia Yang",
+        "Chunjie Wang",
+        "Jie Tang"
+      ],
+      "url": "https://arxiv.org/abs/2205.10803",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "グラフ上の自己教師あり事前学習として、マスクしたノード特徴を再構成するグラフオートエンコーダ GraphMAE を提案した研究。対照学習に比べ、複雑な学習戦略や構造的データ拡張に依存せず、生成的手法でもノード分類・グラフ分類・転移学習で最先端水準に達することを示した。",
+        "novelty": "既存のグラフオートエンコーダ(GAE)が抱える、構造再構成の偏重、入力無破壊の特徴再構成による自明解、MSEの不安定さ、MLPデコーダの表現力不足という4つの課題を同時に解決した点が新しい。生成的 GAE として対照学習手法を複数のタスクで上回る結果を示した。",
+        "method": "ノード特徴の一部を学習可能な [MASK] トークンで置換し、GNN エンコーダで符号化する。デコーダ入力ではマスクノードの符号を別トークン [DMASK] で再度マスク(re-mask)し、単層 GNN デコーダ(GAT や GIN)で元特徴を再構成する。損失は、ベクトルのノルムや次元の影響を受けないコサイン誤差をγ乗でスケールした scaled cosine error (SCE) で、易しいサンプルの寄与を下げる(focal loss に類似)。推論時はマスクなしでエンコーダを適用する。",
+        "validation": "ノード分類6データセット、グラフ分類7データセット、分子特性の転移学習8データセットの計21データセットで評価した。ノード分類では Cora 84.2%、CiteSeer 73.4%、PubMed 81.1% で、グラフ分類では7データセット中5つで自己教師あり手法の中で最高精度を示した。転移学習では平均 ROC-AUC 73.8% で最良だった。アブレーションでは、SCE が MSE より node 分類で 1.5〜8.0 ポイント上回り、入力マスクを外すと大きく性能が低下した。",
+        "discussion": "最適なマスク率やスケーリング係数γはデータセットごとに異なり、調整が必要である(例: MUTAG では大きなγが逆効果)。また、グラフ分類の入力特徴は one-hot などで情報量が少なく、特徴再構成が有効な範囲の検証が今後の課題である。PPI では隠れ層サイズを大幅に増やすと教師あり学習に匹敵したが、モデルがかなり大きくなる点が課題である。",
+        "next": [
+          {
+            "title": "Masked Autoencoders Are Scalable Vision Learners",
+            "reason": "GraphMAE の設計の元となった画像分野のマスクオートエンコーダで、マスク率やデコーダ設計の考え方を理解できる。"
+          },
+          {
+            "title": "Large-Scale Representation Learning on Graphs via Bootstrapping",
+            "reason": "比較対象となる代表的な対照学習手法 BGRL で、負例なしの対照学習との違いを把握できる。"
+          },
+          {
+            "title": "From canonical correlation analysis to self-supervised graph neural networks",
+            "reason": "ノード分類で GraphMAE と競合する最先端の対照学習手法 CCA-SSG を理解するため。"
+          }
+        ]
+      },
+      "titleJa": "GraphMAE: 自己教師ありマスク型グラフオートエンコーダ",
+      "why": "マスクしたノード特徴を再構成するグラフオートエンコーダ GraphMAE を提案し、複雑な学習戦略や構造的データ拡張に頼らずに、生成的手法でも対照学習手法に匹敵・上回る性能を示した研究です。既存のGAEが抱える4つの課題（構造再構成の偏重、自明解、MSEの不安定さ、MLPデコーダの表現力不足）を同時に解決しており、ノード分類・グラフ分類・転移学習の計21データセットで評価し、ノード分類では Cora 84.2%、CiteSeer 73.4%、PubMed 81.1%、転移学習では平均 ROC-AUC 73.8% で最良でした。KDD 2022 で被引用数上位（Paper Digest の集計で同年1位）に選ばれている点も注目されます。"
+    },
+    {
+      "title": "FLDetector: Defending Federated Learning Against Model Poisoning Attacks via Detecting Malicious Clients",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Zaixi Zhang",
+        "Xiaoyu Cao",
+        "Jinyuan Jia",
+        "Neil Zhenqiang Gong"
+      ],
+      "url": "https://arxiv.org/abs/2207.09209",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "連合学習（FL）に対するモデル汚染攻撃に対し、悪意あるクライアントを検出して除外する手法FLDetectorを提案した研究。多数の悪意あるクライアントが存在する状況でも、検出後に残った少数の悪意あるクライアントをByzantine頑健なFL手法で抑え、正確なグローバルモデルを学習できるようにする。",
+        "novelty": "従来のByzantine頑健手法は少数の悪意あるクライアントにしか耐えられず、FLTrustやVAE検出法はサーバ側にクリーンな検証データを必要とした。FLDetectorは検証データ不要の教師なし手法で、クライアントのモデル更新の時系列的な一貫性という新しい観点から検出を行い、クライアント側に追加の計算・通信負荷も生じない。",
+        "method": "正規のクライアントはFLアルゴリズムに従って更新を計算するため、コーシーの平均値定理により前回の更新と積分ヘッセ行列から今回の更新を予測できる。サーバはL-BFGSでヘッセ行列を近似して各クライアントの更新を予測し、予測と受信した更新とのユークリッド距離を正規化して、過去N回（既定N=10）で平均した疑わしさスコアを算出する。Gap統計量でクラスタ数を判定し、複数クラスタなら2-meansで分け、スコアの大きい側を悪意ありと判定する。検出されたらクライアントを除外して学習を再開する。",
+        "validation": "MNIST、CIFAR10、FEMNISTの3データセットで、非標的攻撃1種と標的攻撃3種（Scaling、DBA、A Little is Enough）、およびFLDetectorに適応した攻撃を評価し、FedAvg、Krum、Trimmed-Mean、Medianと組み合わせた。FEMNISTではFLDetectorのFNRが全攻撃・全手法で0.0、FPRは0.0〜0.20で、VAE法より優れていた。検出後に悪意あるクライアントを除外してMedianで学習した場合、テスト精度は攻撃なしの場合と同等（例：CIFAR10の非標的攻撃で27.8%から65.9%に回復）で、バックドアのASRも低下した（例：CIFAR10のA Little is Enough攻撃で95.2%から1.8%）。",
+        "discussion": "FedAvgのようにByzantine頑健でない手法では、検出漏れの少数のクライアントでもバックドアが成立するためASRが高いまま残る（MNISTのFedAvgの例）。また、検出精度はFedAvgよりByzantine頑健手法の方が高く、ヘッセ行列の推定精度に依存する面がある。さらに、サーバ側でN回分のモデル差分を保持する必要があり、検出後に学習をやり直す必要がある点や、本文が理論保証を行うのはiid・FedAvg・更新の符号反転攻撃という限定条件下のみである点も課題である（本文の一部は省略されており、これ以外の限界の議論は確認できていない）。",
+        "next": [
+          {
+            "title": "FLTrust: Byzantine-robust Federated Learning via Trust Bootstrapping",
+            "reason": "クリーンな検証データを使い多数の悪意あるクライアントにも耐える代表的な頑健FL手法で、FLDetectorとの前提の違いを理解できる。"
+          },
+          {
+            "title": "Learning to detect malicious clients for robust federated learning",
+            "reason": "VAEで悪意あるクライアントを検出する比較対象の先行手法であり、FLDetectorとの差を把握できる。"
+          },
+          {
+            "title": "Local model poisoning attacks to Byzantine-robust federated learning",
+            "reason": "本研究が評価に用いた非標的モデル汚染攻撃の枠組みを提案した論文で、攻撃側の仕組みを理解できる。"
+          }
+        ]
+      },
+      "titleJa": "FLDetector: 悪意あるクライアントの検出による、連合学習のモデル汚染攻撃への防御",
+      "why": "連合学習に対するモデル汚染攻撃に対し、クライアントのモデル更新の時系列的な一貫性に着目して悪意あるクライアントを検出・除外するFLDetectorを提案した研究です。検証データ不要の教師なし手法で、クライアント側の追加負荷もなく、従来のByzantine頑健手法が苦手とする多数の悪意あるクライアントがいる状況にも対応します。MNIST、CIFAR10、FEMNISTでの評価では、検出後にMedianで学習するとテスト精度が攻撃なしの場合と同等になり（CIFAR10の非標的攻撃で27.8%から65.9%に回復）、バックドア攻撃のASRも低下（A Little is Enough攻撃で95.2%から1.8%）した点が注目され、KDD 2022で被引用数が上位（Paper Digest集計で同年2位）の論文です。"
+    },
+    {
+      "title": "Pre-training Enhanced Spatial-temporal Graph Neural Network for Multivariate Time Series Forecasting",
+      "selection": "被引用数上位（Paper Digest の集計で同年3位）",
+      "authors": [
+        "Zezhi Shao",
+        "Zhao Zhang",
+        "Fei Wang",
+        "Yongjun Xu"
+      ],
+      "url": "https://arxiv.org/abs/2206.09113",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "多変量時系列予測において、短期の履歴しか入力できない時空間グラフニューラルネットワーク（STGNN）を、2週間などの非常に長い履歴から学習した事前学習モデルで強化するフレームワークSTEPを提案した研究。事前学習モデルが生成するセグメント単位の表現を文脈情報として下流STGNNに与え、時系列間の依存関係（グラフ構造）の学習にも利用する。",
+        "novelty": "多くのSTGNNは計算量の制約から過去1時間程度の短期データしか使えないが、本研究は長期履歴の情報を事前学習で圧縮して下流モデルに渡す点が新しい。また、TSFormerの表現から作るkNNグラフを正則化に使い、離散的な依存グラフの学習を導く点でGTSを発展させている。STEPは任意のSTGNNに拡張可能な汎用フレームワークとされる。",
+        "method": "事前学習段階ではTransformerブロックによるマスク自己符号化モデルTSFormerを用い、長い系列を長さ12のパッチに分割して75%を高比率でマスクし、マスクされたパッチをMAEで再構成する（エンコーダ4層、デコーダ1層、学習可能な位置埋め込み）。予測段階ではTSFormerエンコーダを固定し、最後のパッチの表現を意味射影（MLP）してGraph WaveNetの隠れ表現に加算する。グラフ学習では全パッチ表現を連結した特徴から求めたkNNグラフとのクロスエントロピーを正則化として、Bernoulli分布パラメータをGumbel-Softmaxで離散サンプリングし、回帰損失とともにエンドツーエンドで学習する。",
+        "validation": "METR-LA、PEMS-BAY、PEMS04の3つの公開交通データセットで、HA・VAR・SVR・DCRNN・Graph WaveNet・GMAN・MTGNN・GTSなどと比較し、MAE・RMSE・MAPEで評価した。STEPはほぼ全ての予測ホライズンで最良となり、例えばMETR-LAのHorizon 12でMAE 3.37（GTS 3.46、MTGNN 3.49）を達成した（t検定でp<0.05）。アブレーションでグラフ構造学習と長系列表現の寄与を確認し、DCRNNを下流に用いても性能が向上した。またTSFormerが日次・週次の周期性を捉えていることも可視化で示した。",
+        "discussion": "データセットごとに事前学習を行う必要があり、異種データ間での汎用的な転移は本論文では扱われていない。マスク比率rとkNNのkには最適値が存在し、ハイパーパラメータ調整が必要である。また、学習可能な位置埋め込みを正弦波に置き換えると有意味な表現が得られなかったと報告されており、その成功要因の理論的な解明は今後の課題といえる。",
+        "next": [
+          {
+            "title": "Graph WaveNet for Deep Spatial-Temporal Graph Modeling",
+            "reason": "STEPが主な下流モデルとして採用しているSTGNNであり、基盤の仕組みを理解するために有用である。"
+          },
+          {
+            "title": "Discrete Graph Structure Learning for Forecasting Multiple Time Series",
+            "reason": "STEPのグラフ構造学習がベースにしているGTSの手法で、kNN正則化と離散グラフ学習の原型を理解できる。"
+          },
+          {
+            "title": "Masked Autoencoders Are Scalable Vision Learners",
+            "reason": "TSFormerの高比率マスク再構成と非対称エンコーダ・デコーダ設計の元になったMAEの原理を押さえられる。"
+          }
+        ]
+      },
+      "titleJa": "事前学習で強化した時空間グラフニューラルネットワークによる多変量時系列予測",
+      "why": "短期の履歴しか使えない従来のSTGNNに対し、2週間などの長い履歴から事前学習したTSFormerの表現を文脈情報として与え、時系列間の依存グラフの学習にも活用するフレームワークSTEPを提案した研究です。METR-LA、PEMS-BAY、PEMS04の3つの交通データセットでほぼ全ての予測ホライズンで最良の結果を示し、DCRNNを下流に使っても性能が向上するなど、任意のSTGNNに拡張できる汎用性も確認されています。KDD 2022で被引用数上位(Paper Digestの集計で同年3位)に入った点でも注目されます。"
     }
   ],
   "sources": [
@@ -84,6 +192,10 @@
     {
       "title": "arXiv（受賞論文の著者情報）",
       "url": "https://arxiv.org/"
+    },
+    {
+      "title": "Most Influential KDD Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-kdd-papers-2026-03-version"
     }
   ],
   "unreachable": [

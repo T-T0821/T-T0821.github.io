@@ -97,6 +97,158 @@
           }
         ]
       }
+    },
+    {
+      "title": "Faster Minimum Bayes Risk Decoding with Confidence-based Pruning",
+      "award": "Best Short Paper",
+      "authors": [
+        "Julius Cheng",
+        "Andreas Vlachos"
+      ],
+      "url": "https://arxiv.org/abs/2311.14919",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ニューラル機械翻訳などの条件付き系列生成で高精度な Minimum Bayes Risk (MBR) デコーディングの計算コストを下げる研究。標準的なサンプリングベース MBR はサンプル数が多く、効用関数の呼び出し回数もサンプル数の二乗に比例するため重い。疑似参照文を段階的に増やしながら、最良になりにくい仮説を早期に除外する反復的な枝刈りアルゴリズムを提案した。",
+        "novelty": "従来の効率化は、事前に高速な手法で仮説集合を小さくしてから標準 MBR を回すものが中心だった。本手法は MBR の実行中に、ブートストラップ再標本化で得た信頼度に基づいて仮説を除外する。効用関数やモデル、仮説生成法の知識を必要としない drop-in 代替であり、仮説が1つに絞られれば疑似参照の生成も早期に打ち切れる。",
+        "method": "仮説集合 H を徐々に縮小し、疑似参照リスト R を倍々（COMET は8、chrF++ は16から256まで）で増やす。各ステップで、現在の R 上での勝者 ȳȳ に対し、仮説 y が勝つ確率をブートストラップ再標本（500回）で推定する。この確率が 1−α を下回る仮説を除外する。全仮説に勝つ確率を推定すると分散が大きいため、勝者1つとの比較で上界を推定している。ブートストラップは計算済みの効用値を再利用するので、追加の効用関数呼び出しは不要。比較用ベースラインとして、効用順位の下位 β 割合を切り捨てる単純な枝刈りも用意した。",
+        "validation": "WMT18 の de-en、en-et、tr-en で Transformer base を学習し、仮説は beam top-k（k=256）、疑似参照は epsilon sampling（ε=0.02、1024件のプール）で生成した。chrF++ と COMET を効用・評価指標とし、10試行で平均した。テストでは標準 MBR とほぼ同じスコアを保ちつつ、効用関数の呼び出しは約65,000回から、COMET・α=0.9 の en-et で約2,250回（3.5%）まで減った（疑似参照は32%）。de-en の人手評価（125件）は標準 MBR の 48勝・42敗・35引き分けで有意差がなかった。実測時間では COMET・α=0.99 で標準 MBR の397.82秒に対し210.57秒だった。",
+        "discussion": "枝刈りを入れても MBR はビームサーチ（26.79秒）より大幅に遅い。反復処理でバッチが小さくなり、理論上の削減が実時間では目減りする。サンプルサイズのスケジュールは初期値の重要性を示したのみで、以降は単純な倍増にとどまり、最適な設定は今後の課題である。また、MBR は指標のノイズを悪用して見かけのスコアを上げる恐れがあり、人手評価との併用が望ましい。",
+        "next": [
+          {
+            "title": "Sampling-based approximations to minimum Bayes risk decoding for neural machine translation",
+            "reason": "本論文が「標準 MBR」として比較するサンプリングベース MBR と、仮説・疑似参照の扱いを詳しく理解できる。"
+          },
+          {
+            "title": "Epsilon sampling rocks: Investigating sampling strategies for minimum bayes risk decoding for machine translation",
+            "reason": "本実験の疑似参照生成に使われた epsilon sampling の根拠と、MBR に適したサンプリング戦略を確認できる。"
+          },
+          {
+            "title": "Quality-aware decoding for neural machine translation",
+            "reason": "高速な手法で仮説集合を事前に絞り込む先行アプローチの一つで、本論文の枝刈りと比較できる。"
+          }
+        ]
+      },
+      "titleJa": "信頼度に基づく枝刈りによる Minimum Bayes Risk デコーディングの高速化",
+      "why": "ニューラル機械翻訳などで高精度な Minimum Bayes Risk (MBR) デコーディングは、効用関数の呼び出し回数がサンプル数の二乗に比例して重いという課題があった。本研究は疑似参照文を段階的に増やしながら、ブートストラップ再標本化で得た信頼度に基づき最良になりにくい仮説を実行中に除外する反復的枝刈りを提案し、効用関数やモデル、仮説生成法を選ばずに使える drop-in 代替とした。WMT18 の実験では標準 MBR とほぼ同等のスコアを保ちつつ、COMET・α=0.9 の en-et で効用関数の呼び出しを約65,000回から約2,250回（3.5%）に削減し、de-en の人手評価でも有意差はなかったため、EMNLP 2023 の Best Short Paper に選ばれた。"
+    },
+    {
+      "title": "Is ChatGPT Good at Search? Investigating Large Language Models as Re-Ranking Agents",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Weiwei Sun",
+        "Lingyong Yan",
+        "Xinyu Ma",
+        "Shuaiqiang Wang",
+        "Pengjie Ren",
+        "Zhumin Chen",
+        "Dawei Yin",
+        "Zhaochun Ren"
+      ],
+      "url": "https://arxiv.org/abs/2304.09542",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ChatGPT/GPT-4などの生成系LLMを、パッセージ再ランキング（リランキング）のエージェントとして直接利用できるかを調べた研究。あわせて、LLMのランキング能力を小型の専用モデルへ蒸留する手法を提案し、知識汚染の懸念に対処する新規テストセットNovelEvalも構築した。",
+        "novelty": "従来のLLM再ランキング（UPRのクエリ生成やHELMの関連度生成）は出力のlog-probabilityに依存し、GPT-4には適用しにくかった。本研究は候補パッセージ群の順列を直接出力させる「instructional permutation generation」とスライディングウィンドウ方式を提案し、教師あり手法に匹敵・上回る性能を示した。さらにChatGPTが出力した順列そのものを教師信号にする順列蒸留で、整合性チェック等の帰納バイアスなしに専用モデルを学習する点も新しい。",
+        "method": "各パッセージに[1],[2]…の識別子を付けてLLMに入力し、クエリとの関連度が高い順に「[2] > [3] > [1]」の形式で並べ替えさせる。コンテキスト長の制約は、後ろから前へウィンドウ（サイズ20、ステップ10）をずらして再ランキングするスライディングウィンドウで解決する。蒸留では、MS MARCOから10Kクエリをサンプリングし、BM25上位20件のパッセージに対するChatGPTの順列を教師として、RankNet損失で生徒モデル（DeBERTa-large のクロスエンコーダ、または LLaMA-7B の関連度生成）を学習する。",
+        "validation": "TREC-DL19/20、BEIR（8タスク）、Mr.TyDi（10言語）でBM25上位100件を再ランキングして評価した。GPT-4はmonoT5(3B)に対しnDCG@10でTRECに平均+2.7、BEIRに+2.3の改善を示し（BEIR平均53.68 vs 51.36）、2023年6月以降の情報で作ったNovelEval（21問）でも90.45と最良だった。蒸留したDeBERTa（435M）はBEIR平均53.03でmonoT5(3B)（51.36）を上回り、教師であるChatGPT（49.37）も超えた。",
+        "discussion": "主な分析はOpenAIの非公開モデルに依存しており、オープンソースLLM（ChatGLM-6B、Vicuna-13Bなど）はChatGPTとの差が大きい。また再ランキング性能は初期のパッセージ順序（BM25など）に非常に敏感で、上限は第一段階検索のリコールに左右される。さらにLLMにはバイアスやハルシネーションのリスクがあるため、採用候補や商品のランキングなど社会的影響のあるタスクへの利用は推奨されない。",
+        "next": [
+          {
+            "title": "Zero-shot listwise document reranking with a large language model",
+            "reason": "本論文と同時期にLLMによるリストワイズ再ランキングを検討した研究であり、手法の比較に役立つ。"
+          },
+          {
+            "title": "Improving passage retrieval with zero-shot question generation",
+            "reason": "本論文が比較対象とするクエリ生成方式（UPR）の原典であり、ポイントワイズなLLM再ランキングとの違いを理解できる。"
+          },
+          {
+            "title": "Holistic evaluation of language models",
+            "reason": "本論文の関連度生成ベースライン（HELM）の出典で、LLM評価の枠組みを把握できる。"
+          }
+        ]
+      },
+      "titleJa": "ChatGPTは検索が得意か？大規模言語モデルを再ランキングエージェントとして調べる",
+      "why": "ChatGPT/GPT-4を、候補パッセージの順列を直接出力させるinstructional permutation generationとスライディングウィンドウでパッセージ再ランキングに使えるか検証した研究です。GPT-4はBEIR平均53.68でmonoT5(3B)の51.36を上回り、2023年6月以降の情報で作ったNovelEvalでも最良でした。さらにChatGPTの出力した順列を教師信号に蒸留したDeBERTa（435M）がBEIR平均53.03で、monoT5(3B)と教師のChatGPT（49.37）を超えた点が注目されます。"
+    },
+    {
+      "title": "SODA: Million-scale Dialogue Distillation with Social Commonsense Contextualization",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Hyunwoo Kim",
+        "Jack Hessel",
+        "Liwei Jiang",
+        "Peter West",
+        "Ximing Lu",
+        "Youngjae Yu",
+        "Pei Zhou",
+        "Ronan Le Bras",
+        "Malihe Alikhani",
+        "Gunhee Kim",
+        "Maarten Sap",
+        "Yejin Choi"
+      ],
+      "url": "https://arxiv.org/abs/2212.10465",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "オープンドメインの社会的対話データの不足を解消するため、100万規模の公開対話データセットSODA（約150万対話、1,100万発話超、約3億トークン）を構築した研究。あわせて、SODAで学習した汎用対話モデルCOSMO（3B/11B）を提案している。",
+        "novelty": "常識知識グラフ（Atomic 10x）のトリプルを物語（ナラティブ）に文脈化し、そこから対話を大規模言語モデルで蒸留するCO3フレームワークを初めて提案した。文脈なしのサンプリングよりも多様で具体的な対話が得られ、人手作成の既存コーパス（DailyDialog、BlendedSkillTalk）より一貫性・具体性・自然さで高く評価された。",
+        "method": "CO3は3段階からなる。(1) 社会的常識のトリプルを取得し、テンプレートで文形式にして人名を置換する。(2) GPT-3.5で2〜3文のナラティブを生成する。(3) 話者（もう一人の対話相手は必要に応じてGPT-3.5が推定）を決め、ナラティブに基づく多ターン対話を生成する。その後、パターン照合、ターン数・話者数・非人間話者の除外、Canary/Rewire APIによる安全性フィルタ、GPT-3.5によるゼロショットの常識フィルタ（head事象の含有確認）をかけ、元の68.9%にあたる1,486,896対話を残す。名前はUS SSNの上位1万名からランダムに置換してバイアスを抑える。COSMOはLM-adapted T5を基に、ナラティブ・話者指示・対話履歴を入力として次発話を生成するよう学習する。ナラティブと指示は一定確率でドロップし、ProsocialDialogも追加学習に用いる。",
+        "validation": "SODAと既存データセットのAMTによる直接比較（各300対話）では、BlendedSkillTalkとの文脈依存性を除く全指標でSODAが優位だった。COSMO-3BをDailyDialog（未学習）で評価すると、BlenderBot、GODEL、Koala、Vicunaに全観点で勝ち、人手の正解応答に対しても自然さ・一貫性・総合で55%前後と選好された（Specificの差のみ有意でない）。BlenderBotが学習したBlendedSkillTalkでも総合64%でCOSMOが上回り、SODA上ではCOSMO-11BがGPT-3.5・ChatGPTと総合でほぼ同等、具体性は教師のGPT-3.5より高く、ChatGPTより自然さが高かった。",
+        "discussion": "SODAは二者対話に限られ、科学的知識や歴史的事実に基づく対話を含まない。また、アノテータ集団の偏りがあり得ること、安全性フィルタや名前の多様化でも有害内容や過小代表のリスクを完全には防げないこと、教師モデルがGPT-3.5に限られることが限界として挙げられている。今後は多者対話への拡張、知識ベース対話データの統合、他のLLMや他のベースモデルの検討が課題とされる。",
+        "next": [
+          {
+            "title": "ProsocialDialog: A Prosocial Backbone for Conversational Agents",
+            "reason": "COSMOの追加学習データと安全性フィルタ（Canary）の元になっており、対話の安全性確保の仕組みを理解できる。"
+          },
+          {
+            "title": "Symbolic Knowledge Distillation: from General Language Models to Commonsense Models (Atomic 10x)",
+            "reason": "SODAの種となる常識知識グラフAtomic 10xの構築方法を理解するために有用である。"
+          },
+          {
+            "title": "PLACES: Prompting Language Models for Social Conversation Synthesis",
+            "reason": "LLMで社会的対話を合成する関連手法で、SODAのアプローチとの違いを比較できる。"
+          }
+        ]
+      },
+      "titleJa": "SODA: 社会的コモンセンスによる文脈化を用いた100万規模の対話蒸留",
+      "why": "オープンドメインの社会的対話データの不足に対し、常識知識グラフ（Atomic 10x）のトリプルを物語に文脈化して大規模言語モデルから対話を蒸留するCO3フレームワークを提案し、約150万対話からなる公開データセットSODAを構築した研究です。SODAは人手作成の既存コーパス（DailyDialog、BlendedSkillTalk）より一貫性・具体性・自然さで高く評価され、これで学習した汎用対話モデルCOSMOは、未学習のDailyDialogでもBlenderBot、GODEL、Koala、Vicunaを全観点で上回りました。こうした成果からEMNLP 2023のOutstanding Paperに選ばれています。"
+    },
+    {
+      "title": "G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Yang Liu",
+        "Dan Iter",
+        "Yichong Xu",
+        "Shuohang Wang",
+        "Ruochen Xu",
+        "Chenguang Zhu"
+      ],
+      "url": "https://arxiv.org/abs/2303.16634",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "自然言語生成（NLG）の出力品質を自動評価するため、LLMにチェーン・オブ・ソート（CoT）とフォーム記入形式を組み合わせて使う評価フレームワークG-Evalを提案した研究。要約と対話生成を対象に、参照文なしで人手評価との相関を高めることを目指している。",
+        "novelty": "従来のBLEU/ROUGEなど参照ベース指標は人手評価との相関が低く、GPTScoreのようなLLM生成確率ベースの手法も中規模ニューラル評価器（UniEvalなど）に及ばなかった。G-Evalは、生成確率を使う代わりにフォーム記入でLLMに直接採点させ、評価ステップをLLM自身に自動生成させる点、出力トークン確率で重み付けして連続値スコアを得る点が新しい。",
+        "method": "G-Evalは、(1)タスク定義と評価基準を含むプロンプト、(2)LLMが自動生成した詳細な評価ステップ（Auto CoT）、(3)スコアリング関数の3要素で構成される。スコアリングでは、整数スコアが偏る・同点が多いという問題に対し、各スコアの出力確率p(s_i)による加重和 score=Σp(s_i)×s_i を最終スコアとする。GPT-4はトークン確率を返さないため、n=20, temperature=1でサンプリングして確率を推定している。",
+        "validation": "SummEval（要約）、Topical-Chat（対話）、QAGS（幻覚/一貫性）の3つのメタ評価ベンチマークで人手評価との相関を比較した。SummEvalではG-Eval-4の平均Spearman相関が0.514で、UniEval（0.474）やGPTScore（0.417）を上回った。Topical-ChatではG-Eval-4の平均Spearmanが0.588でUniEval（0.417）を上回り、G-Eval-3.5もほぼ同等だった。QAGSでもG-Eval-4が平均で最良だったが、G-Eval-3.5は振るわなかった。アブレーションでは、CoTを除くとSummEvalの平均Spearmanが0.514から0.500に低下した。確率正規化なしではKendall-Tauが高く出るが、同点が多いためで、公平な比較ではないと論じている。",
+        "discussion": "G-Eval-4は、人手評価では人間作成の要約が好まれる場合でもGPT-3.5生成の要約に高いスコアを付けており、LLM生成文への偏りが示唆された。ただし著者らは予備的研究と位置づけており、LLM評価器を報酬信号に使うと自己強化や評価基準への過適合を招く懸念があり、さらなる検証が必要としている。また、一貫性など難しい評価観点ではモデル規模への感度が高く、GPT-3.5では性能が不十分だった。",
+        "next": [
+          {
+            "title": "GPTScore: Evaluate as you desire",
+            "reason": "G-Evalが直接比較・対比しているLLM生成確率ベースの評価手法であり、フォーム記入方式との違いを理解できる。"
+          },
+          {
+            "title": "Towards a unified multi-dimensional evaluator for text generation (UniEval)",
+            "reason": "従来の最強ベースラインであり、本論文のメタ評価設定やベンチマークもこの研究に従っている。"
+          },
+          {
+            "title": "Benchmarking large language models for news summarization",
+            "reason": "LLM評価器の自己生成文への偏りを調べた分析実験で使われたデータセットの出典である。"
+          }
+        ]
+      },
+      "titleJa": "G-Eval: より人手評価に近いGPT-4によるNLG評価",
+      "why": "LLMにチェーン・オブ・ソートとフォーム記入形式を組み合わせて採点させ、評価ステップの自動生成や出力トークン確率による重み付けで連続値スコアを得る評価フレームワークG-Evalを提案し、参照文なしで要約・対話生成の品質を評価する。SummEvalではG-Eval-4の平均Spearman相関が0.514でUniEval（0.474）やGPTScore（0.417）を上回り、Topical-Chatでも0.588でUniEval（0.417）を上回った。同年のEMNLPで被引用数1位（Paper Digest集計）となっており、LLMによる自動評価の代表的な研究として注目されている。"
     }
   ],
   "sources": [
@@ -111,6 +263,10 @@
     {
       "title": "arXiv（受賞論文の著者情報）",
       "url": "https://arxiv.org/"
+    },
+    {
+      "title": "Most Influential EMNLP Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-emnlp-papers-2026-03-version/"
     }
   ],
   "unreachable": [

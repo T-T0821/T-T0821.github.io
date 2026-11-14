@@ -56,6 +56,147 @@
         "Jure Leskovec"
       ],
       "why": "携帯電話の位置情報から得た人の移動データで感染拡大をモデル化し、どの業種の営業を制限するとどの程度感染を抑えられるかを推定できるようにしました。実際の行政の政策判断に使われた点が評価されました。"
+    },
+    {
+      "title": "Spectral Clustering of Attributed Multi-Relational Graphs",
+      "award": "Best Student Paper",
+      "authors": [
+        "Ylli Sadikaj",
+        "Yllka Velaj",
+        "Sahar Behzadi",
+        "Claudia Plant"
+      ],
+      "url": "https://arxiv.org/abs/2311.01840",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "属性（カテゴリ）付きの多重関係グラフ（ノード間に複数種類のエッジがあり、ノードがカテゴリ属性を持つグラフ）を対象に、次元削減とスペクトラルクラスタリングを同時に行う手法 SpectralMix を提案した研究。関係構造・関係の種類・カテゴリ属性のすべてを統合した低次元（2D/3Dも可）の共通ベクトル空間を得て、K-means でクラスタリングできる。",
+        "novelty": "既存手法の多くは複数エッジ種別を無視する、1種類の属性しか扱えない、100〜200次元の高次元埋め込みを出力する、属性あり／なしのどちらか一方のグラフでしか性能が出ない、といった制約があった。SpectralMix は単一グラフではラプラシアン固有写像、カテゴリデータのみでは同質性分析（Homogeneity Analysis）に帰着する一般化であり、属性あり・なしの多重グラフの双方に適用できる。調整が必要なパラメータは次元数 d のみとされ、重みは最適化中に学習されると述べられている。",
+        "method": "目的関数は、各関係タイプのエッジについてノード間の二乗距離を重み付きで最小化する項と、ノードとそのカテゴリ位置との距離を最小化する項（カテゴリ属性ごとの二部グラフ）の和で、O^T O = I の直交制約により全点が1点に潰れる自明解を避ける。ノード座標 O とカテゴリ座標 M を交互に更新する（隣接ノードとカテゴリ座標の重み付き平均で O を更新し、Gram-Schmidt で正規直交化、M はそのカテゴリに属するノード座標の平均）。収束後の O に対し k = d−1 で K-means を適用する。係数 α は各モダリティが同じ重みになるよう設定することが既定として推奨されている。",
+        "validation": "ACM・IMDB（属性あり）、DBLP・Flickr（属性なし）、脳ネットワーク（TD/ASD）の計6データセットでノードクラスタリングを NMI/ARI で評価し、ANRL・DGI・CrossMNA・DMGC・HAN・MARINE・DMGI と比較した。全データセットで最良であり、例えば ACM で NMI 0.71 / ARI 0.77、Flickr で NMI 0.64 と報告されている（DMGI は ACM で NMI 0.68 / ARI 0.65）。アブレーションでは、属性を除くと ACM の NMI が 0.51 に低下し、属性カテゴリの重みを均一にすると NMI 0.01 まで低下した。t-SNE による可視化では領域ごとの分離が明確で、外れ値群も確認できたとされる。また、統合失調症患者と健常者の脳ネットワークのケーススタディも行っている。",
+        "discussion": "実行時間は IMDB・Flickr・DBLP では他手法より速い一方、ACM では出力次元が大きいため遅く、辺数が多いデータへの計算コストが課題として示されている。脳ネットワークの比較は、小数・負値の重みを扱えない手法が多く DGI・HAN・DMGI の3手法に限られ、また次元数 d はデータセットごとに選ぶ必要があり ACM では性能が次元に依存する。収束の証明は直観的な議論にとどまっており、厳密性には議論の余地がある。",
+        "next": [
+          {
+            "title": "Laplacian Eigenmaps and Spectral Techniques for Embedding and Clustering",
+            "reason": "SpectralMix が単一グラフの場合に帰着するスペクトル埋め込みの基礎を理解できる。"
+          },
+          {
+            "title": "Unsupervised Attributed Multiplex Network Embedding",
+            "reason": "属性付き多重グラフで最も近い比較対象である DMGI の手法と、評価に用いたデータ設定を確認できる。"
+          },
+          {
+            "title": "Dependency Clustering across Measurement Scales",
+            "reason": "同質性分析に基づき数値・カテゴリ混在データをクラスタリングする、SpectralMix の属性処理の背景となる研究である。"
+          }
+        ]
+      },
+      "titleJa": "属性付き多重関係グラフのスペクトラルクラスタリング",
+      "why": "カテゴリ属性を持ち、ノード間に複数種類のエッジがあるグラフを対象に、次元削減とスペクトラルクラスタリングを同時に行う SpectralMix を提案した研究です。関係構造・関係の種類・属性を統合した低次元（2D/3Dも可）の共通空間を得られ、調整が必要なパラメータは次元数 d のみとされています。ACM・IMDB・DBLP・Flickr・脳ネットワークの計6データセットで比較手法を上回り、KDD 2021 の Best Student Paper に選ばれました。"
+    },
+    {
+      "title": "A Transformer-based Framework for Multivariate Time Series Representation Learning",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "George Zerveas",
+        "Srideepika Jayaraman",
+        "Dhaval Patel",
+        "Anuradha Bhamidipaty",
+        "Carsten Eickhoff"
+      ],
+      "url": "https://arxiv.org/abs/2010.02803",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "多変量時系列データに対して、Transformerエンコーダを用いた教師なし表現学習のフレームワーク（TST: Time Series Transformer）を提案した研究。事前学習したモデルを回帰・分類に適用でき、原理的には予測や欠損値補完にも使える。ラベル付きデータが少ない状況でも高精度を得ることを目指している。",
+        "novelty": "著者らによれば、多変量時系列の教師なし表現学習にTransformerエンコーダを用いた初の試みである。従来のTransformer系時系列研究は予測や補完など特定の生成タスク向けのエンコーダ・デコーダ構成が中心だったが、本研究はBERTのように事前学習から多様な下流タスクへ展開できる汎用枠組みにした。また、追加の未ラベルデータなしでも、同じ訓練データを教師なし目的で再利用するだけで完全教師あり学習を上回る点を示した。",
+        "method": "入力の各時刻の特徴ベクトルを線形射影してd次元にし、学習可能な位置エンコーディングを加えてTransformerエンコーダに入力する。事前学習では各変数の系列を独立にマスクし、マスク区間長は平均l_m=3の幾何分布、マスク割合r=0.15とする。マスク部分のみを対象とした平均二乗誤差で元の値を復元させる。短い区間が前後の値から自明に補間されるのを避ける工夫である。層正規化の代わりにバッチ正規化を用いて外れ値の影響を緩和し、可変長系列にはパディングマスクで対応する。回帰・分類では全時刻の表現を連結して線形層に入力し、全重みをファインチューニングする。",
+        "validation": "回帰ではMonash/UEA/UCRアーカイブの6データセット（RMSE）で、TSTは平均ランク1.33と、2位のXGBoost（3.5）を大きく上回った。平均RMSEは全モデル平均より約30%低く、2位のXGBoostより約16%低かった。分類ではUEAの11データセットで7つが最良で平均ランク1.7（ROCKETは2.3）となった。事前学習モデルは完全教師ありに対し、回帰で3/6、分類で8/11のデータセットで上回った。BeijingPM25Qualityでは、ラベル割合を変えても事前学習の利点が続くこと、未ラベルサンプルを増やすほど誤差が下がる傾向が確認された。",
+        "discussion": "ROCKETが勝ったデータセットはいずれも3次元の低次元時系列で、低次元入力では注意機構や位置埋め込みに難があると著者らは推測し、1D畳み込みによる入力表現の改善を今後の課題とする。自己注意の計算量が系列長wに対してO(w²)であることがボトルネックで、疎な注意などの導入が今後の方向として挙げられている。欠損補完や予測は定性的な例示にとどまり、最先端手法との定量比較は今後の課題である。",
+        "next": [
+          {
+            "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+            "reason": "本論文のマスク復元による教師なし事前学習の発想の源流であり、枠組みの設計意図を理解するのに役立つ。"
+          },
+          {
+            "title": "ROCKET: exceptionally fast and accurate time series classification using random convolutional kernels",
+            "reason": "本論文が比較した最強の非深層学習ベースラインで、低次元データでTSTを上回った理由を考える手がかりになる。"
+          },
+          {
+            "title": "Unsupervised Scalable Representation Learning for Multivariate Time Series",
+            "reason": "三つ組損失と因果的拡張CNNによる教師なし多変量時系列表現学習の代表的な先行手法で、直接の比較対象である。"
+          }
+        ]
+      },
+      "titleJa": "多変量時系列表現学習のためのTransformerベースのフレームワーク",
+      "why": "多変量時系列に対してTransformerエンコーダで教師なし事前学習を行う枠組みTSTを提案し、事前学習したモデルを回帰や分類に適用できることを示した研究です。著者らによれば、この目的でTransformerエンコーダを用いた初の試みで、追加の未ラベルデータがなくても、同じ訓練データを教師なし目的で再利用するだけで完全教師あり学習を上回る例があります。回帰では6データセットで平均ランク1.33（2位のXGBoostは3.5）、分類ではUEAの11データセット中7つで最良となり、KDD 2021で被引用数が同年1位（Paper Digest集計）という点でも注目されます。"
+    },
+    {
+      "title": "Spatial-Temporal Graph ODE Networks for Traffic Flow Forecasting",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Zheng Fang",
+        "Qingqing Long",
+        "Guojie Song",
+        "Kunqing Xie"
+      ],
+      "url": "https://arxiv.org/abs/2106.12931",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "交通流予測において、浅いGNNでは捉えにくい長距離の時空間依存関係を扱うため、テンソル型の常微分方程式(ODE)でGNNを連続化したSTGODEを提案した研究。道路の地理的接続に加えて、時系列の類似性に基づく意味的接続も取り入れている。",
+        "novelty": "交通分野で、連続的なグラフODEを道路ネットワークのノード表現に適用した初の試みと主張している。空間と時間を別モジュールで扱う従来手法と異なり、時空間テンソルに対するODEで両者を同時にモデル化し、過平滑化を抑えて深いネットワークを構成できる点が新しい。DTWによる意味的隣接行列の導入も優れている点として挙げられている。",
+        "method": "時空間テンソルHに対し、dH/dt = H×1(Â−I) + H×2(U−I) + H×3(W−I) + H0 というテンソル型ODEを定義する(ÂとI差は正規化隣接行列、Uは時間変換行列、Wは特徴変換行列)。初期状態H0を加えるrestart distributionにより過平滑化を抑え、UとWは直交行列と(0,1)にクランプした固有値で固定し、発散を防ぐ。ODEソルバー(Euler法)を2つの膨張TCNで挟む「サンドイッチ」構造をSTGODEブロックとし、空間隣接行列とDTWに基づく意味的隣接行列それぞれのブロックを並列に配置する。最後にmax-pooling、2層MLP、Huber損失で予測する。",
+        "validation": "PeMSD7(M)、PeMSD7(L)、PeMS03、PeMS04、PeMS07、PeMS08の6つの実データセットで、ARIMA、STGCN、DCRNN、GraphWaveNet、ASTGCN(r)、STSGCNと比較した。RMSE・MAE・MAPEの全指標、全データセットで最良となり、例えばPeMSD7(L)ではRMSE 5.98、MAE 3.22、MAPE 7.94で、STSGCN(6.88/3.61/9.13)を上回った。PeMS04での アブレーションでは、意味的隣接行列、テンソル型定式化、H0のいずれを除いても性能が低下し、ネットワークの深さを増すとSTGCN*は大きく劣化する一方、STGODEは安定していた。",
+        "discussion": "本文では限界や今後の課題が明示的には述べられていない。実験はPeMS系の高速道路データに限られ、ODEの積分時間(深さ)の影響や計算コストの詳細な分析、他領域への一般化は本文からは確認できない。また、対数をテイラー展開の一次近似(ln M ≈ M−I)で置き換えている点や、DTW計算の負荷も検討の余地がある。",
+        "next": [
+          {
+            "title": "Continuous Graph Neural Networks",
+            "reason": "STGODEの基盤となるrestart distributionを用いた連続GNNで、過平滑化を抑える理論的根拠を理解できる。"
+          },
+          {
+            "title": "Neural Ordinary Differential Equations",
+            "reason": "ODEソルバーをブロックとして組み込み逆伝播する枠組みの原典で、STGODEの学習方法の前提となる。"
+          },
+          {
+            "title": "Spatial-Temporal Synchronous Graph Convolutional Networks: A New Framework for Spatial-Temporal Network Data Forecasting",
+            "reason": "時空間を同時にモデル化する最も強いベースラインで、STGODEとの違いを比較できる。"
+          }
+        ]
+      },
+      "titleJa": "交通流予測のための時空間グラフODEネットワーク（Spatial-Temporal Graph ODE Networks）",
+      "why": "浅いGNNでは捉えにくい長距離の時空間依存関係を扱うため、テンソル型ODEでGNNを連続化したSTGODEを提案した研究です。交通分野で連続的なグラフODEを道路ネットワークのノード表現に適用した初の試みと主張しており、時空間を同時にモデル化して過平滑化を抑え、深いネットワークを構成できる点が新しいとされています。PeMS系6つの実データセットでRMSE・MAE・MAPEの全指標において比較手法を上回り、KDD 2021での被引用数も同年2位（Paper Digest集計）と高く評価されています。"
+    },
+    {
+      "title": "Self-supervised Heterogeneous Graph Neural Network with Co-contrastive Learning",
+      "selection": "被引用数上位（Paper Digest の集計で同年3位）",
+      "authors": [
+        "Xiao Wang",
+        "Nian Liu",
+        "Hui Han",
+        "Chuan Shi"
+      ],
+      "url": "https://arxiv.org/abs/2105.09111",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ラベルが乏しい現実環境でも使えるよう、異種情報ネットワーク（HIN）向けの自己教師あり異種グラフニューラルネットワーク HeCo を提案した研究。ネットワークスキーマビューとメタパスビューの2つの視点でノード埋め込みを学習し、互いを教師として協調的に対照学習させる。さらに、より難しい負例を生成する拡張版 HeCo_GAN と HeCo_MU も提案している。",
+        "novelty": "従来の異種グラフ対照学習（DMGI など）は単一のメタパスビュー内で元のネットワークと破損ネットワークを対比していたが、HeCo はネットワークスキーマ（局所構造）とメタパス（高次構造）という2つのビュー間で対照するクロスビュー方式を採る。著者らは、HINに対するクロスビュー対照学習に基づく自己教師あり HGNN としては初の試みだと主張している。また、メタパスで多く結ばれたノードを複数の正例とする選択戦略と、それに対応した損失関数を設計している。",
+        "method": "ネットワークスキーマビューでは、直接の近傍をノードレベルとタイプレベルの階層的アテンションで集約する。近傍は毎エポックでランダムに閾値数だけサンプリングし、多様性を高めて対照タスクを難しくしている。メタパスビューでは、メタパスごとの GCN とセマンティックレベルのアテンションで埋め込みを得る。ビューマスク機構により、前者では自身のメッセージを、後者では中間ノードの情報を隠し、2つの埋め込みが相関しつつ補完的になるようにする。損失は、メタパスで接続された数が多い上位 T_pos 個のノードを正例とし、他を負例とする複数正例の InfoNCE 型で、片方のビューの埋め込みを基準にもう一方のビューの埋め込みと対比する。拡張版は、ガウス分布から GAN で生成した負例を追加する HeCo_GAN と、最も難しい負例を混合して新たな負例を作る、学習パラメータ不要の HeCo_MU である。",
+        "validation": "ACM、DBLP、Freebase、AMiner の4つの実データセットで、ノード分類（Macro-F1、Micro-F1、AUC）とノード клaスタリング（NMI、ARI）を評価し、教師なしの同種・異種手法や半教師ありの HAN と比較した。HeCo は全データセット・全分割でほぼ最良の結果を示し、HAN も上回った。DMGI より概ね良好で、クラスタリングでは ACM で NMI 56.87、ARI 56.94 を達成した。ACM では、拡張版が基本モデルや DMGI を概ね上回り、特に HeCo_GAN の改善幅が大きかった（NMI 59.34、ARI 61.48）。",
+        "discussion": "HeCo_GAN は生成器と識別器の追加学習を要し、HeCo_MU は学習パラメータを持たず効率的である。この2版の比較は ACM でのみ報告されており、他データセットでの有効性は本文からは確認できない。また、正例数の閾値 T_pos やサンプル近傍数の閾値 T_Φm に対して性能が変動する（ACM は近傍数の閾値に敏感）ため、データセットごとの調整が必要である。",
+        "next": [
+          {
+            "title": "Unsupervised Attributed Multiplex Network Embedding (DMGI)",
+            "reason": "単一メタパスビュー内で対照学習を行う代表的な異種グラフの比較対象であり、HeCo との違いを理解できる。"
+          },
+          {
+            "title": "Deep Graph Infomax",
+            "reason": "グラフ対照学習の基礎となる手法であり、HeCo が拡張している考え方を押さえられる。"
+          },
+          {
+            "title": "Hard Negative Mixing for Contrastive Learning",
+            "reason": "HeCo_MU の着想元であり、難しい負例の生成・混合の考え方を詳しく学べる。"
+          }
+        ]
+      },
+      "titleJa": "協調的対照学習による自己教師あり異種グラフニューラルネットワーク",
+      "why": "ラベルが乏しい環境向けに、異種情報ネットワークでネットワークスキーマビューとメタパスビューを互いの教師として協調的に対照学習させる HeCo を提案した研究です。HINに対するクロスビュー対照学習に基づく自己教師あり HGNN としては初の試みだと著者らは主張しており、ACM・DBLP・Freebase・AMiner の4データセットで半教師ありの HAN や DMGI を概ね上回りました。KDD 2021 で Paper Digest 集計の被引用数が同年3位と、大きな注目を集めています。"
     }
   ],
   "sources": [
@@ -70,6 +211,10 @@
     {
       "title": "SIGKDD（Wikipedia・開催地）",
       "url": "https://en.wikipedia.org/wiki/Special_Interest_Group_on_Knowledge_Discovery_and_Data_Mining"
+    },
+    {
+      "title": "Most Influential KDD Papers 2024-09（Paper Digest・被引用数の集計）",
+      "url": "https://resources.paperdigest.org/2024/09/most-influential-kdd-papers-2024-09/"
     }
   ],
   "unreachable": [

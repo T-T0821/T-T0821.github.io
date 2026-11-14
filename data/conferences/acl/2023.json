@@ -119,6 +119,117 @@
           }
         ]
       }
+    },
+    {
+      "title": "Weaker Than You Think: A Critical Look at Weakly Supervised Learning",
+      "award": "Best Special Theme Paper",
+      "authors": [
+        "Dawei Zhu",
+        "Xiaoyu Shen",
+        "Marius Mosbach",
+        "Andreas Stephan",
+        "Dietrich Klakow"
+      ],
+      "url": "https://arxiv.org/abs/2305.17442",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "弱教師あり学習（WSL）の既存手法が報告してきた性能向上が、実は過大評価されていることを示した批判的検証研究である。WSL手法が暗黙に利用しているクリーンな検証データの役割を調べ、それを直接学習に使う単純な手法と比較することで、WSLの真の有用性と限界を明らかにしている。",
+        "novelty": "従来のWSL研究は、早期終了やメタ学習のために大量のクリーンな検証データを使いながら「弱ラベルのみで学習」と主張してきた。本研究はこの評価設定が非現実的だと初めて体系的に指摘し、クリーンデータの量を制御した現実的な設定で再評価した。また、単純なベースライン（FT_W+CFT）が高度な手法に匹敵することを示した。",
+        "method": "WRENCHベンチマークの8つのNLPデータセット（テキスト分類・関係分類・NER）で、FT_W、L2R、MLC、BOND、COSINEを共通のRoBERTa-baseで再実装して比較した。検証データの種類（クリーン／弱ラベル／なし）やクリーンサンプル数（クラスあたり5〜50件、NERは50〜500文）を変えて評価した。さらにクリーンデータで直接ファインチューニング（アダプタ、LoRA、BitFit含む）する手法と比較し、弱ラベルでの学習後にクリーンデータで追加学習する継続的ファインチューニング（CFT）を提案した。事前学習量の異なるPLMや、クリーンラベルと弱ラベルの一致率を変えた実験で、有効性の要因も分析した。",
+        "validation": "クリーンな検証データがない場合、全てのWSL手法は弱ラベルと同等かそれ以下の性能しか出せず、弱ラベルで検証してもランダムなハイパーパラメータと差がなかった。クリーンデータを直接学習に使うと、多くのデータセットでクラスあたり10件程度からCOSINEを上回った（NERでは数百文が必要で、OntoNotesでは400文）。CFTを適用するとFT_WがL2RやCCOSINEと同等以上になり、クラスあたり50件では、WSL+CFTがクリーンデータのみの学習を上回る幅は8データセット中6つで1%未満だった。",
+        "discussion": "限界として、ノイズ率など事前知識でモデル選択できる場合、英語以外でPLMが乏しい低資源言語、ルールベース以外の弱ラベル（LLM生成やハイパーリンクなど）には結論が当てはまらない可能性がある。著者らは、モデル選択基準とクリーンデータへの依存度の報告、少数クリーンサンプルでのfew-shot手法との比較、FT_W+CFTのベースライン採用を今後の研究に推奨している。",
+        "next": [
+          {
+            "title": "Realistic Evaluation of Deep Semi-Supervised Learning Algorithms",
+            "reason": "検証データの扱いを批判し現実的な評価設定を提案した半教師あり学習の先行研究で、本論文の問題意識の源流である。"
+          },
+          {
+            "title": "True Few-Shot Learning with Language Models",
+            "reason": "few-shot学習で検証データを使うことの非現実性を指摘した研究で、本論文の評価方針の根拠となっている。"
+          },
+          {
+            "title": "Self-Training with Weak Supervision / COSINE: Fine-Tuning Pre-trained Language Model with Weak Supervision: A Contrastive-Regularized Self-Training Approach",
+            "reason": "本論文で主な比較対象となる最先端のWSL手法（COSINE）の仕組みを理解できる。"
+          }
+        ]
+      },
+      "titleJa": "思っているより弱い：弱教師あり学習への批判的検証",
+      "why": "弱教師あり学習（WSL）の既存手法は、早期終了やメタ学習のために大量のクリーンな検証データを使いながら「弱ラベルのみで学習」と主張してきたが、本研究はこの評価設定の非現実性を体系的に指摘し、クリーンデータ量を制御した設定で再評価した。クリーンな検証データがなければWSL手法は弱ラベルと同等かそれ以下にとどまり、クリーンデータを直接学習に使う単純な手法（FT_W+CFT）が高度な手法に匹敵することも示している。WSLの報告された性能向上が過大評価であることを実証した点が注目され、ACL 2023でBest Special Theme Paperを受賞した。"
+    },
+    {
+      "title": "Minding Language Models' (Lack of) Theory of Mind: A Plug-and-Play Multi-Character Belief Tracker",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Melanie Sclar",
+        "Sachin Kumar",
+        "Peter West",
+        "Alane Suhr",
+        "Yejin Choi",
+        "Yulia Tsvetkov"
+      ],
+      "url": "https://arxiv.org/abs/2306.00924",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "大規模言語モデルが苦手とする心の理論（ToM）、特に複数登場人物の信念追跡を、学習なしの推論時アルゴリズムで改善する研究。物語中の各キャラクターの信念を明示的なグラフで表現するプラグアンドプレイ手法SymbolicToMを提案している。",
+        "novelty": "従来はToMiなど特定データセットでの教師あり学習が中心で、分布外の摂動に脆かった。本手法は学習・微調整を不要とし、既存モデルをサブタスクに分けて使う。また、単一グラフではなく「p1がp2の信念をどう考えているか」という任意の深さの再帰的な信念グラフ集合を保持する点が特徴で、解釈性も高い。さらにToMiの曖昧さ・誤ラベルや見せかけのパターンも明らかにしている。",
+        "method": "物語を1文ずつ処理し、まず全知視点のグローバルグラフGを更新する。矛盾するエッジはNLI（WANLI）で検出し、文の結果状態を言語モデルで文章化してOpenIEで三つ組を抽出し、追加する。Gの同一連結成分にいるキャラクターを目撃者とみなし、目撃者に対応する各ローカル信念グラフB_{p1..pm}だけに情報を伝播・更新する。質問時は該当する信念グラフに対応する文だけを復元し、質問を世界状態の問いに言い換えて、LLMにゼロショットで回答させる。実験ではm=2。",
+        "validation": "ToMiで、Flan-T5-XLの1次誤信念質問が+62ポイント、GPT3.5の2次誤信念質問が+78ポイント向上した。GPT-3-Davinciは平均で38ポイント向上し92%に達した。ストーリー構造を変えた3つのテストセットと、言い換えを加えたParaphrasedToMiでは、教師あり手法（TTT、微調整GPT3）が大きく性能を落としたのに対し、SymbolicToM併用モデルは頑健だった（ParaphrasedToMiではTTTの平均精度が54ポイント低下）。ただし一部のFlan-T5では現実質問で性能が低下した。",
+        "discussion": "物語が時系列で書かれていること、NLIやOpenIEなどの既製モデルの誤りが伝播すること（言い換えデータで顕在化）が限界である。また既存データセットはSally-Anne型のみで、遠距離など物理的常識を要する目撃者判定は扱えない。今後はより多様なやり取りを含む新データセットの整備や、目撃者検出の高度化が課題である。",
+        "next": [
+          {
+            "title": "Neural Theory-of-Mind? On the Limits of Social Intelligence in Large LMs",
+            "reason": "LLMの心の理論の限界を示した本研究の動機となる論文で、問題設定を把握できる。"
+          },
+          {
+            "title": "Revisiting the Evaluation of Theory of Mind through Question Answering",
+            "reason": "本研究が評価に用いるToMiベンチマークの原論文で、構造と限界を理解できる。"
+          },
+          {
+            "title": "Textual Time Travel: A Temporally Informed Approach to Theory of Mind",
+            "reason": "本研究が比較対象とする教師ありベースラインTTTの手法を確認できる。"
+          }
+        ]
+      },
+      "titleJa": "言語モデルの（欠けた）心の理論を考える：プラグアンドプレイ型の複数キャラクター信念追跡手法",
+      "why": "大規模言語モデルが苦手とする心の理論、特に複数登場人物の信念追跡に対し、学習や微調整を使わず、各キャラクターの再帰的な信念をグラフで保持する推論時手法SymbolicToMを提案した研究です。ToMiでFlan-T5-XLの1次誤信念質問が+62ポイント、GPT3.5の2次誤信念質問が+78ポイント向上し、GPT-3-Davinciでは平均38ポイント向上して92%に達しました。ストーリー構造を変えたテストセットや言い換えを加えたParaphrasedToMiでも、教師あり手法が大きく性能を落とす一方で頑健さを保ち、ToMiの曖昧さや誤ラベルも明らかにした点が注目されます。"
+    },
+    {
+      "title": "Self-Instruct: Aligning Language Models with Self-Generated Instructions",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Yizhong Wang",
+        "Yeganeh Kordi",
+        "Swaroop Mishra",
+        "Alisa Liu",
+        "Noah A. Smith",
+        "Daniel Khashabi",
+        "Hannaneh Hajishirzi"
+      ],
+      "url": "https://arxiv.org/abs/2212.10560",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "事前学習済み言語モデル（LM）自身に指示文・入力・出力を生成させ、人手のラベルをほぼ使わずに指示追従能力を高めるフレームワーク Self-Instruct を提案した研究。vanilla GPT3 から約52Kの指示と約82Kのインスタンスからなる合成データセットを作り、それでGPT3自身をファインチューニングした。データとコードも公開している。",
+        "novelty": "従来の指示チューニングは人手で書かれた指示データ（PromptSource、SuperNIなど）に依存しており、量・多様性・創造性に限界があった。本手法は175個の人手シードタスクから出発し、vanilla LM自身のブートストラップで新しいタスク定義を一から生成する点が新しい。タスク特化のデータ拡張や自己学習とは異なりタスク非依存であり、また既に指示チューニング済みのモデルを使わず vanilla LM のみに頼る点で、並行研究のUnnatural Instructionsとも区別される。",
+        "method": "175個のシードタスクのプールから8個（人手6個＋モデル生成2個）をin-contextの例として抽出し、新しい指示を生成する。次に、その指示が分類タスクかどうかをfew-shotで判定する。インスタンス生成は、非分類タスクではinput-first（入力→出力の順）、分類タスクではラベル偏りを避けるためoutput-first（ラベル→入力の順）で行う。最後に、既存指示とのROUGE-L類似度が0.7未満であること、特定キーワード（image等）を含まないこと、重複や不正な出力でないことなどのヒューリスティックでフィルタし、タスクプールに追加して反復する。得られたデータは複数のテンプレート形式で連結し、通常の教師あり学習でファインチューニングする。",
+        "validation": "SuperNIの119タスクでのゼロショット評価（ROUGE-L）で、GPT3が6.8、Self-Instruct版が39.9（+33.1）となり、InstructGPT001の40.8にほぼ並んだ。SuperNI訓練データと併用すると51.6で、GPT3+SuperNI訓練の49.5を上回った。専門家が作成した252個のユーザー指向指示による人手評価では、T0訓練やSuperNI訓練のGPT3を大きく上回り、Rating-Bまでを有効とするとInstructGPT001との差は5%に留まった。生成データの品質確認（200件のサンプル）では、指示が有効な割合は92%、全フィールドが妥当な割合は54%だった。",
+        "discussion": "生成データにはノイズがあり（出力が正しい割合は58%）、InstructGPT003で出力を再生成して蒸留するとさらに10%改善したことから、データ品質向上の余地が大きい。また、LMが持つ偏りの増幅、頻出タスクに利得が偏るロングテール問題、大規模モデルへの依存といった限界が挙げられている。データ量を増やす効果は16K付近で頭打ちとなり、SuperNIでは数百指示で飽和したため、多様な指示データの組み合わせが今後の課題とされている。",
+        "next": [
+          {
+            "title": "Training Language Models to Follow Instructions with Human Feedback",
+            "reason": "Self-Instructが比較対象とし、人手データによる指示追従モデルの代表例であるInstructGPTの手法を理解できるため。"
+          },
+          {
+            "title": "Super-NaturalInstructions: Generalization via Declarative Instructions on 1600+ Tasks",
+            "reason": "本論文のゼロショット評価に使われ、比較対象であるTk-Instructの訓練にも用いられた人手指示データセットの詳細が分かるため。"
+          },
+          {
+            "title": "Unnatural Instructions: Tuning Language Models with (Almost) No Human Labor",
+            "reason": "InstructGPT002を用いて指示データを生成した並行研究であり、Self-Instructとの方式の違いを比較できるため。"
+          }
+        ]
+      },
+      "titleJa": "Self-Instruct: 自己生成した指示で言語モデルを整合させる",
+      "why": "事前学習済みの言語モデル自身に指示・入力・出力を生成させ、175個の人手シードタスクから約52Kの指示と約82Kのインスタンスを作り、人手ラベルをほぼ使わずGPT3をファインチューニングする手法を提案した研究です。SuperNIの119タスクのゼロショット評価でROUGE-Lが6.8から39.9に向上してInstructGPT001の40.8にほぼ並び、専門家作成の252個の指示による人手評価でもT0訓練やSuperNI訓練のGPT3を大きく上回りました。ACL 2023で被引用数が同年1位（Paper Digest集計）という影響力も注目点で、データとコードも公開されています。"
     }
   ],
   "sources": [
@@ -137,6 +248,10 @@
     {
       "title": "arXiv（受賞論文の著者情報）",
       "url": "https://arxiv.org/"
+    },
+    {
+      "title": "Most Influential ACL Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-acl-papers-2026-03-version/"
     }
   ],
   "unreachable": [
