@@ -45,7 +45,122 @@
       "title": "Nisarg Shah"
     }
   ],
-  "featured": [],
+  "featured": [
+    {
+      "title": "Large Language Model based Multi-Agents: A Survey of Progress and Challenges",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Taicheng Guo",
+        "Xiuying Chen",
+        "Yaqi Wang",
+        "Ruidi Chang",
+        "Shichao Pei",
+        "Nitesh V. Chawla",
+        "Olaf Wiest",
+        "Xiangliang Zhang"
+      ],
+      "url": "https://arxiv.org/abs/2402.01680",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "LLM（大規模言語モデル）をエージェントとして複数用いるマルチエージェントシステム（LLM-MA）に関する研究を体系的に整理したサーベイ論文。複雑な問題解決（ソフトウェア開発、身体性エージェント、科学実験、科学的議論）と世界シミュレーション（社会、ゲーム、心理、経済、推薦、政策、疾病）の2系統の応用を俯瞰し、データセットやベンチマーク、今後の課題もまとめている。",
+        "novelty": "LLMベースの単一エージェントを扱う既存サーベイに対し、複数エージェントの協調・議論・シミュレーションに焦点を当てた体系的レビューが不足していたことを動機としている。エージェントと環境のインターフェース、プロファイリング、通信、能力獲得という4つの観点の枠組みで既存研究を位置づけ・比較できる点が特徴。また最新研究を追えるようGitHubリポジトリを公開している。",
+        "method": "LLM-MAシステムを「エージェント-環境インターフェース（Sandbox / Physical / None）」「エージェントプロファイリング（Pre-defined / Model-Generated / Data-Derived）」「エージェント間通信」「能力獲得」の4側面で分解している。通信は、パラダイム（協調・議論・競争）、構造（階層型・分散型・集中型・共有メッセージプール）、内容（主にテキスト）に分けて整理した。能力獲得は、フィードバックの種類（環境・エージェント間相互作用・人間・なし）と調整方法（記憶・自己進化・動的生成）で分類している。これらの軸で各研究を表（Table 1）にまとめ、応用ごとの代表的研究とデータセット（Table 2）を整理した。",
+        "validation": "サーベイ論文のため独自の実験は行わず、既存研究の分類と整理が中心である。研究論文数が増加傾向にあることを図示し（Fig. 1）、既存研究の成果を紹介している。例えば社会シミュレーションの規模が25エージェント（Generative Agents）、1,000ペルソナ（Social Simulacra）、8,563および17,945エージェント（S3）へと拡大していること、Agent4Recが1,000のエージェントをMovieLens-1Mで初期化していることなどが挙げられている。提示された本文では課題の章（Section 6）は省略されており、詳細は確認できない。",
+        "discussion": "本分野は発展の初期段階で急速に変化しており、新しい手法や応用が日々登場するため、サーベイ自体の継続的な更新が必要であるとしている。エージェント数が増えるほど多様なエージェントの管理が複雑になり、オーケストレーションが重要な課題として挙げられている。また、科学実験では幻覚（ハルシネーション）や高コストのため人間による監督が不可欠であり、LLMエージェントが洗練された信念を見落とす弱点も指摘されている。今後の課題の詳細は第6章に記載されているが、本文提供分では省略されている。",
+        "next": [
+          {
+            "title": "MetaGPT: Meta Programming for Multi-Agent Collaborative Framework",
+            "reason": "SOPをプロンプトに組み込み、共有メッセージプールを提案したソフトウェア開発向けLLM-MAの代表的研究であり、本サーベイの通信構造の理解に役立つ。"
+          },
+          {
+            "title": "Generative Agents: Interactive Simulacra of Human Behavior",
+            "reason": "25エージェントのサンドボックス環境での社会シミュレーションの先駆的研究で、世界シミュレーション系の基礎となる。"
+          },
+          {
+            "title": "Improving Factuality and Reasoning in Language Models through Multiagent Debate",
+            "reason": "複数エージェントの議論で事実性と推論を向上させる科学的議論系の代表的手法を学べる。"
+          }
+        ]
+      },
+      "titleJa": "大規模言語モデルに基づくマルチエージェント:進展と課題のサーベイ",
+      "why": "LLMを複数のエージェントとして協調させるマルチエージェントシステム（LLM-MA）を、複雑な問題解決と世界シミュレーションの2系統の応用に分けて体系的に整理したサーベイです。エージェントと環境のインターフェース、プロファイリング、通信、能力獲得という4つの観点の枠組みで既存研究を位置づけ・比較でき、データセットやベンチマーク、最新研究を追えるGitHubリポジトリも提供しています。IJCAI 2024の論文のうち、Paper Digestの集計で同年の被引用数1位という点からも注目されています。"
+    },
+    {
+      "title": "AutoAgents: A Framework for Automatic Agent Generation",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Guangyao Chen",
+        "Siwei Dong",
+        "Yu Shu",
+        "Ge Zhang",
+        "Jaward Sesay",
+        "Börje F. Karlsson",
+        "Jie Fu",
+        "Yemin Shi"
+      ],
+      "url": "https://arxiv.org/abs/2309.17288",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "タスクの内容に応じて、専門家エージェントのチームと実行計画を LLM が自動生成し、それらを協調させて課題を解くマルチエージェントフレームワーク AutoAgents の提案。従来の手作業・事前定義のエージェントに依存する手法の適応性の限界を解消することを目指す。",
+        "novelty": "多くの既存手法が人手で定義したエージェントに頼るのに対し、AutoAgents は複数エージェント間の議論でエージェントと計画を動的に生成する点が新しい。さらに、個々のエージェントの自己改善（self-refinement）と複数エージェントによる協調改善（collaborative refinement）の両方を備え、生成されたエージェントや計画の信頼性を重視している（Table 1 の比較では、これらを併せ持つ枠組みは AutoAgents のみ）。",
+        "method": "全体は Drafting Stage と Execution Stage の2段階。Drafting では Planner が、プロンプト・説明・ツールセット・提案から成るエージェントチームと実行計画を生成し、Agent Observer と Plan Observer のフィードバックを受けて繰り返し改善する（最大3回）。Execution では Action Observer がチームリーダーとしてタスク割当て・結果検証・計画修正を行い、各エージェントは思考・計画・実行・フィードバックの自己改善を行い、複数エージェントは協調改善で議論する（最大5回）。トークン制約への対応として、短期・長期・動的の3種類の記憶で情報共有する。",
+        "validation": "全実験で GPT-4-0613（temperature 0）を使用。MT-bench の open-ended QA（80問）では、FairEval による勝率が対 ChatGPT 96.3%、対 Vicuna-13B 96.3%、対 GPT-4 76.3%、人手評価では 75%、75%、62.5% だった。Trivia Creative Writing では N=5 で 82.0%（Standard 74.6%）、N=10 で 85.3%（Standard 77.0%）となり、SPP（79.9%、84.7%）を上回った。ablation（20事例、N=5）では、AutoAgents 90.0% に対し、observer なし 87.0%、自己改善なし 87.0%、協調改善なし 88.0%、動的記憶なし 89.0% と、各構成要素が寄与していた。テトリス開発のケーススタディも示されている。",
+        "discussion": "評価は2つのベンチマークと少数のケーススタディに限られ、ablation も20事例のみで、差が小さい項目の統計的な確からしさは本文からは判断できない。また、すべて GPT-4 で検証されており、他のモデルへの一般化や、複数のエージェントを使うことによる計算コスト・トークン消費は十分に議論されていない。協調改善が必要かどうかは Drafting 段階の判断に依存するため、問題によっては効果が出ない場合がある。",
+        "next": [
+          {
+            "title": "Unleashing cognitive synergy in large language models: A task-solving agent through multi-persona self-collaboration (SPP)",
+            "reason": "Trivia Creative Writing タスクの提案元であり、AutoAgents が主に比較・改善の対象とした単一LLMによるペルソナ生成手法のため。"
+          },
+          {
+            "title": "AgentVerse: Facilitating multi-agent collaboration and exploring emergent behaviors in agents",
+            "reason": "エージェントの自動生成と議論による計画作成を行う、最も近い関連手法として本論文が位置づけているため。"
+          },
+          {
+            "title": "MetaGPT: Meta programming for multi-agent collaborative framework",
+            "reason": "AutoAgents の実行環境の基盤であり、役割分担によるソフトウェア開発のマルチエージェント手法を理解できるため。"
+          }
+        ]
+      },
+      "titleJa": "AutoAgents: エージェント自動生成のためのフレームワーク",
+      "why": "タスクの内容に応じて専門家エージェントのチームと実行計画を LLM が自動生成し、それらを協調させて課題を解くマルチエージェントフレームワーク AutoAgents を提案した研究です。人手で定義したエージェントに頼る従来手法と異なり、エージェント間の議論で動的に生成し、自己改善と協調改善の両方を備える点が特徴で、MT-bench や Trivia Creative Writing で SPP などを上回る結果と、各構成要素の寄与を示す ablation が報告されています。IJCAI 2024 で Paper Digest の集計において同年被引用数2位という点でも注目されます。"
+    },
+    {
+      "title": "Continual Learning with Pre-Trained Models: A Survey",
+      "selection": "被引用数上位（Paper Digest の集計で同年3位）",
+      "authors": [
+        "Da-Wei Zhou",
+        "Hai-Long Sun",
+        "Jingyi Ning",
+        "Han-Jia Ye",
+        "De-Chuan Zhan"
+      ],
+      "url": "https://arxiv.org/abs/2401.16386",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "事前学習モデル（PTM）を用いた継続学習（CL）に関する初の包括的サーベイ。問題設定・ベンチマーク・評価プロトコルを整理し、既存手法を3カテゴリに分類して長所短所を比較し、7つのベンチマークで代表手法を実験的に比較している。",
+        "novelty": "従来のCLサーベイはPTMを使わない手法が中心だったが、本論文はPTMベースCLに特化している。手法をプロンプトベース、表現ベース、モデル混合ベースの3つに体系化した。さらにDAPがバッチ内の情報を推論時に使っており比較が不公平になっていることを指摘し、公平な比較の観点を示した。",
+        "method": "手法の分類を軸に、プロンプトベース（L2Pのキー・クエリ照合、DualPrompt、CODA-Promptの注意に基づく合成、DAPの生成）、表現ベース（SimpleCILのプロトタイプ分類器、ADAMの特徴連結、RanPAC、EASE、SLCA）、モデル混合ベース（ESNなどのアンサンブル、LAEやZSCLなどのモデルマージ）を解説する。各手法の仕組みと利点・欠点を式とともに比較している。実験ではViT-B/16-IN21Kを共通バックボーンとし、最終段階精度とインクリメンタル段階の平均精度で評価する。",
+        "validation": "CIFAR100、CUB200、ImageNet-R、ImageNet-A、ObjectNet、OmniBenchmark、VTABの7データセットで、3カテゴリから計11手法（DAPのバッチ情報なし版を除く）を比較した。シンプルなSimpleCILがL2PやDualPromptなど典型的なプロンプト手法を上回り、ADAMやRanPACなどの表現ベース手法が総じて競争力が高かった。DAPはバッチ情報を除くと大きく劣化し（例：CIFAR100で最終段階精度が90.62から58.16に低下）、改善の主因がバッチ投票情報であることが示された。",
+        "discussion": "ImageNetとの領域差が小さいCIFAR100などでは多くの手法が高精度で、PTMが未知の知識を学ぶことを要求する、より難しいベンチマークが必要だとされる。今後の方向として、大規模言語モデルのCL、マルチモーダルPTM、計算資源が限られた環境での学習、PTMの知識を超える新ベンチマークが挙げられている。本サーベイは主に視覚認識とViTに焦点を当てており、他の設定への一般化は今後の課題である。",
+        "next": [
+          {
+            "title": "Revisiting Class-Incremental Learning with Pre-Trained Models: Generalizability and Adaptivity are All You Need",
+            "reason": "SimpleCILとADAMを提案した、表現ベース手法の基礎となる論文であり、PTMベースCLの強いベースラインを理解できる。"
+          },
+          {
+            "title": "Learning to Prompt for Continual Learning",
+            "reason": "プロンプトベースCLの出発点となるL2Pの原論文で、プロンプトプールとキー・クエリ照合の仕組みを把握できる。"
+          },
+          {
+            "title": "RanPAC: Random Projections and Pre-trained Models for Continual Learning",
+            "reason": "ランダム射影とオンラインLDAで高い性能を示した代表的な表現ベース手法で、本論文の実験でも上位に入っている。"
+          }
+        ]
+      },
+      "titleJa": "事前学習モデルを用いた継続学習：サーベイ",
+      "why": "事前学習モデル（PTM）を用いた継続学習に特化した初の包括的サーベイで、既存手法をプロンプトベース・表現ベース・モデル混合ベースの3カテゴリに体系化し、7つのベンチマークで代表手法を比較しています。シンプルなSimpleCILがL2PやDualPromptといった典型的なプロンプト手法を上回ることや、DAPの改善の主因が推論時のバッチ情報であり比較が不公平になっていることを示した点が注目されます。IJCAI 2024で被引用数が同年3位（Paper Digest集計）と、関心の高さもうかがえます。"
+    }
+  ],
   "sources": [
     {
       "title": "Congratulations to the #IJCAI2024 distinguished paper award winners（AIhub）",
@@ -62,6 +177,10 @@
     {
       "title": "IJCAI Awards（公式・各賞の受賞者）",
       "url": "https://www.ijcai.org/awards"
+    },
+    {
+      "title": "Most Influential IJCAI Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-ijcai-papers-2026-03-version/"
     }
   ],
   "unreachable": [

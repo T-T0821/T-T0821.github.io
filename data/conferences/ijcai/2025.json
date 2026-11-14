@@ -52,7 +52,30 @@
     "Shing-Tung Yau",
     "Xin Yao（以上広州）"
   ],
-  "featured": [],
+  "featured": [
+    {
+      "title": "Speeding Up Hyper-Heuristics With Markov-Chain Operator Selection and the Only-Worsening Acceptance Operator",
+      "award": "Distinguished Paper",
+      "authors": [
+        "Abderrahim Bendahi",
+        "Benjamin Doerr",
+        "Adrien Fradin",
+        "Johannes F. Lutzeyer"
+      ],
+      "url": "https://arxiv.org/abs/2506.01107",
+      "ochiai": {
+        "basis": "abstract",
+        "what": "move-acceptance hyper-heuristic（局所最適から効率よく脱出できるハイパーヒューリスティック）に2つの改良を加え、Jump_m や Cliff_d などの代表的ベンチマークで理論的な実行時間を大きく改善した研究。さらに、k個の連続する局所最適を持つ関数を含む新しいベンチマーククラス SEQOPT_k を導入し、その上での実行時間を解析している。",
+        "novelty": "従来は only-improving と all-moves の受理演算子をランダムに選んでいたが、これを2状態マルコフ連鎖で切り替える点が新しい。また、悪化する移動だけを受理する only-worsening 受理演算子は文献で未使用の、直感に反する演算子であり、これを導入した点も新しい。Jump_m では Ω(n^{2m-1}) から O(n^{m+1}) へ、さらにギャップ幅に依存しない O(n^3 log n) へと改善している。",
+        "method": "(i) 受理演算子の選択を、単純な2状態マルコフ連鎖で行う。(ii) all-moves 受理演算子を、悪化する解のみを受け入れる only-worsening 演算子に置き換える。これらを組み合わせた Markov move-acceptance hyper-heuristic を提案し、局所最適からの脱出を理論的に解析している。解析対象として、Jump_m と Cliff_d（k=2 の場合）を含む SEQOPT_k クラスを定義している。",
+        "validation": "アブストラクトによれば、検証は数値実験ではなく実行時間の理論的証明によるもの。マルコフ連鎖化のみで Jump_m の実行時間は Ω(n^{2m-1}) から O(n^{m+1}) に減る。only-worsening 演算子を加えると Jump 関数で O(n^3 log n)（ギャップ幅に非依存）となり、SEQOPT_k 全般では O(n^{k+1} log n) が示されている。",
+        "discussion": "本文が取得できていないため詳細は不明だが、アブストラクトからは結果が理論解析中心であり、実問題や実験での性能は示されていないと読み取れる。SEQOPT_k 以外の関数クラスや実用的な問題への適用可能性、k が大きい場合の n^{k+1} という計算量の実用性が課題になりうる。",
+        "next": []
+      },
+      "titleJa": "マルコフ連鎖による演算子選択と Only-Worsening 受理演算子によるハイパーヒューリスティックの高速化",
+      "why": "局所最適から効率よく脱出できる move-acceptance hyper-heuristic に、受理演算子の選択を2状態マルコフ連鎖で切り替える工夫と、悪化する移動だけを受理する直感に反する only-worsening 演算子を導入した研究です。理論的な実行時間解析により、Jump_m では Ω(n^{2m-1}) から O(n^{m+1}) へ、さらにギャップ幅に依存しない O(n^3 log n) へと大きく改善されることを示しました。加えて、k個の連続する局所最適を持つ新しいベンチマーククラス SEQOPT_k を導入して O(n^{k+1} log n) を示しており、IJCAI 2025 の Distinguished Paper に選ばれています。"
+    }
+  ],
   "sources": [
     {
       "title": "Congratulations to the #IJCAI2025 distinguished paper award winners（AIhub）",

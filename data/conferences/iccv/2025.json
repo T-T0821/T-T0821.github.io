@@ -79,6 +79,160 @@
           }
         ]
       }
+    },
+    {
+      "title": "FlowEdit: Inversion-Free Text-Based Editing Using Pre-Trained Flow Models",
+      "award": "Best Student Paper",
+      "authors": [
+        "Vladimir Kulikov",
+        "Matan Kleiner",
+        "Inbar Huberman-Spiegelglas",
+        "Tomer Michaeli"
+      ],
+      "url": "https://arxiv.org/abs/2412.08629",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "事前学習済みのテキストから画像への生成フローモデル（SD3、FLUX）を用いて、実画像をテキストプロンプトで編集する手法FlowEdit を提案した研究。逆変換（inversion）も最適化もモデル内部への介入も不要で、モデルに依存せず適用できる。",
+        "novelty": "従来の「画像→ノイズ→編集画像」という逆変換ベースの編集を、ソース分布からターゲット分布への直接パスとして再解釈した。そのうえで、ガウスノイズを経由しないより短い直接ODEパスを構成し、輸送コストを下げて構造保存を高めた。注意マップ注入のようなアーキテクチャ依存の工夫を必要としない点も優れている。",
+        "method": "ソース画像から、独立なガウス過程 N_t を用いて (1−t)Z0src + tN_t というノイズ付きソースを作り、Z_tar = Z_FE + Z_src − X_src としてターゲット側の点を得る。ソース・ターゲット各プロンプト条件の速度の差 V^Δ = V_tar − V_src を計算し、これをODEの更新方向として Z_FE を t=1 から 0 へ進める。実際には同じノイズでソースとターゲットの速度を計算し、n_avg 回の平均で期待値を近似する。開始ステップ n_max で編集の強さを調整する。",
+        "validation": "SD3で生成した猫画像1000枚を犬へ編集する実験では、FlowEditは逆変換より輸送コストが低く（MSE 1376 vs 2239、LPIPS 0.15 vs 0.25）、FID（51.14 vs 55.88）とKID（0.017 vs 0.023）も良好だった。70枚超の実画像と250組超のテキスト画像ペアで、SDEdit、iRFDS、RF-Inversion、RF Editなどと比較した。CLIP（テキスト適合）とLPIPS（構造保存）の両立で優れており、定性的にも構造保存とプロンプト適合を両立できていた。",
+        "discussion": "構造保存が強いため、ポーズや背景など画像の大きな領域を大幅に変える編集には向かないという限界がある。手法はヒューリスティックであり、ターゲット分布への正確な写像や最適輸送との一致は保証されない。",
+        "next": [
+          {
+            "title": "Delta Denoising Score",
+            "reason": "FlowEditと表面的に似た最適化ベース編集手法であり、本論文が両者の違いを論じているため。"
+          },
+          {
+            "title": "An Edit Friendly DDPM Noise Space: Inversion and Manipulations",
+            "reason": "正確なノイズ既知でも逆変換編集が構造を保てない問題を指摘した、本研究の動機となる先行研究のため。"
+          },
+          {
+            "title": "Semantic Image Inversion and Editing using Rectified Stochastic Differential Equations",
+            "reason": "フローモデル向けの逆変換ベース編集手法（RF-Inversion）で、本論文の主要な比較対象のため。"
+          }
+        ]
+      },
+      "titleJa": "FlowEdit: 事前学習済みFlowモデルを用いた逆変換不要のテキストベース画像編集",
+      "why": "SD3やFLUXなど事前学習済みの生成フローモデルを使い、逆変換・最適化・モデル内部への介入なしに、実画像をテキストプロンプトで編集する手法FlowEditを提案した研究です。ガウスノイズを経由せずソースからターゲットへ直接ODEパスを構成することで輸送コストを下げ、構造保存を高めており、SD3で生成した猫画像1000枚を犬へ編集する実験でも逆変換よりMSE・LPIPS・FID・KIDが良好でした。SDEditやRF-Inversionなどとの比較でCLIPとLPIPSの両立に優れ、モデルに依存せず適用できる点が評価され、ICCV 2025でBest Student Paperを受賞しています。"
+    },
+    {
+      "title": "RayZer: A Self-supervised Large View Synthesis Model",
+      "award": "Best Paper Honorable Mention",
+      "authors": [
+        "Hanwen Jiang",
+        "Hao Tan",
+        "Peng Wang",
+        "Haian Jin",
+        "Yue Zhao",
+        "Sai Bi",
+        "Kai Zhang",
+        "Fujun Luan",
+        "Kalyan Sunkavalli",
+        "Qixing Huang",
+        "Georgios Pavlakos"
+      ],
+      "url": "https://arxiv.org/abs/2505.00702",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "RayZerは、カメラポーズや3D形状といった3D教師なしで学習される自己教師あり大規模マルチビュー3Dモデルである。ポーズ・キャリブレーション未知の画像から、カメラパラメータの推定、シーン表現の再構成、新規視点合成をフィードフォワードで行う。",
+        "novelty": "学習時にGTではなく自身が予測したカメラポーズで目標視点をレンダリングし、2Dの光度損失のみで学習する点が新しい。ポーズ推定を先に行い、その結果でシーン再構成を条件づける「ポーズ先行」の設計と、純粋なTransformerでレイ構造のみを3D事前知識とする点で、潜在ポーズを用いシーン再構成を先に行うRUSTなどと異なる。",
+        "method": "入力画像を、シーン表現を予測するセットAと、教師信号を与えるセットBに分割し、情報の流れを制御して自明解を防ぐ。カメラ推定器が相対SE(3)ポーズ（6D回転表現）と焦点距離を予測し、Plücker光線マップに変換する。シーン再構成器は、セットAの画像トークンと光線マップを融合して潜在トークン集合を作り、LVSM型のレンダリングデコーダがセットBの予測光線から画像を生成して、MSEと知覚損失で学習する。各モジュールは8層のTransformerである。",
+        "validation": "DL3DV、RealEstate、Objaverseの3データセットで新規視点合成を評価し、GS-LRMやLVSMなど姿勢ラベルを使う「oracle」手法と比較した。DL3DVではPSNR 24.36でLVSMの23.69を上回り、RealEstateでも27.48でLVSMの27.00を上回った。一方、完全なGTポーズを持つObjaverseではLVSMの32.34に対しRayZerは31.52とやや劣る。著者らは、COLMAP由来のポーズが不完全なことがoracle手法の上限になっていると推測している。アブレーションでは、3DGS表現では学習が収束せず、Plücker光線の除去やシーン先行の順序では性能が低下した。",
+        "discussion": "順序なし画像集合での学習は、連続動画フレームでの学習よりも性能が低く（DL3DVでPSNR 20.56対24.36）、動画由来のデータが有利とされる。学習されるポーズ空間は実世界のポーズ空間と厳密には一致せず、評価も予測ポーズで行う必要がある。焦点距離を全ビュー共通の単一値とし、主点を画像中心とするなどの仮定、および静的シーンに限られる点も制約である。なお、COLMAPのノイズがoracle手法の限界だという説明は、著者による推測（conjecture）である。",
+        "next": [
+          {
+            "title": "LVSM: A Large View Synthesis Model with Minimal 3D Inductive Bias",
+            "reason": "RayZerのレンダリングデコーダと主要な比較対象となっており、潜在集合表現による新規視点合成の基盤を理解できる。"
+          },
+          {
+            "title": "RUST: Really Unposed Scene representation Transformer",
+            "reason": "未ポーズ画像から潜在シーン表現を自己教師ありで学習する最も関連の深い先行研究で、RayZerとの設計差を確認できる。"
+          },
+          {
+            "title": "PF-LRM: Pose-Free Large Reconstruction Model for Joint Pose and Shape Prediction",
+            "reason": "カメラ教師を用いてポーズ推定と再構成を同時に行う教師あり手法で、RayZerの比較対象として違いを理解できる。"
+          }
+        ]
+      },
+      "titleJa": "RayZer: 自己教師あり大規模視点合成モデル",
+      "why": "カメラポーズや3D形状といった3D教師なしで学習し、ポーズ未知の画像からカメラ推定・シーン再構成・新規視点合成をフィードフォワードで行う自己教師ありモデルを提案した研究である。自身が予測したポーズで目標視点をレンダリングし2D光度損失のみで学習する点が特徴で、DL3DVとRealEstateではポーズラベルを使うLVSMを上回るPSNRを示した（完全なGTポーズを持つObjaverseではやや劣る）。ICCV 2025でBest Paper Honorable Mentionを受賞している。"
+    },
+    {
+      "title": "LLaVA-CoT: Let Vision Language Models Reason Step-by-Step",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Guowei Xu",
+        "Peng Jin",
+        "Ziang Wu",
+        "Hao Li",
+        "Yibing Song",
+        "Lichao Sun",
+        "Li Yuan"
+      ],
+      "url": "https://arxiv.org/abs/2411.10440",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "視覚言語モデル（VLM）が複雑な視覚質問応答で体系的・構造的な推論をできない問題に対し、自律的に多段階推論を行うVLM「LLaVA-CoT」を提案した研究。要約・画像記述・推論・結論の4段階を自ら進めるよう、10万件規模のデータ（LLaVA-CoT-100k）で学習する。さらに推論時スケーリング手法SWIRESも提案している。",
+        "novelty": "単なるCoTプロンプトではなく、4段階をタグで明示した構造化推論をモデル自身が単一の推論パスで自発的に実行する点が新しい。また、固定間隔ではなく推論ステージ単位で探索を行うステージ単位ビームサーチに、報酬が閾値を超えない場合に前段階へ戻って再生成するリトレーシング機構を加えた点が先行のbest-of-Nやビームサーチと異なる。",
+        "method": "VQAデータセット10種から集めた約99k件に対しGPT-4oで<SUMMARY>/<CAPTION>/<REASONING>/<CONCLUSION>の4段階の推論応答を生成・フィルタし、Llama-3.2-11B-Vision-Instructを全パラメータSFTする。推論時は各ステージでM個の候補を生成して報酬モデル（InternLM-XComposer2.5-Reward）で上位N個を残す。全候補が閾値未満なら前ステージに戻って再生成し、最大C回まで繰り返す（SWIRES）。caption段階以降に適用する。",
+        "validation": "MMStar、MMBench V1.1、MMVet、MathVista、AI2D、HallusionBenchの6ベンチマークで評価し、ベースモデルの平均56.6に対しLLaVA-CoTは62.4、SWIRESによるスケーリング適用で65.5となった。元のQ&Aで直接学習した場合（59.0）やタグなしの場合（60.9）より高く、MMStarでは推論系スキルの向上が大きかった。推論重視に絞ったベンチマークの比較では、Llama-3.2-90B-Vision-Instruct、Gemini-1.5-Pro、GPT-4o-miniを上回る結果を示した。",
+        "discussion": "学習データがGPT-4o生成の応答に依存しており、品質や教師モデルへの依存が課題になりうる。また、スケーリング効果の比較は主にMMStarで示されており、探索による計算コストの増大も考慮が必要である。今後の展望として、強化学習による複雑なマルチモーダル推論のさらなる改善が挙げられている。",
+        "next": [
+          {
+            "title": "Visual CoT: Advancing Multi-Modal Language Models with a Comprehensive Dataset and Benchmark for Chain-of-Thought Reasoning",
+            "reason": "VLMにCoT応答を学習させる関連手法であり、本論文の構造化CoTとの違いを比較するために有用。"
+          },
+          {
+            "title": "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning",
+            "reason": "本論文が今後の方向として挙げる強化学習による推論能力向上の代表例で、テスト時スケーリングの背景理解にもなる。"
+          },
+          {
+            "title": "Prism: A Framework for Decoupling and Assessing the Capabilities of VLMs",
+            "reason": "知覚段階と推論段階に分けて処理する関連手法で、本論文の段階分解の発想と比較できる。"
+          }
+        ]
+      },
+      "titleJa": "LLaVA-CoT: 視覚言語モデルに段階的な推論をさせる",
+      "why": "視覚言語モデルが複雑な視覚質問応答で体系的な推論を苦手とする問題に対し、要約・画像記述・推論・結論の4段階をタグで明示し、モデル自身が単一の推論パスで進める LLaVA-CoT を、10万件規模のデータ LLaVA-CoT-100k で学習させた研究です。ステージ単位ビームサーチに、報酬が閾値を超えない場合に前段階へ戻るリトレーシング機構を加えた推論時スケーリング手法 SWIRES も提案し、6ベンチマークの平均でベースモデルの56.6から62.4、SWIRES適用で65.5へ向上しました。推論重視のベンチマークでは Llama-3.2-90B-Vision-Instruct、Gemini-1.5-Pro、GPT-4o-mini を上回っており、ICCV 2025 で Paper Digest 集計の被引用数が同年1位である点も注目されます。"
+    },
+    {
+      "title": "Visual-RFT: Visual Reinforcement Fine-Tuning",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Ziyu Liu",
+        "Zeyi Sun",
+        "Yuhang Zang",
+        "Xiaoyi Dong",
+        "Yuhang Cao",
+        "Haodong Duan",
+        "Dahua Lin",
+        "Jiaqi Wang"
+      ],
+      "url": "https://arxiv.org/abs/2503.01785",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "OpenAI o1やDeepSeek-R1で注目された検証可能な報酬による強化学習ファインチューニング（RFT）を、数学・コード以外の視覚認識タスクへ拡張するVisual-RFTを提案した研究。大規模視覚言語モデル（LVLM）に推論過程と最終回答を生成させ、タスク別の報酬で更新することで、少量データでも細粒度分類・物体検出・推論グラウンディングなどの性能を高める。",
+        "novelty": "従来RFT/RLVRは数学やコードなど正解が明確な領域が中心で、LVLMへの適用は幻覚低減や人間の嗜好アライメントにとどまっていた。本研究は視覚認識タスク向けにルールベースの検証可能報酬（IoU報酬、分類報酬）を設計し、GRPO系の強化学習をLVLMの視覚知覚・グラウンディング強化に適用した点が新しい。正解の模倣であるSFTと異なり、データ量を増やすのではなく報酬設計でデータ効率を高める枠組みである。",
+        "method": "各入力に対しポリシーモデル（Qwen2-VL-2B/7B）が<think>推論</think>と<answer>回答</answer>形式で複数の応答を生成し、検証可能報酬で採点する。GRPOでは報酬をグループ内で平均・標準偏差により正規化して相対的な優位度を求め、critic不要で更新し、KL項で参照モデルとの乖離を抑える。検出タスクの報酬は、IoU報酬（出力ボックスの平均IoU）、信頼度報酬（IoUが0でない一致ボックスは高信頼度ほど、不一致ボックスは低信頼度ほど高報酬）、形式報酬の和である。分類タスクは正解なら1となる精度報酬と形式報酬の和である。",
+        "validation": "Qwen2-VL-2Bの細粒度分類（Flower102、Pets37、FGVC-Aircraft、Cars196）の1-shotで平均精度がベースライン56.0から80.3（+24.3）に向上し、SFTは51.7に低下した。COCOの8カテゴリ2-shotでmAPが+21.9、LVISの希少6カテゴリ（10-shot相当）で+15.4となり、SFTを上回った。LISAの推論グラウンディング（学習画像239枚）では2Bでmean IoU（test）が37.6でSFTの28.3を上回り、COCOの65基本カテゴリで学習したオープンボキャブラリ検出では新規15カテゴリのmAPが9.8から31.3、LVIS希少カテゴリで2.7から20.7に改善した。",
+        "discussion": "検証は主にQwen2-VLの2B/7Bに限られ、評価もタスクごとの少量データ設定が中心である。7Bでは改善幅が2Bより小さい傾向があり（例: LISAのmean IoU test +3.5）、モデル規模や他のLVLMでの一般性は本文からは確認できない。報酬はタスクごとに手作業で設計する必要があり、正解が明確に定義しにくいタスクへの拡張が課題である。",
+        "next": [
+          {
+            "title": "DeepSeek-R1: Incentivizing reasoning capability in llms via reinforcement learning",
+            "reason": "Visual-RFTの土台となる検証可能報酬とGRPOによる強化学習の考え方を理解できる。"
+          },
+          {
+            "title": "DeepSeekMath: Pushing the limits of mathematical reasoning in open language models",
+            "reason": "本手法が採用するGRPOアルゴリズムの原典である。"
+          },
+          {
+            "title": "Qwen2-VL: Enhancing vision-language model's perception of the world at any resolution",
+            "reason": "Visual-RFTで実験に用いられたベースLVLMの構造と能力を把握できる。"
+          }
+        ]
+      },
+      "titleJa": "Visual-RFT: 視覚強化ファインチューニング",
+      "why": "OpenAI o1やDeepSeek-R1で注目された検証可能な報酬による強化学習ファインチューニングを、数学・コード以外の視覚認識タスクへ拡張し、IoU報酬や分類報酬といったルールベースの報酬でLVLMを更新するVisual-RFTを提案した研究です。Qwen2-VL-2Bの細粒度分類1-shotで平均精度が56.0から80.3に向上し、SFTは51.7に低下したほか、COCOやLVISの検出、LISAの推論グラウンディングでもSFTを上回っています。少量データでも報酬設計によってデータ効率を高められる点が評価され、ICCV 2025で被引用数が同年2位(Paper Digest集計)となっています。"
     }
   ],
   "sources": [
@@ -89,6 +243,10 @@
     {
       "title": "International Conference on Computer Vision（AI Wiki・開催地と投稿数）",
       "url": "https://www.aiwiki.ai/wiki/iccv"
+    },
+    {
+      "title": "Most Influential ICCV Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-iccv-papers-2026-03-version/"
     }
   ],
   "unreachable": [

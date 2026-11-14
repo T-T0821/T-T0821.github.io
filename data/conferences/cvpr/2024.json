@@ -134,6 +134,120 @@
           }
         ]
       }
+    },
+    {
+      "title": "Mip-Splatting: Alias-free 3D Gaussian Splatting",
+      "award": "Best Student Paper",
+      "authors": [
+        "Zehao Yu",
+        "Anpei Chen",
+        "Binbin Huang",
+        "Torsten Sattler",
+        "Andreas Geiger"
+      ],
+      "url": "https://arxiv.org/abs/2311.16493",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "3D Gaussian Splatting（3DGS）が、焦点距離やカメラ距離の変更（サンプリングレートの変化）でアーティファクトを生じる問題を解決する研究。3Dスムージングフィルタと2D Mipフィルタの2つの修正により、任意スケールでエイリアスのないレンダリングを可能にした。",
+        "novelty": "3DGSの失敗原因を、3D周波数制約の欠如と2Dダイレーションフィルタの使用に帰着させた。Mip-NeRF系の手法はマルチスケール画像での学習が必要だが、本手法は単一スケール学習のみで異なるスケールでも忠実にレンダリングできる。EWA splattingとは異なり、3D空間でのフィルタ適用と、1画素に対応するよう決めたMipフィルタにより再構成問題を扱う点が違う。",
+        "method": "学習画像の焦点距離と深度から各ガウシアンの最大サンプリングレートν̂_kを求め（定数m=100イテレーションごとに再計算）、ナイキスト限界に合わせて3Dガウシアンにサイズs/ν̂_kのガウシアン低域通過フィルタを畳み込む。このフィルタは学習後は表現の一部として固定され、レンダリング時のオーバーヘッドはない。さらに2Dダイレーションを、物理的な撮像過程の2Dボックスフィルタをガウシアンで近似した2D Mipフィルタ（式10）に置き換え、1画素を覆うように設定する。分散は2D Mipが0.1、3Dスムージングが0.2で、合計0.3が3DGS/EWAと同等になる。",
+        "validation": "BlenderとMip-NeRF 360で評価した。Blenderの単一スケール学習・マルチスケールテストでは、平均PSNRが3DGSの24.84、3DGS+EWAの29.40に対し31.97、平均SSIMも0.974と全手法で最高だった。Mip-NeRF 360の単一スケール学習・拡大テスト（zoom-in）では平均PSNRが27.37で、3DGS（23.25）や3DGS+EWA（25.43）を上回った。同一スケール学習・テストでも、PSNR 27.79と3DGSなどと同等の性能を保った。",
+        "discussion": "ボックスフィルタのガウシアン近似は、ガウシアンが画面上で小さいときに誤差を生み、縮小が進むほど誤差が増える。サンプリングレートの計算（現状PyTorch実装）により学習時間がわずかに増えるため、CUDA実装や事前計算用データ構造の設計が今後の課題とされている。",
+        "next": [
+          {
+            "title": "3D Gaussian Splatting for Real-Time Radiance Field Rendering",
+            "reason": "Mip-Splattingが改良するベース手法であり、ダイレーションを含むレンダリングと最適化の詳細を理解するために必要。"
+          },
+          {
+            "title": "Mip-NeRF: A Multiscale Representation for Anti-aliasing Neural Radiance Fields",
+            "reason": "コーントレーシングとIPEによるNeRFのアンチエイリアシングの代表例で、本手法との違いを比較できる。"
+          },
+          {
+            "title": "EWA Volume Splatting",
+            "reason": "本手法が比較・差別化するEWAフィルタの原理を理解するための基礎文献。"
+          }
+        ]
+      },
+      "titleJa": "Mip-Splatting: エイリアスのない3D Gaussian Splatting",
+      "why": "3D Gaussian Splatting（3DGS）が焦点距離やカメラ距離の変化で生じるアーティファクトに対し、3Dスムージングフィルタと2D Mipフィルタの2つの修正で、任意スケールでエイリアスのないレンダリングを可能にした研究です。Mip-NeRF系の手法と違いマルチスケール画像での学習が不要で、単一スケール学習のみで異なるスケールでも忠実に描画できます。Blenderのマルチスケールテストでは平均PSNRが31.97（3DGSは24.84）、Mip-NeRF 360のzoom-inでも27.37（3DGSは23.25）と大きく上回り、同一スケールでも同等の性能を保ちました。CVPR 2024のBest Student Paperに選ばれています。"
+    },
+    {
+      "title": "BioCLIP: A Vision Foundation Model for the Tree of Life",
+      "award": "Best Student Paper",
+      "authors": [
+        "Samuel Stevens",
+        "Jiaman Wu",
+        "Matthew J Thompson",
+        "Elizabeth G Campolongo",
+        "Chan Hee Song",
+        "David Edward Carlyn",
+        "Li Dong",
+        "Wasila M Dahdul",
+        "Charles Stewart",
+        "Tanya Berger-Wolf",
+        "Wei-Lun Chao",
+        "Yu Su"
+      ],
+      "url": "https://arxiv.org/abs/2311.18803",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "生物の画像を扱う汎用の視覚基盤モデルとして、大規模データセットTreeOfLife-10M（1,040万枚超、約45.4万分類群）と、それで学習したBioCLIPを提案した。生命の樹全体に汎化し、細粒度の分類ができ、少数データ（zero-shot/few-shot）でも強いモデルを目指している。",
+        "novelty": "従来の教師あり分類は各クラスを独立した記号として扱うが、本研究はCLIPのマルチモーダル対照学習を分類階層（界から種）の活用に転用した。これは新規かつ自明でない貢献だと著者は述べている。また、既存のML-readyな生物画像データセットiNat21（270万枚・1万種）を大きく上回る多様性をEOLの画像追加で実現した。さらに複数のテキスト型を混ぜる学習戦略を提案した。",
+        "method": "界から種までの分類階層を連結した文字列（taxonomic name）を作り、画像とのペアでCLIPの対照学習目的を使って学習する。自己回帰型テキストエンコーダにより、下位ランクの表現が上位ランクに条件付けられて階層構造が埋め込まれる。さらに、学習時に各画像へ分類名・学名・通称などのテキスト型をランダムに割り当てるmixed text type学習を行い、推論時にどの名称しかなくても使えるようにした。初期値はOpenAIのCLIP（ViT-B/16）で、TreeOfLife-10Mで100エポック継続事前学習した。",
+        "validation": "動物・植物・菌類などの10種類の細粒度分類タスク（Meta-Albumの8タスク、Birds 525、新規のRare Species）で評価した。BioCLIPはCLIPやOpenCLIPに対し、zero-shotで平均+17.5ポイント、5-shotで+17.3ポイント（1-shotは+16.7ポイント）上回った。Rare Speciesの未見種ではtaxonomic+common名の組合せが最良で、CLIP目的は通常のクロスエントロピーや階層分類より大きく優れ（1-shot平均44.7 対 16.5/19.3）、t-SNEでも階層に沿った表現が確認された。",
+        "discussion": "BioCLIPは本質的に分類目的で学習されており、形質（トレイト）レベルの細かい表現の抽出は今後の課題である。Bioscan-1Mの属・種ラベルは少ない（それぞれ22.5%、7.5%）など、ラベル粒度の不足は避けがたい課題として本文でも指摘されている。今後はiNaturalistの1億枚超の研究グレード画像の取り込みによるデータ拡大と、種の外見に関するより豊かなテキスト記述の収集を計画している。",
+        "next": [
+          {
+            "title": "Learning Transferable Visual Models From Natural Language Supervision",
+            "reason": "BioCLIPが土台とし、その対照学習目的を転用しているCLIPの原論文であり、手法の前提理解に必須である。"
+          },
+          {
+            "title": "Making better mistakes: Leveraging class hierarchies with deep networks",
+            "reason": "クラス階層を深層分類器に組み込む代表的な先行研究で、BioCLIPの階層活用との違いを理解できる。"
+          },
+          {
+            "title": "A step towards worldwide biodiversity assessment: The BIOSCAN-1M insect dataset",
+            "reason": "TreeOfLife-10Mに統合された昆虫の実験室画像データセットで、データの構成と限界（ラベル粒度）を理解できる。"
+          }
+        ]
+      },
+      "titleJa": "BioCLIP: 生命の樹のための視覚基盤モデル",
+      "why": "1,040万枚超・約45.4万分類群のデータセットTreeOfLife-10Mを構築し、CLIPのマルチモーダル対照学習を界から種までの分類階層の活用に転用してBioCLIPを学習した研究である。動物・植物・菌類などの10種類の細粒度分類タスクで、CLIPやOpenCLIPに対しzero-shotで平均+17.5ポイント、5-shotで+17.3ポイント上回り、通常のクロスエントロピーや階層分類よりも優れた結果を示した点が注目される。CVPR 2024でBest Student Paperを受賞している。"
+    },
+    {
+      "title": "Improved Baselines with Visual Instruction Tuning",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Haotian Liu",
+        "Chunyuan Li",
+        "Yuheng Li",
+        "Yong Jae Lee"
+      ],
+      "url": "https://arxiv.org/abs/2310.03744",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "LLaVAの枠組みの下で、LMMの設計選択（入力解像度・モデル・データ）を統制された条件で体系的に調べ、より強力で再現しやすいベースラインLLaVA-1.5を構築した研究。MLPコネクタ、学術系VQAデータ、応答形式プロンプトという単純な改良により、11〜12個のベンチマークでSoTAを達成した。最終13Bモデルは公開データ約1.2Mのみを用い、8×A100で約1日で学習できる。",
+        "novelty": "InstructBLIPやQwen-VLのような大規模な画像テキスト事前学習（129M〜1.4B）や専用リサンプラーに頼らず、単純な全結合コネクタと558Kの事前学習データ、665Kの指示データだけで上回る性能を示した。短文回答と長文会話の両立の難しさを、曖昧なプロンプト形式とLLMを微調整しないことに起因すると整理し、単一の応答形式プロンプトで解決した。また、画像をグリッド分割して独立にエンコードするLLaVA-1.5-HDにより、追加の事前学習なしで任意解像度へ拡張できる。",
+        "method": "線形射影を2層MLPに置き換え、CLIP-ViT-L-336pxを採用した。VQAv2、GQA、OKVQA、OCRVQA、A-OKVQA、TextCaps、Visual Genome、RefCOCO、ShareGPTなどを混合し、VQA質問の末尾に「Answer the question using a single word or phrase.」などの応答形式プロンプトを付けてLLMごと微調整する。LLaVA-1.5-HDでは、画像をCLIPの本来の解像度の小パッチに分割して個別に符号化し、特徴を結合する。そこに縮小画像の特徴をグローバルコンテキストとして連結し、行末トークンも追加する。LLMはVicuna v1.5（7B/13B）を用いる。",
+        "validation": "VQAv2、GQA、VizWiz、ScienceQA-IMG、TextVQA、POPE、MME、MMBench、SEED-Bench、LLaVA-Bench-in-the-Wild、MM-Vetなどで評価した。学術系ベンチマーク5つのうち4つで最良、残る1つで2位だった。MMBenchは13Bで67.7、MMBench-CNは63.6でQwen-VL-Chatの56.7を上回り、7BモデルでもIDEFICS-80Bを上回った。アブレーションでは、VQA-v2の追加と形式プロンプトでMME 809.6→1323.8となった。HDではグローバルコンテキストの追加でMMEが+71、MM-Vetが+3.2向上した。学習データを50%に間引いても全体性能の98%以上を維持した。",
+        "discussion": "著者らは限界として、高解像度での学習時間の増加、複数画像理解の欠如、特定分野での問題解決能力の限界、ハッカーションが残る点を挙げており、医療などの重要用途では注意が必要としている。データ圧縮戦略、合成能力（compositional capabilities）の仕組みの理解、韓国語など一部言語での会話能力の低さは今後の課題である。また、GQAなど一部の評価では学習時に当該データセットの画像を観測しているため、比較には注意が必要である。",
+        "next": [
+          {
+            "title": "Visual Instruction Tuning",
+            "reason": "LLaVAの原論文であり、本論文の出発点となるアーキテクチャと指示データ生成手法を理解できる。"
+          },
+          {
+            "title": "InstructBLIP: Towards General-Purpose Vision-Language Models with Instruction Tuning",
+            "reason": "Q-Formerと大規模事前学習を用いる主要な比較対象で、設計思想の違いを把握できる。"
+          },
+          {
+            "title": "Visual Instruction Tuning with Polite Flamingo",
+            "reason": "VQA型データ混合による会話能力の低下という、本論文が解決を図る問題を指摘した研究である。"
+          }
+        ]
+      },
+      "titleJa": "視覚指示チューニングによるベースラインの改良",
+      "why": "LLaVAの枠組みでLMMの入力解像度・モデル・データの設計選択を統制して調べ、MLPコネクタ、学術系VQAデータ、応答形式プロンプトという単純な改良でLLaVA-1.5を構築し、11〜12個のベンチマークでSoTAを達成した研究です。大規模な画像テキスト事前学習や専用リサンプラーに頼らず、公開データ約1.2Mのみで13Bモデルを8×A100・約1日で学習でき、再現しやすい強力なベースラインとして示した点が注目され、CVPR 2024の被引用数でPaper Digest集計の同年1位となっています。"
     }
   ],
   "sources": [
@@ -148,6 +262,10 @@
     {
       "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
       "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    },
+    {
+      "title": "Most Influential CVPR Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-cvpr-papers-2026-03-version/"
     }
   ],
   "unreachable": [

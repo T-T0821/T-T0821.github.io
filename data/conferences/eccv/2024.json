@@ -59,12 +59,136 @@
           }
         ]
       }
+    },
+    {
+      "title": "Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Shilong Liu",
+        "Zhaoyang Zeng",
+        "Tianhe Ren",
+        "Feng Li",
+        "Hao Zhang",
+        "Jie Yang",
+        "Qing Jiang",
+        "Chunyuan Li",
+        "Jianwei Yang",
+        "Hang Su",
+        "Jun Zhu",
+        "Lei Zhang"
+      ],
+      "url": "https://arxiv.org/abs/2303.05499",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "Transformer系検出器DINOに言語を密に統合し、カテゴリ名や参照表現（属性を含む記述）で指定した任意の物体を検出できるオープンセット物体検出器Grounding DINOを提案した研究。大規模なグラウンデッド事前学習により、COCOを一切学習に使わないゼロショット設定でも高い性能を示す。",
+        "novelty": "従来のオープンセット検出器（GLIPはneckのみ、OV-DETRはクエリ初期化のみ）が言語融合を一部のフェーズに限っていたのに対し、neck・クエリ初期化・headの3フェーズすべてで融合する「密な融合」を採用した。また無関係なカテゴリ名同士の注意を遮断するsub-sentenceレベルのテキスト表現を導入した。さらに評価を新規カテゴリだけでなく、属性付き物体を指す参照表現理解（REC）にも広げた点も特徴である。",
+        "method": "画像バックボーン（Swin）とテキストバックボーン（BERT）の特徴を、変形可能自己注意・通常の自己注意と、画像→テキスト／テキスト→画像のクロスアテンションを積んだfeature enhancerで融合する。言語誘導クエリ選択では、画像特徴とテキスト特徴の内積の最大値が上位となる900個のトークンをデコーダのクエリ位置として選ぶ。クロスモダリティデコーダは各層に画像クロスアテンションに加えテキストクロスアテンションを持つ。sub-sentenceレベル表現ではアテンションマスクで無関係なカテゴリ名間の相互作用を排除し、単語単位の特徴を保つ。損失はL1・GIoUによる箱回帰と、クエリとテキストトークン間のコントラスト（focal）損失を用いる。",
+        "validation": "COCO、LVIS、ODinW、RefCOCO/+/gで評価した。COCOゼロショットではSwin-LでAP 52.5を達成し、同条件でDINOより+0.5 AP、GLIPより+1.8 AP高く、ODinWゼロショットでは平均AP 26.1と新記録を示した。アブレーションでは、エンコーダ融合、言語誘導クエリ選択、テキストクロスアテンション、sub-sentenceプロンプトがいずれもLVISゼロショット性能に寄与した（クエリ選択+3.0 AP、テキストクロスアテンション+1.8 AP、sub-sentence+0.5 AP）。RECではGLIPを上回るが、REC用データなしでは精度が低く、RefCOCO系データで学習すると大きく向上した。",
+        "discussion": "LVISではDetCLIPv2に劣り、特に希少カテゴリのAPが低く、DETR系アーキテクチャの特性の可能性が論じられている。セグメンテーションには対応せず、学習データがGLIPの最大モデルより少なく、誤検出（ハルシネーション）も見られるとされる。RECのゼロショット性能は低く、今後の重点課題として挙げられている。",
+        "next": [
+          {
+            "title": "Grounded Language-Image Pre-training (GLIP)",
+            "reason": "Grounding DINOが拡張・比較する主要な基盤であり、物体検出をフレーズグラウンディングとして定式化する手法を理解できる。"
+          },
+          {
+            "title": "DINO: DETR with Improved DeNoising Anchor Boxes for End-to-End Object Detection",
+            "reason": "Grounding DINOのベースとなる検出器で、クエリ選択やデコーダの構造を理解するために必要である。"
+          },
+          {
+            "title": "MDETR - Modulated Detection for End-to-End Multi-Modal Understanding",
+            "reason": "DETR系で言語とグラウンディングを統合した先行研究で、REC評価での比較対象でもある。"
+          }
+        ]
+      },
+      "titleJa": "Grounding DINO: DINOとグラウンデッド事前学習を結びつけたオープンセット物体検出",
+      "why": "Transformer系検出器DINOに言語を密に統合し、カテゴリ名や属性を含む参照表現で指定した任意の物体を検出できるオープンセット検出器を提案した研究である。neck・クエリ初期化・headの3フェーズすべてで言語を融合し、無関係なカテゴリ名同士の注意を遮断するsub-sentenceレベルのテキスト表現も導入した点が新しい。COCOを学習に使わないゼロショットでAP 52.5（Swin-L）を達成し、ODinWゼロショットでも平均AP 26.1と新記録を示したことに加え、ECCV 2024で被引用数が同年1位（Paper Digest集計）である点も注目される。"
+    },
+    {
+      "title": "YOLOv9: Learning What You Want to Learn Using Programmable Gradient Information",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Chien-Yao Wang",
+        "I-Hau Yeh",
+        "Hong-Yuan Mark Liao"
+      ],
+      "url": "https://arxiv.org/abs/2402.13616",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "深層ネットワークでは層を重ねるほど入力情報が失われる情報ボトルネックにより、損失関数が信頼できる勾配を生成できないという問題に取り組んだ研究である。これを解決する学習概念 PGI（Programmable Gradient Information）と、軽量で効率的なアーキテクチャ GELAN を提案し、両者を組み合わせた物体検出器 YOLOv9 を構築した。",
+        "novelty": "従来の可逆アーキテクチャは推論コストが増え、マスクモデリングは再構成損失がターゲット損失と衝突し、深層監督は浅いモデルで性能が落ちるという欠点があった。PGI は補助可逆ブランチと multi-level auxiliary information により、推論時の追加コストなしにこれらを回避し、軽量モデルから大型モデルまで適用できる。GELAN は通常の畳み込みのみで、depth-wise 畳み込みベースの YOLO-MS よりパラメータ効率が高いとされる。",
+        "method": "PGI は、推論に使う main branch、学習時のみ使う auxiliary reversible branch、multi-level auxiliary information の3要素から成る。補助可逆ブランチが信頼できる勾配を main branch に供給し、推論時には取り除ける。multi-level auxiliary information は、特徴ピラミッドの各階層と main branch の間に統合ネットワークを挿入し、全ターゲット物体の勾配情報を集約して、特定サイズの物体情報に偏らないようにする。GELAN は CSPNet と ELAN を組み合わせ、ELAN を任意の計算ブロックを使える形に一般化したもので、YOLOv9 では RepConv を用いた CSP ブロックを採用している。",
+        "validation": "MS COCO 2017 で、全モデルを事前学習なしの train-from-scratch、500 エポックで学習して比較した。YOLOv9-E は AP 55.6% で、YOLOv8-X に対しパラメータ16%減、計算量27%減、AP +1.7%、YOLOv9-C は YOLOv7 AF と同じ AP 53% をパラメータ42%減、計算量22%減で達成した。アブレーションでは、深層監督が浅いモデルで精度を下げる場合があるのに対し、PGI は GELAN-S/M/C/E の全サイズで AP を改善した（例: GELAN-E で +0.6）。また ImageNet 事前学習済みの RT DETR-X と同等の精度を、パラメータ66%で達成した。",
+        "discussion": "GELAN は深さに対して感度が低く、特別な設計なしに安定した性能を得られるとされるが、評価は MS COCO の物体検出に限られており、他タスクや他ドメインでの有効性は本文では示されていない。補助可逆ブランチは学習時に追加の計算・メモリを要する点も考慮が必要である（本文では学習コストの定量評価は確認できない）。",
+        "next": [
+          {
+            "title": "YOLOv7: Trainable bag-of-freebies sets new state-of-the-art for real-time object detectors",
+            "reason": "YOLOv9 のベースモデルであり、補助ヘッドや lead-head guided assignment、RepConv の理解に必要である。"
+          },
+          {
+            "title": "Reversible Column Networks",
+            "reason": "可逆アーキテクチャを多階層に一般化した手法で、PGI が対比・参照する可逆ブランチの考え方を理解できる。"
+          },
+          {
+            "title": "DETRs beat YOLOs on real-time object detection",
+            "reason": "RT DETR は YOLOv9 の主な比較対象であり、Transformer 系リアルタイム検出器との違いを把握できる。"
+          }
+        ]
+      },
+      "titleJa": "YOLOv9: Programmable Gradient Information を用いて学習したいことを学習する",
+      "why": "深層ネットワークで層を重ねるほど入力情報が失われ、損失関数が信頼できる勾配を生成できなくなる情報ボトルネックの問題に対し、推論時の追加コストなしに補助可逆ブランチなどで対処する学習概念 PGI と、通常の畳み込みのみで構成される軽量な GELAN を提案し、両者を組み合わせた物体検出器 YOLOv9 を構築した研究です。MS COCO 2017 で事前学習なしの train-from-scratch 条件でも、YOLOv9-E が AP 55.6% を達成して YOLOv8-X よりパラメータ16%減、計算量27%減、AP +1.7% となり、ImageNet 事前学習済みの RT DETR-X と同等の精度をパラメータ66%で実現しました。PGI は深層監督が浅いモデルで精度を下げる場合があるのに対し GELAN-S/M/C/E の全サイズで AP を改善しており、軽量モデルから大型モデルまで効く点が注目され、Paper Digest の集計で ECCV 2024 の被引用数2位となっています。"
+    },
+    {
+      "title": "MMBench: Is Your Multi-modal Model an All-around Player?",
+      "selection": "被引用数上位（Paper Digest の集計で同年3位）",
+      "authors": [
+        "Yuan Liu",
+        "Haodong Duan",
+        "Yuanhan Zhang",
+        "Bo Li",
+        "Songyang Zhang",
+        "Wangbo Zhao",
+        "Yike Yuan",
+        "Jiaqi Wang",
+        "Conghui He",
+        "Ziwei Liu",
+        "Kai Chen",
+        "Dahua Lin"
+      ],
+      "url": "https://arxiv.org/abs/2307.06281",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "大規模視覚言語モデル（VLM）の能力を客観的かつ頑健に評価するため、3,217問の選択式問題からなる二言語（英語・中国語）ベンチマーク MMBench を提案した研究。知覚と推論を軸とする階層的な分類（L-1〜L-3、計20の細粒度能力）で、モデルの得意・不得意を詳細に分析できる。",
+        "novelty": "従来の VQAv2 や COCO Caption は完全一致による偽陰性が多く細粒度の分析ができず、OwlEval など人手評価は再現性・拡張性に課題があった。本研究は、客観的な選択式問題、厳格な CircularEval、LLM による選択肢抽出、英中の対応比較を組み合わせ、これらの課題をまとめて解消した。また、テキストのみで解ける問題や誤問題を LLM/VLM で自動検出して人手確認する品質管理手法も提示している。",
+        "method": "各問題を（質問、2〜4個の選択肢、画像、正解）の組とし、ボランティアが主にインターネット（80%超）から収集した。CircularEval では選択肢を循環シフトして N 回（N は選択肢数）問い、全パスで正解したときのみ正答とする。自由形式の出力は、まずヒューリスティックなマッチングで選択肢ラベルを抽出し、失敗した場合は GPT-4（gpt-4-0125）で選択肢に対応づける。中国語版は GPT-4 で翻訳し、人手で検証した。",
+        "validation": "GPT-4 による選択肢抽出は、人手による抽出結果と91.5%一致した。CircularEval により多くのVLMで精度が大きく低下し（GPT-4v で約10%減、OpenFlamingo v2 は36.7%から2.6%）、モデル間の差が明確になった。MMBench-test では、オープンソースの InternLM-XComposer2 が78.1%で最高となり、プロプライエタリでは Qwen-VL-Max 75.4%、GPT-4v 74.3% だった。LLM の性能が VLM の性能に大きく影響すること、プロプライエタリモデルは構造化された画像テキスト理解や外部知識を要するタスクで優位なことも示された。",
+        "discussion": "全VLMが、画像の低レベル特徴の認識、表・図・レイアウトなど構造化された視覚入力の理解、物体間の空間関係の認識・推論に弱いことが示され、今後の改善課題となっている。プロプライエタリモデルのコンテンツ制限による回答拒否は、精度に最大2.4%の影響を与える。選択式形式の評価であるため、自由記述の生成能力までは直接測れない点が限界として考えられる（この点は本文中で明示的には論じられていない）。",
+        "next": [
+          {
+            "title": "MME: A Comprehensive Evaluation Benchmark for Multimodal Large Language Models",
+            "reason": "同時期の代表的なVLM評価ベンチマークであり、MMBench との設計や評価方法の違いを比較できる。"
+          },
+          {
+            "title": "Visual Instruction Tuning (LLaVA)",
+            "reason": "MMBench で高い性能を示したLLaVA系モデルの基盤となる手法で、VLM の学習パラダイムを理解できる。"
+          },
+          {
+            "title": "LVLM-eHub: A Comprehensive Evaluation Benchmark for Large Vision-Language Models",
+            "reason": "MMBench が課題として挙げた人手による主観評価アプローチの代表例で、客観評価との違いを理解できる。"
+          }
+        ]
+      },
+      "titleJa": "MMBench: あなたのマルチモーダルモデルは万能選手か?",
+      "why": "大規模視覚言語モデル(VLM)を客観的かつ頑健に評価するため、3,217問の選択式問題からなる英語・中国語の二言語ベンチマーク MMBench を提案した研究です。厳格な CircularEval や GPT-4 による選択肢抽出(人手抽出と91.5%一致)などを組み合わせ、従来の完全一致評価や人手評価の課題を解消し、知覚と推論にわたる20の細粒度能力でモデルの得意・不得意を分析できます。ECCV 2024 で被引用数が上位(Paper Digest 集計で同年3位)であり、InternLM-XComposer2 が78.1%、Qwen-VL-Max が75.4%、GPT-4v が74.3%という比較結果も示されています。"
     }
   ],
   "sources": [
     {
       "title": "European Conference on Computer Vision（AI Wiki・開催地・投稿数・最優秀論文）",
       "url": "https://www.aiwiki.ai/wiki/eccv/raw"
+    },
+    {
+      "title": "Most Influential ECCV Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-eccv-papers-2026-03-version/"
     }
   ],
   "unreachable": [
