@@ -1,0 +1,141 @@
+{
+  "conf": "kdd",
+  "updated": "2026-11-14",
+  "year": 2024,
+  "headline": "バルセロナで初の欧州開催。概念にもとづく解釈可能なモデル CAT と LinkedIn の GNN 基盤が最優秀論文に",
+  "summary": "第30回の KDD 2024 は、2024年8月25〜29日にスペインのバルセロナで開催されました。研究トラックは投稿2,046本・採択409本（20.0%）です。研究トラックの最優秀論文は、特徴量を人間に分かりやすい「概念」にまとめ、テイラー展開で概念間の関係を表す解釈可能なモデル CAT（ウィリアム・アンド・メアリー大学ほか）、ADS トラックは LinkedIn で実運用される大規模なグラフニューラルネット基盤 LiGNN でした。Test of Time 賞は、グラフのノードを埋め込みベクトルにする DeepWalk（研究）と、都市の大気質推定の U-Air（ADS）です。",
+  "stats": {
+    "submissions": 2046,
+    "accepted": 409,
+    "rate": "20.0%",
+    "note": "研究トラックの数値（myhuiban の集計）"
+  },
+  "trends": [
+    "解釈可能な AI: 概念にもとづく加法モデルで、少ないパラメータと高い説明性を両立（CAT）",
+    "グラフ学習の実運用: LinkedIn の大規模 GNN 基盤と、学習の7倍高速化（LiGNN）",
+    "科学への応用: 火星の観測データの高解像度な潜在構造の学習（ADS 次点）",
+    "グラフ表現学習の定着: DeepWalk が Test of Time 賞"
+  ],
+  "implications": [
+    "金融・医療など説明責任が求められる分野で、精度と解釈性を両立するモデルの需要が高まっていることを反映している",
+    "GNN が SNS の推薦や検索の実運用基盤になったことが示され、グラフデータの活用は実務の標準的な選択肢になった"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper（研究トラック）",
+      "title": "CAT: Interpretable Concept-based Taylor Additive Models",
+      "authors": "Viet Duong, Qiong Wu, Zhengyi Zhou, Hongjue Zhao, Chenxiang Luo, Eric Zavesky, Huaxiu Yao, Huajie Shao",
+      "url": "https://arxiv.org/abs/2406.17931"
+    },
+    {
+      "award": "Best Paper（ADS トラック）",
+      "title": "LiGNN: Graph Neural Networks at LinkedIn",
+      "authors": "Fedor Borisyuk ほか（LinkedIn）",
+      "url": "https://arxiv.org/abs/2402.11139"
+    },
+    {
+      "award": "Runner-up（ADS トラック）",
+      "title": "Nested Fusion: A Method for Learning High Resolution Latent Structure of Multi-Scale Measurement Data on Mars",
+      "authors": "Austin Wright, Duen Chau, Scott Davidoff"
+    },
+    {
+      "award": "Test of Time（研究）",
+      "title": "DeepWalk: Online Learning of Social Representations",
+      "authors": "Bryan Perozzi, Rami Al-Rfou, Steven Skiena"
+    },
+    {
+      "award": "Test of Time（ADS）",
+      "title": "U-Air: When Urban Air Quality Inference Meets Big Data",
+      "authors": "Yu Zheng, Furui Liu, Hsun-Ping Hsieh"
+    }
+  ],
+  "featured": [
+    {
+      "title": "CAT: Interpretable Concept-based Taylor Additive Models",
+      "titleJa": "CAT: 概念にもとづく解釈可能なテイラー加法モデル",
+      "award": "Best Paper（研究トラック）",
+      "authors": [
+        "Viet Duong",
+        "Qiong Wu",
+        "Zhengyi Zhou",
+        "Hongjue Zhao"
+      ],
+      "url": "https://arxiv.org/abs/2406.17931",
+      "why": "特徴量ごとに関数を学ぶ一般化加法モデル（GAM）は、パラメータが多く、特徴量が多いと人間には解釈しにくくなる課題がありました。特徴量を概念にまとめ、テイラー展開で概念間の相互作用を表すことで、少ないパラメータで分かりやすい説明を可能にしました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "入力特徴を粗いグループに分けるだけで、人間が理解できる高レベルな概念を通じて予測を説明できる解釈可能モデル CAT（Concept-bAsed Taylor additive model）を提案した研究。専門家による概念名・正解値のアノテーションを不要にしつつ、GAM系手法のパラメータ過多・過学習・スケーラビリティの問題の緩和を狙う。",
+        "novelty": "従来の概念ベース手法（CBM等）は専門家による概念ラベルと正解値を必要としたが、CAT はメタデータから特徴をカテゴリ分けするだけで概念を扱える。また従来のGAM系が低レベル特徴ごとに形状関数を学習するのに対し、概念単位で扱うため、特徴数が多くても説明が理解しやすく、パラメータ数も少ない。さらに既存のCP分解ベースの多項式手法より表現力の高いTucker分解を用いたTaylorNetを導入している。",
+        "method": "各特徴グループを1次元の概念表現へ写すDNN概念エンコーダ（MLP: 隠れ層64-64-32、LeakyReLU）を用意し、画像データでは disentangled representation learning で潜在因子を概念として抽出する。得られた概念ベクトルを、活性化関数を持たない白箱の TaylorNet（Taylor多項式）に入力して予測する。高次係数テンソルの次数に対する指数的なパラメータ増加は Tucker 分解で低ランク化して抑え、実験では単層で次数2または3（ランクはそれぞれ8、16）を用いる。これにより予測を概念の1次項と概念間の相互作用項に分解して解釈できる。",
+        "validation": "表形式4データセット（Airbnb、COMPAS、Diabetes、UCI-HAR）と画像2データセット（MNIST、CelebA）で、XGBoost・MLP・EBM・NAM・NBM・SPAM・Grand-Slamin と比較し、RMSE、Accuracy、Macro-F1を3シードの平均で評価した。CAT は EBM を除く解釈可能ベースラインを概ね上回り、UCI-HAR のみ EBM が上回る一方、EBM は1,200万超のパラメータを要した。CAT は NAM・NBM・SPAM よりパラメータ数が少なく学習スループットも高い傾向を示した（例: Airbnb で CAT 次数2は48,742パラメータ、NAM は822,780）。COMPAS と Diabetes の二値分類では次数2でも黒箱を含む全ベースラインを上回ったと報告されている。",
+        "discussion": "概念のグルーピングは、メタデータが整備され人手で意味のあるグループ化ができることが前提であり、その質が性能や解釈性に影響しうる。解釈性を保つため単層・低次（2〜3）に限定しており、より高次の相互作用の表現力とのトレードオフが残る。なお提供された本文は一部省略されており、ケーススタディや概念数・ランクなどのハイパーパラメータ分析の詳細は確認できていない。",
+        "next": [
+          {
+            "title": "Concept Bottleneck Models",
+            "reason": "CAT が課題とする、専門家による概念ラベルを前提とした概念ベース解釈手法の代表であり、差分を理解するために必須。"
+          },
+          {
+            "title": "Scalable Interpretability via Polynomials",
+            "reason": "多項式でGAMの高次相互作用を扱う SPAM であり、CAT の最も近い比較対象かつ Taylor/多項式アプローチの背景を把握できる。"
+          },
+          {
+            "title": "Neural Additive Models: Interpretable Machine Learning with Neural Nets",
+            "reason": "特徴ごとにNNで形状関数を学習するNAMはCATが改善対象とするGAM系手法の基礎となる論文。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "LiGNN: Graph Neural Networks at LinkedIn",
+      "titleJa": "LiGNN: LinkedIn におけるグラフニューラルネットワーク",
+      "award": "Best Paper（ADS トラック）",
+      "authors": [
+        "Fedor Borisyuk",
+        "Shihai He",
+        "Yunbo Ouyang",
+        "Morteza Ramezani"
+      ],
+      "url": "https://arxiv.org/abs/2402.11139",
+      "why": "時間を考慮したグラフ構造、新規ユーザーへの対応、学習の7倍高速化など、LinkedIn で大規模な GNN を実運用するための工夫と、A/B テストから得た教訓をまとめました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "LinkedInで実運用されている大規模GNNフレームワーク「LiGNN」の提案と、その開発・展開で得た知見の報告。最大で千億ノード・数千億エッジ規模の異種グラフ上で、Feed・求人・人物推薦・広告などに使えるノード埋め込みを学習・提供する。アルゴリズム改善、学習の高速化と安定化、ニアライン推論、デプロイ時の教訓までを含む。",
+        "novelty": "既存のSAGE系GNNに、トランスフォーマーによる時系列モデリングと長期損失を組み合わせた、本番向けで簡素かつスケーラブルな「時間グラフ」を導入した点が新しい。また、外部コンテンツ埋め込みに基づくkNN人工エッジでコールドスタートノードを補うグラフ高密度化や、適応的近傍サンプリング、グルーピング＆スライシング、共有メモリキューなどの学習高速化手法を提示し、学習時間を24時間から3.3時間（約7倍）に短縮した。",
+        "method": "エンコーダ・デコーダ構成で、エンコーダはGraphSAGE型（平均または注意機構による集約）、デコーダはMLP、コサイン、バッチ内ネガティブサンプリングを用意する。時間グラフでは直近N件の活動をサンプリングし、SAGE出力をマルチヘッド系列化して連結し、プレフィックス因果マスク付きトランスフォーマーに入力して、BCE損失と長期損失で学習する。高密度化では、出次数の低いノード（下位30%）に、外部埋め込みの近似最近傍（HNSW系）で見つけた出次数の高いノード（上位90%以上）へのエッジをk≈50本追加する。サンプリングは2-hop PPR（Forward Push・ランダムウォーク）を既定とし、Microsoft DeepGNNのグラフエンジンから実時間で取得する。学習の工夫として、近傍数を検証指標に応じて段階的に増やす適応的サンプリング、メンバー単位でのグルーピング＆スライシング、Pythonの共有メモリキュー、ローカル勾配集約、Horovodへの移行、gRPCリトライ、GeneratorEnqueuerなどを用いる。",
+        "validation": "Follow Feed、Out-of-Network Feed、求人推薦、人物推薦、広告CTRの各ドメインで、オフラインのアブレーションとオンラインA/Bテストを実施した。Follow FeedのAUCではIDエンベディングが+15.3%、時間グラフが+5.8%、近傍数を20から200にすると+3.2%の向上を示した。2-hop PPRはマルチホップPPRの利得の約90%を3倍速で得られ、人物推薦ではオフラインrecallが+29.6%、広告CTRが約+2%、求人のhearing back rateが約+1%、Feedの Engaged DAUが+0.5%向上した。学習面では、グルーピング＆スライシングで69.9%、共有メモリキューで68.04%の学習時間削減となり、学習成功率は30%から90%超に改善した。",
+        "discussion": "最大の利得源であるIDエンベディングや各手法の効果は、LinkedIn固有の巨大データとインフラ（DeepGNN、Kubernetes、Beam）に依存するため、他環境での再現性は不明である。ニアライン推論は2-hopサンプリングしか対応しておらず、GPUコロケーションは現状のモデルでは効果がなかったなど、モデル拡大に伴って状況が変わる可能性が残る。また、Feedでのインプレッション割引の配置のように、モデル外のシステム設計が効果を左右する点が教訓として挙げられている。",
+        "next": [
+          {
+            "title": "Inductive Representation Learning on Large Graphs",
+            "reason": "LiGNNのエンコーダの基盤であるGraphSAGEの原論文で、近傍サンプリングと集約の仕組みを理解できる。"
+          },
+          {
+            "title": "PinnerFormer: Sequence Modeling for User Representation at Pinterest",
+            "reason": "LiGNNの時間グラフが採用するトランスフォーマーによる系列モデリングと長期損失の元になった手法を確認できる。"
+          },
+          {
+            "title": "Scaling graph neural networks with approximate pagerank",
+            "reason": "LiGNNで既定のサンプリングとなったPPRベースの近似計算（Forward Push等）の理論と実装を把握できる。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "KDD 2024 受賞論文の発表（智源社区）",
+      "url": "https://hub.baai.ac.cn/view/39457"
+    },
+    {
+      "title": "KDD の採択率（myhuiban・研究トラックの集計）",
+      "url": "https://www.myhuiban.com/conference/136"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": [
+    "基調講演者の一覧は確認できなかったため省略しています"
+  ]
+}

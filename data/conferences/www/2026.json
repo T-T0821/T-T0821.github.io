@@ -1,0 +1,97 @@
+{
+  "conf": "www",
+  "updated": "2026-11-14",
+  "year": 2026,
+  "headline": "ドバイ開催・投稿3,370本。外部知識と LLM 内部の知識を統合する医療 QA の研究が最優秀論文に",
+  "summary": "The Web Conference 2026 は、2026年6月29日〜7月3日にアラブ首長国連邦のドバイで開催されました。研究トラックは投稿3,370本・採択676本（約20%）で、推薦（110本）、グラフアルゴリズム、セキュリティ・プライバシー、意味と知識の4分野で採択の過半を占めています。最優秀論文は、医療の質問応答で、検索した外部文書（RAG）と LLM 自身が生成した文書（GAG）の両方を統合し、検索の雑音と生成の幻覚の両方を抑える研究でした。検索と RAG・検索エージェントの論文も60本にのぼり、Agentic Web（エージェントが使う Web）のチュートリアルやワークショップも開かれました。",
+  "stats": {
+    "submissions": 3370,
+    "accepted": 676,
+    "rate": "約20%",
+    "note": "研究トラックの数値（Bohrium の集計）"
+  },
+  "trends": [
+    "RAG と LLM の知識の統合: 外部の検索結果と内部知識の生成を組み合わせた医療 QA",
+    "推薦: 最大の分野（110本・16.3%）。生成的検索による推薦（最優秀短論文）",
+    "検索と RAG・検索エージェント: 60本（8.9%）",
+    "Agentic Web: エージェントが Web を使う時代のインターフェースやプロトコル",
+    "グラフ表現学習の定着: LINE が Seoul Test of Time 賞"
+  ],
+  "implications": [
+    "RAG の弱点（検索の雑音）と LLM 単体の弱点（幻覚）を補い合う設計が最高賞を得ており、医療のような高信頼の分野での LLM 活用の方向性を示している",
+    "Web がエージェントに使われる前提での設計（Agentic Web）が議題に上がっており、サイト運営者にとってもエージェント向けの情報提供が課題になりつつある"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "From Retrieval to Generation: Unifying External and Parametric Knowledge for Medical Question Answering",
+      "authors": "Lei Li, Xiao Zhou, Yingying Zhang, Xian Wu",
+      "url": "https://arxiv.org/abs/2510.18297"
+    },
+    {
+      "award": "Best Short Paper",
+      "title": "DualGR: Generative Retrieval with Long and Short-Term Interests Modeling",
+      "authors": "Zhongchao Yi ほか"
+    },
+    {
+      "award": "Seoul Test of Time",
+      "title": "LINE: Large-scale Information Network Embedding",
+      "authors": ""
+    }
+  ],
+  "featured": [
+    {
+      "title": "From Retrieval to Generation: Unifying External and Parametric Knowledge for Medical Question Answering",
+      "titleJa": "検索から生成へ: 医療の質問応答における外部知識とパラメータ内知識の統合",
+      "award": "Best Paper",
+      "authors": [
+        "Lei Li",
+        "Xiao Zhou",
+        "Yingying Zhang",
+        "Xian Wu"
+      ],
+      "url": "https://arxiv.org/abs/2510.18297",
+      "why": "医療 QA では、外部文書を検索する RAG は検索の雑音や不足に、LLM 自身に文書を生成させる GAG は幻覚に弱いという課題がありました。両方の知識を統合して推論を誤らせないようにする枠組みを示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "医療QAにおいて、検索拡張生成（RAG）の知識不足・ノイズと、生成拡張生成（GAG）のハルシネーションという双方の弱点を補うため、外部知識（検索文書）とパラメトリック知識（LLM生成文書）を統合するフレームワークMedRGAGを提案した研究。検索→生成→読解（retrieval–generation–then–read）という流れで、信頼性の高い証拠を読み手LLMに与える。",
+        "novelty": "既存のRAG・GAG統合手法（GRGやCOMBOなど）が検索文書と生成文書を単純に結合するのに対し、検索結果から不足知識を明示的に特定して生成を誘導する点と、質問ごとの知識要件に基づいて文書を選別する点が新しい。これにより生成文書への過度な依存を抑えつつ、知識の網羅性を高めている。",
+        "method": "3段階で構成される。(1) 複数コーパス（教科書・Wikipedia）から各ソースで均等に検索し、MedCPT-Rerankerで上位k件に絞る。(2) KGCCでは、検索文書の要約→不足知識の探索→不足知識ごとの背景文書生成を行い（不足分が足りなければ質問から直接生成）、多様な補完文書を得る。(3) KADSでは、統合用LLMが知識要件の特定・文書への対応付け・冗長性を避けた上位5件の選択を一括で行い、読み手に渡す。生成器にLLaMA-3.1-8B、要約・探索・統合にGPT-4o-miniを使用。",
+        "validation": "MedQA-US、MedMCQA、MMLU-Med、PubMedQA*、BioASQ-Y/Nの5ベンチマークで、Qwen2.5-7B、LLaMA-3.1-8B、Ministral-8Bの3種の読み手を用いて精度を比較した。全読み手・データセット平均でMedRAGに対し12.5%、MedGENIEに対し4.5%の改善を示し、例えばQwen2.5-7Bの平均精度は71.14（MedRAG 62.35、MedGENIE 67.79）だった。アブレーションでは生成・検索・KGCC・KADSのいずれを除いても精度が低下し、KADSによる5件選択は10件全てを渡す設定と同等以上の精度を保った。",
+        "discussion": "生成器や補助LLM（要約・探索・統合）の規模に性能が依存し、8B・14Bの小型モデルではGPT-4o-miniより大きく劣るため、複数段階の処理に伴う誤りの蓄積や推論コストが課題となる。また、MedQAのように質問文が長く複雑なデータセットでは検索文書の採用比率が上がらないという例外も見られた。今後は、より広範な知識集約型QAや複雑な臨床シナリオへの拡張と、LLM内部知識の活用と検証可能な検索証拠の統合が展望として挙げられている。",
+        "next": [
+          {
+            "title": "To Generate or to Retrieve? On the Effectiveness of Artificial Contexts for Medical Open-Domain Question Answering",
+            "reason": "主要な比較対象であるGAG手法MedGENIEの提案論文で、生成文脈の有効性と限界を理解できる。"
+          },
+          {
+            "title": "Benchmarking Retrieval-Augmented Generation for Medicine (MedRAG)",
+            "reason": "RAG側の主要ベースラインとなる医療RAGのベンチマーク・ツールキットとして、本研究の比較基盤を把握できる。"
+          },
+          {
+            "title": "Blinded by Generated Contexts: How Language Models Merge Generated and Retrieved Contexts When Knowledge Conflicts?",
+            "reason": "検索文書と生成文書が競合する際に生成文書へ偏る現象を分析しており、KADSの動機となる文書ソース選好の背景を理解できる。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "The ACM Web Conference 2026（公式・日程と受賞）",
+      "url": "https://www2026.thewebconf.org/"
+    },
+    {
+      "title": "WWW 2026 Accepted Papers: Research Landscape, Award Winners（Bohrium）",
+      "url": "https://www.bohrium.com/en/blog/www-2026-accepted-papers/"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": [
+    "集計サイトの一部に「完全オンライン」との記載がありましたが、公式サイトの記載に従いドバイ開催としています",
+    "基調講演者の一覧は確認できなかったため省略しています"
+  ]
+}

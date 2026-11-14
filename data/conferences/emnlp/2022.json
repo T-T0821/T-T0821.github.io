@@ -1,0 +1,91 @@
+{
+  "conf": "emnlp",
+  "updated": "2026-11-14",
+  "year": 2022,
+  "headline": "アブダビ開催・投稿4,190本。タングラム（図形パズル）で抽象的な視覚推論を調べる KiloGram が最優秀論文に",
+  "summary": "2022年12月7〜11日にアラブ首長国連邦のアブダビでハイブリッド開催されました。投稿は4,190本（ARR からのコミット275本を含む）で、本会議に829本（20%）、Findings に549本（13%）が採択されています。「言語モデルとその分析」や「リソースと評価」が200本超の主要トラックになりました。最優秀論文は、タングラムの図形に人々が付けた多様な説明を大規模に集め、人間と機械の抽象的な視覚推論を比べるデータセット KiloGram（コーネル大学ほか）です。基調講演には Gary Marcus 氏らが登壇しました。",
+  "stats": {
+    "submissions": 4190,
+    "accepted": 829,
+    "rate": "20%",
+    "note": "長論文22%、短論文12%。Findings は549本（13%）"
+  },
+  "keynotes": [
+    "Gary Marcus（ニューヨーク大学名誉教授）「Towards a Foundation for AGI」",
+    "Neil Cohn（ティルブルフ大学）",
+    "Mona Diab（Meta Responsible AI）「Towards a Responsible NLP」"
+  ],
+  "trends": [
+    "抽象的な視覚推論: 図形への多様な言語表現を集めたデータで、人間と機械の推論を比較",
+    "主要トラック: リソースと評価、NLP 応用、機械学習、対話、言語モデルの分析、マルチモーダル、情報抽出",
+    "ChatGPT 公開直後の開催: 言語モデルの分析が独立した主要トラックに"
+  ],
+  "implications": [
+    "抽象的な図形のような「慣れていない」入力では画像と言語のモデルが人間に及ばないことが示され、汎化性能の評価に新しい観点を加えた"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Abstract Visual Reasoning with Tangram Shapes",
+      "authors": "Anya Ji, Noriyuki Kojima, Noah Rush, Alane Suhr, Wai Keen Vong, Robert D. Hawkins, Yoav Artzi",
+      "url": "https://arxiv.org/abs/2211.16492"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Abstract Visual Reasoning with Tangram Shapes",
+      "titleJa": "タングラム図形による抽象的な視覚推論",
+      "award": "Best Paper",
+      "authors": [
+        "Anya Ji",
+        "Noriyuki Kojima",
+        "Noah Rush",
+        "Alane Suhr",
+        "Wai Keen Vong",
+        "Robert D. Hawkins",
+        "Yoav Artzi"
+      ],
+      "url": "https://arxiv.org/abs/2211.16492",
+      "why": "1,000種類以上のタングラム図形に、人々が「何に見えるか」「どの部品が何か」を付けた大規模データ KiloGram を作りました。CLIP などのモデルは抽象的な図形の理解で人間に及ばず、部品の情報や色付けで改善することを示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "人間と機械の抽象的視覚推論を調べるための資源 KiloGram を提案した研究。1,016個のタングラム図形をベクタ画像化し、全体形状の説明、パーツ分割、パーツ名を含む13,404件のアノテーションを収集した。これを使い、事前学習済みマルチモーダルモデル（CLIP、ViLT）の抽象視覚推論能力を参照ゲームで評価している。",
+        "novelty": "従来のタングラム研究は10〜20個、最大でも60個程度の小規模な刺激セットに限られていたが、本研究は約2桁大きい1,016個を提供する。画像は元のパズルピースから構成したベクタ図形で、全体の説明だけでなくセグメンテーションとパーツ名まで含むため、全体-部分の推論を扱える。1図形あたり複数の注釈（最低10件、一部は50件以上）を集め、注釈の分布そのものを表現している点も特徴である。",
+        "method": "MTurkで2段階の注釈を行った。まず全体形状の説明（「This shape, as a whole, looks like ___」）を書き、次にピースを選んでパーツ名を付ける。注釈の分散は、形状命名の乖離（SND）、パーツ命名の乖離（PND）、パーツ分割の一致度（PSA）の3指標で測る。評価では、テキストと10枚の画像から正しい画像を選ぶ参照ゲームを用いる。入力条件は、テキストが全体のみかパーツ名付きか、画像が単色（black）かパーツ別の色分け（color）かの組合せで、事前学習済み重みと対照学習によるファインチューニング、およびパーツ部分集合によるデータ拡張（aug）を比較した。",
+        "validation": "事前学習済みモデルはランダム（10%）をわずかに上回る程度で、テスト精度はCLIPが17〜18%台、ViLTが11〜13%台だった。ファインチューニングで大きく改善し、テストのparts + colorではViLTが77.3%、CLIPが46.5%となり、人間（開発セットで63.0%）を上回った。人間も、パーツ名と色分けの両方があるときに最も成績が高かった。ViLTは、両方の情報を同時に符号化できることでパーツ情報を活用できたと考えられる。データ分析では、SNDの平均が0.91と高く、命名が多様であることが示された。",
+        "discussion": "説明が孤立した画像に対して集められており、文脈に応じた語用論的な詳細さを欠くため、参照ゲームには解けない曖昧さが含まれ、精度の上限は100%を下回ると考えられる。人間評価は予備的で、参加者が高成績群と低成績群に分かれたため、人間とモデルの比較には慎重さが必要である。分析は英語に限られており、今後は対話型の参照ゲームや他言語・他文化への拡張が課題とされている。",
+        "next": [
+          {
+            "title": "ViLT: Vision-and-Language Transformer Without Convolution or Region Supervision",
+            "reason": "本研究で joint encoding の代表として評価され、パーツ情報の活用で高性能を示したモデルの詳細を理解できる。"
+          },
+          {
+            "title": "Learning Transferable Visual Models From Natural Language Supervision (CLIP)",
+            "reason": "separate encoding の代表として評価され、対照学習による事前学習とファインチューニングの基礎となる手法である。"
+          },
+          {
+            "title": "Referring as a collaborative process",
+            "reason": "タングラムを用いた参照ゲームの認知科学的な原点であり、本研究の動機と課題設定の背景が分かる。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "EMNLP 2022 Proceedings（ACL Anthology・会議録の前付け、プログラム委員長の挨拶）",
+      "url": "https://aclanthology.org/2022.emnlp-main.0.pdf"
+    },
+    {
+      "title": "Cornell NLP scholars win best paper at top conference（コーネル大学）",
+      "url": "https://bowers.cornell.edu/news-stories/cornell-natural-language-processing-scholars-win-best-paper-top-conference"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": [
+    "最優秀論文以外の受賞論文の題名は、確認できた出典に記載がなかったため省略しています"
+  ]
+}

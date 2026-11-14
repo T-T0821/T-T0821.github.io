@@ -1,0 +1,142 @@
+{
+  "conf": "acl",
+  "updated": "2026-11-14",
+  "year": 2026,
+  "headline": "サンディエゴ開催・投稿1.2万本。LLM 全盛の中、最優秀論文3本は言語学・形式理論寄りの研究に",
+  "summary": "2026年7月2〜7日に米国サンディエゴで開催されました。投稿は過去最多の12,148本（前年比約45%増）で、本会議に2,296本（18.9%）、Findings に2,163本（17.8%）が採択されています。AI エージェント、安全性とアラインメント、数学・記号推論、コードモデルなどのトラックが新設され、ほぼすべてが LLM を中心にしています。一方、最優秀論文3本は、LLM が「進行中の出来事は完了するとは限らない」という未完了相のパラドックスを扱えるかを調べた研究（ミュンヘン大学・東京大学）、文処理における記憶の効率と資源合理的な符号化、局所アテンションを持つ Transformer の表現力の理論と、言語学・形式理論寄りのテーマでした。2027年は京都で開催予定です。",
+  "stats": {
+    "submissions": 12148,
+    "accepted": 2296,
+    "rate": "18.9%",
+    "note": "Findings は2,163本（17.8%）。出典により採択数が1本ずれる（2,297本・2,164本）"
+  },
+  "trends": [
+    "LLM の言語理解の検証: 未完了相のパラドックスや構文の最小対など、言語学的な現象で LLM を試す",
+    "形式理論: 局所アテンションを持つ Transformer の表現力の特徴づけ",
+    "認知科学との接点: 文処理における記憶の効率と資源合理的な符号化",
+    "LLM 中心のトラック新設: エージェント、安全性・アラインメント、数学・記号推論、コード、効率化、臨床・生物医学"
+  ],
+  "implications": [
+    "投稿の大半が LLM の応用でも、最高賞は言語と計算の原理を問う研究に与えられており、評価の基準は「新しい性能」より「深い理解」に置かれている",
+    "ACL-27 は京都で開催予定で、日本の企業・研究者が NLP の最前線に直接触れる好機になる"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "The Imperfective Paradox in Large Language Models",
+      "authors": "Bolei Ma, Yusuke Miyao",
+      "url": "https://arxiv.org/abs/2601.09373"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Memory efficiency and resource-rational encoding in sentence processing",
+      "authors": "Weijie Xu, Richard Futrell, Brian Dillon"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Characterizing the Expressivity of Local Attention in Transformers",
+      "authors": "Jiaoda Li, Ryan Cotterell",
+      "url": "https://arxiv.org/abs/2605.00768"
+    },
+    {
+      "award": "Best Theme Paper",
+      "title": "Mapping the Circumplex of Affect: Geometric Analysis of Emotion Representations via Hyperspherical Contrastive Learning",
+      "authors": "Yusuke Yamauchi, Akiko Aizawa"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "CxMP: A Linguistic Minimal-Pair Benchmark for Evaluating Constructional Understanding in Language Models",
+      "authors": "Miyu Oba, Saku Sugawara"
+    }
+  ],
+  "featured": [
+    {
+      "title": "The Imperfective Paradox in Large Language Models",
+      "titleJa": "大規模言語モデルにおける未完了相のパラドックス",
+      "award": "Best Paper",
+      "authors": [
+        "Bolei Ma",
+        "Yusuke Miyao"
+      ],
+      "url": "https://arxiv.org/abs/2601.09373",
+      "why": "「走っていた」なら「走った」と言えるが、「家を建てていた」からは「建てた」とは言えない、という言語学の古典的な問題を診断するデータセットを作りました。LLM は目標のある出来事を完了したと思い込む「目的論的バイアス」を持ち、文中で完了が否定されていても覆されないことを示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "LLMがイベントの合成的意味論を理解しているかを、「不完全相のパラドックス」（過去進行形は活動動詞では事象の実現を含意するが、達成動詞では含意しない）で検証した研究。診断用データセットImperfectiveNLIを構築し、7つの7〜9B級オープンウェイトモデルが目的志向の事象で完了を幻覚する「目的論的バイアス」を持つことを示した。",
+        "novelty": "先行研究は相（アスペクト）の分類やモデリング、または人間の判断との比較が中心で、LLMの相的推論を体系的に診断した研究はなかった。本研究は、テレシティ（有界性）と文脈（中断／曖昧）を掛け合わせた最小対の統制設計、TBRやΔAAといった指標、プロンプト介入・モデル規模・動詞意味クラス・表現分析を組み合わせて、バイアスの所在を多面的に切り分けた。",
+        "method": "テンプレートに基づき、有界動詞（達成）100個と非有界動詞（活動）100個について、Geminiで文を生成し人手で検証して400例を構築した。条件は、中断された達成(A)・中断された活動(B)・曖昧な達成(C)・曖昧な活動(D)の4種で、正解はそれぞれ矛盾・含意・中立・含意である。評価ではStrict Logic、Definition-Aware、CoT、Counterfactualの4種のプロンプトを使い、Group CでTrueと答える割合をTBRとし、ACC_D − TBR_C をΔAAと定義した。さらにbert-base-uncasedで進行形と単純過去形の埋め込みのコサイン類似度を測り、行動との関係を調べた。",
+        "validation": "ゼロショットでは多くのモデルがGroup Cでほぼ失敗した（例: Llama-3.1のAcc_C 0.02、TBR_C 0.98）一方、Group Dはほぼ満点で、ΔAAはほぼ0だった。例外はQwen2.5（TBR_C 0.53、ΔAA 0.44）。CoTやCounterfactualはTBRを下げるが、Group Dの精度が大きく低下する（Llama-3.1でCoT 0.65、Counterfactualはほぼ0）。Qwen2.5ではモデル規模とTBRが負相関（r=-0.93）、ΔAAと正相関（r=0.95）を示し、32BでΔAAが0.83となった。動詞クラス別では、Group Aの精度は移動(46%)が創造(18%)より高かった。",
+        "discussion": "データがテンプレートベースの英語のみであるため、実際の言語使用ではより難しくなる可能性があり、他言語への一般化も未検証である。介入は推論時プロンプトに限られ、ファインチューニングや活性操作は検討されていない。また、表現分析はbert-base-uncasedの類似度に基づいて相関も有意水準に届かない(p=0.07)など限定的で、「表現は区別しているが推論が先行知識に支配される」という解釈は仮説にとどまる。事象ごとのスクリプト知識と文法的相の切り分けも今後の課題である。",
+        "next": [
+          {
+            "title": "Toward a semantic analysis of verb aspect and the English 'imperfective' progressive",
+            "reason": "不完全相のパラドックスを慣性世界の可能世界意味論で定式化した原典で、本研究の理論的基盤を理解できる。"
+          },
+          {
+            "title": "Do Large Language Models Understand Lexical Aspect? / Ma (2024)",
+            "reason": "大規模LLMが語彙的相の識別に苦戦することを示した先行研究で、本研究の問題設定と直接つながる。ただし本文に原題の記載はなく、題名は推定である。"
+          },
+          {
+            "title": "Faith and fate: limits of transformers on compositionality",
+            "reason": "高頻度の統計パターンと衝突するとTransformerの合成的推論が劣化するという、本研究の考察の根拠となる論文である。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Characterizing the Expressivity of Local Attention in Transformers",
+      "titleJa": "Transformer における局所アテンションの表現力の特徴づけ",
+      "award": "Best Paper",
+      "authors": [
+        "Jiaoda Li",
+        "Ryan Cotterell"
+      ],
+      "url": "https://arxiv.org/abs/2605.00768",
+      "why": "効率化のために使われる局所（窓）アテンションが、なぜかモデルの品質も上げるという現象に理論的な説明を与えました。局所アテンションを加えると時相論理の演算子が1つ増え、認識できる言語のクラスが真に広がること、全体と局所のアテンションが相補的であることを証明しています。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "Transformerのローカルアテンション（直近の有界窓のみを参照）がなぜ品質を改善しうるのかを、認識器の表現力（どの形式言語を認識できるか）の観点から形式的に説明した研究。固定精度Transformerのグローバルアテンションは過去演算子Pを1つ持つ線形時相論理（LTL）の断片に対応するが、ローカルアテンションを加えると第2の時相演算子Yが加わり、認識可能な正規言語のクラスが真に拡大することを証明した。",
+        "novelty": "先行研究（Li and Cotterell, 2025）はグローバルアテンションのみを扱いLTL[P]との対応を示していたが、本研究はローカルアテンションをLTL[Y]（定義的言語に対応）として特徴づけ、LTL[P]とLTL[Y]が互いに比較不能（どちらも他方を包含しない）であることを示した。さらに両者を併用したLTL[P,Y]が最も豊かな断片となり、局所検査可能言語（n-gramに近い）をすべて含むことを証明した点が新しい。",
+        "method": "Transformerをマスク付きアテンションで定義し、グローバルマスク（m<n）とk-ローカルマスク（max(1,n−k)≤m<n）を区別する。これをLTLの断片LTL[P]、LTL[Y]、LTL[P,Y]、LTL[P,Y≤k]に対応づけ、代数的（統語的半群、局所R-自明性）およびオートマトン的（最小DFAにおける禁止構成）な同値な特徴づけを与えた。Y≤k（直近k歩のいずれかで成立）についてはk=1が最大の表現力であること、また法述語MOD_m^r（m≥k）があればLTL[Y≤k]がLTL[Y]と同等になることも示した。",
+        "validation": "形式言語認識（長さ汎化あり）と自然言語モデリング（WikiText-2）で理論を検証した。グローバル、ローカル、ハイブリッドの3種を比較し、ハイブリッドは両極端より多くの言語を認識でき、長い系列への汎化もより安定していた。ローカルの窓幅は1が最も強く、SiPEやRoPEでもローカルアテンションの不在は補えず、WikiText-2ではウィンドウ幅1のハイブリッドが位置符号化によらず最低のパープレキシティを達成した。具体的な数値は与えられた本文中には記載がない。",
+        "discussion": "純粋なローカルアテンションは直近の固定長接尾辞のみに依存し、定義的言語という小さなクラスに表現力が縮退するため、グローバルとの併用が不可欠である。ハイブリッドでも深さ2の有界Dyck言語のようなスターフリー言語の一部は認識できず、完全なスターフリー言語には届かない。ここで示した結果は固定精度の理論的設定に基づくため、実際の大規模モデルへの当てはまりは今後の検証課題である（本文の議論は一部省略されており、詳細な限界の記述は確認できていない）。",
+        "next": [
+          {
+            "title": "Characterizing the expressivity of fixed-precision transformer language models",
+            "reason": "本研究の直接の前提で、グローバルアテンションとLTL[P]の対応を示した先行論文である。"
+          },
+          {
+            "title": "Masked hard-attention transformers recognize exactly the star-free languages",
+            "reason": "マスク付きアテンションとLTL・スターフリー言語の関係を示した、本研究の理論的背景となる論文である。"
+          },
+          {
+            "title": "Longformer: The long-document transformer",
+            "reason": "ローカルアテンションとグローバルアテンションを併用する代表的な実用モデルで、ハイブリッド構成の動機を理解できる。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "ACL 2026 での受賞（国立情報学研究所）",
+      "url": "https://www.nii.ac.jp/en/news/release/2026/0722.html"
+    },
+    {
+      "title": "ACL 2026 の受賞論文と統計（36Kr）",
+      "url": "https://www.36kr.com/p/3888326643104513"
+    },
+    {
+      "title": "ACL 2027（公式・京都開催）",
+      "url": "https://2027.aclweb.org/"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": [
+    "基調講演者の一覧は確認できなかったため省略しています",
+    "優秀論文18本の一覧は確認できた出典になかったため、日本の研究者が受賞した1本のみ掲載しています"
+  ]
+}

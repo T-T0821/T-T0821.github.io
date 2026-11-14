@@ -1,0 +1,110 @@
+{
+  "conf": "acl",
+  "updated": "2026-11-14",
+  "year": 2020,
+  "headline": "シアトル開催予定からオンラインへ。モデルを「振る舞いのテスト」で評価する CheckList が最優秀論文に",
+  "summary": "シアトルで予定されていた第58回大会は、COVID-19 のため2020年7月5〜10日にオンラインで開催されました。投稿3,088本に対し採択は779本（長論文571・短論文208、採択率25.2%）です。最優秀論文は、ソフトウェアテストの考え方を持ち込み、NLP モデルの能力を項目ごとのテストで確かめる CheckList（Microsoft ほか）でした。佳作にはドメイン適応のための追加事前学習（Don't Stop Pretraining）と、機械翻訳の自動評価指標の見直しが選ばれ、「精度の数字だけでは分からない」ことを示す評価研究が評価された回です。",
+  "stats": {
+    "submissions": 3088,
+    "accepted": 779,
+    "rate": "25.2%"
+  },
+  "trends": [
+    "評価方法の見直し: 正解率だけでなく、能力ごとの振る舞いテストでモデルの弱点を洗い出す（CheckList）",
+    "ドメイン適応: 対象分野やタスクのテキストで事前学習を続けると性能が上がる",
+    "自動評価指標の信頼性: 機械翻訳の BLEU などと人手評価の関係を再検証"
+  ],
+  "implications": [
+    "ベンチマークの高得点と実際の頑健さは別物であり、実務では用途に合わせたテストケースを自前で用意する必要がある、という考え方がここで広まった",
+    "汎用の事前学習モデルを自社ドメインのデータで追加学習する手法は、その後の LLM の継続事前学習やドメイン特化モデルの基本になった"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Beyond Accuracy: Behavioral Testing of NLP Models with CheckList",
+      "authors": "Marco Tulio Ribeiro, Tongshuang Wu, Carlos Guestrin, Sameer Singh",
+      "url": "https://arxiv.org/abs/2005.04118"
+    },
+    {
+      "award": "Best Paper Honorable Mention",
+      "title": "Don't Stop Pretraining: Adapt Language Models to Domains and Tasks",
+      "authors": "Allen Institute for AI・ワシントン大学"
+    },
+    {
+      "award": "Best Paper Honorable Mention",
+      "title": "Tangled up in BLEU: Reevaluating the Evaluation of Automatic Machine Translation Evaluation Metrics",
+      "authors": "メルボルン大学"
+    },
+    {
+      "award": "Test of Time (1995)",
+      "title": "Centering: A Framework for Modeling the Local Coherence of Discourse",
+      "authors": "Barbara J. Grosz, Aravind K. Joshi, Scott Weinstein"
+    },
+    {
+      "award": "Test of Time (1995)",
+      "title": "Unsupervised Word Sense Disambiguation Rivaling Supervised Methods",
+      "authors": "David Yarowsky"
+    },
+    {
+      "award": "Test of Time (2010)",
+      "title": "Distributional Memory: A General Framework for Corpus-based Semantics",
+      "authors": "Marco Baroni, Alessandro Lenci"
+    },
+    {
+      "award": "Test of Time (2010)",
+      "title": "Word Representations: A Simple and General Method for Semi-supervised Learning",
+      "authors": "Joseph Turian, Lev-Arie Ratinov, Yoshua Bengio"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Beyond Accuracy: Behavioral Testing of NLP Models with CheckList",
+      "titleJa": "正解率を超えて: CheckList による NLP モデルの振る舞いテスト",
+      "award": "Best Paper",
+      "authors": [
+        "Marco Tulio Ribeiro",
+        "Tongshuang Wu",
+        "Carlos Guestrin",
+        "Sameer Singh"
+      ],
+      "url": "https://arxiv.org/abs/2005.04118",
+      "why": "否定の理解や固有名詞の置き換えへの頑健さなど、言語能力ごとにテストを作ってモデルを調べる枠組みです。高精度とされた商用モデルにも多くの失敗が見つかり、評価の仕方そのものを変えるきっかけになりました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "NLPモデルの汎化性能を、ホールドアウトデータの精度だけでなくソフトウェア工学の振る舞いテスト（ブラックボックステスト）の考え方で評価する、タスク非依存の方法論とツール「CheckList」を提案した研究。言語的な能力（Capabilities）とテスト種別を行列として整理し、網羅的なテスト設計と大量のテストケース生成を支援する。",
+        "novelty": "従来の評価手法（ノイズ頑健性、敵対的摂動、公平性、診断用データセットなど）は個別タスクや特定の振る舞いに限られていたが、CheckListは Vocabulary、Negation、NER、Temporal、SRL、Logic などの汎用的な能力と3種のテスト型を組み合わせた包括的な指針を与える。また、テンプレート、マスク言語モデルによる埋め込み候補提案、汎用摂動などの抽象化により、テスト作成の労力を下げている点が新しい。",
+        "method": "モデルをブラックボックスとして扱い、能力（行）×テスト種別（列）の行列のセルを埋める形でテストを作る。テスト種別は、単純な例で基本機能を確認する Minimum Functionality test (MFT)、ラベルを保つ摂動で予測が変わらないことを確認する Invariance test (INV)、期待される方向に予測が変わることを確認する Directional Expectation test (DIR) の3つ。テストケースは「I {NEGATION} {POS_VERB} the {THING}.」のようなテンプレートとレキシコンの直積で生成し、RoBERTa のマスク予測や WordNet でフィルイン候補を拡張する。実装は OSS として公開され、テストの保存・共有や、文字入れ替え（タイポ）、固有名詞置換などの汎用摂動も備える。",
+        "validation": "感情分析（商用3モデル、BERT-base、RoBERTa-base）、Quora Question Pair（BERT-base、RoBERTa-base）、機械読解（SQuAD で微調整した BERT-large）に適用した。ベンチマークでは高精度（例: QQP で 91.1%/91.3%、SQuAD で 93.2 F1）のモデルでも、否定、時制、SRL、共参照などで深刻な失敗が見つかり、たとえば感情分析では文末の否定で商用モデルの失敗率がほぼ100%となった。ユーザー調査では、商用感情分析チームが約5時間のセッションで多数の新規かつ対処可能なバグを発見した。また、18名による QQP の2時間テストでは、CheckList の能力一覧とテンプレートを使った条件が、補助なしの条件より多くのテストを作成し（13.5 対 5.8）、重大バグ（severity≥3）数も多かった（6.2 対 2.2）。",
+        "discussion": "テストで失敗が見つからなくても、モデルが公平である、または問題がないことの証明にはならず（公平性テストはその一例）、あくまで簡単なテストを通過したにすぎない。提示された能力の一覧は網羅的ではなく、タスクやドメインに応じてユーザー自身が能力を追加する必要がある。また、データのバージョン管理問題、ラベル誤り、アノテータバイアス、最悪ケースのセキュリティ、解釈可能性といった非振る舞い的な問題には直接使えず、ベンチマークを置き換えるのではなく補完するものとされている。",
+        "next": [
+          {
+            "title": "Errudite: Scalable, reproducible, and testable error analysis",
+            "reason": "モデルの失敗箇所を特定する対話的な誤り分析手法で、CheckList とは異なる視点から集約精度の限界を補う関連研究として読む価値がある。"
+          },
+          {
+            "title": "Semantically equivalent adversarial rules for debugging NLP models",
+            "reason": "CheckList の INV テストの発想に近い、意味を保つ摂動によるモデルのデバッグ手法である。"
+          },
+          {
+            "title": "Perturbation sensitivity analysis to detect unintended model biases",
+            "reason": "名前などの置換でモデルの予測がどう変わるかを調べる手法で、CheckList の公平性・NER テストの背景として参考になる。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "ACL 2020 Announces Best Paper & Test-of-Time Awards（Synced）",
+      "url": "https://syncedreview.com/2020/07/08/acl-2020-announces-best-paper-test-of-time-awards/"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": [
+    "佳作2本の著者名は出典に記載がなかったため所属のみ記載しています",
+    "基調講演者の一覧は確認できなかったため省略しています"
+  ]
+}

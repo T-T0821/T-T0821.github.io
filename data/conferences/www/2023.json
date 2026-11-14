@@ -1,0 +1,97 @@
+{
+  "conf": "www",
+  "updated": "2026-11-14",
+  "year": 2023,
+  "headline": "オースティン開催。Twitter のボット検出は「データセットの作り方」のせいで精度が高く見えていたと示した研究が最優秀論文に",
+  "summary": "第32回となる The Web Conference 2023 は米国オースティンで開催されました。投稿1,900本・採択365本（19.2%）です。最優秀論文は、Twitter のボット検出の手法が既存のデータセットでほぼ完璧な精度を示すのは、データの集め方とラベル付けの単純さによるもので、実際の利用には信頼できないことを示した研究でした。Seoul Test of Time 賞には、ニュース推薦に文脈つきバンディットを使った2010年の論文が選ばれています。",
+  "stats": {
+    "submissions": 1900,
+    "accepted": 365,
+    "rate": "19.2%"
+  },
+  "trends": [
+    "ベンチマークの妥当性: 高精度の原因がデータセットの作り方にあることを示す",
+    "ボット検出と情報の信頼性: 選挙や偽情報の研究に使われる第三者ツールの限界",
+    "オンライン推薦の基礎: 文脈つきバンディットによるニュース推薦が Test of Time 賞"
+  ],
+  "implications": [
+    "公開データセットでの高精度がそのまま実用性を意味しないことが示され、偽情報対策やコンテンツ審査のツールを導入する際は自社データでの検証が欠かせない"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Simplistic Collection and Labeling Practices Limit the Utility of Benchmark Datasets for Twitter Bot Detection",
+      "authors": "Chris Hays, Zachary Schutzman, Manish Raghavan, Erin Walk, Philipp Zimmer",
+      "url": "https://arxiv.org/abs/2301.07015"
+    },
+    {
+      "award": "Seoul Test of Time",
+      "title": "A Contextual-Bandit Approach to Personalized News Article Recommendation",
+      "authors": "Wei Chu, Lihong Li, John Langford, Robert Schapire"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Simplistic Collection and Labeling Practices Limit the Utility of Benchmark Datasets for Twitter Bot Detection",
+      "titleJa": "単純なデータ収集とラベル付けが Twitter ボット検出のベンチマークの有用性を損なっている",
+      "award": "Best Paper",
+      "authors": [
+        "Chris Hays",
+        "Zachary Schutzman",
+        "Manish Raghavan",
+        "Erin Walk",
+        "Philipp Zimmer"
+      ],
+      "url": "https://arxiv.org/abs/2301.07015",
+      "why": "ボット検出の研究や選挙・偽情報の分析は、プラットフォーム外の第三者ツールに頼っています。そのツールが既存データセットで示すほぼ完璧な性能は、データの集め方とラベル付けの限界によるものだと示し、評価の前提を問い直しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "Twitterのボット検出で広く使われる公開ベンチマークデータセット群を分析し、高い検出精度がモデルの高度さではなくデータの収集・ラベル付け手続きの単純さに由来することを示した研究。浅い決定木で最先端に近い性能が出ること、データセット間で汎化しないことを根拠とする。",
+        "novelty": "従来研究はボット検出器の不一致・時間的不安定性・汎化不足・ラベル誤りを指摘していたが、その原因を具体的に説明していなかった。本研究は、限界の原因をデータの単純な収集・ラベル付け手続きに結びつけて定量的に示した点が新しい。解釈可能な浅い決定木を使えば、データセットのサンプリング・ラベル付けの癖を直接読み取れる点も特徴である。",
+        "method": "各データセットに深さ4以下の浅い決定木（scikit-learn）を5分割交差検証で学習させ、最先端モデルと同種の特徴量に限定して比較した（twibot-2020のみ既定の分割を使用）。決定木の分岐から収集・ラベル付けの人為的な痕跡を読み取った。さらに、あるデータセットで学習したランダムフォレストを他で評価する実験（フォロワー数・フォロー数・ツイート数・リスト数に限定）と、1つを除く全データで学習して残りで評価するleave-one-dataset-out実験を行った。加えて、ボットの種類ごと（スパムボット、フェイクフォロワーなど）の分類と、同種ボットのデータセット間の識別も決定木で調べた。",
+        "validation": "約10種のベンチマークで、浅い決定木の精度は最先端から概ね10ポイント以内に収まった（rtbust-2019のみ差が0.22）。例えばcresci-2017は深さ1で精度0.98（最先端との差-0.02）で、「earthquake」という語を含むか否かだけでほぼ分離できた。クロスデータセット評価では、対角成分は高いが非対角成分の多くはバランス精度0.5前後かそれ以下だった。leave-one-outでもtwibot-2020の0.55、rtbust-2019の0.53など、ランダムに近い結果が多かった。一方、cresci-2017やcresci-2015、midterm-2018は、データの重複や同一研究グループによる類似の収集手法のためか高めの値になった。",
+        "discussion": "ラベルを真値と仮定して分析しており、ラベル自体の誤りや人間アノテータの偏りは評価されていない。また、より表現力の高いモデル（ニューラルネットなど）が汎化を改善する可能性は排除しきれず、著者らも推測にとどまる。提言として、データセット作成者にはサンプリング・ラベル付け手続きの透明な報告を、検出器の開発者には解釈可能な単純モデルとの併用を、前処理として検出器を使う研究者にはバイアスへの配慮を求めている。",
+        "next": [
+          {
+            "title": "LOBO: Evaluation of Generalization Deficiencies in Twitter Bot Classifiers",
+            "reason": "leave-one-bot-out評価で汎化不足を示した先行研究で、本論文のクロスデータセット実験の土台になっている。"
+          },
+          {
+            "title": "Detection of Novel Social Bots by Ensembles of Specialized Classifiers",
+            "reason": "ボットの種類ごとに特化した分類器を組み合わせる手法で、本論文が検証対象とする「少数のボット種別」という仮定の代表例である。"
+          },
+          {
+            "title": "Demystifying Misconceptions in Social Bots Research",
+            "reason": "cresci-2017の「earthquake」の由来を明らかにした著者らによる論考で、ボット研究の誤解や本論文の指摘への応答を確認できる。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "The Web Conference 公式 X（WWW 2023 最優秀論文の発表）",
+      "url": "https://twitter.com/TheWebConf/status/1653440879728656402"
+    },
+    {
+      "title": "Seoul Test of Time Award 2023（EurekAlert!）",
+      "url": "https://www.eurekalert.org/news-releases/987755"
+    },
+    {
+      "title": "The Web Conference の採択率（myhuiban の集計）",
+      "url": "https://www.myhuiban.com/conference/137"
+    },
+    {
+      "title": "The Web Conference（Wikipedia・開催地）",
+      "url": "https://en.wikipedia.org/wiki/The_Web_Conference"
+    },
+    {
+      "title": "arXiv（受賞論文の著者情報）",
+      "url": "https://arxiv.org/"
+    }
+  ],
+  "unreachable": [
+    "開催日程（日付）は公式ページで確認できなかったため月のみ表示しています",
+    "基調講演者の一覧は確認できなかったため省略しています"
+  ]
+}
