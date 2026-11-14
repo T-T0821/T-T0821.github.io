@@ -3,10 +3,13 @@
 // Claude で重要なものを選んで日本語で要約し、docs/<category>/YYYY-MM-DD.md に出力する。
 //
 // 使い方: node scripts/news/collect.mjs [category ...]   （省略時は全分野）
+//         node scripts/news/collect.mjs --render-only [category ...]
+//           保存済みの data/*.json から Markdown だけを作り直す（収集・要約はしない）
 // 任意の環境変数:
 //   CLAUDE_MODEL   既定 claude-sonnet-5-5
 //   DIGEST_DATE    出力日付 YYYY-MM-DD（既定は JST の今日）
 
+import fs from 'node:fs'
 import path from 'node:path'
 import {
   ROOT, MODEL, DATE, log, safe, fetchText, fetchJson, parseFeed, toPlain, ask, extractJson,
@@ -134,45 +137,80 @@ async function summarize(field, news, papers) {
   throw lastErr
 }
 
-function render(field, result) {
-  const title = `${DATE} の${field.label}動向`
-  const heads = result.news.slice(0, 2).map(n => n.title_ja).join('／')
-  const description = `${field.label}の最新ニュース ${result.news.length} 件と論文 ${result.papers.length} 件を日本語で要約。${heads ? heads + ' など' : ''}`
+// 保存・描画用に 1 件分の情報をまとめる（data/*.json にもこの形で保存し、--render-only で再描画できる）
+function toItem(x, noteKey) {
+  return {
+    title: x.title_ja || x.item.title,
+    original: x.item.title,
+    url: x.item.url,
+    source: x.item.source,
+    date: x.item.date && !Number.isNaN(x.item.date.getTime()) ? x.item.date.toISOString().slice(0, 10) : '',
+    authors: x.item.authors || [],
+    summary: x.summary,
+    [noteKey]: x[noteKey] || '',
+  }
+}
+
+// ---------- Markdown 生成 ----------
+// スマホで読みやすいよう、冒頭に「今日の動向」と見出し一覧を置き、各項目は
+// 「見出し → 出典・日付・原文リンク → 要約 → 影響（注目点）」の順にそろえる。
+function render(field, data) {
+  const news = data.news || []
+  const papers = data.papers || []
+  const title = `${data.date} の${field.label}動向`
+  const heads = news.slice(0, 2).map(n => n.title).join('／')
+  const description = `${field.label}の最新ニュース ${news.length} 件と論文 ${papers.length} 件を日本語で要約。${heads ? heads + ' など' : ''}`
   const lines = [
     '---',
     `title: ${yamlStr(title)}`,
-    `date: ${DATE}`,
+    `date: ${data.date}`,
     `category: "${field.category}"`,
     `description: ${yamlStr(description)}`,
     'lang: "日本語"',
+    'pageClass: digest-page',
     '---',
     '',
     `# ${title}`,
     '',
-    `> ${[...field.feeds.map(f => f.name), ...field.papers.map(p => p.name)].join('・')} から自動収集し、Claude（\`${MODEL}\`）が要約しています。詳細は各リンク先の一次情報を確認してください。`,
-    '',
   ]
-  if (result.overview) lines.push('## 今日の動向', '', sanitize(result.overview), '')
+  if (data.overview) lines.push('::: info 今日の動向', sanitize(data.overview), ':::', '')
 
-  if (result.news.length) {
-    lines.push('## ニュース', '')
-    for (const n of result.news) {
-      lines.push(`### ${sanitize(n.title_ja || n.item.title)}`, '')
-      lines.push(`[${sanitize(n.item.title)}](${n.item.url}) ・ ${n.item.source} ・ ${n.item.date.toISOString().slice(0, 10)}`, '')
+  // 見出し一覧（タップで各項目へ移動）
+  const toc = (label, list, prefix) => {
+    if (!list.length) return
+    lines.push(`**${label}（${list.length} 件）**`, '')
+    list.forEach((x, i) => lines.push(`${i + 1}. [${sanitize(x.title)}](#${prefix}-${i + 1})`))
+    lines.push('')
+  }
+  toc('📰 ニュース', news, 'news')
+  toc('📄 論文', papers, 'paper')
+
+  if (news.length) {
+    lines.push('## 📰 ニュース', '')
+    news.forEach((n, i) => {
+      lines.push(`### ${i + 1}. ${sanitize(n.title)} {#news-${i + 1}}`, '')
+      lines.push([sanitize(n.source), n.date, `[原文を読む ↗](${n.url})`].filter(Boolean).join(' ・ '), '')
       lines.push(sanitize(n.summary), '')
-      if (n.impact) lines.push(`**影響・使いどころ:** ${sanitize(n.impact)}`, '')
-    }
+      if (n.impact) lines.push('::: tip 💡 影響・使いどころ', sanitize(n.impact), ':::', '')
+    })
   }
-  if (result.papers.length) {
-    lines.push('## 論文', '')
-    for (const p of result.papers) {
-      lines.push(`### ${sanitize(p.title_ja || p.item.title)}`, '')
-      const authors = p.item.authors?.length ? ` ・ ${sanitize(p.item.authors.join(', '))}${p.item.authors.length >= 4 ? ' ほか' : ''}` : ''
-      lines.push(`[${sanitize(p.item.title)}](${p.item.url}) ・ ${p.item.source}${authors}`, '')
+  if (papers.length) {
+    lines.push('## 📄 論文', '')
+    papers.forEach((p, i) => {
+      lines.push(`### ${i + 1}. ${sanitize(p.title)} {#paper-${i + 1}}`, '')
+      const authors = p.authors?.length ? `${sanitize(p.authors.join(', '))}${p.authors.length >= 4 ? ' ほか' : ''}` : ''
+      lines.push([sanitize(p.source), authors, `[論文を読む ↗](${p.url})`].filter(Boolean).join(' ・ '), '')
+      if (p.original && p.original !== p.title) lines.push(`<small>原題: ${sanitize(p.original)}</small>`, '')
       lines.push(sanitize(p.summary), '')
-      if (p.why) lines.push(`**注目ポイント:** ${sanitize(p.why)}`, '')
-    }
+      if (p.why) lines.push('::: tip 🔍 注目ポイント', sanitize(p.why), ':::', '')
+    })
   }
+  lines.push(
+    '::: details このページについて',
+    `${[...field.feeds.map(f => f.name), ...field.papers.map(p => p.name)].join('・')} から自動収集し、Claude（\`${data.model || MODEL}\`）が要約しています。詳細は各リンク先の一次情報を確認してください。`,
+    ':::',
+    '',
+  )
   return lines.join('\n')
 }
 
@@ -189,19 +227,30 @@ async function runField(field) {
   const result = await summarize(field, news, papers)
   if (!result.news.length && !result.papers.length) return log(`${field.label}: 選ばれた項目がないためスキップ`)
 
-  const strip = x => ({ title: x.title_ja, summary: x.summary, url: x.item.url, source: x.item.source, original: x.item.title })
-  writeOutputs(field.category, render(field, result), {
+  const data = {
     date: DATE,
     model: MODEL,
     overview: result.overview,
-    news: result.news.map(strip),
-    papers: result.papers.map(strip),
-  })
+    news: result.news.map(x => toItem(x, 'impact')),
+    papers: result.papers.map(x => toItem(x, 'why')),
+  }
+  writeOutputs(field.category, render(field, data), data)
+}
+
+// 保存済みの data/<category>/<DATE>.json から Markdown だけを作り直す（表示形式を変えたとき用）
+function rerenderField(field) {
+  const file = path.join(ROOT, 'data', field.category, `${DATE}.json`)
+  if (!fs.existsSync(file)) return log(`${field.label}: ${DATE} のデータがないためスキップ`)
+  const data = JSON.parse(fs.readFileSync(file, 'utf-8'))
+  fs.writeFileSync(path.join(ROOT, 'docs', field.category, `${DATE}.md`), render(field, data))
+  log(`再描画: docs/${field.category}/${DATE}.md`)
 }
 
 async function main() {
-  const only = process.argv.slice(2)
+  const args = process.argv.slice(2)
+  const only = args.filter(a => !a.startsWith('--'))
   const targets = only.length ? FIELDS.filter(f => only.includes(f.category)) : FIELDS
+  if (args.includes('--render-only')) return targets.forEach(rerenderField)
   log(`分野別ダイジェスト / モデル: ${MODEL} / 対象: ${targets.map(f => f.category).join(', ')}`)
   let failed = 0
   for (const field of targets) {

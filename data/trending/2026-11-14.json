@@ -1,6 +1,7 @@
 {
   "date": "2026-11-14",
   "model": "claude-sonnet-5-5",
+  "overview": "今日の一覧で最も目立つのは、コーディングエージェントを取り巻くツール群です。Chrome DevTools MCP や Modern Web Guidance（Google Chrome チームによるスキルとそのソースリポジトリ）、Plannotator、alibaba の open-code-review、Claude Skills 形式のトレーディング支援ツールなどがあり、エージェントに最新知識や実ブラウザ操作の手段を与える、あるいはその出力をレビューして人間が制御するといった「周辺の仕組み」に関心が集まっていると読み取れます。また、Cloudflare の kitesurf、Rust 製コンテナランタイムの kiri、Edge0 のローカル MoE 推論、Univer の Office SDK のように、既存の重い環境に頼らず、軽量なランタイムやローカル・エッジ環境、組み込み可能な SDK で動かす方向の試みも目立ちます。Windows 向けの apkstart や FFmpeg GUI ツールのように、複雑な操作を隠して手軽に使えるようにするデスクトップ向けツールも上がっており、実用性の高さが支持されているようです。さらに、DeepSeek のブラウザ直結チャットデモ、Dynamic Island 風の UI コンポーネント、LLM による多市場の株式分析通知など、LLM やデザインを手軽に自分のアプリや日常業務へ取り込む事例も並んでいます。",
   "repos": [
     {
       "fullName": "RoutineMiku/apkstart",

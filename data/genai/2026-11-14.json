@@ -8,42 +8,60 @@
       "summary": "GoogleはGemini 4 Hydrogenを検索に全世界で提供し、より有用で視覚的、直感的な回答を返すとしています。詳細な仕様や対象機能は概要からは確認できません。",
       "url": "https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/",
       "source": "Google AI Blog",
-      "original": "Google Search gets a major upgrade with Gemini 4 Hydrogen"
+      "original": "Google Search gets a major upgrade with Gemini 4 Hydrogen",
+      "date": "2026-11-12",
+      "authors": [],
+      "impact": "検索経由の流入や回答表示の変化が想定されるため、検索を前提にしたサービスやSEOを運用するエンジニアは動向を確認しておく価値があります。"
     },
     {
       "title": "ChatGPT Wallet発表：エージェントがユーザー承認のもとで購入を実行",
       "summary": "ChatGPT Work、Codex、dotsのエージェントが、ユーザーの承認と既存のカード保護のもとで購入を完了できる仕組みです。",
       "url": "https://openai.com/index/introducing-chatgpt-wallet",
       "source": "OpenAI News",
-      "original": "Introducing ChatGPT Wallet"
+      "original": "Introducing ChatGPT Wallet",
+      "date": "2026-11-13",
+      "authors": [],
+      "impact": "エージェントに決済を任せる設計では、承認フローと不正対策の組み込み方を検討する際の参考になります。"
     },
     {
       "title": "llama.cpp v1.0.0 リリース",
       "summary": "ローカルAIエコシステムの基盤としてllama.cppがv1.0.0に到達しました。概要がないため、具体的な変更点は元記事の確認が必要です。",
       "url": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
       "source": "Hugging Face Blog",
-      "original": "llama.cpp v1.0.0 : A stronger foundation for the local AI ecosystem"
+      "original": "llama.cpp v1.0.0 : A stronger foundation for the local AI ecosystem",
+      "date": "2026-11-13",
+      "authors": [],
+      "impact": "ローカルLLMの推論基盤として採用している場合は、バージョン更新に伴う変更点や互換性を確認しておくとよいでしょう。"
     },
     {
       "title": "Amplitude、OpenAIモデルで製品改善を1〜2日で出荷",
       "summary": "AmplitudeのプロアクティブなプロダクトエージェントWaveは、主にOpenAIモデルを基盤に、作るべきものの特定、コーディングエージェントによる変更の出荷、効果測定までを担います。",
       "url": "https://openai.com/business/customer-stories/amplitude",
       "source": "OpenAI News",
-      "original": "How Amplitude ships product improvements in 1–2 days with OpenAI"
+      "original": "How Amplitude ships product improvements in 1–2 days with OpenAI",
+      "date": "2026-11-12",
+      "authors": [],
+      "impact": "企画から実装、効果測定までをエージェントでつなぐ開発プロセスの実例として参考になります。"
     },
     {
       "title": "Shield、レガシーポータル作業の引き継ぎにOpenAIを活用",
       "summary": "ShieldはOpenAIを使い、IT技術者がレガシーポータルで行う作業を引き継ぐForgeエージェントを提供しています。エージェントがシステムを操作し、技術者は判断が必要な課題に集中できるとしています。",
       "url": "https://openai.com/business/customer-stories/shield",
       "source": "OpenAI News",
-      "original": "Shield helps technicians hand off legacy portal work with OpenAI"
+      "original": "Shield helps technicians hand off legacy portal work with OpenAI",
+      "date": "2026-11-13",
+      "authors": [],
+      "impact": "APIのない旧システムの操作をエージェントに任せる業務自動化の実例として参考になります。"
     },
     {
       "title": "LLMON：LLMネイティブなマークアップ言語、Granite 4.1 3B/8Bに搭載",
       "summary": "LLMONというLLM向けのマークアップ言語が、Granite 4.1の3Bおよび8Bモデルで利用可能になったと紹介されています。概要がなく、仕様や効果の詳細は確認できません。",
       "url": "https://huggingface.co/blog/ibm-granite/llmon-an-llm-native-markup-language-now-in-granite",
       "source": "Hugging Face Blog",
-      "original": "LLMON: An LLM-Native Markup Language, now in Granite 4.1 3B and 8B"
+      "original": "LLMON: An LLM-Native Markup Language, now in Granite 4.1 3B and 8B",
+      "date": "2026-11-12",
+      "authors": [],
+      "impact": "小型モデルでの構造化出力や入出力形式に関わる可能性があるため、元記事で内容を確認する価値があります。"
     }
   ],
   "papers": [
@@ -52,35 +70,73 @@
       "summary": "決定モデルを、行動を選ぶActor、行動を評価するJudge、強化学習で方策を教えるTeacherとして比較しています。ALFWorldとWebShopで、行動が下手でも教師として有効かを検証しています。",
       "url": "https://arxiv.org/abs/2611.17167",
       "source": "Hugging Face Daily Papers",
-      "original": "Actor, Judge, or Teacher? Understanding Decision Models in Long-Horizon Agents"
+      "original": "Actor, Judge, or Teacher? Understanding Decision Models in Long-Horizon Agents",
+      "date": "",
+      "authors": [
+        "Haochen Liu",
+        "Qianhao Zhu",
+        "Zixuan Wang",
+        "Dingming Li"
+      ],
+      "why": "エージェントの評価・報酬設計で、行動モデルと評価モデルの役割を分けて考える視点を与えます。"
     },
     {
       "title": "SO-Arena：System Oneモデルの能力範囲と信頼性のベンチマーク",
       "summary": "長いトークン生成を伴わずに高速に判断するSystem Oneモデルについて、11分野・5つの能力ファミリーで能力範囲と判断の信頼性を評価するベンチマークです。信頼できる情報源と参照ラベルの手動検証に基づく評価を特徴とします。",
       "url": "https://arxiv.org/abs/2611.15777",
       "source": "Hugging Face Daily Papers",
-      "original": "SO-Arena: Benchmarking the Capability Spectrum and Reliability of System One Models"
+      "original": "SO-Arena: Benchmarking the Capability Spectrum and Reliability of System One Models",
+      "date": "",
+      "authors": [
+        "Lichen Li",
+        "Ziping Dong",
+        "Sicheng Feng",
+        "Qi Li"
+      ],
+      "why": "今日の論文群で複数見られるSystem One系の流れを評価する基盤として注目度が高い研究です。"
     },
     {
       "title": "SteerDistill：閉ループの教師誘導によるLLMエージェントの量子化",
       "summary": "低ビット量子化したエージェントの失敗を、フル精度の教師が修正方向へ導く量子化対応蒸留で補う手法です。学生の実行結果のフィードバックで教師の誘導を反復的に改善します。",
       "url": "https://arxiv.org/abs/2611.13410",
       "source": "Hugging Face Daily Papers",
-      "original": "SteerDistill: Quantizing LLM Agents via Closed-Loop Teacher Steering"
+      "original": "SteerDistill: Quantizing LLM Agents via Closed-Loop Teacher Steering",
+      "date": "",
+      "authors": [
+        "Genming Cui",
+        "Xiangyu Li",
+        "Zixu Hao",
+        "Xin Ding"
+      ],
+      "why": "エージェントの推論コスト削減と、タスク成功率の維持を両立する実務的な課題を扱っています。"
     },
     {
       "title": "DeepStress：深層検索エージェントのストレステスト",
       "summary": "検索エージェントに、信頼性・関連性・事実性を制御して品質の低い根拠を与える動的なテスト枠組みです。正解率だけでなく、慎重な振る舞いを評価する指標RASとCoPRASを導入しています。",
       "url": "https://arxiv.org/abs/2607.13920",
       "source": "Hugging Face Daily Papers",
-      "original": "DeepStress: Stress-Testing Deep Search Agents"
+      "original": "DeepStress: Stress-Testing Deep Search Agents",
+      "date": "",
+      "authors": [
+        "Ismael Rousseau",
+        "Geraldine Damnati",
+        "Frederic Bechet"
+      ],
+      "why": "検索・RAG型エージェントの、劣悪な根拠に対する頑健性を再現可能な形で検証できます。"
     },
     {
       "title": "ScrapeBench：AIエージェントのウェブスクレイピングにおける法令遵守の評価",
       "summary": "利用規約やrobots.txtでスクレイピングを禁じる1,626サイトで、エージェントの遵守状況を評価するベンチマークです。多くのエージェントの遵守率は5%未満で、規約を確認した場合でも低いままでした。",
       "url": "https://arxiv.org/abs/2611.11306",
       "source": "Hugging Face Daily Papers",
-      "original": "ScrapeBench: Evaluating Legal Compliance of AI Agents in Website Scraping"
+      "original": "ScrapeBench: Evaluating Legal Compliance of AI Agents in Website Scraping",
+      "date": "",
+      "authors": [
+        "Joseph Marvin Imperial",
+        "Daniel Slate",
+        "Noam Kolt"
+      ],
+      "why": "Web上で動作するエージェントを運用する際の法務・コンプライアンス上のリスクを具体的に示しています。"
     }
   ]
 }

@@ -3,11 +3,14 @@
 // Claude で日本語の技術要約を作成して docs/trending/YYYY-MM-DD.md に出力する。
 //
 // 使い方: node scripts/trending/collect.mjs
+//         node scripts/trending/collect.mjs --render-only
+//           保存済みの data/trending/*.json から Markdown だけを作り直す（収集・要約はしない）
 // 任意の環境変数:
 //   CLAUDE_MODEL      既定 claude-sonnet-5-5
 //   TRENDING_LIMIT    要約するリポジトリ数（既定 15）
 //   DIGEST_DATE       出力日付 YYYY-MM-DD（既定は JST の今日）
 
+import fs from 'node:fs'
 import path from 'node:path'
 import {
   ROOT, MODEL, DATE, log, fetchText, fetchJson, decodeEntities, ask, sanitize, yamlStr,
@@ -133,63 +136,84 @@ async function summarizeOverview(repos) {
 const fmt = n => (typeof n === 'number' ? n.toLocaleString('en-US') : '-')
 const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 
-function render(repos, carried, overview) {
-  const title = `${DATE} のトレンド OSS`
+const ONE_LINER = /^\*\*一言で:\*\*\s*(.+)$/m
+
+// スマホで読みやすいよう、冒頭に「今日の傾向」と一言付きの一覧を置き、各リポジトリは
+// 「見出し → ★・言語・ライセンス → リンク → 一言 → 詳細」の順にそろえる。
+function render({ date = DATE, model = MODEL, repos, carried = [], overview = '' }) {
+  const title = `${date} のトレンド OSS`
   const top = repos.slice(0, 3).map(r => r.fullName.split('/')[1]).join('、')
   const description = `直近24時間でスターが急増した OSS ${repos.length} 件を日本語で要約。注目: ${top} ほか`
+  const gained = r => (r.starsGained ? `+${fmt(r.starsGained)}` : '')
   const lines = [
     '---',
     `title: ${yamlStr(title)}`,
-    `date: ${DATE}`,
+    `date: ${date}`,
     `category: "${CATEGORY}"`,
     `description: ${yamlStr(description)}`,
     'lang: "日本語"',
+    'pageClass: digest-page',
     '---',
     '',
     `# ${title}`,
     '',
-    `> [Trendshift](https://trendshift.io/) の日次ランキングから収集し、Claude（\`${MODEL}\`）が README をもとに要約しています。`,
-    '',
   ]
-  if (overview) lines.push('## 今日の傾向', '', sanitize(overview), '')
+  if (overview) lines.push('::: info 今日の傾向', sanitize(overview), ':::', '')
 
-  lines.push('## 一覧', '', '| # | リポジトリ | 言語 | ★ 合計 | ★ 24h |', '|---|---|---|---:|---:|')
-  repos.forEach((r, i) =>
-    lines.push(
-      `| ${i + 1} | [${r.fullName}](#${slug(r.fullName)}) | ${sanitize(r.language) || '-'} | ${fmt(r.stars)} | ${r.starsGained ? '+' + fmt(r.starsGained) : '-'} |`,
-    ),
-  )
+  // 一覧（タップで各リポジトリへ移動）
+  lines.push(`**🔥 今日の ${repos.length} 件**`, '')
+  repos.forEach((r, i) => {
+    const one = r.summary.match(ONE_LINER)?.[1]
+    const star = gained(r) ? `（★${gained(r)}）` : ''
+    lines.push(`${i + 1}. [${r.fullName}](#${slug(r.fullName)})${star}${one ? `<br>${sanitize(one)}` : ''}`)
+  })
   lines.push('')
 
   repos.forEach((r, i) => {
     lines.push(`## ${i + 1}. ${r.fullName} {#${slug(r.fullName)}}`, '')
     const meta = [
-      `[GitHub](${r.url})`,
-      r.homepage ? `[Website](${r.homepage})` : null,
-      r.language ? `言語: ${sanitize(r.language)}` : null,
-      `★ ${fmt(r.stars)}${r.starsGained ? `（24h +${fmt(r.starsGained)}）` : ''}`,
-      r.license ? `ライセンス: ${r.license}` : null,
+      `★ ${fmt(r.stars)}${gained(r) ? `（24h ${gained(r)}）` : ''}`,
+      r.language ? sanitize(r.language) : null,
+      r.license || null,
+      `[GitHub ↗](${r.url})`,
+      r.homepage ? `[Website ↗](${r.homepage})` : null,
     ].filter(Boolean)
     lines.push(meta.join(' ・ '), '')
+    const one = r.summary.match(ONE_LINER)?.[1]
+    if (one) lines.push('::: tip 一言で', sanitize(one), ':::', '')
     if (r.description) lines.push(`> ${sanitize(r.description)}`, '')
-    lines.push('::: v-pre', '', sanitize(r.summary), '', ':::', '')
+    lines.push('::: v-pre', '', sanitize(r.summary.replace(ONE_LINER, '').trim()), '', ':::', '')
   })
 
   if (carried.length) {
     lines.push('## 引き続き注目', '', '直近で既に紹介済みのリポジトリです。', '')
-    lines.push('| リポジトリ | ★ 24h | 紹介記事 |', '|---|---:|---|')
     for (const r of carried) {
-      lines.push(
-        `| [${r.fullName}](https://github.com/${r.fullName}) | ${r.starsGained ? '+' + fmt(r.starsGained) : '-'} | [${r.coveredOn}](./${r.coveredOn}#${slug(r.fullName)}) |`,
-      )
+      const star = gained(r) ? `（★${gained(r)}）` : ''
+      lines.push(`- [${r.fullName}](https://github.com/${r.fullName})${star} ・ [${r.coveredOn} の紹介](./${r.coveredOn}#${slug(r.fullName)})`)
     }
     lines.push('')
   }
+  lines.push(
+    '::: details このページについて',
+    `[Trendshift](https://trendshift.io/) の日次ランキングから収集し、Claude（\`${model}\`）が README をもとに要約しています。`,
+    ':::',
+    '',
+  )
   return lines.join('\n')
+}
+
+// 保存済みの data/trending/<DATE>.json から Markdown だけを作り直す（表示形式を変えたとき用）
+function rerender() {
+  const file = path.join(ROOT, 'data', CATEGORY, `${DATE}.json`)
+  if (!fs.existsSync(file)) return log(`${DATE} のデータがないためスキップ`)
+  const data = JSON.parse(fs.readFileSync(file, 'utf-8'))
+  fs.writeFileSync(path.join(ROOT, 'docs', CATEGORY, `${DATE}.md`), render({ ...data, carried: (data.carried || []).slice(0, 10) }))
+  log(`再描画: docs/${CATEGORY}/${DATE}.md`)
 }
 
 // ---------- メイン ----------
 async function main() {
+  if (process.argv.includes('--render-only')) return rerender()
   log(`トレンド OSS / モデル: ${MODEL}`)
   const candidates = await fromTrendshift()
   log(`Trendshift: ${candidates.length} 件`)
@@ -233,12 +257,14 @@ async function main() {
     log(`全体傾向の生成に失敗: ${e.message}`)
   }
 
-  writeOutputs(CATEGORY, render(done, carried.slice(0, 10), overview), {
+  const data = {
     date: DATE,
     model: MODEL,
+    overview,
     repos: done.map(({ readme, ...r }) => r),
     carried: carried.map(({ fullName, starsGained, coveredOn }) => ({ fullName, starsGained, coveredOn })),
-  })
+  }
+  writeOutputs(CATEGORY, render({ ...data, carried: data.carried.slice(0, 10) }), data)
 }
 
 main().catch(e => {
