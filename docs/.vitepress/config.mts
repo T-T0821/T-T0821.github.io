@@ -2,7 +2,7 @@ import { defineConfig, type DefaultTheme } from 'vitepress'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { CATEGORIES, isDailySlug, shortDate, type Category } from './categories'
+import { CATEGORIES as daily, isDailySlug, shortDate, type Category } from './categories'
 
 const docsDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 
@@ -27,9 +27,6 @@ function listPages(cat: string): Page[] {
     .sort((a, b) => b.date.localeCompare(a.date))
 }
 
-const daily = CATEGORIES.filter(c => c.group === 'daily')
-// 記事がまだないカテゴリはナビとサイドバーに出さない（一覧ページ自体は残す）
-const research = CATEGORIES.filter(c => c.group === 'research' && listPages(c.key).length > 0)
 const catText = (c: Category) => `${c.icon} ${c.label}`
 
 // 日次ダイジェスト用サイドバー。いま見ているカテゴリだけ開き、他は折りたたむ
@@ -50,23 +47,9 @@ function dailySidebar(current: string): DefaultTheme.SidebarItem[] {
   }]
 }
 
-// Deep Research 記事用サイドバー
-function researchSidebar(): DefaultTheme.SidebarItem[] {
-  return [{
-    text: 'Deep Research 記事',
-    items: research.map(c => ({
-      text: catText(c),
-      link: `/${c.key}/`,
-      items: listPages(c.key).map(p => ({ text: p.title, link: `/${c.key}/${p.slug}` })),
-    })),
-  }]
-}
-
 function buildSidebar(): DefaultTheme.SidebarMulti {
   const sidebar: DefaultTheme.SidebarMulti = {}
   for (const c of daily) sidebar[`/${c.key}/`] = dailySidebar(c.key)
-  const rs = researchSidebar()
-  for (const c of CATEGORIES.filter(c => c.group === 'research')) sidebar[`/${c.key}/`] = rs
   return sidebar
 }
 
@@ -75,7 +58,7 @@ export default defineConfig({
   base: '/',
   lang: 'ja-JP',
   title: 'AI Tech Blog',
-  description: '毎朝の技術ダイジェストと Deep Research 記事を AI が自動でまとめるブログ',
+  description: '注目の OSS と各分野のニュース・論文を AI が毎朝日本語でまとめる技術ダイジェスト',
   // 自動生成記事には README 由来の localhost や相対リンクが含まれることがあり、
   // それでデプロイが止まらないようにリンク切れチェックを無効化する
   ignoreDeadLinks: true,
@@ -84,16 +67,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'ホーム', link: '/' },
-      {
-        text: '毎日のダイジェスト',
-        activeMatch: `^/(${daily.map(c => c.key).join('|')})/`,
-        items: daily.map(c => ({ text: catText(c), link: `/${c.key}/` })),
-      },
-      {
-        text: 'Deep Research',
-        activeMatch: `^/(${CATEGORIES.filter(c => c.group === 'research').map(c => c.key).join('|')})/`,
-        items: research.map(c => ({ text: catText(c), link: `/${c.key}/` })),
-      },
+      ...daily.map(c => ({ text: catText(c), link: `/${c.key}/`, activeMatch: `^/${c.key}/` })),
     ],
 
     sidebar: buildSidebar(),

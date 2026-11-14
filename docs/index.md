@@ -16,12 +16,3 @@ hero:
 ---
 
 <HomeDashboard />
-
-<details class="home-about">
-<summary>このサイトの仕組み</summary>
-
-- **毎日のダイジェスト**：毎朝 9:00（JST）ごろ、Trendshift のランキングや各分野の公式ブログ・技術メディア・arXiv などから情報を集め、Claude が日本語で要約して自動でコミットしています。
-- **Deep Research 記事**：指定したトピックを GitHub Copilot CLI の Deep Research で調べ、GitHub Actions から記事として公開しています。
-- サイトは VitePress で静的に生成し、GitHub Pages で配信しています。ソースは [GitHub](https://github.com/T-T0821/T-T0821.github.io) にあります。
-
-</details>
