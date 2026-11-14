@@ -4,11 +4,11 @@ layout: home
 
 hero:
   name: "AI Tech Blog"
-  text: "毎朝届く技術ダイジェスト"
+  text: "毎週届く技術ダイジェスト"
   tagline: 注目の OSS と、生成AI・AWS・PLC/装置設計・開発手法のニュースや論文を、AI が日本語でまとめています。
   actions:
     - theme: brand
-      text: 今日のトレンド OSS
+      text: 今週のトレンド OSS
       link: /trending/
     - theme: alt
       text: 生成AIの動向

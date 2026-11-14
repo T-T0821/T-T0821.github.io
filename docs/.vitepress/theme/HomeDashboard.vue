@@ -5,7 +5,7 @@
         📅 最新のダイジェスト
         <span v-if="latestDate" class="home-heading-sub">{{ shortDate(latestDate) }} 更新</span>
       </h2>
-      <p class="home-lead">毎朝 9:00（JST）ごろ、各分野のニュース・論文と注目 OSS を日本語で要約して追加しています。</p>
+      <p class="home-lead">毎週日曜の朝 9:00（JST）ごろ、1 週間分の各分野のニュース・論文と注目 OSS を日本語で要約して追加しています。</p>
       <div class="digest-grid">
         <div v-for="d in digests" :key="d.cat.key" class="digest-card">
           <a :href="withBase(d.latest ? d.latest.url : `/${d.cat.key}/`)" class="digest-main">

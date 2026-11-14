@@ -8,7 +8,7 @@
 // 任意の環境変数:
 //   CLAUDE_MODEL   既定 claude-sonnet-5-5
 //   DIGEST_DATE    出力日付 YYYY-MM-DD（既定は JST の今日）
-//   OCHIAI_PER_FIELD  分野ごとに落合フォーマットで詳しくまとめる論文数（既定 2、0 で無効）
+//   OCHIAI_PER_FIELD  分野ごとに落合フォーマットで詳しくまとめる論文数（既定 3、0 で無効）
 
 import fs from 'node:fs'
 import path from 'node:path'
@@ -19,14 +19,18 @@ import {
 import { summarizeOchiai, renderOchiai } from '../lib/ochiai.mjs'
 import { FIELDS } from './fields.mjs'
 
-const NEWS_WINDOW_HOURS = 48 // これより古いニュースは対象外
-const PAPER_WINDOW_DAYS = 5 // arXiv は週末や公開遅延があるため少し広めに
-const DEDUPE_DAYS = 14 // この期間に紹介した URL は再掲しない
-const MAX_NEWS_CANDIDATES = 60
-const MAX_PAPER_CANDIDATES = 40
+// 毎週日曜に実行する週刊ダイジェスト。直近 1 週間（取りこぼし防止に 1 日の余裕を持たせる）を対象にする
+const NEWS_WINDOW_HOURS = 8 * 24 // これより古いニュースは対象外
+const PAPER_WINDOW_DAYS = 8
+const HF_DAYS = 7 // Hugging Face Daily Papers を遡る日数
+const DEDUPE_DAYS = 28 // この期間に紹介した URL は再掲しない
+const MAX_NEWS_CANDIDATES = 120
+const MAX_PAPER_CANDIDATES = 80
+const MAX_NEWS = 12 // 1 号あたりに載せるニュースの最大数
+const MAX_PAPERS = 8 // 1 号あたりに載せる論文の最大数
 // 重要度の高い順に並んだ論文のうち、先頭から何件を落合フォーマットでまとめるか。
 // 1 件ごとに本文を読ませるため、Max プランの使用量を見ながら調整する
-const OCHIAI_PER_FIELD = Number(process.env.OCHIAI_PER_FIELD ?? 2)
+const OCHIAI_PER_FIELD = Number(process.env.OCHIAI_PER_FIELD ?? 3)
 
 const now = Date.now()
 const within = (date, ms) => date && !Number.isNaN(date.getTime()) && now - date.getTime() <= ms
@@ -53,7 +57,15 @@ async function fromArxiv(source) {
 }
 
 async function fromHuggingFace() {
-  const list = await fetchJson('https://huggingface.co/api/daily_papers')
+  // 直近 1 週間の Daily Papers を日付ごとに取得してまとめる
+  const days = Array.from({ length: HF_DAYS }, (_, i) =>
+    new Date(new Date(DATE).getTime() - i * 86400 * 1000).toISOString().slice(0, 10),
+  )
+  const lists = await Promise.all(
+    days.map(d => fetchJson(`https://huggingface.co/api/daily_papers?date=${d}`).catch(() => [])),
+  )
+  const seen = new Set()
+  const list = lists.flat().filter(x => x.paper?.id && !seen.has(x.paper.id) && seen.add(x.paper.id))
   return list
     .map(x => ({
       title: toPlain(x.paper?.title || x.title, 300),
@@ -91,7 +103,7 @@ function buildPrompt(field, news, papers) {
     (x.authors?.length ? ` / 著者: ${x.authors.join(', ')}` : '') +
     (x.upvotes ? ` / 注目度: ${x.upvotes}` : '') +
     `\n概要: ${x.summary || '(なし)'}`
-  return `分野「${field.label}」の今日のダイジェストを作ります。この分野の関心事: ${field.focus}
+  return `分野「${field.label}」の今週（直近 1 週間）のダイジェストを作ります。この分野の関心事: ${field.focus}
 
 <news>
 ${news.map((x, i) => line('n', i, x)).join('\n\n') || '(候補なし)'}
@@ -102,14 +114,14 @@ ${papers.map((x, i) => line('p', i, x)).join('\n\n') || '(候補なし)'}
 </papers>
 
 手順:
-1. news から、この分野のエンジニアにとって重要度の高いものを最大 8 件選ぶ（分野に関係の薄いものは選ばない）。
-2. papers から、この分野に関係があり実務・研究で注目すべきものを最大 5 件選ぶ（関係の薄いものしかなければ 0 件でよい）。
+1. news から、この分野のエンジニアにとって重要度の高いものを最大 ${MAX_NEWS} 件選ぶ（分野に関係の薄いものは選ばない）。
+2. papers から、この分野に関係があり実務・研究で注目すべきものを最大 ${MAX_PAPERS} 件選ぶ（関係の薄いものしかなければ 0 件でよい）。
 3. 選んだものを重要度の高い順に並べ、それぞれ日本語で要約する。
-4. 全体の動向を 2〜4 文でまとめる。
+4. 今週全体の動向を 2〜4 文でまとめる。
 
 次の JSON だけを出力してください（コードブロックは不要）:
 {
-  "overview": "今日の動向（2〜4文）",
+  "overview": "今週の動向（2〜4文）",
   "news": [
     { "id": "n0", "title_ja": "日本語タイトル", "summary": "何が発表・変更されたか（2〜3文）", "impact": "エンジニアへの影響・使いどころ（1文）" }
   ],
@@ -158,12 +170,12 @@ function toItem(x, noteKey) {
 }
 
 // ---------- Markdown 生成 ----------
-// スマホで読みやすいよう、冒頭に「今日の動向」と見出し一覧を置き、各項目は
+// スマホで読みやすいよう、冒頭に「今週の動向」と見出し一覧を置き、各項目は
 // 「見出し → 出典・日付・原文リンク → 要約 → 影響（注目点）」の順にそろえる。
 function render(field, data) {
   const news = data.news || []
   const papers = data.papers || []
-  const title = `${data.date} の${field.label}動向`
+  const title = `週刊${field.label}（${data.date}）`
   const heads = news.slice(0, 2).map(n => n.title).join('／')
   const description = `${field.label}の最新ニュース ${news.length} 件と論文 ${papers.length} 件を日本語で要約。${heads ? heads + ' など' : ''}`
   const lines = [
@@ -179,7 +191,7 @@ function render(field, data) {
     `# ${title}`,
     '',
   ]
-  if (data.overview) lines.push('::: info 今日の動向', sanitize(data.overview), ':::', '')
+  if (data.overview) lines.push('::: info 今週の動向', sanitize(data.overview), ':::', '')
 
   // 見出し一覧（タップで各項目へ移動）
   const toc = (label, list, prefix) => {
