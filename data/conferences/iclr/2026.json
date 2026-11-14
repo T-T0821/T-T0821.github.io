@@ -1,0 +1,106 @@
+{
+  "conf": "iclr",
+  "year": 2026,
+  "updated": "2026-11-14",
+  "headline": "投稿約2万本（リオデジャネイロ）。Transformer の簡潔さの理論と「LLM は複数ターンの会話で迷子になる」が最優秀論文に",
+  "summary": "ブラジルのリオデジャネイロで開催され、南米で初めての ICLR となりました。投稿19,525本・採択5,357本（27%）で、投稿は前年の約1.7倍に急増し、査読者は21,674人に上りました。最優秀論文は2本で、Transformer は RNN よりはるかに簡潔に概念を表現できることを示した理論研究と、指示が最初に全部与えられない複数ターンの会話では最先端 LLM の性能が平均39%も落ちることを示した評価研究です。佳作は Muon 最適化手法の行列符号関数計算を改良する Polar Express。Test of Time 賞は DCGAN と DDPG（連続制御の深層強化学習）でした。",
+  "stats": {
+    "submissions": 19525,
+    "accepted": 5357,
+    "rate": "27%"
+  },
+  "attendees": "9,954人（現地7,054人、オンライン2,900人、80か国）",
+  "trends": [
+    "Transformer の理論: RNN と比べた表現の簡潔さ（succinctness）を形式言語理論で証明",
+    "LLM の対話信頼性: 複数ターンで条件が後出しされると性能が大きく低下し、立て直せない",
+    "新しい最適化手法: Muon の中核計算（行列符号関数）を近似理論で最適化",
+    "規模の急拡大と査読: 投稿約2万本、エリアチェア数が前年の約2倍に"
+  ],
+  "implications": [
+    "チャット型 AI を業務に組み込む際は、最初に条件をまとめて渡す・会話をリセットするなど、複数ターンでの性能低下を前提にした設計が有効だと示唆している",
+    "Adam に代わる最適化手法（Muon など）が実用段階に入り、大規模学習の効率化競争が最適化アルゴリズムの層まで及んでいる",
+    "Transformer がなぜ強いのかを理論で裏付ける研究が評価されており、アーキテクチャ選定に理論的な根拠を求める流れが続いている"
+  ],
+  "awards": [
+    {
+      "award": "Outstanding Paper",
+      "title": "Transformers are Inherently Succinct",
+      "authors": "Pascal Bergsträßer, Ryan Cotterell, Anthony Widjaja Lin"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "LLMs Get Lost In Multi-Turn Conversation",
+      "authors": "Philippe Laban, Hiroaki Hayashi, Yingbo Zhou, Jennifer Neville",
+      "url": "https://arxiv.org/abs/2505.06120"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "The Polar Express: Optimal Matrix Sign Methods and their Application to the Muon Algorithm",
+      "authors": "Noah Amsel, David Persson, Christopher Musco, Robert M. Gower"
+    },
+    {
+      "award": "Test of Time",
+      "title": "Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks（DCGAN）",
+      "authors": "Alec Radford, Luke Metz, Soumith Chintala"
+    },
+    {
+      "award": "Test of Time",
+      "title": "Continuous control with deep reinforcement learning（DDPG）",
+      "authors": "Timothy P. Lillicrap ほか"
+    }
+  ],
+  "featured": [
+    {
+      "title": "LLMs Get Lost In Multi-Turn Conversation",
+      "titleJa": "LLM は複数ターンの会話で迷子になる",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Philippe Laban",
+        "Hiroaki Hayashi",
+        "Yingbo Zhou",
+        "Jennifer Neville"
+      ],
+      "url": "https://arxiv.org/abs/2505.06120",
+      "why": "同じ課題を、最初に全部伝える場合と会話の中で少しずつ伝える場合とで比べ、主要なオープン・クローズドの LLM すべてで平均39%性能が落ちることを20万件超の模擬会話で示しました。早い段階で決めつけて誤りから戻れないことが主な原因です。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "LLMが、情報が段階的に与えられる「指示が不完全なマルチターン会話」でどれだけ性能が落ちるかを大規模シミュレーションで調べた研究。既存のシングルターン完全指定ベンチマークの指示を分割（シャード化）して会話を再現し、15種のLLMを6つの生成タスクで比較した。その結果、全モデルでマルチターン時に平均39%の性能低下（Lost in Conversation現象）が見られた。",
+        "novelty": "従来のマルチターン評価は各ターンが独立に評価できる「エピソード型」が中心だったが、本研究は指示の不完全性（underspecification）を評価の中心に据え、同一タスクでシングルターンとマルチターンを直接比較できる環境を作った。また性能低下を適性（aptitude）の損失と信頼性（unreliability）の増大に分解し、低下の主因が後者であることを示した点が新しい。さらに、既存ベンチマークを再利用できる半自動のシャード化プロセス自体も貢献として提示している。",
+        "method": "完全指定の指示を、元の情報を保ったまま1ターンで1つずつ開示できる複数のシャードに半自動（GPT-4oで候補生成・検証後、著者が確認）で分割する。会話はGPT-4o-miniによるユーザーシミュレータが各ターンで最大1シャードを開示し、応答を戦略分類・回答抽出してタスク別評価器で採点する。比較条件としてFull、Concat、Sharded、およびRecap・Snowballを用意し、各条件でN=10回試行して平均性能、適性A（90パーセンタイル）、不信頼性U（90と10パーセンタイルの差）を算出した。",
+        "validation": "6タスク（Code、Database、Actions、Math、Data-to-text、Summary）計600指示、15モデル、20万超の会話で評価し、全モデル・全タスクでFullからShardedへ性能が低下し平均-39%となった。Concatは平均でFullの95.1%に保たれ、情報損失が原因ではないことが示された。適性の低下は平均16%にとどまる一方、不信頼性は平均112%増加した。2シャード以上で既に劣化が生じ、推論モデル（o3、R1）も同様に劣化した。温度を0にしてもShardedでは信頼性はほぼ改善せず、Snowballでの繰り返しはFull→Shardedの劣化を15-20%緩和する程度だった。",
+        "discussion": "著者らは、シミュレーションが理想化・単純化されており（会話は必ず十分な情報で終わる、ユーザーの逸脱が少ない等）、実世界での劣化はむしろ過小評価の可能性があるとしている。対処として、ユーザー側の情報の一括提示やエージェント的な繰り返しは部分的な効果にとどまるため、LLM開発者は適性だけでなくマルチターンでの信頼性を同時に最適化すべきだと主張している。LLMベースのシミュレータや分類器による誤差が一部残る点も限界である。",
+        "next": [
+          {
+            "title": "On overcoming miscalibrated conversational priors in LLM-based chatbots",
+            "reason": "実際の対話ログにおける指示の不完全性の実態と応答戦略の分類を扱っており、本研究の動機と分類の元になっている。"
+          },
+          {
+            "title": "Lost in the middle: How language models use long contexts",
+            "reason": "本研究で観察された「中間ターンの情報が失われる」現象の背景にある、長文脈での位置依存の性能低下を理解できる。"
+          },
+          {
+            "title": "MT-Bench-101: A fine-grained benchmark for evaluating large language models in multi-turn dialogues",
+            "reason": "本研究が対比しているエピソード型のマルチターン評価の代表例で、違いを把握できる。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Announcing the ICLR 2026 Outstanding Papers（ICLR Blog）",
+      "url": "https://blog.iclr.cc/2026/04/23/announcing-the-iclr-2026-outstanding-papers/"
+    },
+    {
+      "title": "ICLR 2026 Fact Sheet（公式）",
+      "url": "https://media.iclr.cc/Conferences/ICLR2026/ICLR2026_Fact_Sheet.pdf"
+    },
+    {
+      "title": "ICLR 2026（公式サイト）",
+      "url": "https://iclr.cc/Conferences/2026"
+    }
+  ],
+  "unreachable": [
+    "招待講演は6件と公表されていますが、講演者名はファクトシートに記載がありません"
+  ]
+}

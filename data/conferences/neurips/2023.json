@@ -1,0 +1,156 @@
+{
+  "conf": "neurips",
+  "year": 2023,
+  "updated": "2026-11-14",
+  "headline": "ChatGPT 後最初の NeurIPS。DPO・「創発は幻か」・LLM の信頼性評価など、LLM を検証し使いこなす研究が受賞した回",
+  "summary": "ChatGPT 公開から1年後、ニューオーリンズで開催され、登録者は16,382人（現地13,307人）に達しました。本会議の投稿は12,343本、採択は3,218本（26.1%）です。最優秀論文には「LLM の創発的能力は評価指標が生んだ幻ではないか」と問う論文とプライバシー監査の効率化手法が選ばれ、次点には RLHF を単純な分類損失に置き換える DPO と、データが足りない時代のスケーリング則が入りました。データセット部門は GPT モデルの信頼性を多面的に評価する DecodingTrust と気候シミュレーション用 ClimSim。Test of Time 賞は word2vec でした。",
+  "stats": {
+    "submissions": 12343,
+    "accepted": 3218,
+    "rate": "26.1%",
+    "note": "メイントラック。D&B トラックは投稿987本・採択322本"
+  },
+  "attendees": "登録16,382人（現地13,307人、オンライン3,075人）",
+  "keynotes": [
+    "Björn Ommer",
+    "Lora Aroyo",
+    "Linda Smith",
+    "Jelani Nelson",
+    "Christopher Ré",
+    "Susan Murphy",
+    "パネル「Beyond Scaling」"
+  ],
+  "trends": [
+    "LLM のアラインメント手法の簡素化: DPO が報酬モデルと強化学習なしで人間の好みに合わせる道を開いた",
+    "LLM 能力の検証: 「創発」は評価指標の非連続性による見かけの現象だとする論文が最優秀論文に",
+    "データ制約下のスケーリング: 高品質データが枯渇する前提で、データの繰り返し利用の効果を定量化",
+    "信頼性・安全性・プライバシー: DecodingTrust（GPT の信頼性評価）や1回の学習でのプライバシー監査が受賞"
+  ],
+  "implications": [
+    "アラインメント（人の意図に沿わせる調整）が DPO で大幅に手軽になり、オープンモデルの指示追従チューニングが一気に普及した",
+    "LLM の能力を「どう測るか」が研究の中心テーマになり、評価設計が開発と同じくらい重要になった",
+    "Web 上の高品質データは有限という前提が共有され、合成データ・データ再利用・データ選別の研究が加速する流れが見えた"
+  ],
+  "awards": [
+    {
+      "award": "Outstanding Paper",
+      "title": "Are Emergent Abilities of Large Language Models a Mirage?",
+      "authors": "Rylan Schaeffer, Brando Miranda, Sanmi Koyejo",
+      "url": "https://arxiv.org/abs/2304.15004"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Privacy Auditing with One (1) Training Run",
+      "authors": "Thomas Steinke, Milad Nasr, Matthew Jagielski"
+    },
+    {
+      "award": "Outstanding Paper Runner-up",
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafael Rafailov, Archit Sharma, Eric Mitchell, Christopher D. Manning, Stefano Ermon, Chelsea Finn",
+      "url": "https://arxiv.org/abs/2305.18290"
+    },
+    {
+      "award": "Outstanding Paper Runner-up",
+      "title": "Scaling Data-Constrained Language Models",
+      "authors": "Niklas Muennighoff, Alexander Rush, Boaz Barak ほか"
+    },
+    {
+      "award": "Outstanding Datasets and Benchmarks Paper",
+      "title": "DecodingTrust: A Comprehensive Assessment of Trustworthiness in GPT Models",
+      "authors": "Boxin Wang ほか"
+    },
+    {
+      "award": "Outstanding Datasets and Benchmarks Paper",
+      "title": "ClimSim: A large multi-scale dataset for hybrid physics-ML climate emulation",
+      "authors": "Sungduk Yu ほか"
+    },
+    {
+      "award": "Test of Time",
+      "title": "Distributed Representations of Words and Phrases and their Compositionality（word2vec）",
+      "authors": "Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg Corrado, Jeff Dean"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "titleJa": "DPO：言語モデルは実は報酬モデルである",
+      "award": "Outstanding Paper Runner-up",
+      "authors": [
+        "Rafael Rafailov",
+        "Archit Sharma",
+        "Eric Mitchell",
+        "Christopher D. Manning",
+        "Stefano Ermon",
+        "Chelsea Finn"
+      ],
+      "url": "https://arxiv.org/abs/2305.18290",
+      "why": "RLHF（報酬モデル＋強化学習）を、好みのペアデータに対する単純な分類損失に置き換えられることを示しました。実装が簡単で安定するため、オープンモデルの調整手法として事実上の標準になりました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "RLHFで必要だった明示的な報酬モデルの学習と強化学習（PPO等）を使わず、人間の選好データから言語モデルを直接最適化する手法 Direct Preference Optimization (DPO) を提案した研究。単純な二値交差エントロピー（分類）損失だけで、KL制約付き報酬最大化という標準RLHFと同じ目的を解く。",
+        "novelty": "報酬関数とKL制約付き最適方策の間の解析的な対応を利用した変数変換により、Bradley-Terryの選好損失を方策の関数として直接書き下し、報酬モデル学習とRLのループを不要にした。学習中のLMからのサンプリングや大規模なハイパーパラメータ調整が不要で、実装が簡単かつ安定している。また、この再パラメータ化は報酬モデルのクラスを制限しないことを理論的に示した（Theorem 1）。",
+        "method": "KL制約付き報酬最大化の最適方策 π_r ∝ π_ref exp(r/β) から報酬を r = β log(π/π_ref) + β log Z(x) と書き換え、Bradley-Terryモデルが報酬の差のみに依存するため分配関数Z(x)が相殺されることを利用する。これにより損失 L_DPO = -E[log σ(β log(π_θ(y_w|x)/π_ref(y_w|x)) - β log(π_θ(y_l|x)/π_ref(y_l|x)))] を得る。勾配は好ましい応答の尤度を上げ好ましくない応答の尤度を下げ、暗黙の報酬が誤って順序付けた例ほど大きく重み付けされる。この重み付けがないと言語モデルが劣化することも示されている。π_ref にはSFTモデルを用い、利用できない場合は好ましい応答の尤度最大化で初期化する。",
+        "validation": "IMDbの感情制御生成（GPT-2-large）、Reddit TL;DR要約（GPT-J系SFTモデル）、Anthropic HHの単発対話（Pythia-2.8B）で、PPO、Best-of-N、Unlikelihood、Preferred-FTなどと比較した。感情制御では報酬とKLのフロンティアでDPOがPPO（真の報酬を使うPPO-GT含む）を上回った。要約ではGPT-4による勝率がDPOで約61%、PPOの最良値は57%であり、サンプリング温度に対してもDPOの方が頑健だった。CNN/DailyMailへの分布外評価でもDPOがPPOを上回り（温度0で0.36対0.26）、人間評価ではGPT-4判定が人間同士の一致度と同程度に人間と一致することを確認した。",
+        "discussion": "DPO方策の分布外汎化を明示的報酬モデルによる学習と比べた包括的な検証は今後の課題であり、報酬の過最適化が直接選好最適化でどう現れるかも未解明である（学習後半の性能のわずかな低下がその例かは不明）。実験は最大6Bパラメータまでで、さらに大規模なモデルへの拡張は今後の課題である。また、GPT-4による勝率はプロンプトに左右されるため、自動評価の引き出し方に関する研究が必要で、他モダリティの生成モデルへの応用も展望されている。",
+        "next": [
+          {
+            "title": "Training language models to follow instructions with human feedback",
+            "reason": "DPOが置き換えようとしている標準的なRLHFパイプライン（SFT・報酬モデル・PPO）の基準となる論文で、比較対象を理解するために役立つ。"
+          },
+          {
+            "title": "Training a helpful and harmless assistant with reinforcement learning from human feedback",
+            "reason": "DPOの単発対話実験で使われたAnthropic HHデータセットの出典で、実験設定の背景が分かる。"
+          },
+          {
+            "title": "Constitutional AI: Harmlessness from AI Feedback",
+            "reason": "AIフィードバックによる合成選好データ生成（RLAIF）を扱っており、DPOと組み合わせる際の選好データ作成の文脈を理解できる。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Are Emergent Abilities of Large Language Models a Mirage?",
+      "titleJa": "LLM の創発的能力は幻か？",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Rylan Schaeffer",
+        "Brando Miranda",
+        "Sanmi Koyejo"
+      ],
+      "url": "https://arxiv.org/abs/2304.15004",
+      "why": "モデル規模を大きくすると能力が突然現れる「創発」は、正解率のような非連続な評価指標を使ったことによる見かけの現象だと主張し、LLM の能力予測と評価の議論に大きな影響を与えました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "大規模言語モデル（LLM）の「創発的能力」（スケールに対して急激かつ予測不能に現れる能力）は、モデルの本質的変化ではなく、研究者が選ぶ評価指標が生む見かけ上の現象（蜃気楼）であるという代替説明を提案した研究。数理モデルと3種類の検証でこれを裏付けている。",
+        "novelty": "Srivastava らが指摘していた「指標が創発の一因かもしれない」という議論を、定量的に検証可能な予測へ落とし込んだ点が新しい。指標選択が創発の主因である可能性を、GPT系モデルの出力、BIG-Benchのメタ分析、視覚タスクでの人工的な創発の誘発という3方向から示した。Caballero らの区分的べき乗則とは異なり、単一のべき乗則のもとでも創発が見かけ上生じうると主張する。",
+        "method": "トークンあたりの交差エントロピーがパラメータ数Nのべき乗則で減少すると仮定し、1トークンの正解確率をexp(-L_CE)とする。L個のトークンすべてが正解であることを要求するAccuracyは、正解確率のL乗（幾何的に減衰）となり、非線形な歪みで急激な立ち上がりを生む。Multiple Choice Gradeのような不連続指標も同様に鋭い変化を生む。一方、Token Edit Distanceのような線形指標やBrier Scoreのような連続指標では滑らかな改善になる。さらに、テストデータが少ないと解像度（1/データ数）が不足し、小型モデルが全く解けないように見えるという要因も指摘する。",
+        "validation": "InstructGPT/GPT-3系の2桁×2桁の乗算と4桁の加算で、出力を固定したままAccuracyからToken Edit Distanceに変えると性能が滑らかに改善した。またテストデータを増やして解像度を上げると、Accuracyでも全モデルが偶然水準を上回り、目標長に対して幾何的に低下した。BIG-Benchのメタ分析では、39の推奨指標のうち創発が現れるのは最大5指標（人手注釈データでは4指標）で、創発の92%超がMultiple Choice GradeとExact String Matchに集中していた。LaMDAでは、Multiple Choice Gradeでの創発がBrier Scoreに変えると消えた。さらにオートエンコーダ（CIFAR100）、LeNet（MNIST）、自己回帰Transformer（Omniglot）で、指標を意図的に変えて見かけ上の創発を誘発できた。",
+        "discussion": "著者は、LLMが創発的能力を持ちえないと主張しているのではなく、先行研究で報告された創発が蜃気楼である可能性が高いと述べている。数理モデルはトークンの独立性や一定の誤り率などの仮定に依存し、付加・削除のコストも扱えていない。また、多数のタスク・指標・モデルの組合せ（約10^6）に対する多重比較の問題や、モデル出力が非公開で独立検証が難しい点も課題として挙げられている。",
+        "next": [
+          {
+            "title": "Emergent Abilities of Large Language Models",
+            "reason": "本論文が直接批判している創発的能力の定義と主要な実証結果を、原典で確認できる。"
+          },
+          {
+            "title": "Beyond the Imitation Game: Quantifying and Extrapolating the Capabilities of Language Models",
+            "reason": "BIG-Benchの原論文であり、本論文のメタ分析が依拠する評価指標とタスク群を理解できる。"
+          },
+          {
+            "title": "Broken Neural Scaling Laws",
+            "reason": "創発を区分的べき乗則の変化として説明する対立的な見方であり、本論文の主張と比較できる。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "NeurIPS 2023 Awards（公式・受賞一覧）",
+      "url": "https://neurips.cc/virtual/2023/awards_detail"
+    },
+    {
+      "title": "NeurIPS 2023 Fact Sheet（公式）",
+      "url": "https://media.neurips.cc/Conferences/NeurIPS2023/NeurIPS2023-Fact_Sheet.pdf"
+    }
+  ]
+}

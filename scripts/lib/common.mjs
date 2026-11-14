@@ -116,12 +116,13 @@ export function extractJson(text) {
 
 /**
  * VitePress は Markdown を Vue テンプレートとしてコンパイルするため、
- * コード以外の部分の `<` と `{{` をエスケープしてビルド失敗を防ぐ。
+ * コード以外の部分の `<` と `{` をエスケープしてビルド失敗を防ぐ。
+ * （`{` は Vue の `{{` に加え、`_{j≠i}` のような数式が markdown-it-attrs の属性と解釈されるのも防ぐ）
  */
 export function sanitize(text) {
   return String(text || '')
     .split(/(```[\s\S]*?```|`[^`\n]*`)/g)
-    .map((part, i) => (i % 2 ? part : part.replace(/<\/?br\s*\/?>/gi, ' ').replace(/</g, '&lt;').replace(/\{\{/g, '&#123;&#123;')))
+    .map((part, i) => (i % 2 ? part : part.replace(/<\/?br\s*\/?>/gi, ' ').replace(/</g, '&lt;').replace(/\{/g, '&#123;')))
     .join('')
 }
 

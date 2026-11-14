@@ -1,0 +1,124 @@
+{
+  "conf": "neurips",
+  "year": 2024,
+  "updated": "2026-11-14",
+  "headline": "登録者約2万人。画像生成の次トークン予測化（VAR）と、事前学習データのトークン選別が受賞した回",
+  "summary": "バンクーバーで開催され、登録者は19,756人に増えました。本会議は投稿15,671本・採択4,037本（25.8%）です。最優秀論文は、画像を粗い解像度から細かい解像度へ「次のスケール」を予測して生成する VAR と、高階微分を効率よく推定する確率的テイラー推定器（STDE）の2本でした。次点は「すべてのトークンが学習に必要なわけではない」と示した事前学習データ選別の研究と、拡散モデルを自分の劣化版で誘導する Autoguidance。Test of Time 賞は GAN と Seq2Seq の2本で、深層生成モデルと系列変換という現在の LLM・生成 AI の源流が同時に表彰されました。",
+  "stats": {
+    "submissions": 15671,
+    "accepted": 4037,
+    "rate": "25.8%",
+    "note": "メイントラック。D&B トラックは投稿1,820本・採択460本"
+  },
+  "attendees": "登録19,756人（現地16,777人、オンライン2,978人）",
+  "keynotes": [
+    "Alison Gopnik",
+    "Sepp Hochreiter",
+    "Fei-Fei Li",
+    "Lidong Zhou",
+    "Arnaud Doucet",
+    "Danica Kragic",
+    "Rosalind Picard"
+  ],
+  "trends": [
+    "自己回帰モデルによる画像生成: VAR が拡散モデルに迫る品質と、LLM と同様のスケーリング則を示した",
+    "事前学習データの質: トークン単位で学習に使うデータを選ぶ Rho-1 が次点に。量から質への転換",
+    "拡散モデルの誘導手法: CFG（分類器なし誘導）に代わる Autoguidance で品質と多様性を両立",
+    "アラインメント用データ: 多文化・多様な人間のフィードバックを集めた PRISM がデータセット部門で受賞"
+  ],
+  "implications": [
+    "画像と言語を同じ「次トークン予測」の枠組みで扱う流れが強まり、マルチモーダル統合モデルの設計に影響している",
+    "「データをさらに集める」から「どのデータで学習するか選ぶ」へ重心が移り、データキュレーションが競争力の源泉になった",
+    "誰の価値観に合わせるのかというアラインメントの多様性が、技術課題として扱われ始めた"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Visual Autoregressive Modeling: Scalable Image Generation via Next-Scale Prediction",
+      "authors": "Keyu Tian, Yi Jiang, Zehuan Yuan, Bingyue Peng, Liwei Wang",
+      "url": "https://arxiv.org/abs/2404.02905"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Stochastic Taylor Derivative Estimator: Efficient amortization for arbitrary differential operators",
+      "authors": "Zekun Shi ほか"
+    },
+    {
+      "award": "Best Paper Runner-up",
+      "title": "Not All Tokens Are What You Need for Pretraining",
+      "authors": "Zhenghao Lin ほか"
+    },
+    {
+      "award": "Best Paper Runner-up",
+      "title": "Guiding a Diffusion Model with a Bad Version of Itself",
+      "authors": "Tero Karras ほか"
+    },
+    {
+      "award": "Datasets and Benchmarks Best Paper",
+      "title": "The PRISM Alignment Dataset: What Participatory, Representative and Individualised Human Feedback Reveals About the Subjective and Multicultural Alignment of Large Language Models",
+      "authors": "Hannah Rose Kirk ほか"
+    },
+    {
+      "award": "Test of Time",
+      "title": "Generative Adversarial Nets",
+      "authors": "Ian Goodfellow ほか"
+    },
+    {
+      "award": "Test of Time",
+      "title": "Sequence to Sequence Learning with Neural Networks",
+      "authors": "Ilya Sutskever, Oriol Vinyals, Quoc V. Le"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Visual Autoregressive Modeling: Scalable Image Generation via Next-Scale Prediction",
+      "titleJa": "VAR：次のスケールを予測する画像生成",
+      "award": "Best Paper",
+      "authors": [
+        "Keyu Tian",
+        "Yi Jiang",
+        "Zehuan Yuan",
+        "Bingyue Peng",
+        "Liwei Wang"
+      ],
+      "url": "https://arxiv.org/abs/2404.02905",
+      "why": "画像を左上から1トークンずつではなく、低解像度から高解像度へ段階的に予測する自己回帰モデルで、拡散モデルを上回る品質と速度、LLM と同様のスケーリング則を示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "画像の自己回帰生成を、ラスタースキャン順の「次トークン予測」ではなく、粗い解像度から細かい解像度へトークンマップ単位で予測する「次スケール予測」として再定義したVisual AutoRegressive modeling (VAR)を提案した研究。GPT型の自己回帰モデルとして初めて、ImageNet 256×256でDiffusion Transformerを上回る画質と高速な推論を実現し、LLMに見られるスケーリング則とゼロショット汎化も確認した。",
+        "novelty": "従来の画像ARはトークンを1次元に平坦化するため、VQVAE特徴の双方向依存と単方向仮定の矛盾、空間的局所性の劣化、O(n^6)の計算量といった問題があった。VARは自己回帰の単位をトークンマップにしてこれらを回避し、計算量をO(n^4)、反復回数をO(log n)に削減した。GPT型ARがDiTを上回った初の例であり、スケーリング則も実証した。",
+        "method": "二段階構成で、第1段階では共有コードブック(V=4096)を使う多スケールVQVAEが画像をK個のトークンマップ(1×1から最終解像度まで)に残差方式で量子化する。第2段階ではGPT-2型のデコーダ専用Transformerにブロック単位の因果マスクを適用し、先行する全スケールを条件に次のスケールの全トークンを並列に予測する。モデルはAdaLN、クラス埋め込みを開始トークンとする条件付け、attention前のqueryとkeyの単位ベクトル正規化により構成され、幅・ヘッド数・ドロップ率を深さdに比例させて拡大する。",
+        "validation": "ImageNet 256×256のクラス条件付き生成で、VAR-d30(2B)はFID 1.73、IS 350.2(棄却サンプリング使用)を達成し、VQGANベースのAR(FID 18.65、IS 80.4)を大きく上回った。DiT-XL/2に対しては約45倍高速で、学習エポックは350対1400と少なく、512×512でもVAR-d36-sがFID 2.63でDiT-XL/2(3.04)を上回った。12種類のモデル(18.5Mから2B)ではテスト損失とモデルサイズ・計算量の間にべき乗則が成り立ち、相関係数は約-0.998であった。さらにゼロショットでインペインティング、アウトペインティング、クラス条件付き編集が可能であることも示した。",
+        "discussion": "VQVAEの構造や学習はベースラインのまま据え置かれており、より優れたトークナイザやサンプリング手法による改善余地が残る。テキスト条件付き生成と動画生成(3Dの次スケール予測)は未実装で今後の課題とされ、LLMとの統合や長い時間依存の扱いに優位性があると主張されているが、本論文では検証されていない。",
+        "next": [
+          {
+            "title": "Taming Transformers for High-Resolution Image Synthesis (VQGAN)",
+            "reason": "VARが直接のベースラインとし、トークナイザの構造も踏襲しているラスタースキャン型ARの基礎となる論文であるため。"
+          },
+          {
+            "title": "Scalable Diffusion Models with Transformers (DiT)",
+            "reason": "VARが画質・速度・スケーラビリティの面で比較・上回ったと主張する拡散Transformerの代表的手法を理解するため。"
+          },
+          {
+            "title": "Autoregressive Image Generation using Residual Quantization (RQ-Transformer)",
+            "reason": "VARの多スケール量子化の残差設計の着想元であり、スタック型コードを用いた類似の手法として比較できるため。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "NeurIPS 2024 Awards（公式・受賞一覧）",
+      "url": "https://neurips.cc/virtual/2024/awards_detail"
+    },
+    {
+      "title": "NeurIPS 2024 Fact Sheet（公式）",
+      "url": "https://media.neurips.cc/Conferences/NeurIPS2024/NeurIPS2024-Fact_Sheet.pdf"
+    },
+    {
+      "title": "Announcing the NeurIPS 2024 Test of Time Paper Awards（NeurIPS Blog）",
+      "url": "https://blog.neurips.cc/2024/11/27/announcing-the-neurips-2024-test-of-time-paper-awards/"
+    }
+  ]
+}

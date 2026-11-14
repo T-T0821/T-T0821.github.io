@@ -1,0 +1,106 @@
+{
+  "conf": "icml",
+  "year": 2020,
+  "updated": "2026-11-14",
+  "headline": "ウィーン開催予定から初のオンライン開催へ。集合データの対称性や画像版 GPT など「構造」と「事前学習」が並んだ回",
+  "summary": "ウィーンで予定されていましたが、COVID-19 のため初の完全オンライン開催となりました。投稿4,990本・採択1,084本（約21.7%）です。最優秀論文は、点群や集合のように順序のない要素の集まりを扱うネットワークの理論（Learning Sets of Symmetric Elements）と、画像復元のためのチューニング不要な最適化手法の2本。次点には画像のピクセル列を GPT と同じ方法で事前学習する Image GPT が入り、言語で成功した事前学習を画像へ広げる試みが評価されました。Test of Time 賞はガウス過程を使ったベイズ最適化（GP-UCB）です。",
+  "stats": {
+    "submissions": 4990,
+    "accepted": 1084,
+    "rate": "21.7%"
+  },
+  "trends": [
+    "対称性・幾何を取り入れた深層学習: 集合・グラフ・点群の構造をモデルに組み込む研究が受賞",
+    "画像の生成的事前学習: Image GPT が「言語で効いた方法は画像にも効く」ことを示唆",
+    "ガウス過程・ベイズ最適化: 不確実性を扱う古典的手法の再評価（Test of Time とガウス過程事後分布の効率的サンプリング）",
+    "画像の逆問題: 強化学習でパラメータを自動調整するプラグアンドプレイ手法が受賞"
+  ],
+  "implications": [
+    "データの構造（対称性）を設計に取り込むことで少ないデータでも汎化するという考え方は、のちの分子・材料設計 AI の基礎になった",
+    "Transformer による事前学習をモダリティ横断で使う流れはこの時期に始まり、のちの ViT やマルチモーダルモデルにつながる",
+    "ハイパーパラメータ探索などに使うベイズ最適化は、実務の AutoML でも引き続き中核技術であることが確認された"
+  ],
+  "awards": [
+    {
+      "award": "Outstanding Paper",
+      "title": "On Learning Sets of Symmetric Elements",
+      "authors": "Haggai Maron, Or Litany, Gal Chechik, Ethan Fetaya",
+      "url": "https://arxiv.org/abs/2002.08599"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Tuning-free Plug-and-Play Proximal Algorithm for Inverse Imaging Problems",
+      "authors": "Kaixuan Wei ほか"
+    },
+    {
+      "award": "Outstanding Paper Honorable Mention",
+      "title": "Generative Pretraining From Pixels（Image GPT）",
+      "authors": "Mark Chen ほか（OpenAI）"
+    },
+    {
+      "award": "Outstanding Paper Honorable Mention",
+      "title": "Efficiently sampling functions from Gaussian process posteriors",
+      "authors": "James Wilson ほか"
+    },
+    {
+      "award": "Test of Time",
+      "title": "Gaussian Process Optimization in the Bandit Setting: No Regret and Experimental Design",
+      "authors": "Niranjan Srinivas, Andreas Krause, Sham Kakade, Matthias Seeger"
+    }
+  ],
+  "featured": [
+    {
+      "title": "On Learning Sets of Symmetric Elements",
+      "titleJa": "対称性をもつ要素の集合の学習",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Haggai Maron",
+        "Or Litany",
+        "Gal Chechik",
+        "Ethan Fetaya"
+      ],
+      "url": "https://arxiv.org/abs/2002.08599",
+      "why": "画像の集まりや点群の集まりのように、要素の並び順に意味がなく、各要素自体にも対称性がある入力を扱うための層（DSS 層）を設計し、その表現力を理論的に示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "順序のない集合の要素自体が、画像の並進のような固有の対称性を持つ場合（画像集合、点群集合、グラフ集合など）に対する、原理的な深層学習手法を提案した研究。要素の並べ替えと要素内対称性の両方に等変な線形層を完全に特徴づけ、それを積み重ねた Deep Sets for Symmetric Elements (DSS) ネットワークを構築した。",
+        "novelty": "従来は各要素を Siamese ネットワークで個別に処理してから集約する後段融合が一般的だったが、本論文は全層で要素間の情報共有を行う理論的根拠を示した。DeepSets、Hartford らの表形式データ向けモデル、Aittala & Durand や Sridhar らの画像集合向け集約層を特殊例として含む統一的な枠組みである。また DSS ネットワークは Siamese ネットワークより厳密に表現力が高いことを証明した。",
+        "method": "対称群を G = S_n × H（S_n は要素の並べ替え、H は要素内対称性）と定義し、Theorem 1 で線形 G 等変層が L(X)_i = L1^H(x_i) + L2^H(Σ_{j≠i} x_j) の形に限られることを示した（L1^H, L2^H は線形 H 等変写像）。証明は、この形の層の空間の次元が 2E(H) であり、G 等変層全体の空間の次元 E(G)=E(H)E(S_n)=2E(H) と一致することを用いる。画像集合では、各画像に同じ畳み込み L1 を適用し、全画像の和に別の畳み込み L2 を適用して足し合わせる層になる。さらに、H 不変（等変）ネットワークが普遍的なら対応する G 不変（等変）ネットワークも普遍的であるという普遍近似定理を、特定の低次元集合 ℰ を除いたコンパクト集合上で証明した。",
+        "validation": "1D 信号の分類、UCF101 の動画フレーム選択、Dynamic Faust の点群・グラフでの中央フレーム選択、Places 画像での最高品質画像選択、色チャンネル復元（CelebA・Places）、バースト画像のデブラーで、Siamese+DeepSets などの後段融合モデルと比較した。例えば Dynamic Faust の点群選択では、Siamese+DS が 22.26% に対し DSS(sum) は 42.45%、画像選択では DSS が Siamese+DS を 1〜3% 上回り、色チャンネル復元では誤差が大幅に低下した。DSS(sum) は全タスクで安定して良好で、DSS(Aittala) も強かった一方、DSS(Sridhar) はタスクによって失敗した。",
+        "discussion": "普遍近似の結果は、H 不変（等変）ネットワークが普遍的であることを前提とし、ℰ を除いたコンパクト集合上でのみ成り立つという制約がある。本文の記述では、要素ごとに異なる H を適用する設定では等変ネットワークが実質的に Siamese ネットワークに帰着する。実験での優位性が理論的な表現力の高さによるものかは「示唆される」にとどまり、最適な集約方式もタスク依存である。",
+        "next": [
+          {
+            "title": "Deep Sets",
+            "reason": "DSS が一般化する基礎であり、S_n 等変層の特徴づけと普遍性の出発点を理解できる。"
+          },
+          {
+            "title": "Burst image deblurring using permutation invariant convolutional neural networks",
+            "reason": "画像集合に対する中間層での情報共有を提案した先行研究で、DSS(Aittala) の元となっている。"
+          },
+          {
+            "title": "On the universality of invariant networks",
+            "reason": "高次テンソルを用いた一般の群での普遍性を示した研究で、本論文の普遍近似結果と相補的な関係にある。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "ICML 2020 Awards（公式・受賞一覧）",
+      "url": "https://icml.cc/virtual/2020/awards_detail"
+    },
+    {
+      "title": "ICML 2020（公式サイト）",
+      "url": "https://icml.cc/Conferences/2020"
+    },
+    {
+      "title": "International Conference on Machine Learning（Wikipedia・投稿数と採択数の表）",
+      "url": "https://en.wikipedia.org/wiki/International_Conference_on_Machine_Learning"
+    }
+  ],
+  "unreachable": [
+    "招待講演者の一覧は公式ページから取得できなかったため省略しています",
+    "開催日程（日付）は公式ページに記載がなかったため月のみ表示しています"
+  ]
+}
