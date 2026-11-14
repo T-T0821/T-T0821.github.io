@@ -8,56 +8,80 @@
       "summary": "プライマリのシークレットを別の AWS アカウントに同期コピーとして維持でき、クロスアカウントアクセス、バックアップ、災害復旧に使えます。既存のマルチリージョンレプリケーションをアカウント境界の外へ拡張した機能です。プラットフォームチームやセキュリティチームが一元的にシークレットを管理・ローテーションし、各利用アカウントが常に最新のローカルコピーを持てる構成が可能になります。",
       "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/secrets-manager-cross-account/",
       "source": "AWS What's New",
-      "original": "AWS Secrets Manager now supports cross-account replication"
+      "original": "AWS Secrets Manager now supports cross-account replication",
+      "date": "2026-11-13",
+      "authors": [],
+      "impact": "マルチアカウント環境でのシークレット配布や DR 設計が簡素化できる可能性があります。"
     },
     {
       "title": "Security Hub CSPM が Organizations の宣言型ポリシーによる一元設定に対応",
       "summary": "AWS Organizations の宣言型ポリシーを使い、組織内の全アカウント・全リージョンで Security Hub CSPM を有効化し、有効にするセキュリティ基準やコントロールを定義できます。ポリシーはすべてのアカウントとリージョンへの適用も、特定のアカウントとリージョンの組み合わせへの適用も可能です。各アカウントの設定がポリシーと揃った状態に保たれ、構成のドリフトを防ぐのに役立ちます。",
       "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/security-hub-cspm-org-policies/",
       "source": "AWS What's New",
-      "original": "AWS Security Hub CSPM now supports centralized configuration with AWS Organizations declarative policies"
+      "original": "AWS Security Hub CSPM now supports centralized configuration with AWS Organizations declarative policies",
+      "date": "2026-11-13",
+      "authors": [],
+      "impact": "組織全体のセキュリティ設定を一貫して管理したいチームにとって、運用負荷の軽減につながります。"
     },
     {
       "title": "Amazon Cognito が OAuth 2.0 トークン交換（RFC 8693）に対応",
       "summary": "ユーザーに代わって動作するサービスや AI エージェントが、ユーザーのトークンを下流サービス向けにスコープされた新しいトークンに交換できるようになりました。従来は元のトークンを転送するか、独自にトークン発行の仕組みを構築・維持する必要がありました。",
       "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/cognito-token-exchange/",
       "source": "AWS What's New",
-      "original": "Amazon Cognito now supports OAuth 2.0 token exchange"
+      "original": "Amazon Cognito now supports OAuth 2.0 token exchange",
+      "date": "2026-11-12",
+      "authors": [],
+      "impact": "AI エージェントやマイクロサービス間の委任認可で、元のトークンを使い回さない設計を採りやすくなります。"
     },
     {
       "title": "Bedrock AgentCore Identity が OAuth 2.0 ディスカバリー URL に対応",
       "summary": "インバウンドの JWT 認可とアウトバウンドの OAuth 認証情報プロバイダーの両方で、OAuth 2.0 の認可サーバーディスカバリー URL を指定できるようになりました。これまでは OIDC のディスカバリー URL のみ受け付けていたため、OIDC を使わない OAuth 2.0 認可サーバーは利用できませんでした。",
       "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/bedrock-agentcore-oauth2-discovery/",
       "source": "AWS What's New",
-      "original": "Amazon Bedrock AgentCore Identity now supports OAuth 2.0 discovery URLs"
+      "original": "Amazon Bedrock AgentCore Identity now supports OAuth 2.0 discovery URLs",
+      "date": "2026-11-13",
+      "authors": [],
+      "impact": "OIDC 非対応の認可サーバーを使う環境でも、AgentCore を既存の認証基盤と接続できるようになります。"
     },
     {
       "title": "Aurora と RDS が Graviton5 ベースの R9g インスタンスに対応",
       "summary": "Graviton5 ベースの R9g が、Aurora（PostgreSQL 互換・MySQL 互換）と RDS for PostgreSQL・MySQL・MariaDB で一般提供されました。Graviton4 ベースの同等サイズと比べ、Aurora ではオンデマンド料金で最大 30% の性能向上、最大 22% の価格性能比の向上があるとされています（エンジン、バージョン、ワークロードによる）。",
       "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/amazon-aurora-rds-postgresql-mysql-mariadb-r9g-instances/",
       "source": "AWS What's New",
-      "original": "Amazon Aurora and RDS now support Graviton5-based R9g database instances"
+      "original": "Amazon Aurora and RDS now support Graviton5-based R9g database instances",
+      "date": "2026-11-12",
+      "authors": [],
+      "impact": "既存の Graviton4 インスタンスからの移行を、自社ワークロードで検証する価値があります。"
     },
     {
       "title": "Aurora PostgreSQL の express configuration が CloudFormation に対応",
       "summary": "express configuration で作成した Aurora PostgreSQL クラスターを、CloudFormation テンプレートでデプロイできるようになりました。express configuration は Aurora Serverless データベースを数秒で作成してクエリできる構成です。AWS::RDS::DBCluster に createOnly プロパティ withExpressConfiguration が追加されています。",
       "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/aurora-postgresql-cloudformation/",
       "source": "AWS What's New",
-      "original": "Aurora PostgreSQL with express configuration now supported in CloudFormation"
+      "original": "Aurora PostgreSQL with express configuration now supported in CloudFormation",
+      "date": "2026-11-13",
+      "authors": [],
+      "impact": "開発・検証用データベースの素早い払い出しを IaC で自動化できます。"
     },
     {
       "title": "RDS for Oracle の自動マイナーバージョンアップグレードとメンテナンスのダウンタイムを短縮",
       "summary": "自動マイナーバージョンアップグレードに加え、メンテナンスウィンドウで実施するマイナーバージョンアップグレードと OS 更新のダウンタイムが短縮されました。自動マイナーバージョンアップグレードを有効にしている DB インスタンスは、自動的にこの改善の恩恵を受けます。",
       "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/rds-oracle-reduces-maintenance-downtime-for-amvu-scheduled-upgrades/",
       "source": "AWS What's New",
-      "original": "Amazon RDS for Oracle reduces downtime for automatic minor version upgrades and scheduled maintenance"
+      "original": "Amazon RDS for Oracle reduces downtime for automatic minor version upgrades and scheduled maintenance",
+      "date": "2026-11-13",
+      "authors": [],
+      "impact": "Oracle の最新マイナーバージョンや OS 更新を、アプリへの影響を抑えて適用しやすくなります。"
     },
     {
       "title": "AWS Batch on EKS が Linux capabilities、seccomp、Pod レベル設定に対応",
       "summary": "EKS ジョブ定義で、Linux capabilities や seccomp プロファイル、Pod レベルの設定など、Kubernetes の securityContext の追加項目が使えるようになりました。Pod Security Standards の restricted プロファイルを適用している EKS クラスターでも、必要な権限とシステムコールだけでジョブを実行できます。設定は RegisterJobDefinition API で行います。",
       "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/aws-batch-eks-security-context/",
       "source": "AWS What's New",
-      "original": "AWS Batch on Amazon EKS adds Linux capabilities, seccomp, and pod-level settings"
+      "original": "AWS Batch on Amazon EKS adds Linux capabilities, seccomp, and pod-level settings",
+      "date": "2026-11-13",
+      "authors": [],
+      "impact": "restricted プロファイルを強制するクラスターで、最小権限の原則に沿って Batch ジョブを動かせます。"
     }
   ],
   "papers": [
@@ -66,14 +90,30 @@
       "summary": "サーバーレス LLM のコールドスタートは約 1 分かかり、重みのロードはそのうち 5〜11% に過ぎず、大半はコンパイル、メモリプロファイリング、ランタイム設定が占めると指摘しています。提案手法 Cairn は、最初にモデルを起動したサーバーが重みとエンジンの成果物を、クラスター共有の CXL メモリプールに公開する仕組みです。",
       "url": "https://arxiv.org/abs/2611.16180",
       "source": "arXiv",
-      "original": "Fast Serverless LLM Cold Starts by Sharing and Prewarming Startup Work"
+      "original": "Fast Serverless LLM Cold Starts by Sharing and Prewarming Startup Work",
+      "date": "",
+      "authors": [
+        "Hongjin Kim",
+        "Igjae Kim",
+        "Kwanghoon Choi",
+        "Minho Ha"
+      ],
+      "why": "コールドスタートの主因が重みのロードではなく起動処理の重複にあるという分析が、サーバーレス推論基盤の設計に示唆を与えます。"
     },
     {
       "title": "SBC クラスター上のエネルギー比例型サーバーレスコンピューティング",
       "summary": "サーバーレス関数の状態を持たない性質を利用し、スケールトゥゼロを関数インスタンスから物理ノードにまで広げて、エネルギー比例性を実現できると示しています。tinyFaaS を基にしたプラットフォームは、ノードの電源状態をワーカー選択の一部として扱います。",
       "url": "https://arxiv.org/abs/2611.14026",
       "source": "arXiv",
-      "original": "Energy-Proportional Serverless Computing on SBC Clusters"
+      "original": "Energy-Proportional Serverless Computing on SBC Clusters",
+      "date": "",
+      "authors": [
+        "Yuliya Sasinskaya",
+        "Natalie Carl",
+        "Niklas Kowallik",
+        "David Bermbach"
+      ],
+      "why": "サーバーレスの省電力化をノードの電源管理まで含めて扱う点が、エッジやオンプレミス環境の運用を考える際の参考になります。"
     }
   ]
 }
