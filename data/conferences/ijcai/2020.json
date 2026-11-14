@@ -1,0 +1,70 @@
+{
+  "conf": "ijcai",
+  "year": 2020,
+  "updated": "2026-11-14",
+  "headline": "横浜開催の予定がコロナ禍で延期され、2021年1月にオンラインで開催された IJCAI-PRICAI 2020",
+  "summary": "環太平洋の AI 会議 PRICAI との合同で横浜開催が予定されていましたが、COVID-19 のため半年延期され、2021年1月に完全オンラインで開催されました。投稿4,717本・採択592本（約12.6%）と、主要会議の中でも特に狭き門です。研究功績賞（Award for Research Excellence）は制約充足の Eugene Freuder 氏、若手向けの Computers and Thought 賞は計算社会選択の Piotr Skowron 氏でした。JAIR 最優秀論文賞には、低レベルの技能から計画用の記号表現を学ぶ研究が選ばれ、学習と記号推論の橋渡しが評価されました。",
+  "stats": {
+    "submissions": 4717,
+    "accepted": 592,
+    "rate": "12.6%"
+  },
+  "trends": [
+    "学習と記号推論の統合: 技能から計画用の記号表現を学ぶ研究が JAIR 最優秀論文賞",
+    "マルチエージェント経路計画: 衝突ベース探索（CBS）が AIJ Prominent Paper 賞",
+    "計算社会選択・制約充足: 受賞者の顔ぶれに古典的 AI の強さが表れた"
+  ],
+  "implications": [
+    "倉庫ロボットや AGV の経路計画に使われるマルチエージェント経路探索が表彰されており、物流・製造の自動化に直結する AI 研究が IJCAI の柱の一つであることがわかる",
+    "学習した知覚と記号的な計画をつなぐ研究は、現在の LLM エージェントの計画能力の議論にも通じる"
+  ],
+  "awards": [
+    {
+      "award": "IJCAI-JAIR Best Paper Prize",
+      "title": "From Skills to Symbols: Learning Symbolic Representations for Abstract High-Level Planning",
+      "authors": "George Konidaris, Leslie Pack Kaelbling, Tomas Lozano-Perez"
+    },
+    {
+      "award": "AIJ Prominent Paper Award",
+      "title": "Conflict-Based Search for Optimal Multi-Agent Pathfinding",
+      "authors": "Guni Sharon, Roni Stern, Ariel Felner, Nathan Sturtevant"
+    },
+    {
+      "award": "AIJ Classic Paper Award",
+      "title": "Temporal Constraint Networks",
+      "authors": "Rina Dechter, Itay Meiri, Judea Pearl"
+    },
+    {
+      "award": "Award for Research Excellence",
+      "title": "Eugene Freuder"
+    },
+    {
+      "award": "Computers and Thought Award",
+      "title": "Piotr Skowron"
+    }
+  ],
+  "featured": [],
+  "sources": [
+    {
+      "title": "Congratulations to the #IJCAI2020 award winners（AIhub）",
+      "url": "https://aihub.org/2021/01/11/congratulations-to-the-ijcai2020-award-winners/"
+    },
+    {
+      "title": "IJCAI Past Conferences（公式・開催地）",
+      "url": "https://www.ijcai.org/past_conferences"
+    },
+    {
+      "title": "IJCAI Awards（公式・各賞の受賞者）",
+      "url": "https://www.ijcai.org/awards"
+    },
+    {
+      "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
+      "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    }
+  ],
+  "unreachable": [
+    "本会議の Distinguished Paper（最優秀論文）の一覧は公式ページから取得できなかったため、関連する賞のみ掲載しています",
+    "招待講演者の一覧は公式ページから取得できなかったため省略しています",
+    "開催日程（日付）は公式ページで確認できなかったため月のみ表示しています"
+  ]
+}

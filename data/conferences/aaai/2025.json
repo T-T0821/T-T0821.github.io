@@ -1,0 +1,100 @@
+{
+  "conf": "aaai",
+  "year": 2025,
+  "updated": "2026-11-14",
+  "headline": "フィラデルフィア開催・投稿1.3万本。ニューロシンボリック推論の矛盾修正（周志華氏ら）などが最優秀論文に選ばれた回",
+  "summary": "フィラデルフィアで開催され、投稿12,957本・採択3,032本（約23.4%）と前年から3割増えました。最優秀論文は3本で、ニューラルネットの知覚と記号的な知識による推論の食い違いを「アブダクション（仮説推論）による振り返り」で効率よく直す手法（南京大学・周志華氏ら）、少ない問い合わせで最適な歪み（distortion）を達成する投票方式、ω正則な目的を持つ部分観測マルコフ決定過程（POMDP）の判定可能なクラスが選ばれました。社会との整合を扱う新トラックでは、市民参加型の生物多様性データの分布のずれを調べた研究が受賞しています。",
+  "stats": {
+    "submissions": 12957,
+    "accepted": 3032,
+    "rate": "23.4%"
+  },
+  "trends": [
+    "ニューロシンボリック AI: 学習ベースの知覚と論理的な知識の矛盾を効率的に修正",
+    "計算社会選択: 有権者への少数の問い合わせで最適な集約を実現",
+    "形式検証と計画: 部分観測下での目的達成の判定可能性",
+    "データの分布シフト: 市民科学データの偏りの分析（AI for Social Alignment）"
+  ],
+  "implications": [
+    "LLM の推論の誤りを論理的な知識で検出・修正するニューロシンボリックなアプローチは、業務ルールや安全規則を守らせたい現場で有望な方向性である",
+    "AAAI は機械学習一辺倒ではなく、論理・計画・社会選択などの「古典的 AI」も最高賞に選び続けており、総合会議としての性格がはっきりしている"
+  ],
+  "awards": [
+    {
+      "award": "Outstanding Paper",
+      "title": "Efficient Rectification of Neuro-Symbolic Reasoning Inconsistencies by Abductive Reflection",
+      "authors": "Wen-Chao Hu, Wang-Zhou Dai, Yuan Jiang, Zhi-Hua Zhou",
+      "url": "https://arxiv.org/abs/2412.08457"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Every Bit Helps: Achieving the Optimal Distortion with a Few Queries",
+      "authors": "Soroush Ebadian, Nisarg Shah"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Revelations: A Decidable Class of POMDPs with Omega-Regular Objectives",
+      "authors": "Marius Belly ほか",
+      "url": "https://arxiv.org/abs/2412.12063"
+    },
+    {
+      "award": "AI for Social Alignment Track",
+      "title": "DivShift: Exploring Domain-Specific Distribution Shifts in Large-Scale, Volunteer-Collected Biodiversity Datasets",
+      "authors": "Elena Sierra, Lauren Gillespie, Moises Exposito Alonso"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Efficient Rectification of Neuro-Symbolic Reasoning Inconsistencies by Abductive Reflection",
+      "titleJa": "アブダクティブな振り返りによるニューロシンボリック推論の矛盾の効率的な修正",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Wen-Chao Hu",
+        "Wang-Zhou Dai",
+        "Yuan Jiang",
+        "Zhi-Hua Zhou"
+      ],
+      "url": "https://arxiv.org/abs/2412.08457",
+      "why": "ニューラルネットの出力が論理的な知識と矛盾するとき、どの出力が間違っていそうかを学習した「振り返り」で素早く特定し、アブダクションでまとめて修正する手法です。人間の「直感と熟考」の二重過程になぞらえた設計で、推論の精度と速度を両立しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ニューロシンボリック(NeSy)AIにおいて、ニューラルネットの直観的出力が知識ベース(KB)と矛盾する問題を効率よく修正する手法ABL-Refl(Abductive Reflection)を提案した研究。人間の認知的リフレクション(System 1の誤りを素早く検知しSystem 2で修正する)に着想を得ている。誤り箇所を示すリフレクションベクトルを用い、その箇所だけにアブダクションを適用して一貫した出力を得る。",
+        "novelty": "従来のAbductive Learning(ABL)は、外部の零次最適化モジュールによる離散的な整合性最適化が計算ボトルネックで、出力次元n<10程度の小規模問題に限られていた。ABL-Refl はこれをニューラルネットに組み込んだリフレクション機構で置き換え、推論時のKB呼び出しを1回に抑える。NASRのように大規模な合成データを事前準備する必要がなく、KBから教師なしでリフレクションを学習できる点も優れている。",
+        "method": "ネットワークは本体ブロックf1の後に、出力層f2と並列にリフレクション層Rを持ち、各要素の誤りの有無を示す二値ベクトルrを直観的出力ŷと同時に生成する。rで誤りと判定された位置を空欄にし、記号ソルバー(MiniSAT、Prolog CLP(FD)、Gurobiなど)がアブダクションで埋めて最終出力を得る。学習では、リフレクション適用前後のKBとの整合性の改善量ΔConを報酬とするREINFORCEによる整合性損失と、誤りと判定する要素が多すぎないようにするリフレクションサイズ損失を用い、ラベル付きデータの教師あり損失と組み合わせる(α=β=1、C=0.8)。リフレクションの学習にはラベルを使わずKBの情報のみを用いる。",
+        "validation": "記号版Sudokuでは推論精度が97.4%で、RRN 73.1%、CL-STE 76.5%、SATNet 74.1%を大きく上回った。ラベルが2Kでも94.7%を達成し、ソルバー単体との比較ではMiniSATでわずかに高速化(0.217秒 vs 0.227秒)、Prolog CLP(FD)で大幅に高速化(31.88秒 vs 105.81秒)したが、精度は100%から97.4%に低下した。画像版Sudokuでは77.8%(事前学習CNN使用で93.5%)でSATNetの63.5%を上回り、最大クリーク問題の近似比は4データセットで0.982〜0.991であった。リフレクションの比較では、再現率がABLはタイムアウト、NN Confidence 82.64%、NASR 95.86%、ABL-Refl 99.04%となった。",
+        "discussion": "ソルバー単体と比べると精度がわずかに下がる(100%→97.4%)というトレードオフがあり、Cを小さくして多くをソルバーに委ねると精度は上がるが効率とのバランスが課題となる。実験はSudokuやグラフ組合せ最適化が中心であり、今後は大規模言語モデルの出力の誤り検出と記号推論による信頼性向上への応用が展望として挙げられている。",
+        "next": [
+          {
+            "title": "Bridging machine learning and logical reasoning by abductive learning",
+            "reason": "ABL-Reflの基盤であるAbductive Learningの原論文で、置き換え対象の整合性最適化の仕組みを理解できる。"
+          },
+          {
+            "title": "Learning where and when to reason in neuro-symbolic inference",
+            "reason": "誤り箇所を選択する外部モジュールを用いるNASRの手法で、ABL-Reflとの直接の比較対象である。"
+          },
+          {
+            "title": "Injecting logical constraints into neural networks via straight-through estimators",
+            "reason": "論理知識をニューラルネットの制約として緩和する代表的手法CL-STEで、Sudokuの主要ベースラインである。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "AAAI Conference Paper Awards and Recognition（公式・受賞一覧）",
+      "url": "https://aaai.org/about-aaai/aaai-awards/aaai-conference-paper-awards-and-recognition/"
+    },
+    {
+      "title": "AAAI-25（公式サイト）",
+      "url": "https://aaai.org/conference/aaai/aaai-25/"
+    },
+    {
+      "title": "AAAI 2025 Venue Overview（Paper Copilot）",
+      "url": "https://papercopilot.com/venue-overview/aaai-2025-venue-overview/"
+    }
+  ],
+  "unreachable": [
+    "招待講演者の一覧は公式ページから取得できなかったため省略しています"
+  ]
+}

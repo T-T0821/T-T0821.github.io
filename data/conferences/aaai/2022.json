@@ -1,0 +1,84 @@
+{
+  "conf": "aaai",
+  "year": 2022,
+  "updated": "2026-11-14",
+  "headline": "2年連続のオンライン開催・採択率15%。推薦システムの公平性を運用中に監査する手法が最優秀論文に選ばれた回",
+  "summary": "2年連続でオンライン開催となり、投稿9,020本・採択1,349本と採択率は約15%まで下がりました。最優秀論文は、推薦システムがユーザーの好みに照らして公平かどうかを、運用しながら少ない探索で証明（監査）する手法の1本でした。推薦・広告などの実サービスで公平性をどう確かめるかが、理論と実装の両面で評価されました。",
+  "stats": {
+    "submissions": 9020,
+    "accepted": 1349,
+    "rate": "15.0%"
+  },
+  "trends": [
+    "推薦システムの公平性: 「どのユーザーも他人への推薦を羨まない」という羨望のなさ（envy-freeness）を監査",
+    "バンディットによる監査: 探索を最小限にしながら公平性を統計的に保証",
+    "投稿の急増と厳選: 採択率約15%と、この期間で最も狭き門に"
+  ],
+  "implications": [
+    "推薦や広告の公平性はデータを見るだけでは判定できず、運用中の小さな実験で確かめる必要があるという考え方は、規制対応（説明責任・監査）の実装に役立つ",
+    "大規模プラットフォームが自社サービスの公平性を検証する研究を出しており、AI 監査が企業の実務テーマになりつつあることを示す"
+  ],
+  "awards": [
+    {
+      "award": "Outstanding Paper",
+      "title": "Online Certification of Preference-based Fairness for Personalized Recommender Systems",
+      "authors": "Virginie Do, Sam Corbett-Davies, Jamal Atif, Nicolas Usunier",
+      "url": "https://arxiv.org/abs/2104.14527"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Online Certification of Preference-Based Fairness for Personalized Recommender Systems",
+      "titleJa": "個人化推薦システムにおける好みに基づく公平性のオンライン認証",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Virginie Do",
+        "Sam Corbett-Davies",
+        "Jamal Atif",
+        "Nicolas Usunier"
+      ],
+      "url": "https://arxiv.org/abs/2104.14527",
+      "why": "推薦の公平性を「どのユーザーも他人向けの推薦の方が良かったとは思わない」状態と定義し、ユーザーに少しだけ別の推薦を試すバンディットアルゴリズムで、運用中のシステムがこの条件を満たすかを統計的に判定する方法を示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "推薦システムの公平性を、ユーザーが他ユーザーの推薦より自分の推薦を好むという「羨望のなさ（envy-freeness）」の基準で監査する手法を提案した研究。ユーザー選好は既存の推薦結果以外では観測できないため、監査を多腕バンディットの新しい純粋探索問題として定式化し、ユーザー体験を損なわないことを理論保証したサンプル効率の高いアルゴリズム OCEF を示した。",
+        "novelty": "従来の監査はグループ単位の推薦パリティや等満足度に限られていたが、本研究は個人の選好に基づき、個人間の効用比較を必要としない基準で監査する。また、純粋探索バンディットに保守的探索（conservative exploration）制約を組み合わせた新しい設定を導入した。さらに、羨望の確率的緩和（ε,γ,λ）により、監査のサンプル数と対象ユーザー数が総ユーザー数 M に依存しないことを示した。",
+        "method": "監査者は各時刻で通常の推薦を出すか、他ユーザーの推薦ポリシーによる推薦を提示して選好を探索する。OCEF は対象ユーザーを基準腕（腕0）、他ユーザーのポリシーを腕として信頼区間（反復対数の法則に基づく anytime bound）を管理し、ベースラインより明確に劣る腕を除外しながら、羨望があれば envy、全腕が除外されれば ε-no-envy を返す。保守的制約（式3）は信頼区間に基づく量 ξ_t で評価し、違反しうる場合はベースラインを引く。確率的基準では AUDIT が ⌈log(3/δ)/λ⌉ 人のユーザーと各 ⌈log(3M̃/δ)/log(1/(1-γ))⌉ 本の腕をサンプルして OCEF を並列に適用する。",
+        "validation": "4つの合成バンディット問題（10腕）と、Last.fm（1.9k ユーザー）および MovieLens-1M（上位2000ユーザー・2500アイテム）をもとにした行列補完シミュレーションで評価した。保守性パラメータ α に対し、監査期間は非自明な α で最小となり、コストは羨望がなければ正で、羨望があれば負になる傾向を確認した。ε=δ=0.05、λ=γ=0.1 では M̃=41 ユーザー、K=75 腕となり、データセットのユーザー数に依存しなかった。また、等ユーザー効用制約（EUU）は総効用を下げ羨望を生む（例：Last.fm で総効用 1726→1552、0.05-羨望ユーザー割合 0.61）一方、最適ポリシー（OPT）は羨望がないことを示した。",
+        "discussion": "環境の定常性（コンテキスト・報酬分布やポリシーが固定）を仮定しており、非定常な場合は今後の課題とされている。他ユーザーのポリシーを提示する内部監査が必要で、倫理・プライバシー面の確認を前提とする。また、グループ単位の羨望の一般的な定義は未解決で、α と期間の関係など一部の挙動は理論解析で捉えきれていない。",
+        "next": [
+          {
+            "title": "Conservative Bandits",
+            "reason": "本研究が採用する保守的探索制約の原典で、制約の設定を理解するのに必要。"
+          },
+          {
+            "title": "Improved algorithms for conservative exploration in bandits",
+            "reason": "OCEF が保守的制約の評価（ξ_t と Φ）で直接従っている手法で、信頼区間の構成を確認できる。"
+          },
+          {
+            "title": "FairRec: Two-Sided Fairness for Personalized Recommendations in Two-Sided Platforms",
+            "reason": "羨望なし基準を明示的に取り入れた公平な推薦アルゴリズムで、本研究の監査と補完的な関係にある。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "AAAI Conference Paper Awards and Recognition（公式・受賞一覧）",
+      "url": "https://aaai.org/about-aaai/aaai-awards/aaai-conference-paper-awards-and-recognition/"
+    },
+    {
+      "title": "AAAI Conference on Artificial Intelligence（Wikipedia・開催地）",
+      "url": "https://en.wikipedia.org/wiki/AAAI_Conference_on_Artificial_Intelligence"
+    },
+    {
+      "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
+      "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    }
+  ],
+  "unreachable": [
+    "招待講演者の一覧は公式ページから取得できなかったため省略しています",
+    "開催日程（日付）は公式ページの取得が制限されたため月のみ表示しています"
+  ]
+}

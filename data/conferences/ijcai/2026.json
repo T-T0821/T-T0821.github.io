@@ -1,0 +1,120 @@
+{
+  "conf": "ijcai",
+  "year": 2026,
+  "updated": "2026-11-14",
+  "headline": "ブレーメンで ECAI と合同開催。エージェント型 AI が主題となり、予算配分の投票や長文脈時系列の推論効率化が最優秀論文に",
+  "summary": "ドイツ・ブレーメンで欧州の ECAI と合同の IJCAI-ECAI 2026 として開催されました。最優秀論文は3本で、承認投票による予算配分で近似的に戦略的操作を防ぐ方法、データベースの問い合わせ結果を説明するための不整合の尺度、長い文脈を扱う時系列 Transformer の推論を効率化する StreamTimer が選ばれました。研究功績賞は Nicholas R. Jennings 氏で「エージェント型 AI の過去・現在・未来」を講演し、Computers and Thought 賞の Jiajun Wu 氏は「コードによる視覚・物理知能」を語るなど、エージェント型 AI とマルチエージェント社会がプログラム全体の主題でした。",
+  "stats": {
+    "accepted": 989,
+    "note": "全トラック合計。メイントラックは712本（報道による）"
+  },
+  "keynotes": [
+    "Nicholas R. Jennings（研究功績賞講演）",
+    "David C. Parkes（John McCarthy 賞講演）",
+    "Jiajun Wu（Computers and Thought 賞講演）",
+    "Barbara Plank",
+    "Luciano Serafini",
+    "Tinne Tuytelaars",
+    "Jan Peters",
+    "Doina Precup"
+  ],
+  "trends": [
+    "エージェント型 AI とマルチエージェント社会: プログラム全体の主題",
+    "エージェントと物理 AI の安全性・検証: 提言からテスト・ベンチマークへ",
+    "LLM の推論: 推論時計算・RL 事後学習・エージェント的な足場の組み合わせ",
+    "計算社会選択と説明可能性: 予算配分の戦略的操作耐性、問い合わせ結果の説明",
+    "長文脈時系列の効率化: StreamTimer"
+  ],
+  "implications": [
+    "AI 研究の主題が単体のモデルから「複数のエージェントが協調・競合する社会」へ移っており、エージェント同士の調整・検証技術が次の重要分野になる",
+    "EU AI 法の標準化が議論の場に上っており、欧州市場に AI を出す企業は学術界の安全性・検証研究の動向を追う必要がある",
+    "次回 IJCAI-27 は京都（8月）で開催予定で、日本からの参加・発表の機会が大きく広がる"
+  ],
+  "awards": [
+    {
+      "award": "Distinguished Paper",
+      "title": "Approximate Strategyproofness in Approval-Based Budget Division",
+      "authors": "Haris Aziz, Patrick Lederer, Jeremy Vollen",
+      "url": "https://arxiv.org/abs/2605.11736"
+    },
+    {
+      "award": "Distinguished Paper",
+      "title": "Tuple Inconsistency Measures: Toward Explaining Query Answers",
+      "authors": "Yurun Gu, Badran Raddaoui, Yue Ma, Aikaterini Tzompanaki, Nicole Bidoit"
+    },
+    {
+      "award": "Distinguished Paper",
+      "title": "StreamTimer: Efficient Inference for Long-Context Time Series Transformers",
+      "authors": "Xiyu Meng, Yuhan Wu, Canran Xiao, Yabo Dong, Duanqing Xu"
+    },
+    {
+      "award": "Award for Research Excellence",
+      "title": "Nicholas R. Jennings"
+    },
+    {
+      "award": "Computers and Thought Award",
+      "title": "Jiajun Wu"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Approximate Strategyproofness in Approval-Based Budget Division",
+      "titleJa": "承認投票による予算配分における近似的な耐戦略性",
+      "award": "Distinguished Paper",
+      "authors": [
+        "Haris Aziz",
+        "Patrick Lederer",
+        "Jeremy Vollen"
+      ],
+      "url": "https://arxiv.org/abs/2605.11736",
+      "why": "参加型予算などで、各自が支持するプロジェクトに投票して予算を分ける仕組みは、嘘の投票で得をできないこと（耐戦略性）と公平性を両立できないことが知られています。本研究は耐戦略性を「近似的に」満たす度合いを定量化し、公平性とのより良い両立点を示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "承認投票に基づく予算分配（approval-based budget division）において、Brandlらの不可能性定理（耐戦略性・効率性・公平性の同時達成は不可能）を、耐戦略性を近似的に緩めることで回避できるかを調べた研究。操作による効用の最大乗法的利得を表すインセンティブ比（incentive ratio）を分配ルールの分析指標として導入し、Nash積ルール（NASH）の比が2であることを示した。",
+        "novelty": "公平かつ効率的なルールがどの程度耐戦略性を破るかは従来未解明だったが、本論文はインセンティブ比で初めてそれを定量化した。FUT・MP・EGALの比が投票者数または候補者数に対し線形に増えるのに対し、NASHのみが定数2で済むことを示した。さらにAFS充足ルール、狭義凹な福祉関数の最大化ルール、GFSと効率性を満たす正則ルールのいずれでも比は2以上となり、NASHの2が最適であることを示した点も新しい。",
+        "method": "インセンティブ比を、操作後の効用と正直申告時の効用の比の上限（sup）として定義した。NASHの上界2の証明では、(1) 全投票者の効用が正であること、(2) NASH解における分離不等式、(3) 投票者iが加わってもi以外のNash福祉が高々e^{-1}倍までしか下がらないこと、の3つの補題を用いる。仮に比が2を超えるとΣ u_j(q)/u_j(p) > nとなり(2)に矛盾することを、Jensenの不等式で導く。この議論は微分可能性を仮定せず、任意の凹効用関数に拡張でき、グループ操作にも一般化できる。下界は、AFSなど各性質から特定の反例プロファイルを構成し、パラメータを大きくして比が2に収束することを示している。",
+        "validation": "理論面では、MPとFUTの比がΘ(n)、EGALがΘ(m)であることを具体的な反例プロファイル（例：MPで(n−3)/4、FUTで(n−5)/2）で示した。実験面では、複数の分布から生成した承認プロファイルでFUT、MP、EGAL、NASHの平均インセンティブ比と操作可能なプロファイルの割合を測定した。その結果、4ルールとも頻繁に操作可能で、NASHとEGALはほぼ全プロファイルで操作可能だった。ただしNASHでは操作による利得が大きくならず、EGALとMPでは大きな利得が得られた。FUTだけは平均比が理論上の最悪値より大幅に低かった。実験の具体的な数値は、提供された本文には含まれていない。",
+        "discussion": "NASHはほぼ常に操作可能であり、比が2に収まるのはあくまで最悪ケースの利得に対する保証で、実際に操作を防げるかはコストと利得の釣り合い次第である。最適性の結果は、AFS・SCWM・正則かつGFS＋効率性という特定のルールクラスに限られており、それ以外のクラスで2未満の比が可能かは未解決である。また、本文が途中で切れているため、SCWMや正則ルールの下界証明の詳細、実験の詳細な設定は確認できない。",
+        "next": [
+          {
+            "title": "Distribution Rules Under Dichotomous Preferences: Two Out of Three Ain't Bad",
+            "reason": "本論文が回避しようとしている、耐戦略性・効率性・公平性の不可能性定理の原典であるため。"
+          },
+          {
+            "title": "Fair Mixing: the Case of Dichotomous Preferences",
+            "reason": "NASHがAFSとコアを満たすことを示した基礎文献で、本論文の公平性の議論の前提となるため。"
+          },
+          {
+            "title": "Approximately Fair and Population Consistent Budget Division via Simple Payment Schemes",
+            "reason": "MPルールの定義と、各ルールのAFSに対する近似度合いを扱っており、比較表の根拠となるため。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Congratulations to the #IJCAI-ECAI 2026 distinguished paper award winners（AIhub）",
+      "url": "https://aihub.org/?p=21111"
+    },
+    {
+      "title": "IJCAI-ECAI 2026（公式サイト）",
+      "url": "https://2026.ijcai.org/"
+    },
+    {
+      "title": "IJCAI-ECAI Bremen: Everything Announced at AI's Oldest Conference（AI2 Work）",
+      "url": "https://ai2.work/blog/ijcai-ecai-bremen-everything-announced-at-ai-s-oldest-conference"
+    },
+    {
+      "title": "IJCAI Future Conferences（公式）",
+      "url": "https://www.ijcai.org/future_conferences"
+    },
+    {
+      "title": "IJCAI Awards（公式・各賞の受賞者）",
+      "url": "https://www.ijcai.org/awards"
+    }
+  ],
+  "unreachable": [
+    "投稿数と採択率は確認できませんでした。採択数・講演者・テーマは報道記事によります"
+  ]
+}

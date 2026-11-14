@@ -1,0 +1,96 @@
+{
+  "conf": "cvpr",
+  "updated": "2026-11-14",
+  "year": 2022,
+  "headline": "ニューオーリンズで現地開催再開。幾何計算の難しい最小問題を学習で解く研究が最優秀論文、Ref-NeRF などが佳作に",
+  "summary": "ニューオーリンズで3年ぶりに現地開催されました。投稿8,161本・採択2,067本（約25.3%）です。最優秀論文は、複数カメラの相対的な位置関係を求める幾何計算で、偽の解が大量に出る「難しい最小問題」を、学習で良い初期値を選んで数値的にたどることで高速に解く研究（チェコ工科大学ほか）でした。佳作には、光沢のある物体の見え方を正しく表す Ref-NeRF、2台のシャッターで振動を光学的に計測する研究が選ばれています。",
+  "stats": {
+    "submissions": 8161,
+    "accepted": 2067,
+    "rate": "25.3%"
+  },
+  "trends": [
+    "学習と幾何の融合: ホモトピー継続法の出発点を学習で選び、RANSAC 内で高速に解く",
+    "NeRF の高度化: 反射・光沢を扱う Ref-NeRF",
+    "計算イメージング: 特殊なシャッター制御による振動センシング",
+    "単眼姿勢推定: 微分可能な確率的 PnP（最優秀学生論文 EPro-PnP）"
+  ],
+  "implications": [
+    "深層学習の時代でも、カメラの幾何・最適化の古典的な問題が最高賞を得ており、ロボットや AR で正確な3D計測を行うには幾何の理解が欠かせないことを示す",
+    "カメラで振動や音を計測する計算イメージングは、設備の状態監視など製造業の非接触センシングへの応用が見込める"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Learning to Solve Hard Minimal Problems",
+      "authors": "Petr Hruby, Timothy Duff, Anton Leykin, Tomas Pajdla",
+      "url": "https://arxiv.org/abs/2112.03424"
+    },
+    {
+      "award": "Best Student Paper",
+      "title": "EPro-PnP: Generalized End-to-End Probabilistic Perspective-n-Points for Monocular Object Pose Estimation",
+      "authors": "Hansheng Chen ほか"
+    },
+    {
+      "award": "Best Paper Honorable Mention",
+      "title": "Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields",
+      "authors": "Dor Verbin ほか"
+    },
+    {
+      "award": "Best Paper Honorable Mention",
+      "title": "Dual-Shutter Optical Vibration Sensing",
+      "authors": "Mark Sheinin ほか"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Learning to Solve Hard Minimal Problems",
+      "titleJa": "難しい最小問題を解くことを学習する",
+      "award": "Best Paper",
+      "authors": [
+        "Petr Hruby",
+        "Timothy Duff",
+        "Anton Leykin",
+        "Tomas Pajdla"
+      ],
+      "url": "https://arxiv.org/abs/2112.03424",
+      "why": "3台のカメラの相対姿勢推定のように、多数の偽の解を持つ連立多項式を毎回すべて解く代わりに、学習で「近い既知の問題と解」を選び、そこから目的の問題へ数値的に連続変形して1つの解だけを求めることで、RANSAC 内で使えるほど高速にしました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "RANSAC の枠組みで、多数の偽解を持つ「難しい最小問題」を効率よく解く手法を提案した研究。全解を求めず、学習で選んだ開始問題・解のペアから実数ホモトピー連続法(HC)を1本だけ追跡して目的の解を得る。3視点・各4点の相対姿勢(Scranton緩和)と古典的な5点問題で実証している。",
+        "novelty": "従来の「全解を解いてから選ぶ(solve & pick)」ではなく、「先に開始ペア(アンカー)を選んでから解く(pick & solve)」に発想を転換し、計算量が偽解の数にほぼ依存しない。Scranton問題には従来ミリ秒オーダーの近似解法しかなかったが、本手法は10倍以上高速な実用的ソルバーを初めて実現した。また実データの分布を学習に取り込む点が、既存の記号・数値ソルバーと異なる。",
+        "method": "デプス変数による低次でスパースな多項式系を用い、実数演算の線形セグメントHC(予測子は4次ルンゲ・クッタ、修正子は最大3回のニュートン法)をC++で最適化している。オフラインではETH 3Dデータから問題・解ペアをサンプリングし、貪欲法(支配集合の近似)でアンカー集合を選び、6層×100ニューロンのMLPで各問題に最適なアンカーまたはTRASH(スキップ)を分類する。オンラインでは入力を正規化(カメラ回転・順序の不変化)した後、MLPで選んだアンカーから1本のパスを追跡する。",
+        "validation": "ETH 3Dの未学習シーン(delivery_area、facade)で評価し、Scranton(4pt)は成功率26.3%・16.3μsで、RANSAC内では平均約4サンプル・61.6μsで有効な候補が得られた。5ptは成功率29.0%・7.6μsで、実効時間は26.1μsだった。最近傍アンカー(ユークリッド・マハラノビス距離)のベースラインより実効時間が大幅に良く、CVPR 2020 RANSAC Tutorialのベンチマークでは5pt問題でNistér解法の約4倍のサンプル数で同等の精度に達した(成功率は約25%)。",
+        "discussion": "複素HCの高い成功率を捨てて高速な実数HCを採用したため失敗率が高く、RANSACのサンプル数を増やして補う必要がある。またMLPは学習したデータ分布のみを表現するため、分布が異なる状況(特殊な運動の車載カメラなど)では再学習や適応が要る一方、特定分布に特化できる利点にもなりうる。他の難しい最小問題への一般化は今後の課題として示されている。",
+        "next": [
+          {
+            "title": "TRPLP - Trifocal relative pose from lines at points",
+            "reason": "本論文のHC実装の基盤となった、最適化された最小問題向けホモトピー連続法ソルバーの先行研究であるため。"
+          },
+          {
+            "title": "Four points in two or three calibrated views: Theory and practice",
+            "reason": "本論文が緩和した元の4pt問題の理論と近似解法(約1ms)が示されており、比較対象を理解できるため。"
+          },
+          {
+            "title": "An efficient solution to the five-point relative pose problem",
+            "reason": "本論文が性能比較・ベンチマークの基準として用いる古典的な5点問題のNistér解法であるため。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "CVPR Paper Awards（IEEE TCPAMI・受賞一覧）",
+      "url": "https://tc.computer.org/tcpami/awards/cvpr-paper-awards/"
+    },
+    {
+      "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
+      "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    }
+  ],
+  "unreachable": [
+    "基調講演者の一覧は公式ページから取得できなかったため省略しています",
+    "開催日程（日付）は公式ページで確認できなかったため月のみ表示しています"
+  ]
+}

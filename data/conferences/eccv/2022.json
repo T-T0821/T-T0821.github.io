@@ -1,0 +1,74 @@
+{
+  "conf": "eccv",
+  "updated": "2026-11-14",
+  "year": 2022,
+  "headline": "テルアビブ開催。ニューラルネット同士の「機能」を比べる部分距離相関の研究が最優秀論文に選ばれた回",
+  "summary": "イスラエルのテルアビブで開催され、投稿5,804本・採択1,645本（約28.3%）でした。最優秀論文は、統計学の部分距離相関という手法を深層学習に持ち込み、異なるネットワークが学んだ表現の似ている部分・違う部分を比較したり、多様なモデルを学習させたり、敵対的な頑健性を高めたりできることを示した研究（ウィスコンシン大学）です。ViT と CNN の比較などモデルの理解が注目された時期を反映しています。",
+  "stats": {
+    "submissions": 5804,
+    "accepted": 1645,
+    "rate": "28.3%"
+  },
+  "trends": [
+    "ネットワークの比較と理解: 部分距離相関による表現の比較",
+    "ViT と CNN の比較: アーキテクチャ間で学習内容の違いを分析"
+  ],
+  "implications": [
+    "モデルが何を学んでいるかを定量的に比べる手法は、モデル更新時の挙動変化の確認や、複数モデルを組み合わせる際の多様性の評価に使える"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "On the Versatile Uses of Partial Distance Correlation in Deep Learning",
+      "authors": "Xingjian Zhen, Zihang Meng, Rudrasis Chakraborty, Vikas Singh",
+      "url": "https://arxiv.org/abs/2207.09684"
+    }
+  ],
+  "featured": [
+    {
+      "title": "On the Versatile Uses of Partial Distance Correlation in Deep Learning",
+      "titleJa": "深層学習における部分距離相関の多様な使い道",
+      "award": "Best Paper",
+      "authors": [
+        "Xingjian Zhen",
+        "Zihang Meng",
+        "Rudrasis Chakraborty",
+        "Vikas Singh"
+      ],
+      "url": "https://arxiv.org/abs/2207.09684",
+      "why": "次元の異なる特徴同士でも依存関係を測れる距離相関と、その「ほかの要因を除いた」版である部分距離相関を深層学習に応用し、ネットワーク間の比較、多様なモデルの学習、敵対的頑健性の向上、生成モデルの属性の分離に使えることを示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "異なる次元の特徴空間間の相関を測れる統計量である距離相関（distance correlation）と偏距離相関（partial distance correlation）を、大規模な深層学習モデルで使えるように整備した研究。これにより、あるモデルを別のモデルで条件付ける、独立な特徴を持つ複数モデルを学習する、もつれを解いた表現（disentanglement）を学習する、といった幅広い用途に使える汎用的な正則化項・制約として提案している。",
+        "novelty": "従来のCCAは浅い設定では使えるが、深層学習向けには専用アルゴリズムが必要で、偏CCAの深層版は報告されていなかった。距離相関は特徴間の距離が計算できれば深層でもほぼそのまま適用でき、その偏版により「一方のモデルの影響を除いた上での他方の情報」を測ったり損失に組み込んだりできる点が新しい。著者らは、ネットワーク間の条件付けを行うこの機能は従来示されていなかったと述べている。",
+        "method": "ミニバッチ（サイズm）ごとに距離行列を計算してO(m^2)で距離相関を確率的に推定し、微分可能な損失として使う。2つのネットワークのパラメータが分離可能であることを利用し、ブロック確率的勾配法（Alg.1）を示すが、実験では通常のSGDで十分だったとしている。偏距離相関はU中心化行列とその内積、および射影により定義され、Z の影響を除いた残差間の相関として計算する。用途ごとに、独立性のためにCE損失に α·距離相関を加える（式11）、偏距離相関を最大化する（式12）、属性と残差表現の距離相関を最小化する（式13）といった損失を設計している。",
+        "validation": "敵対的攻撃の転移実験では、CIFAR10（ResNet18）とImageNet（MobileNet-v3-small、EfficientNet-B0、ResNet34、ResNet152）で、f1で作った敵対例によるf2の精度を評価した（FGM/PGD、α=0.05）。ベースラインより敵対的精度が向上し、ResNet18とMobileNet-v3-smallのPGDでは10%以上の絶対改善があり、クリーン精度はおおむね同程度だった（ResNet18は89.14→87.61）。ネットワーク比較では、BERTによるクラス名埋め込みとの距離相関で ViT・ResNet 各層の類似度を可視化し、偏距離相関で「Yを除いたXが持つ情報」を定量化した。また Grad-CAM による可視化と、FFHQ上のStyleGAN2ベース半教師あり disentanglement で属性操作の有効性を定性的に示した。",
+        "discussion": "本文の範囲では、評価の多くが定性的な可視化や少数の設定に基づいており、ミニバッチ推定の近似精度やバッチサイズ依存性、計算コストの詳細な検証は示されていない。また偏距離相関の最大化による効果は Grad-CAM などの定性的な確認が中心で、精度向上など定量的な利得は示されていない。なお本文には、content-style disentanglement で距離相関を用いた先行研究[43]の存在が後から追記されている。",
+        "next": [
+          {
+            "title": "Do Vision Transformers See Like Convolutional Neural Networks?",
+            "reason": "本論文のネットワーク間類似度比較の直接のベースラインであり、CKAによる ViT と CNN の層ごとの比較が参照できる。"
+          },
+          {
+            "title": "Similarity of Neural Network Representations Revisited",
+            "reason": "距離相関の代替・比較対象となるCKAの理論的性質（不変性）を理解するために有用である。"
+          },
+          {
+            "title": "An Online Riemannian PCA for Stochastic Canonical Correlation Analysis",
+            "reason": "深層学習向けの確率的CCAであり、本論文が対比している深層CCA手法の中心的な先行研究である。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "European Conference on Computer Vision（AI Wiki・開催地・投稿数・最優秀論文）",
+      "url": "https://www.aiwiki.ai/wiki/eccv/raw"
+    }
+  ],
+  "unreachable": [
+    "基調講演者の一覧は公式ページから取得できなかったため省略しています",
+    "開催日程は確認できなかったため月のみ表示しています"
+  ]
+}

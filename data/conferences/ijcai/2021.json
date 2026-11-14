@@ -1,0 +1,111 @@
+{
+  "conf": "ijcai",
+  "year": 2021,
+  "updated": "2026-11-14",
+  "headline": "モントリオール主催のオンライン開催。古典的計画・論理・公平分割の研究が最優秀論文に並び、研究功績賞は強化学習の Richard Sutton 氏",
+  "summary": "モントリオール主催で、オンラインで開催されました。投稿4,204本・採択587本（約13.9%）です。最優秀論文（Distinguished Paper）は、古典的計画で「解けない問題」を見抜くヒューリスティックを学習する研究、論理プログラミングの2つの意味論の関係を明らかにした研究、土地を参加者間で一定の距離を空けて公平に分割する方法の3本でした。研究功績賞は強化学習の父と呼ばれる Richard Sutton 氏、Computers and Thought 賞はセキュリティ・環境保護へのゲーム理論応用の Fei Fang 氏が受賞しています。",
+  "stats": {
+    "submissions": 4204,
+    "accepted": 587,
+    "rate": "13.9%"
+  },
+  "trends": [
+    "学習による計画の高速化: 解のない計画問題を早期に判定するヒューリスティックの学習",
+    "論理と知識表現: 近似不動点理論と正当化理論の関係",
+    "公平分割: 区画間の距離を保った土地分割（計算社会選択）",
+    "強化学習の評価: Sutton 氏の研究功績賞"
+  ],
+  "implications": [
+    "深層学習全盛の時期にも、計画・論理・公平分割といった記号的 AI の研究が最高賞に選ばれており、IJCAI は AI の幅広い基礎を扱う場であり続けている",
+    "計画問題に学習を組み合わせる研究は、現在の LLM による計画・エージェントの検証手法の土台になる"
+  ],
+  "awards": [
+    {
+      "award": "Distinguished Paper",
+      "title": "Learning Generalized Unsolvability Heuristics for Classical Planning",
+      "authors": "Simon Ståhlberg, Guillem Francès, Jendrik Seipp"
+    },
+    {
+      "award": "Distinguished Paper",
+      "title": "On the Relation Between Approximation Fixpoint Theory and Justification Theory",
+      "authors": "Simon Marynissen, Bart Bogaerts, Marc Denecker"
+    },
+    {
+      "award": "Distinguished Paper",
+      "title": "Keep Your Distance: Land Division With Separation",
+      "authors": "Edith Elkind, Erel Segal-Halevi, Warut Suksompong",
+      "url": "https://arxiv.org/abs/2105.06669"
+    },
+    {
+      "award": "Honourable Mention",
+      "title": "Actively Learning Concepts and Conjunctive Queries under ELr-Ontologies",
+      "authors": "Maurice Funk, Jean Christoph Jung, Carsten Lutz"
+    },
+    {
+      "award": "Award for Research Excellence",
+      "title": "Richard Sutton"
+    },
+    {
+      "award": "Computers and Thought Award",
+      "title": "Fei Fang"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Keep Your Distance: Land Division With Separation",
+      "titleJa": "距離を保て：区画間の分離を伴う土地分割",
+      "award": "Distinguished Paper",
+      "authors": [
+        "Edith Elkind",
+        "Erel Segal-Halevi",
+        "Warut Suksompong"
+      ],
+      "url": "https://arxiv.org/abs/2105.06669",
+      "why": "土地などの資源を分けるとき、各人の区画の間に一定の距離（緩衝帯）が必要な場合でも、各人が自分の取り分に一定の満足を保証できる分割方法と、その限界を理論的に示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "土地分割において、(1)各エージェントが使える幾何学的形状（正方形・fat長方形・任意の軸平行長方形）の区画を受け取り、(2)異なるエージェントの区画が距離s以上離れる、という2つの実用要件を課した公平分割を研究した論文。比例性が保証できない状況で、順序的な最大最小シェア(maximin share)近似がどこまで達成可能かの上界・下界を示し、アルゴリズム的・クエリ計算量的側面も検討している。",
+        "novelty": "1次元の分離付きケーキ分割(Elkind et al. 2022)を2次元の土地分割へ拡張した初の研究。分離制約下ではs>0のとき、エージェント数や形状に関わらずMMSの乗法近似が一切保証できないことを示し、順序近似(1-out-of-k MMS)に絞る根拠を与えた。また、計算幾何学の道具(rainbow independent set、guillotine分割)を公平分割に持ち込んだ点が新しい。",
+        "method": "s分離をWrap(Q,s)（各長方形を幅s/2の枠で囲む）に置き換えることで、s分離性を「枠付き長方形が重ならないこと」と等価にし、各エージェントのk分割からrainbow independent setを選ぶ方針をとる。fat長方形についてはRISN(r,2)=⌈r⌉+2を示し、「重なりが少ない長方形が必ず存在する」という議論を帰納的に用いてk=(2⌈r⌉+2)n−(3⌈r⌉+2)(正方形ならk=4n−5)を得る。任意の長方形ではこの手法が破綻するため、垂直ナイフを動かして「p:q矩形カット」か「矩形スタック」のどちらかが存在することを示す補題(Lemma 5.8, 5.11)を用いた再帰的構成で有限のkを導く。さらに計算面ではguillotine分割で近似最適分割を効率的に求める。",
+        "validation": "実験ではなく理論的証明による評価である。n=2では任意の長方形でk=3のMMS保証を示し、これは下界と一致して最適である。fat長方形ではk=(2⌈r⌉+2)n−(3⌈r⌉+2)、任意の長方形ではk=17·2^{n−3}で十分と示し、n=3や4では改善した境界を付録で与える。また、RISN(r,n)≥n+1という下界も示している。",
+        "discussion": "fat長方形の境界(正方形で4n−5)はn=2でのみ最適で、n≥3での正確なRISN(r,n)は未解決(Open question 5.5)であり、任意長方形でのk=17·2^{n−3}は指数的に大きく改善余地がある。また、1-out-of-kのMMS分割自体を効率よく計算・近似することが難しく、guillotine分割に限定することで近似的な回避策をとっている点も課題である。",
+        "next": [
+          {
+            "title": "Mind the gap: Cake cutting with separation",
+            "reason": "本論文の直接の前身で、1次元ケーキにおける分離制約付き公平分割の設定と結果を理解できる。"
+          },
+          {
+            "title": "Fair and square: Cake-cutting in two dimensions",
+            "reason": "正方形などの形状制約付き2次元ケーキ分割で、比例性の保証が1/(2n)に制限される結果を扱っており、本研究の形状制約の背景となる。"
+          },
+          {
+            "title": "The combinatorial assignment problem: Approximate competitive equilibrium from equal incomes",
+            "reason": "本論文が用いる順序的MMS近似(1-out-of-k)を最初に導入した文献である。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Congratulations to the authors of the #IJCAI2021 distinguished papers（AIhub）",
+      "url": "https://aihub.org/2021/09/03/congratulations-to-the-authors-of-the-ijcai2021-distinguished-papers/"
+    },
+    {
+      "title": "IJCAI Past Conferences（公式・開催地）",
+      "url": "https://www.ijcai.org/past_conferences"
+    },
+    {
+      "title": "IJCAI Awards（公式・各賞の受賞者）",
+      "url": "https://www.ijcai.org/awards"
+    },
+    {
+      "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
+      "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    }
+  ],
+  "unreachable": [
+    "招待講演者の一覧は公式ページから取得できなかったため省略しています",
+    "開催日程（日付）は公式ページで確認できなかったため月のみ表示しています"
+  ]
+}
