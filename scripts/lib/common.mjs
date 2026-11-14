@@ -121,7 +121,7 @@ export function extractJson(text) {
 export function sanitize(text) {
   return String(text || '')
     .split(/(```[\s\S]*?```|`[^`\n]*`)/g)
-    .map((part, i) => (i % 2 ? part : part.replace(/</g, '&lt;').replace(/\{\{/g, '&#123;&#123;')))
+    .map((part, i) => (i % 2 ? part : part.replace(/<\/?br\s*\/?>/gi, ' ').replace(/</g, '&lt;').replace(/\{\{/g, '&#123;&#123;')))
     .join('')
 }
 
