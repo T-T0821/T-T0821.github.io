@@ -1,4 +1,5 @@
 import { defineConfig, type DefaultTheme } from 'vitepress'
+import { defineTeekConfig } from 'vitepress-theme-teek/config'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -80,8 +81,37 @@ function buildSidebar(): DefaultTheme.SidebarMulti {
   return sidebar
 }
 
+// Teek テーマの設定。トップページとサイドバーはこれまでの自作のものを使い、
+// Teek のブログ用機能（記事一覧トップ、自動サイドバー、パーマリンク、frontmatter 自動追記）は切る
+const teekConfig = defineTeekConfig({
+  teekHome: false,
+  vpHome: true,
+  // 記事ページの見た目。default / card / segment / card-nav / segment-nav
+  pageStyle: (process.env.TEEK_PAGE_STYLE as any) || 'segment-nav',
+  windowTransition: true,
+  articleAnalyze: { showIcon: true, showInfo: false, showAuthor: false, showCreateDate: false, showUpdateDate: false, showCategory: false, showTag: false } as any,
+  articleShare: { enabled: false },
+  breadcrumb: { enabled: false },
+  docAnalysis: { enabled: false },
+  backTop: { enabled: true },
+  themeEnhance: {
+    position: 'top',
+    layoutSwitch: { hidden: true },
+    spotlight: { hidden: true },
+    themeColor: { defaultColorName: (process.env.TEEK_COLOR as any) || 'vp-primary', defaultSpread: true },
+  },
+  vitePlugins: {
+    sidebar: false,
+    permalink: false,
+    autoFrontmatter: false,
+    mdH1: false,
+    docAnalysis: false,
+  },
+})
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  extends: teekConfig,
   base: '/',
   lang: 'ja-JP',
   title: 'AI Tech Blog',

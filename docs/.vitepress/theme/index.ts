@@ -1,8 +1,10 @@
-import DefaultTheme from 'vitepress/theme'
+import Teek from 'vitepress-theme-teek'
+import 'vitepress-theme-teek/index.css'
 import { inBrowser, useRoute, type EnhanceAppContext } from 'vitepress'
-import { watch } from 'vue'
+import { h, watch } from 'vue'
 import ArticleList from './ArticleList.vue'
 import HomeDashboard from './HomeDashboard.vue'
+import teekJa from './teek-ja'
 import './custom.css'
 
 const RELOAD_KEY = 'vp-stale-reload'
@@ -26,7 +28,9 @@ async function reloadIfPageExists(path: string) {
 }
 
 export default {
-  extends: DefaultTheme,
+  extends: Teek,
+  // Teek の表示文言を日本語にする
+  Layout: () => h(Teek.Layout, { locale: teekJa }),
   enhanceApp({ app }: EnhanceAppContext) {
     app.component('ArticleList', ArticleList)
     app.component('HomeDashboard', HomeDashboard)
