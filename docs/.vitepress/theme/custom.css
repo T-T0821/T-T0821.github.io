@@ -1,41 +1,37 @@
-/* ── Article Card Grid ── */
+/* ───────── Deep Research 記事カード ───────── */
 .article-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.25rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
 }
 
 .card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: block;
     border: 1px solid var(--vp-c-divider);
     border-radius: 12px;
-    padding: 1.25rem 1.5rem;
+    padding: 1rem 1.25rem;
     text-decoration: none !important;
-    color: inherit;
+    color: inherit !important;
     background: var(--vp-c-bg-soft);
-    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    transition: border-color 0.2s;
 }
 
 .card:hover {
     border-color: var(--vp-c-brand-1);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    transform: translateY(-2px);
 }
 
 .card-date {
     font-size: 0.78rem;
     color: var(--vp-c-text-2);
-    margin: 0 0 0.4rem;
+    margin: 0 0 0.3rem !important;
 }
 
-.card-title {
+.vp-doc .card-title {
     font-size: 1.05rem;
     font-weight: 600;
-    line-height: 1.4;
-    margin: 0 0 0.6rem;
+    line-height: 1.45;
+    margin: 0 0 0.5rem;
     color: var(--vp-c-text-1);
     border: none;
     padding: 0;
@@ -45,7 +41,7 @@
     font-size: 0.88rem;
     color: var(--vp-c-text-2);
     line-height: 1.6;
-    margin: 0;
+    margin: 0 !important;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -53,33 +49,237 @@
     overflow: hidden;
 }
 
-.card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--vp-c-divider);
-}
-
-.card-tag {
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--vp-c-brand-1);
-    background: var(--vp-c-brand-soft);
-    padding: 0.2em 0.6em;
-    border-radius: 4px;
-}
-
-.card-read-more {
-    font-size: 0.82rem;
-    color: var(--vp-c-brand-1);
-}
-
 .no-articles {
     color: var(--vp-c-text-2);
     text-align: center;
     padding: 3rem 0;
+}
+
+/* ───────── 日次ダイジェストの日付リスト ───────── */
+.vp-doc .daily-month {
+    font-size: 1rem;
+    margin: 2rem 0 0.5rem;
+    padding-top: 0;
+    border-top: none;
+    color: var(--vp-c-text-2);
+}
+
+.daily-row {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.75rem 0.25rem;
+    border-bottom: 1px solid var(--vp-c-divider);
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+.daily-row:hover .daily-date {
+    color: var(--vp-c-brand-1);
+}
+
+.daily-date {
+    flex: 0 0 auto;
+    min-width: 6.5em;
+    font-weight: 600;
+    color: var(--vp-c-text-1);
+    white-space: nowrap;
+}
+
+.daily-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--vp-c-text-2);
+}
+
+@media (max-width: 480px) {
+    .daily-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+    }
+}
+
+/* ───────── トップページ ───────── */
+.home-dashboard section {
+    margin-bottom: 3rem;
+}
+
+.vp-doc .home-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+    margin: 0 0 0.25rem;
+    padding-top: 0;
+    border-top: none;
+}
+
+.home-heading-sub {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--vp-c-text-2);
+}
+
+.vp-doc .home-lead {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    color: var(--vp-c-text-2);
+}
+
+.digest-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0.75rem;
+}
+
+.digest-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 12px;
+    background: var(--vp-c-bg-soft);
+    overflow: hidden;
+}
+
+.digest-card:hover {
+    border-color: var(--vp-c-brand-1);
+}
+
+.digest-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+    padding: 0.9rem 1.1rem 0.6rem;
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+.digest-label {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--vp-c-text-1);
+}
+
+.digest-date {
+    font-size: 0.78rem;
+    color: var(--vp-c-text-2);
+}
+
+.digest-desc {
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--vp-c-text-2);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    overflow: hidden;
+}
+
+.vp-doc .digest-archive {
+    padding: 0.5rem 1.1rem 0.7rem;
+    font-size: 0.82rem;
+    text-decoration: none;
+}
+
+.vp-doc ul.research-list {
+    list-style: none;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.vp-doc .research-list li {
+    margin: 0;
+    border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.research-list a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.7rem 0.25rem;
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+.research-cat {
+    font-size: 0.78rem;
+    color: var(--vp-c-text-2);
+}
+
+.research-title {
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--vp-c-text-1);
+}
+
+.research-list a:hover .research-title {
+    color: var(--vp-c-brand-1);
+}
+
+.home-about {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 12px;
+    font-size: 0.9rem;
+}
+
+.home-about summary {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* ───────── 記事本文（日次ダイジェスト含む）の読みやすさ ───────── */
+
+/* 長い URL やリポジトリ名で横にはみ出さないようにする */
+.vp-doc p,
+.vp-doc li,
+.vp-doc td {
+    overflow-wrap: anywhere;
+}
+
+/* 日次ページ冒頭の出典説明（blockquote）は控えめに */
+.vp-doc h1 + blockquote > p {
+    font-size: 0.85rem;
+    line-height: 1.7;
+}
+
+/* ニュース・論文の各項目（h3）を区切って見つけやすく */
+.vp-doc h2 + h3,
+.vp-doc h3 {
+    margin-top: 2.5rem;
+}
+
+.vp-doc h2 + h3 {
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 640px) {
+    /* スマホでは表を詰めて、横スクロールを減らす */
+    .vp-doc table {
+        font-size: 0.82rem;
+    }
+
+    .vp-doc th,
+    .vp-doc td {
+        padding: 6px 8px;
+    }
+
+    .vp-doc h1 {
+        font-size: 1.6rem;
+        line-height: 1.35;
+    }
+
+    .vp-doc h2 {
+        font-size: 1.3rem;
+        line-height: 1.4;
+    }
+
+    .vp-doc h3 {
+        font-size: 1.1rem;
+        line-height: 1.45;
+    }
 }
