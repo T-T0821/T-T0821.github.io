@@ -70,6 +70,149 @@
           }
         ]
       }
+    },
+    {
+      "title": "BSP-Net: Generating Compact Meshes via Binary Space Partitioning",
+      "award": "Best Student Paper",
+      "authors": [
+        "Zhiqin Chen",
+        "Andrea Tagliasacchi",
+        "Hao Zhang"
+      ],
+      "url": "https://arxiv.org/abs/1911.06971",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "BSP-Netは、二分空間分割（BSP）の考え方を取り入れ、平面の集合から凸体を構成して3D形状を表現するニューラルネットワークである。iso-surfacingなしで、コンパクト（低ポリ）かつwatertightな多角形メッシュを直接出力する。オートエンコードや単一画像からの3D再構成（SVR）にも適用できる。",
+        "novelty": "従来の暗黙関数ベースの手法はMarching Cubes等の高コストなiso-surfacingが必要で、メッシュが過剰分割され鋭いエッジも滑らかに近似されていた。BSP-Netはメッシュを直接生成し、鋭い幾何特徴を表現でき、凸体の数も固定せず自動的に決まる点がCvxNetと異なる。また凸分解の教師なしで学習でき、全形状で同一の凸体集合を共有するため、セグメンテーションと部品対応も得られる。",
+        "method": "エンコーダの特徴量からMLPで平面パラメータP（p×4）を出力し（第1層）、2値行列Tで平面を選択的にグルーピングしてmax-poolingで凸体を作り（第2層）、min-pooling等で凸体を結合して形状を得る（第3層）。学習は2段階で、Stage 1ではTとWを連続値に緩和し、max/minを和に置き換えたS+で近似的に学習する。Stage 2ではTを閾値0.01で量子化し、厳密なS*でfine-tuneする（任意で凸体の重なりを抑える損失を追加）。推論時は得られた平面とTからCSGで多角形メッシュを抽出する。3D実験ではp=4,096平面、c=256凸体を用いる。",
+        "validation": "ShapeNetで、オートエンコード（VP、SQ、BAE-NETと比較）、セグメンテーション（IoU）、SVR（AtlasNet、OccNet、IM-NETと比較）を評価した。オートエンコードのCDは0.447でBAE-NETの1.592より良く、セグメンテーションの平均IoUは79.3（overlap損失併用で79.8）でBAE*の81.8には及ばないが、VP、SQ、BAEを上回る。SVRではCD 1.432はIM-NET 128/256（1.387/1.371）にやや劣るが同等水準であり、鋭い特徴を測る新指標ECDは0.743と他手法（1.866〜6.245）より大幅に良く、LFDも2939.15で最良級である。しかも平均頂点数は1,073、面数は1,910と少ない。",
+        "discussion": "凸体の和集合でしか表現できないため、湯のみやリングのような凹形状は多数の小さな凸片に分解され、平面や凸体の予算が無駄になる。差集合などCSG演算への一般化が今後の課題である。また学習に約6日と長くかかり、形状の複雑さに応じてプリミティブ数を適応させる仕組みや、RGB画像のみからの学習、整備されたデータセット外への汎化も課題として挙げられている。",
+        "next": [
+          {
+            "title": "CvxNets: Learnable Convex Decomposition",
+            "reason": "凸体の集合で形状を分解する最も近い先行研究で、BSP-Netとの設計の違いを理解できる。"
+          },
+          {
+            "title": "BAE-NET: Branched Autoencoder for Shape Co-Segmentation",
+            "reason": "BSP-Netのアーキテクチャの着想元であり、セグメンテーション比較の主要なベースラインである。"
+          },
+          {
+            "title": "Learning Implicit Fields for Generative Shape Modeling",
+            "reason": "BSP-Netが比較対象とし、進行的学習やサンプリング方法も踏襲している暗黙関数ベースの代表的手法（IM-NET）である。"
+          }
+        ]
+      },
+      "titleJa": "BSP-Net: 二分空間分割によるコンパクトなメッシュの生成",
+      "why": "平面の集合から凸体を構成する二分空間分割（BSP）の考え方をニューラルネットワークに取り入れ、iso-surfacingなしで低ポリかつwatertightな多角形メッシュを直接出力する研究です。鋭いエッジも表現でき、ShapeNetではオートエンコードのCDが0.447とBAE-NETの1.592を上回り、鋭い特徴を測るECDも0.743と他手法より大幅に良好でした。平均頂点数1,073、面数1,910と少ないメッシュで、単一画像からの3D再構成でもIM-NETと同等水準の精度を示した点が注目され、CVPR 2020でBest Student Paperを受賞しています。"
+    },
+    {
+      "title": "DeepCap: Monocular Human Performance Capture Using Weak Supervision",
+      "award": "Best Paper Honorable Mention",
+      "authors": [
+        "Marc Habermann",
+        "Weipeng Xu",
+        "Michael Zollhoefer",
+        "Gerard Pons-Moll",
+        "Christian Theobalt"
+      ],
+      "url": "https://arxiv.org/abs/2003.08325",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "単眼RGB画像1枚から、人物の骨格ポーズと服を含む密な非剛体表面変形を同時に推定する、学習ベースの人物パフォーマンスキャプチャ手法DeepCapを提案した。学習時は多視点映像による弱教師あり学習のみを用い、3Dの正解アノテーションを必要としない。テスト時は単一視点の画像だけで、時間的に頂点対応の取れた変形テンプレートを得られる。",
+        "novelty": "従来の単眼密キャプチャ（LiveCapなど）は、キーポイント検出後に高コストなテンプレートフィッティングを行うため不安定だったが、本手法はポーズと非剛体変形を1回のフィードフォワードで推定する。PIFuやDeepHumanなどの暗黙表現手法と異なり、メッシュ表現により時間方向の頂点対応を保ち、四肢の欠落も防げる。また3D正解を使わず、微分可能な変形・レンダリング層で多視点の2D情報から学習する点が新しい。",
+        "method": "人物ごとのスキャンテンプレートを骨格と埋め込み変形グラフ（Embedded Deformation Graph）でリギングし、ResNet50ベースの2つのネットワークに分担させる。PoseNetは関節角とカメラ相対回転を回帰し、運動学層とグローバル位置合わせ層（閉形式解）を通して、多視点の2D関節検出に対するスパースキーポイント損失と関節可動域の事前損失で学習する。DefNetはPoseNetの重みを固定したまま、グラフ各ノードの回転と並進を回帰し、変形層とデュアルクォータニオンスキニングで得たメッシュに対し、多視点シルエット損失（距離変換）、グラフ上のキーポイント損失、素材別の重み付きAs-rigid-as-possible損失で学習する。さらに、テスト画像の単一視点でキーポイントとシルエット損失を使って少数回ファインチューニングし、スタジオと実環境のドメインギャップを縮める。",
+        "validation": "4名の被験者で、実環境13シーケンスの定性評価と、キャリブレーション済みスタジオで撮影した4シーケンスの定量評価を行った。被験者S1のポーズ精度は3DPCK 98.43%、MPJPE 49.11mm、GLE 91.08mmで、VNect・HMR・HMMR・LiveCapを上回り、多視点ベースラインMVBL（3DPCK 99.17%、MPJPE 45.44mm）に近い。表面精度ではS1でAMVIoU 87.2%、RVIoU 87.03%と他の単眼手法を上回り、アブレーションでは視点数・フレーム数の増加で精度が向上し、DefNetの追加でPoseNetのみに比べAMVIoUが約4%改善した。順伝播は約50msである。",
+        "discussion": "人物ごとにテンプレートスキャンと多視点スタジオ撮影、学習が必要で、PIFuのように任意の被験者へ汎化する手法よりは汎用性が低い。テスト時にもOpenPoseの2D関節検出と背景除去に依存する。今後は手や顔をメッシュ表現に組み込む拡張や、衣服をより物理的に正しい多層表現でモデル化する方向が挙げられている。",
+        "next": [
+          {
+            "title": "LiveCap: Real-time Human Performance Capture from Monocular Video",
+            "reason": "本論文が直接の比較対象・基盤とする、テンプレートベース単眼密パフォーマンスキャプチャの先行手法であり、剛性重みや損失設計の出自を理解できる。"
+          },
+          {
+            "title": "PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization",
+            "reason": "本論文が対比する暗黙表現ベースの単眼着衣人物再構成の代表例で、メッシュ表現との違いを把握できる。"
+          },
+          {
+            "title": "End-to-end Recovery of Human Shape and Pose",
+            "reason": "パラメトリックモデル（SMPL）を直接回帰する代表手法HMRであり、比較対象としてポーズ推定の基準を理解できる。"
+          }
+        ]
+      },
+      "titleJa": "DeepCap: 弱教師あり学習による単眼人物パフォーマンスキャプチャ",
+      "why": "単眼RGB画像1枚から、骨格ポーズと服を含む密な非剛体表面変形を1回のフィードフォワードで同時に推定する手法を提案した研究である。学習には多視点映像による弱教師ありのみを用い3D正解を必要とせず、メッシュ表現により時間方向の頂点対応も保てる点が注目される。ポーズ精度ではVNectやLiveCapなどの単眼手法を上回り、多視点ベースラインに近い結果を示し、順伝播は約50msである。"
+    },
+    {
+      "title": "Momentum Contrast for Unsupervised Visual Representation Learning",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Kaiming He",
+        "Haoqi Fan",
+        "Yuxin Wu",
+        "Saining Xie",
+        "Ross Girshick"
+      ],
+      "url": "https://arxiv.org/abs/1911.05722",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ラベルなしの画像から視覚表現を学習する教師なし表現学習手法 MoCo (Momentum Contrast) を提案した研究。対照学習を「辞書引き」とみなし、大規模かつ一貫性のある動的辞書をキューとモーメンタム更新エンコーダで構築する。ImageNet 教師あり事前学習に匹敵、あるいは上回る転移性能を、複数の検出・セグメンテーションタスクで示した。",
+        "novelty": "従来の end-to-end 方式は辞書サイズがミニバッチサイズに縛られ、メモリバンク方式は辞書内のキーが過去の異なるエンコーダ由来で一貫性に欠けていた。MoCo はキューで辞書サイズをミニバッチから切り離し、キーエンコーダをクエリエンコーダの移動平均とすることで、大きさと一貫性を両立した。特別なネットワーク設計を要さず標準の ResNet で動作し、10億枚規模の Instagram 画像にも適用できる。",
+        "method": "辞書を現在のミニバッチをエンキューし最古のミニバッチをデキューするキューとして保持し、InfoNCE 損失（温度 0.07）でクエリと正例キーを近づけ、キュー内の負例から遠ざける。キーエンコーダのパラメータは θ_k ← mθ_k + (1−m)θ_q（既定 m=0.999）で更新し、勾配による逆伝播はクエリエンコーダのみに行う。プレテキストタスクは同一画像の 2 つのランダム拡張ビューを正例とするインスタンス識別で、BN による情報漏洩（ズル）を防ぐため Shuffling BN を用いる。",
+        "validation": "ImageNet-1M での線形分類では、ResNet-50 で 60.6%、R50w4× で 68.6% を達成した。アブレーションでは、キューを用いる MoCo がメモリバンクより 2.6% 高く、モーメンタムは m=0.999 で 59.0%、m=0.9 では 55.2%、m=0 では学習が収束しなかった。転移では PASCAL VOC 検出（C4、IG-1B で AP 50 が +0.9、AP が +3.7、AP75 が +4.9）、COCO 検出・インスタンスセグメンテーション（2× スケジュール）、キーポイント検出、DensePose、LVIS、Cityscapes セマンティックセグメンテーションなど 7 タスクで教師あり事前学習を上回った。一方、VOC セマンティックセグメンテーションでは 0.8 ポイント以上下回り、Cityscapes インスタンスセグメンテーションは同等だった。",
+        "discussion": "IN-1M から IG-1B への性能向上は一貫しているものの小幅であり、大規模データを十分に活かし切れていない可能性があり、より高度なプレテキストタスクが期待される。また、MoCo はマスク型オートエンコーディングなど、対照学習を含む他のプレテキストタスクへの適用も今後の方向として挙げられている。VOC セマンティックセグメンテーションで教師あり事前学習に劣るなど、全タスクで優位とは言えない点にも留意が必要である。",
+        "next": [
+          {
+            "title": "Unsupervised Feature Learning via Non-Parametric Instance Discrimination",
+            "reason": "MoCo が採用するインスタンス識別タスクとメモリバンク方式の原典であり、比較対象の仕組みを理解できる。"
+          },
+          {
+            "title": "Representation Learning with Contrastive Predictive Coding",
+            "reason": "InfoNCE 損失の出典であり、MoCo の損失関数の背景を理解するために必要。"
+          },
+          {
+            "title": "Improved Baselines with Momentum Contrastive Learning",
+            "reason": "本文で言及された MoCo v2 で、データ拡張と射影ヘッドの小変更により R50 で 71.1% に向上した拡張版である。"
+          }
+        ]
+      },
+      "titleJa": "教師なし視覚表現学習のためのMomentum Contrast",
+      "why": "ラベルなし画像から視覚表現を学ぶ MoCo を提案した研究で、対照学習を辞書引きとみなし、キューとモーメンタム更新エンコーダにより大きさと一貫性を兼ね備えた辞書を作る点が特徴です。ImageNet での線形分類は ResNet-50 で 60.6%、R50w4× で 68.6% を達成し、検出・セグメンテーションなど7タスクで ImageNet 教師あり事前学習を上回りました。ただし VOC セマンティックセグメンテーションでは下回っており、CVPR 2020 の被引用数上位（Paper Digest の集計で同年1位）という点でも注目されます。"
+    },
+    {
+      "title": "Analyzing and Improving the Image Quality of StyleGAN",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Tero Karras",
+        "Samuli Laine",
+        "Miika Aittala",
+        "Janne Hellsten",
+        "Jaakko Lehtinen",
+        "Timo Aila"
+      ],
+      "url": "https://arxiv.org/abs/1912.04958",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "StyleGANの生成画像に現れる特有のアーティファクト（水滴状のブロブや、progressive growing由来の位置固定的な細部）の原因を分析し、アーキテクチャと学習法を改良したStyleGAN2を提案した研究。画質の向上に加え、生成画像を潜在空間Wへ射影しやすくなり、生成元ネットワークの特定（attribution）も容易になった。",
+        "novelty": "AdaINのインスタンス正規化がブロブ状アーティファクトの原因であることを突き止め、データ依存の正規化を重みの「デモジュレーション」に置き換えた。また、progressive growingを使わずに同等の効果を得るスキップ型生成器と残差型識別器を採用した。さらにPPLに基づく経路長正則化を導入し、FIDやP&Rでは捉えにくい画質の差を改善した。",
+        "method": "スタイルによる変調を畳み込み重みのスケーリングとして実装し、入力が単位分散のi.i.d.であるという仮定のもとで、出力の標準偏差に対応する重みのL2ノルムで割って正規化する（Eq.1〜3）。経路長正則化は、E(‖J_w^T y‖₂ − a)² を最小化してヤコビアンを直交に近づけるもので、aは移動指数平均で動的に設定する。正則化項は16ミニバッチに1回だけ計算する遅延正則化で計算コストを抑える。最高解像度付近の特徴マップ数を2倍にしてネットワークも大型化した。",
+        "validation": "FFHQ（1024×1024）とLSUN Car/Cat/Church/Horseで、FID、Precision/Recall、PPLを用いて評価した。FFHQのFIDはベースラインの4.40から最終構成で2.84に、LSUN CarのFIDは3.27から2.32に改善した。PPLもLSUN Carで1484.5から415.5、LSUN Catで924から439に下がった。生成画像のW空間への射影では、LPIPS距離のヒストグラムからStyleGAN2のほうがほぼ完全に元画像へ再現できることを示した。学習速度はconfig eで37 img/sから61 img/sへ約40%向上した。",
+        "discussion": "経路長正則化は、FFHQより構造の少ないデータセットではFIDとPPLのトレードオフを生む傾向がある（Table 1行d）。さらなる大型化で効果が得られる可能性があるが、未検証である。今後は、PPLのピクセル空間L2距離を特徴空間の距離に置き換える改良や、大量の学習データを必要としない手法の探求が課題として挙げられている。",
+        "next": [
+          {
+            "title": "A Style-Based Generator Architecture for Generative Adversarial Networks",
+            "reason": "本論文が改良対象とするStyleGANの元論文で、マッピングネットワーク・AdaIN・PPLの出発点を理解するために必要。"
+          },
+          {
+            "title": "Progressive Growing of GANs for Improved Quality, Stability, and Variation",
+            "reason": "本論文が見直しの対象とするprogressive growingの原典で、その狙いと代替設計との違いを把握できる。"
+          },
+          {
+            "title": "MSG-GAN: Multi-Scale Gradients for Generative Adversarial Networks",
+            "reason": "本論文のスキップ型生成器の設計の元になったアーキテクチャで、progressive growing不要の構成を比較できる。"
+          }
+        ]
+      },
+      "titleJa": "StyleGANの画質の分析と改良",
+      "why": "StyleGANの生成画像に現れるブロブ状のアーティファクトなどの原因を分析し、AdaINの正規化を重みのデモジュレーションに置き換えるなどの改良でStyleGAN2を提案した研究です。FFHQのFIDを4.40から2.84へ、LSUN CarのFIDを3.27から2.32へ改善し、PPLも大きく下げました。生成画像を潜在空間Wへ射影しやすくなる点も示されており、CVPR 2020で被引用数が同年2位の注目論文です。"
     }
   ],
   "sources": [
@@ -80,6 +223,10 @@
     {
       "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
       "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    },
+    {
+      "title": "Most Influential CVPR Papers 2023-04（Paper Digest・被引用数の集計）",
+      "url": "https://resources.paperdigest.org/2023/04/most-influential-cvpr-papers-2023-04/"
     }
   ],
   "unreachable": [

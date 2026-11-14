@@ -84,6 +84,156 @@
           }
         ]
       }
+    },
+    {
+      "title": "Actively Learning Concepts and Conjunctive Queries under ELr-Ontologies",
+      "award": "Honourable Mention",
+      "authors": [
+        "Maurice Funk",
+        "Jean Christoph Jung",
+        "Carsten Lutz"
+      ],
+      "url": "https://arxiv.org/abs/2105.08326",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "記述論理ELrで書かれたオントロジーの下で、概念（EL概念など）や連言クエリ（CQ）をAngluinの能動学習枠組み（所属性質問と同値性質問）で学習する問題を扱った研究。EL概念、対称性なしELI概念、弦的・対称性なし・アリティ有界なCQが多項式時間で学習可能であることを示した。また、ELIオントロジー下ではEL概念ですら多項式クエリ学習できないことも示した。",
+        "novelty": "オントロジーなしの場合のCQ学習（ten Cate et al.）を、オントロジーの影響を考慮した形に拡張した。有限の「3-compact model」を導入し、無限になりうる普遍モデルの代わりに用いた点が新しい。さらに、ELIオントロジー下ではクラスの包含判定オラクルがあっても多項式クエリ学習が不可能という否定的結果を示し、ExpTime完全性から予想される以上の限界を明らかにした。",
+        "method": "アルゴリズムは、全シンボルを含む最も特殊な仮説q⊥から始め、同値性質問で得た正の反例ABoxと現仮説の3-compact model同士の直積を新仮説とし、refineサブルーチンで対象クラスに戻す。refineはminimize（所属性質問で不要な個体・アサーションを削除）、expand（弦なしサイクルを長さ2倍に拡張）、split（対称性を解消する分割）を繰り返す。アリティ無制限の場合は、3-compact modelの存在的生成部分をアンラベルして有限の初期部分を得る別版のrefineを用い、CQ同値性質問を使う。仮説が常に対象の下近似で、変数数が対象以下という性質により、多項式回の更新で収束する。",
+        "validation": "実験ではなく理論的証明が中心である。Fishmark、LUBM∃、NPDの3つのベンチマークの65クエリを分析し、85%超がCQcsfクラスに入る一方、ELIQsfに入るのは5%未満だった。負の結果として、所属性質問のみでは学習不可能、同値性質問のみではP=NPでない限り多項式時間学習不可能であること、ELIオントロジー下では多項式クエリ学習不可能であることを証明した。",
+        "discussion": "アリティ有界でない場合は、仮説がCQcsfに属する保証がなくLemma 1が使えないため、制限のないCQを許す同値性質問が必要になる。また、refineの実行時間はアリティに対して指数的であり、アリティ有界の仮定が実用上のボトルネックになる。ELIオントロジーへの拡張は否定的結果により閉ざされており、どのクラスやオントロジーなら可能かは今後の課題である。",
+        "next": [
+          {
+            "title": "Learning schema mappings",
+            "reason": "オントロジーなしでのCQの多項式時間能動学習アルゴリズムの基礎であり、本論文のアルゴリズムの出発点になる。"
+          },
+          {
+            "title": "Conjunctive queries: Unique characterizations and exact learnability",
+            "reason": "所属性質問のみによるCQ学習と、少数のデータ例によるCQの特徴づけとの関係を扱っており、本論文の否定的結果と関連する。"
+          },
+          {
+            "title": "Exact learning of lightweight description logic ontologies",
+            "reason": "概念やクエリではなくELオントロジーそのものを能動学習する関連研究で、本論文との対比に有用である。"
+          }
+        ]
+      },
+      "titleJa": "ELrオントロジー下での概念と連言クエリの能動学習",
+      "why": "記述論理ELrのオントロジーの下で、EL概念や対称性なしELI概念、弦的・対称性なし・アリティ有界な連言クエリを、Angluinの能動学習枠組み（所属性質問と同値性質問）で多項式時間に学習できることを示した研究です。無限になりうる普遍モデルの代わりに有限の「3-compact model」を導入した点が新しく、ELIオントロジー下ではEL概念ですら多項式クエリ学習できないという否定的結果も示しています。Fishmark、LUBM∃、NPDの65クエリの分析では85%超が学習可能なCQcsfクラスに入り、IJCAI 2021でHonourable Mentionを受賞しました。"
+    },
+    {
+      "title": "Generalizing to Unseen Domains: A Survey on Domain Generalization",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Jindong Wang",
+        "Cuiling Lan",
+        "Chang Liu",
+        "Yidong Ouyang",
+        "Tao Qin",
+        "Wang Lu",
+        "Yiqiang Chen",
+        "Wenjun Zeng",
+        "Philip S. Yu"
+      ],
+      "url": "https://arxiv.org/abs/2103.03097",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ドメイン一般化（DG：訓練時に見ていない分布のテストドメインへ汎化するモデルの学習）に関する初のサーベイ論文。DGの形式的定義、関連分野との違い、理論、手法の分類、データセット・応用、今後の研究課題を体系的に整理している。",
+        "novelty": "DGを対象とした包括的なレビューとして、理論（ドメイン適応の誤差上界、平均リスク推定誤差上界、DGの汎化誤差上界）を含めて整理した点が新しい。同時期の視覚特化のDGサーベイやOOD汎化（因果・安定学習）中心のサーベイと異なり、手法を3分類（データ操作・表現学習・学習戦略）で網羅し、オープンソースのコードベース DeepDG も提供している。IJCAI-21の短縮版に対し、因果的手法、IRM、勾配操作系手法などを追加し、新規論文を30%超追加している。",
+        "method": "手法を (1) データ操作（データ拡張：ドメインランダム化・敵対的拡張、データ生成：GAN/VAE/Mixup）、(2) 表現学習（ドメイン不変表現：カーネル法・ドメイン敵対学習・明示的特徴整合・IRM、および特徴分離）、(3) 学習戦略（アンサンブル学習、メタ学習、勾配操作、分布的ロバスト最適化、自己教師あり学習）に分類し、代表的アルゴリズムを詳述している。理論面では、Ben-Davidらの H△H-divergence に基づくDA誤差上界、Blanchardらの平均リスク推定誤差上界（ドメイン別データの利用が混合データより有利）、Albuquerqueらの凸包近似に基づくDG誤差上界を紹介し、ドメイン不変表現学習の動機づけとしている。",
+        "validation": "本論文はサーベイであり、提案手法の新規実験による有効性検証が中心ではない。提供された本文の範囲では、データセット紹介や DeepDG による公開データでの結果分析の具体的な数値は確認できない（該当節は中略されている）。例として PACS（スケッチ・漫画・絵画で学習し写真でテスト）が挙げられている。",
+        "discussion": "データ拡張・生成では理論的な裏付けが不十分で、NLPではOODでも自明な構文的ヒューリスティクスに頼る傾向があるとの指摘がある。ドメインランダム化には無駄なランダム化が含まれ、敵対的拡張は最適化が難しい。IRMも内側の最適化が難しいなど各手法に課題があり、3分類は相補的で組み合わせ可能とされる。今後の研究課題は最終節で整理されているが、提供本文には含まれていない。",
+        "next": [
+          {
+            "title": "Domain Generalization via Invariant Feature Representation",
+            "reason": "カーネルによるドメイン不変表現の古典的手法 DICA を提案しており、表現学習系DGの出発点を理解できるため。"
+          },
+          {
+            "title": "Invariant Risk Minimization",
+            "reason": "分布の整合ではなく全ドメインで共通の最適分類器を課す因果的視点のDGを提案した重要論文であるため。"
+          },
+          {
+            "title": "Domain generalization in vision: A survey",
+            "reason": "本サーベイと同時期に書かれた、コンピュータビジョンに特化したDGサーベイで、視覚分野の手法を補完的に把握できるため。"
+          }
+        ]
+      },
+      "titleJa": "未知のドメインへの汎化：ドメイン一般化に関するサーベイ",
+      "why": "訓練時に見ていない分布のテストドメインへ汎化するモデルを学ぶ「ドメイン一般化（DG）」について、形式的定義、関連分野との違い、理論、手法、データセット・応用、今後の課題を体系的に整理した初のサーベイです。ドメイン適応の誤差上界やDGの汎化誤差上界といった理論も含め、手法をデータ操作・表現学習・学習戦略の3分類で網羅し、オープンソースのコードベース DeepDG も提供しています。IJCAI 2021 の論文の中で被引用数が同年1位（Paper Digest の集計）である点からも、この分野の基礎的な参照文献として注目されています。"
+    },
+    {
+      "title": "Time Series Data Augmentation for Deep Learning: A Survey",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Qingsong Wen",
+        "Liang Sun",
+        "Fan Yang",
+        "Xiaomin Song",
+        "Jingkun Gao",
+        "Xue Wang",
+        "Huan Xu"
+      ],
+      "url": "https://arxiv.org/abs/2002.12478",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "深層学習を時系列データに適用する際のラベル付きデータ不足を補うため、時系列データ拡張手法を体系的に整理したサーベイ論文。手法を時間・周波数・時間周波数領域の基本手法と、分解ベース・統計的生成モデル・学習ベースの発展手法に分類するタクソノミーを提案している。分類・異常検知・予測の3タスクで予備的な比較実験も行い、5つの今後の研究方向を示している。",
+        "novelty": "既存のサーベイ(Iwana and Uchida, 2020)は時系列分類に限られていたが、本論文は予測や異常検知も含む複数タスクを対象にしている。画像・音声の拡張手法を単純に流用するのではなく、時系列固有の性質(時間依存性、周波数領域での変換など)に着目して整理している点が特徴である。さらに、今後の研究機会を具体的に提示している。",
+        "method": "基本手法は、時間領域(ウィンドウクロッピング、ワーピング、反転、ノイズ注入、異常検知向けのラベル拡張)、周波数領域(振幅・位相の摂動APP、AAFT/IAAFTによるサロゲートデータ)、時間周波数領域(STFT特徴の平均化やシャッフル、SpecAugment)に分類している。発展手法は、STL等の分解後に残差をブートストラップする方法、混合ガウス木やMARなどの統計的生成モデル、埋め込み空間での補間・外挿、GAN(RGAN/RCGAN、TimeGAN)、AutoAugmentやMODALSなどの自動データ拡張に整理している。",
+        "validation": "Alibaba Cloudの監視データ5000系列(季節性の有無の2値分類)で完全畳み込みネットワークを学習し、外れ値(スパイク、ステップ、スロープ)を注入したテストセットでは、拡張により精度が0.1%〜1.9%向上した。異常検知ではYahoo!データセットでU-Netを評価し、F1は生データの0.403、分解残差のみで0.662、拡張ありで0.693となった(Gao et al. 2020の結果の要約)。予測ではDeepARとTransformerをM4等の5データセットで評価し、平均的には改善したが、trafficなど特定のデータ・モデルの組合せでは悪化した。",
+        "discussion": "予測タスクでは拡張が逆効果になる組合せもあり、効果を安定させる自動的な拡張ポリシー探索が課題である。今後の方向として、ウェーブレット変換を用いた時間周波数領域の拡張、不均衡クラスへの対応(拡張と重み付けの併用)、拡張手法の選択・組合せ、ガウス過程による拡張、GAN以外の深層生成モデル(DARN、正規化フロー、VAE)の活用を挙げている。",
+        "next": [
+          {
+            "title": "Time-series generative adversarial networks (TimeGAN)",
+            "reason": "時系列向けGANの代表的手法であり、深層生成モデルによる拡張の中心的な手法を詳しく理解できる。"
+          },
+          {
+            "title": "MODALS: Modality-agnostic automated data augmentation in the latent space",
+            "reason": "時系列を含む複数モダリティで潜在空間の拡張を自動探索する手法で、拡張の選択・組合せの課題に直結する。"
+          },
+          {
+            "title": "An empirical survey of data augmentation for time series classification with neural networks",
+            "reason": "時系列分類に特化した関連サーベイで、本論文の内容を実験面から補完できる。"
+          }
+        ]
+      },
+      "titleJa": "深層学習のための時系列データ拡張：サーベイ",
+      "why": "ラベル付きデータが不足しがちな時系列に深層学習を適用するため、データ拡張手法を時間・周波数・時間周波数領域の基本手法と、分解ベース・統計的生成モデル・学習ベースの発展手法に分類して体系化したサーベイです。先行サーベイが時系列分類に限られていたのに対し、予測や異常検知も対象に含め、分類・異常検知・予測での予備実験と5つの今後の研究方向も示しています。IJCAI 2021 の論文のうち、Paper Digest の集計で同年被引用数2位という点でも注目されます。"
+    },
+    {
+      "title": "Time-Series Representation Learning via Temporal and Contextual Contrasting",
+      "selection": "被引用数上位（Paper Digest の集計で同年3位）",
+      "authors": [
+        "Emadeldeen Eldele",
+        "Mohamed Ragab",
+        "Zhenghua Chen",
+        "Min Wu",
+        "Chee Keong Kwoh",
+        "Xiaoli Li",
+        "Cuntai Guan"
+      ],
+      "url": "https://arxiv.org/abs/2106.14112",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ラベルのない時系列データから表現を学習する教師なしフレームワーク TS-TCC（Temporal and Contextual Contrasting）を提案した研究。学習した特徴の上で線形分類器を訓練するだけで、教師あり学習に匹敵する性能を示し、少量ラベルや転移学習の場面でも有効であることを示した。",
+        "novelty": "画像向けの対照学習は時間依存性を扱えず、既存の時系列向け手法も特定用途（EEG・ECGなど）に限られていた。本研究は、弱い拡張と強い拡張で異なる2つのビューを作り、一方の過去からもう一方の未来を予測するクロスビュー予測（temporal contrasting）を導入した。さらにコンテキスト同士を対照する contextual contrasting を加え、識別的な表現を得る点が新しい。",
+        "method": "入力に弱拡張（jitter-and-scale）と強拡張（permutation-and-jitter）を適用し、3ブロックの畳み込みエンコーダで潜在表現を得る。Temporal contrasting では Transformer を自己回帰モデルとして使い、一方のビューのコンテキストベクトルからもう一方のビューの将来の潜在表現を予測する対照損失で学習する。Contextual contrasting では、射影ヘッドを通した2N個のコンテキストについて、同一サンプルの2ビューを正例、他サンプルを負例とする NT-Xent 型の損失を用いる。全体の損失は両者の重み付き和（λ1=1, λ2=0.7）である。",
+        "validation": "HAR、Sleep-EDF、Epilepsy の3データセットで線形評価を行い、SSL-ECG、CPC、SimCLR を上回った。HAR では ACC 90.37 で教師あり（90.14）と同等以上、Epilepsy では 97.23 で教師あり（96.66）を上回り、Sleep-EDF では 83.00 で教師あり（83.41）と同程度だった。ラベル10%のファインチューニングで、全ラベルの教師あり学習に近い性能を達成した。故障診断データでの12通りのドメイン間転移では 8 つで教師ありを上回り、平均精度は約4%向上した（63.83→67.82）。アブレーションでは、クロスビュー予測、contextual contrasting、2種類の拡張の併用がそれぞれ有効であることが示された。",
+        "discussion": "拡張のハイパーパラメータ（permutation の最大分割数 M やジッタ比率など）はデータの性質に応じて慎重に選ぶ必要がある。また、予測する将来ステップ数 K や λ2 に対する感度もあり、調整が必要である。評価は主に3データセットと1つの転移設定に限られており、他の時系列ドメインへの一般化は本文では検証されていない。転移学習でも4つのシナリオでは教師ありに劣っている。",
+        "next": [
+          {
+            "title": "Representation Learning with Contrastive Predictive Coding",
+            "reason": "TS-TCC の temporal contrasting の土台となる、潜在空間での未来予測による対照学習の原点であり、主要ベースラインでもあるため。"
+          },
+          {
+            "title": "A Simple Framework for Contrastive Learning of Visual Representations",
+            "reason": "contextual contrasting の損失や射影ヘッド、データ拡張の重要性の元になった SimCLR を理解できるため。"
+          },
+          {
+            "title": "Unsupervised Scalable Representation Learning for Multivariate Time Series",
+            "reason": "時間依存性を考慮した時系列向けの教師なし表現学習の先行研究であり、TS-TCC との違いを比較できるため。"
+          }
+        ]
+      },
+      "titleJa": "時間的コントラストと文脈コントラストによる時系列表現学習",
+      "why": "ラベルのない時系列から表現を学ぶ教師なしフレームワーク TS-TCC を提案した研究で、弱い拡張と強い拡張の2ビュー間で過去から未来を予測する temporal contrasting と、contextual contrasting を組み合わせている。学習した特徴に線形分類器を載せるだけで、HAR や Epilepsy では教師あり学習と同等以上の精度を示し、ラベル10%のファインチューニングや故障診断データでのドメイン間転移でも有効だった。IJCAI 2021 で被引用数上位（Paper Digest 集計で同年3位）に入った点も注目される。"
     }
   ],
   "sources": [
@@ -102,6 +252,10 @@
     {
       "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
       "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    },
+    {
+      "title": "Most Influential IJCAI Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-ijcai-papers-2026-03-version/"
     }
   ],
   "unreachable": [

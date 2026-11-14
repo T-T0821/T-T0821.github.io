@@ -88,6 +88,149 @@
           }
         ]
       }
+    },
+    {
+      "title": "Pixel-Perfect Structure-from-Motion with Featuremetric Refinement",
+      "award": "Best Student Paper",
+      "authors": [
+        "Philipp Lindenberger",
+        "Paul-Edouard Sarlin",
+        "Viktor Larsson",
+        "Marc Pollefeys"
+      ],
+      "url": "https://arxiv.org/abs/2108.08291",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "SfMの2つの段階（幾何推定前のキーポイント位置調整と、再構成後の3D点・カメラ姿勢の精緻化）を、CNNが出力する密な特徴マップ上での直接アライメント（featuremetric最適化）で改善する手法を提案した研究。様々なキーポイント検出器や難しい撮影条件でカメラ姿勢と3D構造の精度を高め、数千枚規模の画像にも拡張できる。コードはCOLMAPのアドオンとして公開されている。",
+        "novelty": "従来のBAや、Dusmanuらのパッチフロー回帰によるキーポイント調整は幾何的観測に基づくため、検出ノイズを平均化するのに多数の観測が必要で精度に限界があった。本研究はキーポイント調整とバンドル調整の両方を、同一の密な特徴に基づくfeaturemetricコストに統一した。PixLocが単一画像の姿勢精緻化にとどまるのに対し、複数画像・大規模シーンへ拡張し、タスク特化の特徴でなく既成の特徴でも高精度な精緻化ができることを示した。",
+        "method": "キーポイント調整ではマッチングで得た仮のトラック（track separationで誤マッチを除去）内の全ペアについて、密特徴マップ間の差をロバスト損失（Cauchy）で最小化する。ドリフトを抑えるため最多接続のキーポイントを固定し、初期検出からの移動量をK=8ピクセル以内に制限する。バンドル調整ではトラックごとにロバスト平均に最も近い観測を参照特徴として固定し、特徴誤差を最小化して姿勢と3D点を更新する。これにより残差数をO(N²)からO(N)に減らし、Schur補数と埋め込み点反復を用いる。特徴抽出にはS2DNetを使い、16×16パッチ保存、特徴距離マップの事前計算と空間微分の保存で残差サイズをDから3に削減してメモリを抑える。最適化はCeres上のLevenberg-Marquardt法で解く。",
+        "validation": "ETH3Dの3D三角測量では、SIFT・SuperPoint・D2-Net・R2D2のすべてで未精緻化およびPatch Flowより高精度で、特に1cm閾値で差が大きかった（例：SuperPointの屋内1cm精度は75.76→89.33%）。カメラ姿勢推定ではSuperPointの1mm AUCが15.38→40.00%に向上した。Image Matching Challenge 2020のエンドツーエンドSfMでもステレオ・マルチビュー双方でSuperPoint+SuperGlue、SIFT、D2-Netの姿勢精度が改善し、画像が少ないほど効果が大きかった。Aachen Day-Nightでの実行時間はPatch Flowより約10倍以上高速で、7k枚のモデルを2時間未満で精緻化できた。",
+        "discussion": "128次元の高次元特徴によるメモリ消費がボトルネックであり、著者らは精緻化に必要な次元数は少ないと考え、コンパクトな特徴抽出器の再学習が効率化につながると述べている。また本手法はキーポイントの位置精度に焦点を当てており、Patch Flowのように受容野の大きさによる再現性向上までは解決しない（大きな閾値では完全性でPatch Flowが上回る場合がある）。入力解像度に精度が依存し、1600px未満では精度が大きく低下するほか、解像度を上げると抽出時間とVRAM消費が増える。",
+        "next": [
+          {
+            "title": "Multi-View Optimization of Local Feature Geometry",
+            "reason": "本研究が直接の比較対象とするPatch Flowによるキーポイント調整の元論文で、改良点を理解する上で必須である。"
+          },
+          {
+            "title": "Back to the Feature: Learning robust camera localization from pixels to pose",
+            "reason": "PixLocは特徴量空間での直接アライメントによる姿勢精緻化の先行研究で、本手法の位置づけと違いを把握できる。"
+          },
+          {
+            "title": "S2DNet: Learning accurate correspondences for sparse-to-dense feature matching",
+            "reason": "本手法が密特徴抽出に採用しているネットワークで、特徴の性質や選択理由を理解するのに役立つ。"
+          }
+        ]
+      },
+      "titleJa": "featuremetric refinementによるピクセル精度のStructure-from-Motion",
+      "why": "SfMのキーポイント位置調整と、再構成後の3D点・カメラ姿勢の精緻化という2段階を、CNNの密な特徴マップに基づく同一のfeaturemetricコストで統一的に改善した研究です。既成の特徴でも様々なキーポイント検出器や難しい撮影条件で精度が向上し、ETH3DやImage Matching Challenge 2020で未精緻化やPatch Flowを上回り、Patch Flowより約10倍以上高速で7k枚のモデルを2時間未満で精緻化できる点が注目されます。コードはCOLMAPのアドオンとして公開され、ICCV 2021のBest Student Paperに選ばれました。"
+    },
+    {
+      "title": "Mip-NeRF: A Multiscale Representation for Anti-Aliasing Neural Radiance Fields",
+      "award": "Best Paper Honorable Mention",
+      "authors": [
+        "Jonathan T. Barron",
+        "Ben Mildenhall",
+        "Matthew Tancik",
+        "Peter Hedman",
+        "Ricardo Martin-Brualla",
+        "Pratul P. Srinivasan"
+      ],
+      "url": "https://arxiv.org/abs/2103.13415",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "NeRFは1画素1本のレイでシーンをサンプリングするため、解像度の異なる画像を扱うと近接でボケ、遠方でエイリアシングが生じる。本研究は、レイの代わりに円錐台（conical frustum）を扱い、連続的なスケールでシーンを表現するmip-NeRFを提案する。単一スケール・マルチスケールの両方で精度を向上させつつ、モデルサイズの削減と高速化も実現している。",
+        "novelty": "コンピュータグラフィックスのmipmap的なプリフィルタリングの考えをNeRFに持ち込み、離散的な複数スケールではなく単一のMLPで連続スケールを表現する点が新しい。従来の唯一のアンチエイリアス手段であるスーパーサンプリング（画素あたり複数レイ）は計算コストが非現実的だったが、mip-NeRFはこれを避けられる。またスケールを明示的に入力できるため、NeRFのcoarse/fine 2つのMLPを1つに統合できる。",
+        "method": "各画素からレイではなく円錐を飛ばし、それを区間ごとの円錐台に分割する。各円錐台を平均と共分散を持つ多変量ガウス分布で近似し、位置エンコーディング（PE）の期待値を閉形式で求める積分位置エンコーディング（IPE）を特徴量とする。IPEは区間幅より周期が短い高周波成分を0に近づけ、区間内で一定な周波数を保つため、体積の大きさと形状が暗黙的に符号化されたアンチエイリアス済みの特徴になる。共分散は対角成分のみ直接計算するのでPEとほぼ同じコストで済む。単一MLPを階層サンプリングで繰り返し呼び出し（粗128・細128サンプル）、coarse損失をλ=0.1で重み付けして学習する。",
+        "validation": "NeRFのBlenderデータセットと、画像を1/2・1/4・1/8に縮小して混ぜたマルチスケール版Blenderで、PSNR・SSIM・LPIPSおよびそれらの平均指標を用いて評価した。NeRFに対し平均誤差をマルチスケール版で60%、単一スケール版で約17%削減し、約7%高速でパラメータ数は612K（NeRFは1,191K）と約半分である。アブレーションではIPEを外すと中心画素補正済みNeRFの水準まで性能が落ち、円錐追跡とIPEが主要因と示された。また、スーパーサンプリングしたNeRFに対し、精度が同等で約22倍高速であった（Table 3）。",
+        "discussion": "スーパーサンプリングとの比較用ベースラインは低解像度画像を手動で除外する有利な条件であり、実データではどの画像がどのスケールかを事前に知るのは通常難しいと本文で述べられている。マルチスケール評価は元のBlenderを縮小した合成データが中心で、実世界の多様なスケール変動での検証は本文からは確認できない。mip-NeRFにスーパーサンプリングを加えるとさらに精度が少し上がることも示されている。",
+        "next": [
+          {
+            "title": "NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis",
+            "reason": "mip-NeRFが直接拡張するベースであり、ボリュームレンダリングと位置エンコーディングの前提を理解するために必須である。"
+          },
+          {
+            "title": "Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains",
+            "reason": "PEをフーリエ特徴として捉える理論的背景で、IPEの導出の理解に役立つ。"
+          },
+          {
+            "title": "Neural Geometric Level of Detail: Real-time Rendering with Implicit 3D Shapes",
+            "reason": "連続的なニューラル表現でマルチスケール化を行う関連研究で、既知ジオメトリを前提とする点でmip-NeRFと比較できる。"
+          }
+        ]
+      },
+      "titleJa": "Mip-NeRF: アンチエイリアシングされたニューラル放射輝度場のためのマルチスケール表現",
+      "why": "NeRFがレイで画素をサンプリングするために生じる、近接でのボケや遠方でのエイリアシングに対し、レイの代わりに円錐台を扱い、単一のMLPで連続的なスケールを表現するmip-NeRFを提案した研究です。Blenderデータセットで平均誤差をマルチスケール版で60%、単一スケール版で約17%削減しつつ、パラメータ数は約半分、速度は約7%向上しています。さらにスーパーサンプリングしたNeRFと同等の精度を約22倍高速に達成しており、ICCV 2021でBest Paper Honorable Mentionを受賞しました。"
+    },
+    {
+      "title": "OpenGAN: Open-Set Recognition via Open Data Generation",
+      "award": "Best Paper Honorable Mention",
+      "authors": [
+        "Shu Kong",
+        "Deva Ramanan"
+      ],
+      "url": "https://arxiv.org/abs/2104.02939",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "K クラス分類において、学習時に見ていないオープンセットのデータ（(K+1)番目の「その他」）を識別するオープンセット認識の手法 OpenGAN を提案した研究。既存の K-way ネットワークの上に軽量な識別器ヘッドを載せるだけで、閉世界システムをオープンセット対応にできる。画像分類とピクセル単位のセマンティックセグメンテーションの両方で評価している。",
+        "novelty": "従来は、外れ値を使う open-vs-closed 二値識別器（Outlier Exposure）が学習時の外れ値に過学習して汎化しにくく、GAN 識別器を尤度関数に使う方法は学習が不安定で性能が出ないとされていた。本研究は、実外れ値の検証セットによる識別器のモデル選択、生成した偽のオープンデータによる学習データの拡張、画素ではなく既存 K-way ネットワークの特徴量上での GAN 学習、という3点を組み合わせた。再構成誤差ではなく識別器を直接オープンセット尤度として使い、それが最先端性能を出せることを示した点も新しい。",
+        "method": "Eq. 2 の minimax 最適化で、識別器 D が閉集合データを 1、実オープンデータ（重み λo）と生成器 G が作った偽データ（重み λG）を 0 と分類するよう学習し、G は D を欺くよう学習する。λo=0 とすると外れ値なしで通常の GAN 学習となり、これを OpenGAN-0 と呼ぶ。敵対的学習が進むと D が閉集合と偽データを区別できなくなるため、実外れ値の検証セットで open-vs-closed 精度が最良の D のチェックポイントを選ぶ。D と G は、K-way ネットワーク（分類では ResNet18、セグメンテーションでは HRNet）のペnultimate 層の特徴量上に作る MLP（各約2MB）である。",
+        "validation": "Setup-I（MNIST/SVHN/CIFAR/TinyImageNet のクラス分割）では AUROC で評価し、OpenGAN-0 fea が MNIST .999、SVHN .988、CIFAR .973、TinyImageNet .907 と、比較手法を上回った。Setup-II（TinyImageNet を閉集合、CIFAR/SVHN/MNIST/Cityscapes を開集合とするクロスデータセット）では平均 AUROC が OpenGAN fea で .984、CLS fea で .918、MSP で .754 だった。Setup-III（Cityscapes のセグメンテーション）では OpenGAN fea が AUROC .885 で、CLS fea の .861 などを上回った。BiGAN でも、特徴量上で学習し識別器を使う方が、画素上や再構成誤差を使う場合より良かった。",
+        "discussion": "著者は失敗モードとして、学習に使う開集合データがテスト時のものと大きく異なると、実世界で性能が落ちうることを挙げている。また、モデル選択に実外れ値の検証セットが必要で、特徴量の質は下地の K-way ネットワークに依存する。セグメンテーションでは、誤って開／閉を判定する画素で失敗が起きることも確認されている。",
+        "next": [
+          {
+            "title": "Deep Anomaly Detection with Outlier Exposure",
+            "reason": "OpenGAN が拡張・比較対象とする、外れ値を学習に使う二値識別器の基礎となる論文であるため。"
+          },
+          {
+            "title": "A Less Biased Evaluation of Out-of-Distribution Sample Detectors",
+            "reason": "Setup-II のクロスデータセット評価プロトコルの出典で、外れ値への過学習の問題を扱っているため。"
+          },
+          {
+            "title": "C2AE: Class Conditioned Auto-Encoder for Open-Set Recognition",
+            "reason": "再構成誤差に基づく代表的なオープンセット認識手法で、OpenGAN の「識別器を直接使う」方針との対比が理解できるため。"
+          }
+        ]
+      },
+      "titleJa": "OpenGAN: オープンデータ生成によるオープンセット認識",
+      "why": "学習時に見ていない「その他」のデータを識別するオープンセット認識に対し、既存の K-way ネットワークの特徴量上で GAN を学習し、生成した偽のオープンデータと実外れ値の検証セットによるモデル選択を組み合わせた OpenGAN を提案した研究です。再構成誤差ではなく識別器を直接オープンセット尤度として使い、軽量なヘッドを載せるだけで閉世界システムをオープンセット対応にできる点が特徴です。画像分類とセマンティックセグメンテーションの各設定で比較手法を上回る AUROC を示しており、ICCV 2021 の Best Paper Honorable Mention に選ばれたことからも注目されます。"
+    },
+    {
+      "title": "Emerging Properties in Self-Supervised Vision Transformers",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Mathilde Caron",
+        "Hugo Touvron",
+        "Ishan Misra",
+        "Hervé Jégou",
+        "Julien Mairal",
+        "Piotr Bojanowski",
+        "Armand Joulin"
+      ],
+      "url": "https://arxiv.org/abs/2104.14294",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ラベルなしの自己教師あり学習をVision Transformer（ViT）に適用し、教師あり学習や畳み込みネットワークでは明確に現れない性質が出現するかを調べた研究。その知見を、ラベルなし自己蒸留として解釈できるシンプルな手法DINOにまとめた。ViT-Baseで ImageNet線形評価80.1% top-1を達成した。",
+        "novelty": "自己教師あり学習済みViTの特徴に、物体境界などシーンレイアウト（セグメンテーション情報）が最終層の自己注意に明示的に現れること、およびfine-tuningなしのk-NNでも高精度（小型ViTで78.3%）になることを示した。DINOはBYOLに着想を得つつ、予測器・コントラスト損失・Sinkhorn-Knoppなどの追加要素なしに、教師出力のcenteringとsharpeningだけで崩壊を防ぐ。さらに生徒と教師が全く同じ構造で、BN不要のシステムになっている。",
+        "method": "生徒ネットワークと教師ネットワークは同一構造（バックボーン＋3層MLPと重み正規化層のプロジェクションヘッド）で、教師は生徒パラメータの指数移動平均（モメンタムエンコーダ、λは0.996から1へのコサインスケジュール）で更新する。マルチクロップにより、教師には2つのグローバルビューのみ、生徒には全ビュー（グローバル＋複数のローカルビュー）を入力し、教師出力のソフトマックス分布を生徒が交差エントロピーで予測する（local-to-global対応）。教師出力のcentering（バッチ平均のEMAを引く）と低温度でのsharpeningを組み合わせ、一つの次元が支配する崩壊と一様分布への崩壊を相互に打ち消して防ぐ。",
+        "validation": "ImageNetで、ResNet-50ではSOTAと同等（線形75.3%）、ViT-Sでは線形77.0%・k-NN 74.5%となり、BYOL・MoCov2・SwAVを線形で+3.5%、k-NNで+7.9%上回った。ViT-B/8では線形80.1%、k-NN 77.4%を達成した。また画像検索（Oxford/Paris）、コピー検出（Copydays）、DAVIS 2017動画セグメンテーション、PASCAL VOC12での注意マスクのJaccard類似度（教師あり比で明確に高い）、および転移学習（CIFAR、iNaturalist、Flowers、Carsなど）で有効性を確認した。アブレーションでは、モメンタム・マルチクロップ・交差エントロピー・小パッチの重要性が示された。",
+        "discussion": "パッチサイズを小さくすると（/8や/5）性能は大きく向上するが、スループットが低下しメモリ使用量も増えるという計算コストのトレードオフがある。モメンタム教師が生徒を常に上回る理由はPolyak-Ruppert平均によるアンサンブルとして解釈されているものの、理論的な裏付けは限定的で、前エポックの教師など代替の教師設計の余地も残されている。今後は、キュレーションされていない大規模画像でのDINO事前学習や、弱教師ありセグメンテーションへの応用が展望として挙げられている。",
+        "next": [
+          {
+            "title": "Bootstrap your own latent: A new approach to self-supervised learning (BYOL)",
+            "reason": "DINOが着想を得たモメンタム教師とラベルなし自己蒸留の枠組みの原型であり、予測器やBN依存の違いを理解するのに役立つ。"
+          },
+          {
+            "title": "Unsupervised learning of visual features by contrasting cluster assignments (SwAV)",
+            "reason": "DINOが採用するマルチクロップ戦略とプロジェクションヘッド設計の出典で、比較対象としても使われている。"
+          },
+          {
+            "title": "Training data-efficient image transformers & distillation through attention (DeiT)",
+            "reason": "DINOが実装のベースにしているViTの学習レシピであり、教師あり ViT との比較基準にもなっている。"
+          }
+        ]
+      },
+      "titleJa": "自己教師あり Vision Transformer に現れる創発的な性質",
+      "why": "ラベルなしの自己教師あり学習を Vision Transformer に適用し、物体境界などのシーンレイアウトが最終層の自己注意に明示的に現れることや、fine-tuningなしの k-NN でも高精度になることを示した研究です。この知見を、予測器やコントラスト損失を使わず教師出力の centering と sharpening だけで崩壊を防ぐシンプルな手法 DINO にまとめ、ViT-Base で ImageNet 線形評価 80.1% top-1 を達成しました。被引用数が同年2位と高く、自己教師あり ViT の有効性を示した点で注目されています。"
     }
   ],
   "sources": [
@@ -102,6 +245,10 @@
     {
       "title": "ICCV 2021 Paper Awards（公式）",
       "url": "https://iccv2021.thecvf.com/node/206"
+    },
+    {
+      "title": "Most Influential ICCV Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-iccv-papers-2026-03-version/"
     }
   ],
   "unreachable": [

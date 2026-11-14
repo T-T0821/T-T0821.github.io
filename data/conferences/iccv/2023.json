@@ -71,6 +71,111 @@
           }
         ]
       }
+    },
+    {
+      "title": "Tracking Everything Everywhere All at Once",
+      "award": "Best Student Paper",
+      "authors": [
+        "Qianqian Wang",
+        "Yen-Yu Chang",
+        "Ruojin Cai",
+        "Zhengqi Li",
+        "Bharath Hariharan",
+        "Aleksander Holynski",
+        "Noah Snavely"
+      ],
+      "url": "https://arxiv.org/abs/2306.05422",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "動画全体の全ピクセルについて、オクルージョン（遮蔽）をまたぐ長距離かつ密なモーショントラジェクトリを推定するテスト時最適化手法を提案した研究。準3D正準ボリューム表現「OmniMotion」により、動画全体で大域的に整合した全長の動き推定を実現する。",
+        "novelty": "従来のオプティカルフローや粒子ビデオ追跡は限られた時間窓内でしか動作せず、誤差の蓄積やオクルージョン時の追跡喪失、大域的な整合性の欠如が課題だった。本手法は各フレームのローカル3Dボリュームと正準ボリュームを可逆な双射で結ぶことで、サイクル整合性を保証しつつ、カメラ運動とシーン運動を分離せずに任意の組み合わせを扱い、遮蔽中も追跡できる点が新しい。",
+        "method": "正準3DボリュームGにNeRF風の座標MLP（GaborNet）で密度と色を持たせ、各フレームのローカル空間との写像をフレーム潜在コード条件付きのReal-NVP（アフィンカップリング層6層）による可逆ネットワークで表現する。クエリ画素から光線上にK=32点をサンプルし、双射で対象フレームへ写してアルファ合成し、直交カメラで射影して対応点を得る。RAFTやTAP-Netの全ペアワイズ対応をサイクル整合性・外観整合性でフィルタして教師とし、フロー損失・光度損失・3D加速度正則化で最適化し、誤差の大きい領域を多くサンプルするハードマイニングで動的領域の偏りを補正する。",
+        "validation": "TAP-Vidのベンチマーク（DAVIS、Kinetics（100本の部分集合）、RGB-Stacking）で、AJ、位置精度<δavg、オクルージョン精度OA、新規の時間的一貫性TCを用いてRAFT、PIPs、TAP-Net、Flow-Walk、Deformable Spritesと比較した。RAFT入力版はDAVISでAJ 51.7、<δavg 67.5、OA 85.3、TC 0.74を達成し、TAP-Net入力版も含め入力手法を一貫して改善し、ほとんどの指標で最良だった。アブレーションでは可逆写像を外すとAJが12.5まで低下し、光度損失やハードマイニングの除去でも性能が下がった。",
+        "discussion": "急速で非剛体な動きや細い構造では入力の対応が不足して精度が落ち、非凸最適化のため初期値に敏感で、表面順序の誤りや正準空間での物体の重複といった局所解に陥ることがある。全ペアのフロー計算が系列長に対して二乗で増え、ニューラル暗黙表現ゆえ最適化も長いため計算コストが高く、キーフレームベースのマッチングや高速な表現による効率化が今後の課題として挙げられている。",
+        "next": [
+          {
+            "title": "TAP-Vid: A Benchmark for Tracking Any Point in a Video",
+            "reason": "本論文の評価に用いられたベンチマークと指標（AJ、<δavg、OA）の定義を理解するために必要である。"
+          },
+          {
+            "title": "Particle Video Revisited: Tracking through Occlusions using Point Trajectories (PIPs)",
+            "reason": "遮蔽をまたぐ点追跡の代表的な比較手法で、本手法との時間窓や連鎖の限界の違いを把握できる。"
+          },
+          {
+            "title": "RAFT: Recurrent All-Pairs Field Transforms for Optical Flow",
+            "reason": "本手法の主な入力対応を生成する最先端のオプティカルフロー手法であり、教師信号の性質を理解できる。"
+          }
+        ]
+      },
+      "titleJa": "あらゆるものを、あらゆる場所で、一度に追跡する",
+      "why": "動画内の全ピクセルについて、オクルージョンをまたぐ長距離かつ密なモーショントラジェクトリを推定するテスト時最適化手法を提案した研究です。準3D正準ボリューム表現「OmniMotion」と可逆な双射によってサイクル整合性を保ち、カメラ運動とシーン運動を分離せずに、遮蔽中も追跡できる点が特徴です。TAP-Vidベンチマークで入力手法を一貫して改善し、ほとんどの指標で最良の結果を示したことから、ICCV 2023のBest Student Paperに選ばれました。"
+    },
+    {
+      "title": "Adding Conditional Control to Text-to-Image Diffusion Models",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Lvmin Zhang",
+        "Anyi Rao",
+        "Maneesh Agrawala"
+      ],
+      "url": "https://arxiv.org/abs/2302.05543",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "Stable Diffusionのような大規模な事前学習済みテキスト画像拡散モデルに、エッジ・深度・姿勢・セグメンテーションなどの空間的な条件画像による制御を追加するニューラルネットワーク構造「ControlNet」を提案した研究。元モデルを壊さずに少量データで多様な条件制御を学習でき、単一条件・複数条件、プロンプトの有無を問わず利用できる。",
+        "novelty": "元モデルのパラメータを固定（ロック）したまま、そのエンコード層の学習可能なコピーを作り、重みとバイアスをゼロ初期化した1×1畳み込み（zero convolution）で接続する点が新しい。これにより学習開始時に有害なノイズが入らず、事前学習済みバックボーンが保護される。HyperNetwork、Adapter、Side-Tuning、LoRAなど従来のファインチューニング手法と異なり、深く頑健なエンコーダを条件学習に再利用できる。",
+        "method": "任意のニューラルブロックに対し、元ブロックを固定し、学習可能なコピーに条件ベクトルを入力して、2つのzero convolutionで元の出力に加算する（y_c = F(x) + Z(F(x + Z(c)))）。Stable Diffusionでは、U-Netの12個のエンコーダブロックと中間ブロックをコピーし、出力を12本のスキップ接続と中間ブロックに加える。512×512の条件画像は4層の小さな畳み込みネットワークで64×64の特徴に変換する。学習時はテキストプロンプトの50%を空文字列に置き換え、推論時は解像度に応じて接続に重み（w_i=64/h_i）をかけるCFG Resolution Weightingを用いる。複数の条件はControlNetの出力を直接足し合わせて合成する。",
+        "validation": "20枚の未見スケッチに対する12人のユーザー評価では、ControlNetが画質4.22、条件忠実度4.28（5段階ランキング）で、PITIやSketch-Guided Diffusionを上回った。ADE20Kのセグメンテーション条件では、FIDが15.27（PITI 19.74、ControlNet-lite 17.92）、再構成IoUが0.35（PITI 0.26）だった。深度条件では、200kサンプル・RTX 3090Ti 1枚・5日間の学習で、12M枚超・A100クラスタで学習したSDv2 Depth-to-Imageとほぼ区別がつかず（ユーザーの正答率0.52±0.17）、1k枚の小規模データでも学習が崩壊しないことを確認した。アブレーションでは、zero convolutionを通常の畳み込みに置換するか、学習可能コピーを単一の畳み込み層に置換すると性能が大きく低下した。",
+        "discussion": "本文では限界が明示的に論じられておらず、U-Net構造を持つ他のモデルにも適用できる可能性や、より広範な条件への展開が今後の展望として示されている。条件入力が曖昧でプロンプトがない場合、モデルが入力形状から内容を推測するため、生成内容が意図とずれることがある。また、学習時には元モデルに比べてGPUメモリが約23%、1イテレーションの時間が約34%増える。",
+        "next": [
+          {
+            "title": "High-Resolution Image Synthesis with Latent Diffusion Models",
+            "reason": "ControlNetが対象とするStable Diffusionの基盤となる潜在拡散モデルの仕組みを理解するため。"
+          },
+          {
+            "title": "T2I-Adapter: Learning Adapters to Dig out More Controllable Ability for Text-to-Image Diffusion Models",
+            "reason": "同時期に提案された、Stable Diffusionに外部条件を追加する軽量なアダプタ手法で、ControlNetと直接比較できるため。"
+          },
+          {
+            "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+            "reason": "破滅的忘却を避けるパラメータ効率的ファインチューニングの代表手法で、ControlNetの設計動機と対比して理解できるため。"
+          }
+        ]
+      },
+      "titleJa": "テキストから画像への拡散モデルに条件付き制御を追加する（ControlNet）",
+      "why": "Stable Diffusionのような事前学習済みモデルのパラメータを固定したまま、エンコード層の学習可能なコピーをゼロ初期化の1×1畳み込み（zero convolution）でつなぐ「ControlNet」を提案し、エッジ・深度・姿勢・セグメンテーションなどの空間条件による制御を加えた研究です。深度条件では200kサンプル・RTX 3090Ti 1枚・5日間の学習で、12M枚超をA100クラスタで学習したSDv2 Depth-to-Imageとほぼ区別がつかない結果を示し、1k枚の小規模データでも学習が崩壊しませんでした。ICCV 2023で被引用数が同年2位（Paper Digest集計）という点からも注目されています。"
+    },
+    {
+      "title": "Scalable Diffusion Models with Transformers",
+      "selection": "被引用数上位（Paper Digest の集計で同年3位）",
+      "authors": [
+        "William Peebles",
+        "Saining Xie"
+      ],
+      "url": "https://arxiv.org/abs/2212.09748",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "拡散モデルのバックボーンを、従来標準だった畳み込みU-Netから、潜在空間のパッチ列を処理する純粋なTransformerに置き換えた Diffusion Transformers (DiT) を提案した研究。ImageNetのクラス条件付き画像生成で、Gflopsで測った計算量とサンプル品質（FID）の関係というスケーラビリティを分析している。",
+        "novelty": "拡散モデルではU-Netがほぼ唯一の選択肢だったが、U-Netの帰納バイアスは性能に必須ではなく、標準的なViT設計で置き換えられることを示した。モデルの複雑さをパラメータ数ではなくGflopsで捉え、深さ・幅やトークン数を増やしてGflopsを上げるほどFIDが一貫して下がることを示した。最大モデルのDiT-XL/2は、ImageNet 256×256と512×512の両ベンチマークで従来の拡散モデルを上回った。",
+        "method": "Stable Diffusion由来の学習済みVAEで画像を潜在表現（256×256画像なら32×32×4）に圧縮し、その潜在をp×pのパッチに分割（patchify）して線形埋め込みとsin-cos位置埋め込みを加え、Transformerブロック列に通す。条件（タイムステップtとクラスラベルc）の入れ方として、in-context、cross-attention、adaLN、adaLN-Zeroの4種を比較した。adaLN-Zeroは、スケール・シフトに加えて残差直前のスケールαも条件埋め込みから回帰し、ゼロ初期化することで各ブロックを恒等写像として初期化する。最終層では線形デコーダで各トークンをノイズと対角共分散の予測に戻す。モデルサイズはS/B/L/XL、パッチサイズは8/4/2を組み合わせた。",
+        "validation": "S/B/L/XLとパッチサイズ8/4/2の計12モデルを400Kステップ学習し、FID-50Kとモデルの順伝播Gflopsの間に強い負の相関があることを確認した。パラメータ数がほぼ同じでもパッチを小さくしてGflopsを上げるとFIDが改善した。条件付け方式ではadaLN-Zeroが最良で、400KステップではIn-contextの約半分のFIDだった。DiT-XL/2は7Mステップ学習でclassifier-free guidance（cfg=1.5）使用時にImageNet 256×256でFID 2.27を達成し、従来の拡散モデル最良だったLDMの3.60を上回った。512×512ではFID 3.04で、ADMの3.85を上回った。また、サンプリングステップ数を増やしても、モデル側の計算量の不足は補えなかった（DiT-L/2を1000ステップで使うよりDiT-XL/2を128ステップで使う方が、5倍少ない計算量で良いFID-10K：23.7対25.9）。",
+        "discussion": "本論文の評価はクラス条件付きのImageNet生成に限られ、VAEも既存の学習済みモデルに依存している。著者らは今後の課題として、DiTをさらに大きなモデルやトークン数へスケールさせることと、DALL·E 2やStable Diffusionのようなテキストからの画像生成モデルのバックボーンとして使うことを挙げている。また、Gflopsは複雑さの指標として最良かどうかはまだ議論の余地があると述べている。",
+        "next": [
+          {
+            "title": "High-Resolution Image Synthesis with Latent Diffusion Models",
+            "reason": "DiTが土台とする潜在拡散モデルの枠組みと、比較対象のU-Net系ベースライン（LDM）を理解するため。"
+          },
+          {
+            "title": "Diffusion Models Beat GANs on Image Synthesis",
+            "reason": "DiTがハイパーパラメータや評価の基準としたADMで、U-Netの設計・条件付け・classifier guidanceの詳細が分かるため。"
+          },
+          {
+            "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+            "reason": "DiTが設計とモデル構成の基礎にしたViTの、パッチ化とスケーリングの考え方を押さえるため。"
+          }
+        ]
+      },
+      "titleJa": "Transformerによるスケーラブルな拡散モデル",
+      "why": "拡散モデルのバックボーンを標準だった畳み込みU-Netから、潜在空間のパッチ列を処理する純粋なTransformerに置き換えた Diffusion Transformers (DiT) を提案し、U-Netの帰納バイアスが性能に必須ではないことを示した研究です。モデルの複雑さをGflopsで捉え、Gflopsを増やすほどFIDが一貫して下がるというスケーラビリティを確認しており、最大のDiT-XL/2はImageNet 256×256でFID 2.27（従来最良のLDMは3.60）、512×512でFID 3.04（ADMは3.85）と従来の拡散モデルを上回りました。ICCV 2023で被引用数が同年3位（Paper Digest集計）という点も、その影響の大きさを示しています。"
     }
   ],
   "sources": [
@@ -81,6 +186,10 @@
     {
       "title": "International Conference on Computer Vision（AI Wiki・開催地と投稿数）",
       "url": "https://www.aiwiki.ai/wiki/iccv"
+    },
+    {
+      "title": "Most Influential ICCV Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-iccv-papers-2026-03-version/"
     }
   ],
   "unreachable": [

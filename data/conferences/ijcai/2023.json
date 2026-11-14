@@ -81,6 +81,149 @@
           }
         ]
       }
+    },
+    {
+      "title": "Levin Tree Search with Context Models",
+      "award": "Distinguished Paper",
+      "authors": [
+        "Laurent Orseau",
+        "Marcus Hutter",
+        "Levi H. S. Lelis"
+      ],
+      "url": "https://arxiv.org/abs/2305.16945",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "Levin Tree Search (LTS) の方策を、ニューラルネットではなくオンライン圧縮由来のパラメータ付きコンテキストモデル（LTS+CM）で表現し、LTS損失がパラメータに関して凸になるようにした研究。これにより標準的な凸最適化が使え、オンライン設定での収束・後悔（regret）保証が得られる。Sokoban、The Witness、24-STP、ルービックキューブで高い性能を示した。",
+        "novelty": "従来のLTS+NNでは損失が非凸で最適性や収束の保証がなかったが、本研究はコンテキストモデルとproduct-of-expertsの組合せで、LTS損失の凸性を証明した。また、ログ損失が凸ならLTS損失も凸になること（Theorem 9）を示した。さらにLTSの展開ノード数に関する新しい下界も与えている。LTS+NNが解けなかった24-STPも解け、ルービックキューブでは従来の機械学習手法より桁違いに少ない展開数で解ける。",
+        "method": "各ノードで、相互排他的な文脈の集合（mutex set）ごとに1つの文脈が有効となり、各文脈が行動のカテゴリカル分布を持つ。有効な文脈の予測をproduct mixing（再正規化した積、パラメータはexp β で再パラメータ化）で合成して方策とし、LTSの損失 Σ d(n)/π(n) を最小化する。学習はBootstrapの探索・学習ループ内で、正則化付きの全損失を最小化するFollow the Leader型の更新（凸最適化）で行い、更新は遅延させて計算コストを償却する。ハッシュテーブルで文脈を実装し、計算量は文脈総数よりずっと小さい。",
+        "validation": "Boxoban、The Witness、24-STPで、同じ5万問の訓練データと初期予算でLTS+NNと比較した。STPではLTS+CMが100%解いたのに対しLTS+NNは0.90%で、平均展開数は5667.4、時間は236msだった。The Witnessでは約5分の1の展開数（102.8対520.2）で、Boxoban hardでは100%解決（LTS+NN 94.0%、ExPoSe 97.3%）、ルービックキューブでは平均展開数498.0、時間16msで100%解決した（DeepCubeAは約600,000展開、GBFS(A+M)は171,300展開）。ただしDeepCubeAは短い解を狙うため目的が異なる。",
+        "discussion": "理論保証はオンライン設定に対するもので、実験で使うBootstrapは厳密にはこれと異なるため、保証がそのまま成り立つとは限らず今後の分析課題とされている。また、後悔保証は同じ解ノード集合から学ぶ競合相手に対するものであり、同じ問題集合で最適な解集合を選ぶ競合に対する保証が得られるかは未解決である。文脈（mutex set）は基本的なドメイン知識で人手設計しており、その自動探索や価値関数・ヒューリスティクスの取り込みが今後の課題である。",
+        "next": [
+          {
+            "title": "Single-agent policy tree search with guarantees",
+            "reason": "LTSの元となるアルゴリズムと展開数の上界（Theorem 1）が示されており、本論文の理論的土台を理解できる。"
+          },
+          {
+            "title": "Policy-guided heuristic search with guarantees",
+            "reason": "LTS損失をニューラルネット方策の最適化に使うLTS+NNを提案しており、本論文の直接の比較対象である。"
+          },
+          {
+            "title": "Solving the Rubik's cube with deep reinforcement learning and search",
+            "reason": "ルービックキューブでの比較対象DeepCubeAであり、本手法との目的（短い解か高速な解か）の違いを理解できる。"
+          }
+        ]
+      },
+      "titleJa": "コンテキストモデルを用いたLevin Tree Search",
+      "why": "Levin Tree Search (LTS) の方策をニューラルネットではなくオンライン圧縮由来のコンテキストモデル（LTS+CM）で表現し、product-of-expertsとの組合せでLTS損失がパラメータに関して凸になることを証明した研究です。これにより標準的な凸最適化が使え、オンライン設定での収束・後悔保証が得られる点が注目され、LTS+NNが解けなかった24-STPを100%解き、ルービックキューブでも平均展開数498.0で100%解決しました。IJCAI 2023のDistinguished Paperに選ばれています。"
+    },
+    {
+      "title": "SAT-Based PAC Learning of Description Logic Concepts",
+      "award": "Distinguished Paper",
+      "authors": [
+        "Balder ten Cate",
+        "Maurice Funk",
+        "Jean Christoph Jung",
+        "Carsten Lutz"
+      ],
+      "url": "https://arxiv.org/abs/2305.08511",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "記述論理（ELH^r オントロジー下の EL 概念）を正例・負例から学習する枠組み「bounded fitting」を提案した研究。サイズ上限を1,2,3…と増やしながらデータに適合する概念を探索し、PAC学習としての汎化保証を与える。さらに ELH^r 向けに SAT ソルバーで実装したシステム SPELL を構築し、既存の ELTL と比較した。",
+        "novelty": "DL概念学習の既存手法には汎化に関する形式的保証がなかったが、bounded fitting は Occam アルゴリズムであるため、DLやオントロジーの種類によらず、目標概念サイズに線形なサンプル数で PAC 学習できることを示した。また、最特殊・最一般・量化深度最小の適合概念を返すアルゴリズムは、オントロジーなしでもサンプル効率的な PAC 学習にならないことを、新概念「simulation dual」を用いて証明した。精製演算子に基づく2つの探索の一方は Occam でサンプル効率的、他方はそうでないという区別も示した。",
+        "method": "各ラウンドで、サイズ（SPELL では存在量化の数）が上限以内で全例に適合する概念が存在するかを判定するサイズ制限付き適合問題を解く。ELH^r では NP 完全なので SAT に帰着する。オントロジーは、普遍データベースによる例の置換で除去する。命題式は、概念 C_1..C_n を表す変数と、各個体が C_i の答えになるかを表す変数（シミュレーションに基づく）からなり、変数数は O(n²·|D|) である。加えて、到達可能部分のみを考慮する絞り込みと、同じ ELQ の冗長な表現を減らす対称性破壊制約を導入した。",
+        "validation": "Yago 4 から抽出した約1200万アサーションの断片などで、例の数とターゲット ELQ のサイズを変えて実行時間を ELTL と比較した（タイムアウト60分）。SPELL の実行時間はほぼ常に ELTL より大幅に短く、実行時間に最も影響するのはターゲット概念のサイズで、SPELL はより大きなターゲットを学習できると報告している。汎化実験では、サンプルサイズ5〜75で両者とも精度が上がり、75では0.98に達した（ELTL は5例で0.77、SPELL は0.80）。",
+        "discussion": "ELTL のような実用システムはヒューリスティクスや最適化が複雑で、汎化保証があるか（小さい適合を好むなら Occam かもしれない）は未解決である。また、効率的な PAC 学習は RP=NP でない限り不可能であり、適合 ELQ が存在する人工ベンチマークでの評価にとどまる。今後は、より表現力の高い DL への展開や、さらなる汎化の実験が課題となる。",
+        "next": [
+          {
+            "title": "Learnability and the Vapnik-Chervonenkis dimension",
+            "reason": "Occam アルゴリズムと PAC 学習の関係を与える理論的基礎であり、Theorem 1 の証明の土台を理解できる。"
+          },
+          {
+            "title": "DL-Learner - A framework for inductive learning on the semantic web",
+            "reason": "本論文の比較対象である ELTL を含む代表的な DL 概念学習システムで、SPELL との違いを把握できる。"
+          },
+          {
+            "title": "Ideal downward refinement in the EL description logic",
+            "reason": "ELTL の基になる EL の理想的な精製演算子を扱い、第4節の精製演算子の議論を理解するのに役立つ。"
+          }
+        ]
+      },
+      "titleJa": "記述論理概念のSATベースPAC学習",
+      "why": "ELH^r オントロジー下の EL 概念を正例・負例から学習する「bounded fitting」を提案し、サイズ上限を1,2,3…と増やしながら適合概念を探索する枠組みです。Occam アルゴリズムであるため、DLやオントロジーの種類によらず目標概念サイズに線形なサンプル数で PAC 学習できることを示し、従来手法に欠けていた汎化保証を与えた点が注目されます。SAT ソルバーによる実装 SPELL は、Yago 4 由来の約1200万アサーションの実験で ELTL よりほぼ常に大幅に高速で、より大きなターゲット概念も学習できると報告されています。"
+    },
+    {
+      "title": "Transformers in Time Series: A Survey",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Qingsong Wen",
+        "Tian Zhou",
+        "Chaoli Zhang",
+        "Weiqi Chen",
+        "Ziqing Ma",
+        "Junchi Yan",
+        "Liang Sun"
+      ],
+      "url": "https://arxiv.org/abs/2202.07125",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "時系列データ向けTransformerを体系的に整理した初のサーベイ論文。ネットワーク構造の改良（モジュール・アーキテクチャ）と応用タスク（予測・異常検知・分類）の2軸で既存手法を分類し、強みと限界を整理している。",
+        "novelty": "時系列Transformerを「ネットワーク改良」と「応用領域」の2観点から包括的に整理した新しい分類体系を提示した点。加えてロバスト性、モデルサイズ、季節・トレンド分解の3点について実証分析を行い、実務上の指針を示している。",
+        "method": "ネットワーク改良は、位置エンコーディング（通常・学習型・タイムスタンプ）、注意機構（LogTransやInformerのようなスパース性・低ランク近似でO(N^2)を削減）、アーキテクチャ（InformerやPyraformerの階層・マルチ解像度構造）に分けて整理する。応用は予測（時系列・時空間・イベント）、異常検知、分類に分類する。各手法の洞察・長所・短所を分析し、ETTm2データセットで代表的Transformerを比較した。",
+        "validation": "ETTm2で、入力長を伸ばす実験、層数を変える実験、季節・トレンド分解の有無を比べる実験を行った。入力長を延ばすと多くのTransformer系モデルの精度（MSE）が急速に悪化し、層数は3〜6層程度の方が良い結果になりやすかった。単純な移動平均による分解を加えると、MSEが相対的に50%〜80%改善した（Table 4の相対改善率は53〜82%）。",
+        "discussion": "実験は単一データセット（ETTm2）での予備的な検証にとどまり、長い入力を活かせない点や深層化による性能向上が得られない点が課題として残る。今後の方向として、時系列に適した帰納バイアス、GNNとの統合、事前学習済みTransformer、アーキテクチャレベルの改良、NASの活用を挙げている。DLinearの批判についても、実験結果だけでTransformerの可能性を否定するのは過剰だと論じている。",
+        "next": [
+          {
+            "title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
+            "reason": "長期系列予測向けの効率的な注意機構と生成型デコーダを提案した代表的手法で、本サーベイの基盤となる。"
+          },
+          {
+            "title": "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting",
+            "reason": "季節・トレンド分解と自己相関機構を組み込んだ手法で、分解分析の背景を理解できる。"
+          },
+          {
+            "title": "Are Transformers Effective for Time Series Forecasting?",
+            "reason": "単純な線形モデルがTransformerを上回ると主張しており、本サーベイの議論と対比して読む価値がある。"
+          }
+        ]
+      },
+      "titleJa": "時系列におけるTransformer：サーベイ",
+      "why": "時系列データ向けTransformerを、ネットワーク構造の改良と応用タスク（予測・異常検知・分類）の2軸で体系的に整理した初のサーベイ論文です。ETTm2を用いた実証分析では、入力長を伸ばすと多くのTransformer系モデルのMSEが急速に悪化し、層数は3〜6層程度が良好になりやすいこと、単純な移動平均による季節・トレンド分解でMSEが相対的に約50〜80%改善すること（Table 4では53〜82%）を示し、実務上の指針を与えています。Paper Digestの集計で同年の被引用数1位という点も、注目度の高さを表しています。"
+    },
+    {
+      "title": "On the Paradox of Learning to Reason from Data",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Honghua Zhang",
+        "Liunian Harold Li",
+        "Tao Meng",
+        "Kai-Wei Chang",
+        "Guy Van den Broeck"
+      ],
+      "url": "https://arxiv.org/abs/2205.11502",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "命題論理（定義節）に基づく限定された推論問題空間 SimpleLogic で、BERT を end-to-end で学習させて論理推論を習得できるかを調べた研究。BERT は訓練と同じ分布では近似完璧な精度を出す一方、同一問題空間の別分布には汎化できないというパラドックスを示し、その原因を分析している。",
+        "novelty": "従来研究（Clark et al., 2020 など）は同一分布での高精度をもとに、ニューラルモデルが推論を学習できると主張していた。本研究は、BERT が理論上は正しい推論関数を表現できること（構成的証明）と、分布が変わると汎化に失敗することを同じ問題空間で対比した。さらに、データ収集由来のバイアスではなく、論理推論問題に本質的に内在する統計的特徴がモデルの近道になること、およびそれらを同時に除去するのが計算的に困難であることを示した。",
+        "method": "SimpleLogic は (facts, rules, query, label) の組で、述語数5〜30、ルール本体1〜3述語、推論深さ0〜6 に制限した定義節の問題をテンプレート英語で表現する。Theorem 1 として、n 層の BERT が前向き連鎖を模倣して深さ n-2 以下の問題を解けるパラメータの存在を構成的に証明し、PyTorch で実装して100%の精度を確認した。データは Rule-Priority (RP) と Label-Priority (LP) の2方式でサンプリングし、#rule や branching_factor などの統計的特徴とラベルの相関を分析した。統計的特徴の除去は、ラベルのバランス、周辺分布の維持、データサイズの維持の3条件を満たすよう多めにサンプリングして間引く方法（RP_balance）で行った。",
+        "validation": "RP で学習した BERT は RP 上でほぼ完璧な精度（深さ0〜6で99.9〜95.5%）を示すが、LP では深さ6で57.3%まで低下し、LP で学習した場合の RP でも深さ1〜3で53〜67%程度まで落ちる。RP と LP の混合で学習しても、LP を少し変えた LP* では深さ6で55.2%に低下した。#rule を除去した RP_balance では、RP で学習したモデルを RP_balance で評価すると精度が下がり、RP_balance で学習したモデルは LP の深さ6で68.1%（RP 学習より約10%高い）となった。また #fact、branching_factor、#rule を順に除去する際に必要なサンプル倍率は 5.5→20.0→55.6 倍とほぼ指数的に増加した。",
+        "discussion": "統計的特徴は無数に存在し得て複合的でもあるため、すべてを同時に除去するのは計算上現実的でなく、データから推論を学習することの難しさが示唆される。本研究の対象は演繹推論に限った単純な問題空間と BERT であり、他モデルへの拡張は「自然に拡張できる」と主張されているが、本文では実験は示されていない。また、言語の多様性や事前知識を含む実際の NLP タスクではより強い統計的特徴が生じ得るため、end-to-end 学習には注意が必要だとされている。",
+        "next": [
+          {
+            "title": "Transformers as soft reasoners over language",
+            "reason": "本論文が反論の対象とする、Transformer が言語上の推論を学習できるという主張の元研究であり、比較のために読む価値がある。"
+          },
+          {
+            "title": "Right for the wrong reasons: Diagnosing syntactic heuristics in natural language inference",
+            "reason": "NLI モデルが統計的ヒューリスティックに依存する問題を扱っており、本論文の統計的特徴の議論と対比できる。"
+          },
+          {
+            "title": "What can neural networks reason about?",
+            "reason": "ニューラルネットの推論の汎化を理論面から論じており、本論文の実験的知見を補完する。"
+          }
+        ]
+      },
+      "titleJa": "データから推論を学習することのパラドックスについて",
+      "why": "命題論理（定義節）に基づく限定的な推論問題空間 SimpleLogic で BERT を end-to-end に学習させ、訓練と同じ分布ではほぼ完璧な精度を出す一方、同じ問題空間の別分布には汎化できないというパラドックスを示した研究です。BERT は理論上は正しい推論関数を表現できるにもかかわらず、データ収集のバイアスではなく論理推論問題に本質的に内在する統計的特徴が近道として使われることを明らかにし、それらを同時に除去するには必要なサンプル数がほぼ指数的に増える（5.5→20.0→55.6倍）ことも示しました。同一分布での高精度を根拠に推論の学習が可能だとしてきた従来の主張に疑問を投げかけた点が注目され、IJCAI 2023 で被引用数が同年2位（Paper Digest 集計）となっています。"
     }
   ],
   "sources": [
@@ -99,6 +242,10 @@
     {
       "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
       "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    },
+    {
+      "title": "Most Influential IJCAI Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-ijcai-papers-2026-03-version/"
     }
   ],
   "unreachable": [

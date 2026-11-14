@@ -96,6 +96,215 @@
           }
         ]
       }
+    },
+    {
+      "title": "Neural Inverse Rendering from Propagating Light",
+      "award": "Best Student Paper",
+      "authors": [
+        "Anagh Malik",
+        "Benjamin Attal",
+        "Andrew Xie",
+        "Matthew O'Toole",
+        "David B. Lindell"
+      ],
+      "url": "https://arxiv.org/abs/2506.05347",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "フラッシュライダーで撮影した多視点・時間分解（光の伝搬）ビデオから、物理ベースのニューラル逆レンダリングを行う初のシステムを提案した。直接光と間接光の輸送を正確に扱い、強い間接光下での3D形状復元、伝搬する光の新視点合成、直接・間接成分の自動分解、時間分解リライティングを可能にする。",
+        "novelty": "従来のライダー系NeRF（T-NeRFなど）は直接光のみを扱い、Flying with Photons（FWP）は間接光も扱うが物理ベースではなく、正確な形状復元やリライティングができなかった。本手法は時間分解版の放射輝度キャッシュにより、時間分解の直接・間接光輸送を物理ベースで逆レンダリングできる最初の手法である。また、光源とカメラの両方が移動する多視点フラッシュライダーデータセットを新たに取得した。",
+        "method": "形状はボリュームレンダリング、外観はDisney–GGX BRDFによる物理ベースモデルで表現し、一次レイでは直接光を明示的に計算する。間接光は、任意の点・方向に到来する時間分解放射輝度を保持するニューラル放射輝度キャッシュ（ハッシュエンコーディング）から二次レイで引き、再帰的なパストレーシングを避ける。キャッシュは直接成分と間接成分に分けられ、間接成分はスプリットサム近似と光源位置への条件付けで表現する。学習はライダー計測との二乗誤差に加え、キャッシュと物理モデルを整合させる放射量的事前損失（L_dir/indir）、各種正則化、BRDFと学習可能な重要度サンプラーを使った多重重点サンプリングを用いる。",
+        "validation": "シミュレーション4シーン（Cornell box、pots、peppers、kitchen）と実測データ（globe、house、spheres、およびFWPのstatue）で、T-NeRFとFWP++（FWPを光源移動に対応させた版）と比較した。シミュレーションでは、提案手法がPSNR 30.99 dB、法線MAE 8.45、深度L1 0.21、T-IOU 0.76を達成し、FWP++（29.00 dB、22.80、0.47、0.73）を上回り、法線・深度の精度が大きく向上した。実測では新視点合成の指標でFWP++がやや優位（PSNR 28.45 dB対27.39 dB）だが、定性的には間接光領域で提案手法の方が正確な形状を復元した。CW-ToFや強度画像のみからの学習、リライティングも示した。",
+        "discussion": "物理モデルによる制約が強いため、実測データではキャリブレーション誤差やモデルのずれの影響を受け、新視点合成でFWP++にやや劣る。最適化に単一GPUで1日以上かかるため、時間ベクトル全体ではなく単一時刻を予測する表現や、3D Gaussian Ray Tracing・EVERのような高速表現による効率化が今後の課題である。将来的には非視線外イメージングへの拡張も考えられる。",
+        "next": [
+          {
+            "title": "Flying with Photons: Rendering Novel Views of Propagating Light",
+            "reason": "本手法が直接ベースにしている時間分解放射輝度の表現で、比較対象FWP++の元論文でもある。"
+          },
+          {
+            "title": "Transient Neural Radiance Fields for Lidar View Synthesis and 3D Reconstruction",
+            "reason": "直接光のみを扱うライダーNeRFのベースライン（T-NeRF）であり、時間分解レンダリングの基礎を押さえられる。"
+          },
+          {
+            "title": "Flash Cache: Reducing Bias in Radiance Cache Based Inverse Rendering",
+            "reason": "本手法が採用する放射輝度キャッシュ型逆レンダリングと学習可能な重要度サンプラーの元になっている。"
+          }
+        ]
+      },
+      "titleJa": "伝搬する光からのニューラル逆レンダリング",
+      "why": "フラッシュライダーで撮影した多視点・時間分解ビデオから、直接光と間接光の輸送を物理ベースで扱うニューラル逆レンダリングを初めて実現した研究です。時間分解版の放射輝度キャッシュにより、強い間接光下での3D形状復元や、直接・間接成分の分解、時間分解リライティングが可能になります。シミュレーションでは FWP++ に対し法線MAE 8.45(FWP++は22.80)、深度L1 0.21(同0.47)と精度を大きく改善しており、CVPR 2025 の Best Student Paper に選ばれました。"
+    },
+    {
+      "title": "MegaSaM: Accurate, Fast and Robust Structure and Motion from Casual Dynamic Videos",
+      "award": "Best Paper Honorable Mention",
+      "authors": [
+        "Zhengqi Li",
+        "Richard Tucker",
+        "Forrester Cole",
+        "Qianqian Wang",
+        "Linyi Jin",
+        "Vickie Ye",
+        "Angjoo Kanazawa",
+        "Aleksander Holynski",
+        "Noah Snavely"
+      ],
+      "url": "https://arxiv.org/abs/2412.04463",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "MegaSaM は、動的シーンを含む手持ち撮影などのカジュアルな単眼動画から、カメラパラメータ（姿勢・焦点距離）と高密度な動画深度を、正確・高速・頑健に推定するシステムである。カメラの視差が小さい動画や焦点距離が未知の動画、複雑な物体運動を含む動画にも対応する。",
+        "novelty": "DROID-SLAM のような深層ビジュアル SLAM を、動的シーン・低視差・未知の焦点距離という実環境の条件に向けて学習・推論の両面から拡張した点が新しい。既存手法のような重い単眼深度ネットワークの動画ごとのファインチューニングを使わずに、整合的な動画深度を得られる。比較した先行・同時期手法（CasualSAM、MonST3R など）よりカメラ・深度ともに高精度で、実行時間は同等か高速である。",
+        "method": "微分可能な BA 層を持つ DROID-SLAM に、物体移動確率マップ F_m を追加し、フロー信頼度と掛け合わせて動的領域の重みを下げる。学習は 2 段階で、まず静的シーンの合成データで自己運動のフローと信頼度を事前学習し、次に F_m のみを動的な合成動画（Kubric）でファインチューニングする。初期化には DepthAnything の視差を UniDepth の metric 深度で整合させた値を使い、BA に単眼深度の正則化項を加える。さらに、グローバル BA ではヘッセ行列の対角から認識論的不確実性を見積もり、視差の観測可能性が低い（回転主体で視差が小さい）場合のみ単眼深度正則化を強め、焦点距離が観測不能そうなら焦点距離の最適化を止める。最後に、カメラを固定したまま、視差と不確実性の変数列を CasualSAM 風の一次最適化で精緻化し、高解像度で整合的な動画深度を得る。",
+        "validation": "カメラ姿勢は MPI Sintel、DyCheck、実環境動画（DynIBaR の 12 本）で、ATE・RTE・RRE により較正済み・未較正の両設定で評価した。例えば Sintel の未較正設定では ATE 0.023 / RTE 0.008 / RRE 0.06 で、MonST3R（0.078 / 0.038 / 0.49）や CasualSAM（0.067 / 0.019 / 0.47）を上回った。動画深度は Sintel で abs-rel 0.21、δ1.25 73.1、DyCheck で abs-rel 0.11、δ1.25 94.1 と、DepthCrafter、CasualSAM、MonST3R などを上回った。アブレーションでは、単眼深度による初期化、移動マップ、2 段階学習、不確実性考慮 BA がいずれも精度に寄与することを示した。",
+        "discussion": "動く物体が画面の大半を占める場合や、追跡に使える手がかりがない場合はカメラ追跡が失敗する。また、動画内で焦点距離が変化するケースや強い放射歪みには対応できない。今後は、より強力な視覚基盤モデルの事前知識を取り込むことが有望な方向として挙げられている。",
+        "next": [
+          {
+            "title": "DROID-SLAM: Deep Visual SLAM for Monocular, Stereo, and RGB-D Cameras",
+            "reason": "MegaSaM が基盤とする微分可能 BA 層を持つ深層ビジュアル SLAM であり、本手法の拡張点を理解する前提になる。"
+          },
+          {
+            "title": "Casual SfM / CasualSAM: Structure and Motion from Casual Videos",
+            "reason": "MegaSaM が動画深度最適化の枠組みを引き継ぎ、主要な比較対象ともなっている、動的動画向けの先行手法である。"
+          },
+          {
+            "title": "MonST3R: A Simple Approach for Estimating Geometry in the Presence of Motion",
+            "reason": "DUSt3R の点群表現を動的シーンに拡張した同時期の手法であり、SLAM ベースの MegaSaM と表現・設計を比較できる。"
+          }
+        ]
+      },
+      "titleJa": "MegaSaM：カジュアルな動的動画から高精度・高速・頑健に構造とモーションを推定する",
+      "why": "手持ち撮影などのカジュアルな単眼動画から、カメラ姿勢・焦点距離と高密度な動画深度を推定するシステムで、DROID-SLAM のような深層ビジュアル SLAM を動的シーン・低視差・未知の焦点距離といった実環境の条件に向けて拡張した研究です。重い単眼深度ネットワークの動画ごとのファインチューニングを使わずに整合的な動画深度を得られ、Sintel の未較正設定で ATE 0.023 と MonST3R（0.078）や CasualSAM（0.067）を上回るなど、カメラ・深度ともに高精度で実行時間も同等か高速です。こうした実用的な頑健さと精度が評価され、CVPR 2025 の Best Paper Honorable Mention に選ばれました。"
+    },
+    {
+      "title": "Molmo and PixMo: Open Weights and Open Data for State-of-the-Art Vision-Language Models",
+      "award": "Best Paper Honorable Mention",
+      "authors": [
+        "Matt Deitke",
+        "Christopher Clark",
+        "Sangho Lee",
+        "Rohun Tripathi",
+        "Yue Yang",
+        "Jae Sung Park",
+        "Mohammadreza Salehi",
+        "Niklas Muennighoff",
+        "Kyle Lo",
+        "Luca Soldaini",
+        "Jiasen Lu",
+        "Taira Anderson",
+        "Erin Bransom",
+        "Kiana Ehsani",
+        "Huong Ngo",
+        "YenSung Chen",
+        "Ajay Patel",
+        "Mark Yatskar",
+        "Chris Callison-Burch",
+        "Andrew Head",
+        "Rose Hendrix",
+        "Favyen Bastani",
+        "Eli VanderBilt",
+        "Nathan Lambert",
+        "Yvonne Chou",
+        "Arnavi Chheda",
+        "Jenna Sparks",
+        "Sam Skjonsberg",
+        "Michael Schmitz",
+        "Aaron Sarnat",
+        "Byron Bischoff",
+        "Pete Walsh",
+        "Chris Newell",
+        "Piper Wolters",
+        "Tanmay Gupta",
+        "Kuo-Hao Zeng",
+        "Jon Borchardt",
+        "Dirk Groeneveld",
+        "Crystal Nam",
+        "Sophie Lebrecht",
+        "Caitlin Wittlif",
+        "Carissa Schoenick",
+        "Oscar Michel",
+        "Ranjay Krishna",
+        "Luca Weihs",
+        "Noah A. Smith",
+        "Hannaneh Hajishirzi",
+        "Ross Girshick",
+        "Ali Farhadi",
+        "Aniruddha Kembhavi"
+      ],
+      "url": "https://arxiv.org/abs/2409.17146",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "プロプライエタリVLMによる合成データに頼らず、完全にゼロから構築したオープンなVLMファミリー「Molmo」と、そのための新規データセット群「PixMo」を提案した研究。重み・データ・コードを公開し、VLMの作り方に関する基礎知見をコミュニティに提供することを狙う。最良の72Bモデルは学術ベンチマークと人間評価の双方で高い性能を示す。",
+        "novelty": "従来の高性能オープンVLMはGPT-4Vなどの合成データによる実質的な蒸留に依存していたが、PixMoは外部VLMを一切使わずに収集された。60〜90秒の音声で画像を描写させる手法で平均196語（COCOは11語）の詳細キャプションを得た点や、2D点によるグラウンディング・カウント用データ（230万件）の導入が特徴的である。さらに、重なりを持つマルチクロップ、2段階に簡略化した学習、複数アノテーションを1系列で学習する効率化といったモデル面の工夫もある。",
+        "method": "構成はCLIP ViT-L/14 336pxの画像エンコーダ、アテンションプーリング（2×2パッチ）とMLPによるコネクタ、デコーダ型LLM（OLMo、OLMoE、Qwen2）で、画像は重なりのあるマルチクロップに分割して入力する。事前学習はPixMo-Capで長さヒント付きのキャプション生成を行い、コネクタのみを学習する段階は省いて、事前学習時はテキストトークンのみにドロップアウトをかける。ファインチューニングはPixMoと既存の学術データセットを混ぜ、スタイルタグで回答形式を切り替える。ポインティングは座標をプレーンテキストで出力し、上から下・左から右の順に点を並べてからカウントする思考連鎖としても使う。",
+        "validation": "10の学術ベンチマークと新しいカウント用ベンチマークPixMo-Count、さらに約870人のアノテーターによる32.5万件超のペアワイズ評価（Bradley-TerryによるElo）で評価した。Molmo-72Bは11ベンチマーク平均81.2で表中最高、Eloは1077でGPT-4o（1079）に次ぐ2位となり、Gemini 1.5 Pro、Claude 3.5 Sonnetを上回った。MolmoE-1BはGPT-4Vにほぼ匹敵する。アブレーションでは、重なりクロップ、長さヒント付き事前学習、アテンションプーリング、PixMo-Capの規模拡大などが有効で、カウントでは点を出してから数える方式が有効だった。",
+        "discussion": "MMMUやMathVistaなどの推論系タスクでは、高度な推論向けデータが訓練に含まれないため他モデルに劣る。また、OCR中心のベンチマークではQwen2-VLにやや及ばない。ポインティング性能はテスト時のクロップ数に対して汎化しにくく、Chatbot Arenaでは自社評価ほど順位が上がらなかったため、評価に使う質問の種類による差が示唆される。",
+        "next": [
+          {
+            "title": "Visual Instruction Tuning (LLaVA)",
+            "reason": "完全オープンなVLMの先駆けであり、Molmoが採用した標準的な「視覚エンコーダ＋LLM」構成の出発点を理解できる。"
+          },
+          {
+            "title": "ShareGPT4V: Improving large multi-modal models with better captions",
+            "reason": "GPT-4Vによる合成キャプションに依存する手法の代表で、Molmoが批判し比較対象とした蒸留型データとの違いを把握できる。"
+          },
+          {
+            "title": "PaliGemma: A versatile 3B VLM for transfer",
+            "reason": "ポインティングやカウントを含む転移性能を重視したVLMで、CountBenchQAも提案しており、Molmoのポインティング・カウントのアプローチと対比できる。"
+          }
+        ]
+      },
+      "titleJa": "MolmoとPixMo：最先端のビジョン・ランゲージモデルのためのオープンな重みとオープンなデータ",
+      "why": "プロプライエタリVLMによる合成データに頼らず、人間の音声による詳細キャプションや2D点のグラウンディング・カウント用データ（230万件）を一から収集し、重み・データ・コードを公開したVLMファミリー「Molmo」と「PixMo」を提案した研究です。最良のMolmo-72Bは11ベンチマーク平均81.2で表中最高となり、人間評価のEloでもGPT-4oに次ぐ2位で、Gemini 1.5 ProやClaude 3.5 Sonnetを上回りました。外部VLMの蒸留に依存せずに高性能なオープンVLMを作れることを示し、VLMの作り方に関する基礎知見をコミュニティに提供する点が注目されます。"
+    },
+    {
+      "title": "Video-MME: The First-Ever Comprehensive Evaluation Benchmark of Multi-modal LLMs in Video Analysis",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Chaoyou Fu",
+        "Yuhan Dai",
+        "Yongdong Luo",
+        "Lei Li",
+        "Shuhuai Ren",
+        "Renrui Zhang",
+        "Zihan Wang",
+        "Chenyu Zhou",
+        "Yunhang Shen",
+        "Mengdan Zhang",
+        "Peixian Chen",
+        "Yanwei Li",
+        "Shaohui Lin",
+        "Sirui Zhao",
+        "Ke Li",
+        "Tong Xu",
+        "Xiawu Zheng",
+        "Enhong Chen",
+        "Caifeng Shan",
+        "Ran He",
+        "Xing Sun"
+      ],
+      "url": "https://arxiv.org/abs/2405.21075",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "動画を扱うマルチモーダルLLM（MLLM）を総合的に評価するベンチマーク Video-MME を提案した研究。6つの主要ドメイン・30サブカテゴリ、11秒〜1時間の動画900本（計254時間）に対し、人手で作成した2,700件の4択QAを用意している。字幕・音声も入力に含め、MLLMの動画理解を多面的に測定する。",
+        "novelty": "既存の動画ベンチマークが抱える、動画タイプの多様性不足、時間幅の狭さ、単一モダリティへの偏りという課題に対し、動画の多様性・短中長の時間幅・字幕と音声を含むモダリティの広さ・専門アノテータによる高品質ラベルの4点を同時に満たす。Certificate length（人が正解を確認するのに必要な最小クリップ長）の分析により、中・長尺サブセットがEgoSchemaより長い動画内容の把握を要することを示し、現時点で最も難しい動画QAデータセットだと主張している。",
+        "method": "YouTubeから6ドメイン30カテゴリの動画を、短（2分未満）・中（4〜15分）・長（30〜60分）で収集し、字幕と音声も取得した。アノテータが動画全体を視聴して1本あたり3問（各4択）を作成し、12種のタスク（知覚、推論、情報統合など）を網羅する。別のアノテータがレビューし、さらに質問文のみをGemini 1.5 Proに与えて答えられる問題を除外・修正させることで、動画を見なければ解けない設計にしている。評価はフレーム、フレーム＋字幕、フレーム＋音声の設定で、出力の正規表現抽出と正解との直接比較により精度を算出する。",
+        "validation": "GPT-4V/4o、Gemini 1.5 Flash/Pro、オープンソースの動画MLLM 9種、画像MLLM 3種を評価した。Gemini 1.5 Proが字幕なしで平均75.0%と最高で、GPT-4oは71.9%、最良のオープンソースVILA-1.5は59.0%だった。字幕を加えるとGemini 1.5 Proは81.3%（+6.2）、音声では+4.3となり、効果は長尺ほど大きい（長尺で字幕+10.1）。動画が長くなるほど全モデルで精度が低下し（Gemini 1.5 Proで短尺から長尺へ-14.3）、質問文のみの場合の精度は15%未満だった。",
+        "discussion": "長尺化に伴う性能低下は、推論問題の比率増加、固定フレーム数によるサンプリングの疎化、長文脈理解の難しさが要因と分析され、リングアテンションなどによる長文脈対応、質問に応じたキーフレーム選択やトークン圧縮、複雑な時間推論を含む学習データの整備が今後の課題とされる。オープンソースモデルの多くが音声入力に未対応で音声評価ができておらず、モデルごとにフレーム数が異なるため、比較には入力条件の違いが影響している点にも留意が必要である。",
+        "next": [
+          {
+            "title": "EgoSchema: A Diagnostic Benchmark for Very Long-form Video Language Understanding",
+            "reason": "Video-MMEがcertificate length分析で比較・着想を得た長尺動画QAベンチマークで、評価の考え方を理解できる。"
+          },
+          {
+            "title": "MVBench: A Comprehensive Multi-modal Video Understanding Benchmark",
+            "reason": "短尺中心の代表的な動画理解ベンチマークであり、Video-MMEとの設計や対象範囲の違いを把握できる。"
+          },
+          {
+            "title": "Gemini 1.5: Unlocking multimodal understanding across millions of tokens of context",
+            "reason": "Video-MMEで最高性能を示したGemini 1.5 Proの長文脈マルチモーダル処理能力の背景を理解できる。"
+          }
+        ]
+      },
+      "titleJa": "Video-MME: 動画分析におけるマルチモーダルLLMを総合的に評価する初のベンチマーク",
+      "why": "動画を扱うマルチモーダルLLMを評価するため、6ドメイン・30サブカテゴリ、11秒〜1時間の動画900本に人手で作成した2,700件の4択QAを用意し、字幕・音声も含めて測定するベンチマーク Video-MME を提案した研究です。動画の多様性、短中長の時間幅、モダリティの広さ、専門アノテータによる高品質ラベルを同時に満たす点が特徴で、Gemini 1.5 Pro が字幕なしで平均75.0%、最良のオープンソースは59.0%と差が示され、動画が長いほど精度が下がることも明らかにしました。CVPR 2025 で Paper Digest 集計の同年被引用数1位となっており、動画理解の評価基盤として広く参照されていることがうかがえます。"
     }
   ],
   "sources": [
@@ -110,6 +319,10 @@
     {
       "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
       "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    },
+    {
+      "title": "Most Influential CVPR Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-cvpr-papers-2026-03-version/"
     }
   ],
   "unreachable": []
