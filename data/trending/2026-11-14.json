@@ -8,7 +8,7 @@
       "description": "Windows 上的安卓应用运行器：双击 APK 即装，应用以独立窗口与桌面图标运行，自持 QEMU 运行时",
       "language": "JavaScript",
       "stars": 2637,
-      "starsGained": 1594,
+      "starsGained": 1725,
       "createdAt": "2026-10-29T13:44:03Z",
       "url": "https://github.com/RoutineMiku/apkstart",
       "topics": [
@@ -25,7 +25,7 @@
       "license": "MIT",
       "homepage": "",
       "archived": false,
-      "summary": "**一言で:** Windows 上で APK をダブルクリックするだけでインストールし、各 Android アプリをデスクトップアイコン付きの独立ウィンドウとして動かす、Electron 製のランナーです。\n\n**解決する課題:** Windows で Android アプリを動かすには、エミュレータ UI を開いて APK を入れ、アプリを探して起動する、という手順が必要でした。ApkStart は APK の解析・インストール・ショートカット生成までを自動化し、Windows ネイティブアプリに近い操作感で Android アプリを使えるようにします。運用に必要なランタイム(adb、Android Emulator、システムイメージ)も自前で管理します。\n\n**技術的なポイント:**\n- Android Emulator(QEMU ベース)と Android 14(API 34)の Google Play x86_64 イメージを使用。自前のハイパーバイザではなく、AOSP/QEMU/adb を土台にしています。\n- エミュレータのウィンドウを `SetParent` で埋め込み、タイトルやアイコンを差し替えて、アプリごとの独立ウィンドウに見せます。全画面/ウィンドウモードの切り替えと、アプリごとのサイズ記憶に対応しています。\n- シェル部分はサードパーティ依存ゼロで、ZIP/PNG/ICO/AXML/`resources.arsc` の解析を手書きしています。APK からアイコンと名前をオフラインで取り出し、ICO と `.lnk`(デスクトップ+スタートメニュー)を生成します。\n- ネットワークは QEMU のユーザーモード NAT で、ホストの NIC を共用します。仮想 NIC やドライバは不要です。ハードウェアアクセラレーションは AEHD または WHPX を使い、利用できない場合はソフトウェアエミュレーションにフォールバックします。\n- 起動を速める仕組みとして、quickboot スナップショット(README の実測では冷起動約 23 秒、スナップショット復元約 10 秒)と、起動時のバックグラウンド事前起動(空き時のメモリ常駐は約 1 GB)があります。\n- ARM 専用アプリは「ARM 互換モード」で ndk_translation 経由で動かします。README では一部アプリの動作を確認したとしていますが、強いエミュレーション検知を持つアプリは制限される可能性があると明記されています。\n- ホストの `ApkStartShared` と Android 側 `/sdcard/ApkStartShared` は、マウントではなく双方向同期です。\n\n**使いどころ:** Windows 上で Android アプリを日常的なデスクトップアプリのように起動したい場合や、WSA 終了後の代替を探している場合に向きます。対象は Windows 10/11 x64 です。ARM 専用アプリや、エミュレーション検知が厳しいアプリでは動作が保証されない点に注意してください。\n\n**始め方:**\n```powershell\nnpm install\nnpm start          # ランタイム(adb / Emulator / システムイメージ)を初回デプロイ\nnpm run assoc:on   # (任意).apk のダブルクリック関連付けを登録\n```\nビルド不要の場合は、GitHub または Gitee の Releases から `ApkStart-v*-Setup.exe`(約 1.3 GB、ランタイム同梱)か、軽量版のポータブル zip(約 95 MB、初回起動時にランタイムをダウンロード)を入手できます。"
+      "summary": "**一言で:** Windows 上で APK をダブルクリックするだけでインストールし、各 Android アプリをデスクトップアイコン付きの独立ウィンドウとして実行できる、QEMU/Android Emulator ベースのランナー。\n\n**解決する課題:** WSA（Windows Subsystem for Android）のような仕組みに頼らず、Windows 上で Android アプリをネイティブアプリに近い操作感で使いたいという需要に応えます。通常のエミュレータ操作（AVD 起動・adb install・手動起動）を意識せず、「APK を開く → アイコンから起動」という流れに集約します。ランタイムは自前で管理するため、他のエミュレータへの依存がありません。\n\n**技術的なポイント:**\n- Electron 製のシェルで、ZIP / PNG / ICO / AXML / resources.arsc の解析を手書きし、シェル自体はサードパーティ依存ゼロとしています。\n- ランタイムは公式の Android Emulator + adb + Android 14（Google Play, x86_64）システムイメージ。ネットワークは QEMU のユーザーモード NAT を使うため、Windows 側に仮想 NIC やスイッチは作られません。\n- エミュレータのウィンドウを `SetParent` で埋め込み、タイトル・アイコン・縦画面比率を調整してアプリ単位のウィンドウとして見せます。全画面/ウィンドウモードは F11 で切替でき、サイズはアプリごとに記憶されます。\n- 起動の高速化として、読み取り専用のベースイメージ共有、差分の書き込み層、quickboot スナップショット、アイドル時の事前起動を採用しています（README 記載の実測では、コールドブート約 23 秒、スナップショット復帰約 10 秒）。事前起動時は常駐で約 1 GB のメモリを使います。\n- ARM のみのアプリは「ARM 互換モード」（ndk_translation）で動かせます。README では特定アプリでの動作を実測したとしていますが、強い anti-emulator 検出を持つアプリは動かない場合があると明記されています。また、共有フォルダはマウントではなく双方向の同期方式です。\n\n**使いどころ:** Windows 上でスマホアプリを日常的に使いたい場合や、APK をすぐに試したい場合に向きます。なお対象は Windows 10/11 x64 で、フルインストーラは約 1.3 GB あります。\n\n**始め方:**\n```powershell\n# ソースから実行（初回に adb / Emulator / システムイメージを取得）\nnpm install\nnpm start\n\n# 任意: .apk のダブルクリックインストールを登録\nnpm run assoc:on\n```\nビルド不要の場合は、GitHub / Gitee の Releases から `ApkStart-v*-Setup.exe`（ランタイム同梱）または軽量のポータブル版 zip を入手できます。"
     },
     {
       "fullName": "deepseek-ai/chat-demo",
@@ -33,14 +33,14 @@
       "description": "Chat Demo",
       "language": "TypeScript",
       "stars": 1393,
-      "starsGained": 703,
+      "starsGained": 745,
       "createdAt": "2026-11-12T08:08:19Z",
       "url": "https://github.com/deepseek-ai/chat-demo",
       "topics": [],
       "license": "MIT",
       "homepage": "https://deepseek-ai.github.io/chat-demo/",
       "archived": false,
-      "summary": "**一言で:** DeepSeek API に対して、アプリ側のバックエンドなしでブラウザから直接接続して使える、静的なチャット UI のデモです。\n\n**解決する課題:** DeepSeek API を使ったチャット UI を試したり自前で構築したりする際、通常はサーバー側の実装が必要になります。このリポジトリはブラウザだけで完結する静的サイトとして提供されており、API キーを設定するだけで、会話管理・ストリーミング応答・添付ファイル・音声機能などを備えたチャットを動かせます。\n\n**技術的なポイント:**\n- TypeScript 製で、ビルドには rspack を使用します（`rspack.config.ts`）。リンターは oxlint、フォーマッターは oxfmt です。ビルド成果物は `dist/` に静的ファイルとして出力されます。\n- アプリケーションのバックエンドは不要で、ブラウザが設定された API サービスへ直接接続します。API キーと設定は localStorage、会話と添付ファイルの原本は IndexedDB に保存されます。\n- チャットはデフォルトで `deepseek-flash` モデルを、Anthropic 互換の Messages / Files API 経由で利用します。音声機能は ASR / TTS エンドポイントを使います。検索、リンク読み取り、タイトル生成、`latest_reminder` といった拡張を含むリクエストを送るため、接続先がこれらに対応している必要があります。\n- 機能面では、複数会話、プロンプト編集、再生成、メッセージのブランチ切り替え、Deep thinking、検索と出典表示、Markdown / シンタックスハイライト / KaTeX / Mermaid、日英対応、ライト/ダークテーマ、モバイルレイアウトなどを備えています。\n- 履歴は ZIP 形式でインポート/エクスポートできます。インポートは既存のローカル会話と添付をすべて置き換えます。エクスポートには API キー、設定、画像以外の添付原本は含まれません。API のデフォルトの接続先は `https://api.deepseek.com` で、`createConfig({ apiOrigin, devServer })` で変更できます。\n\n**使いどころ:** DeepSeek API の動作確認や、バックエンド不要の自前チャット UI のベースとして、静的ホスティングやローカルで手軽に動かしたい場合に向いています。`dist/index.html` を直接開く場合は、ブラウザが `file://` でのストレージに対応していることと、API サービスがそのクロスオリジンリクエストを許可していることが必要です。\n\n**始め方:**\nNode.js 22.12 以上と pnpm が必要です。\n\n```sh\ngit clone https://github.com/deepseek-ai/chat-demo.git\ncd chat-demo\npnpm install\npnpm dev\n```\n\nhttp://localhost:8090 を開き、初回のチャット前に設定画面で API キーを入力します。静的サイトとして出力する場合は `pnpm build` を実行します。"
+      "summary": "**一言で:** DeepSeek API に対して、アプリ側バックエンドなしでブラウザから直接接続して動かす、静的なチャットデモアプリです。\n\n**解決する課題:** DeepSeek API を使ったチャット UI を試したい場合、通常はサーバーサイドの実装やビルド環境が必要になります。このリポジトリは静的ファイルだけで完結するため、API キーさえあればオンラインまたはローカルで手軽に動作を確認できます。\n\n**技術的なポイント:**\n- TypeScript 製の純粋な静的サイトで、ビルドには rspack、lint は oxlint、フォーマットは oxfmt を使用します（Node.js 22.12+ と pnpm が必要）。\n- ブラウザが設定された API サービスへ直接リクエストするため、アプリ専用のバックエンドは不要です。API キーと設定は localStorage、会話と添付の原本は IndexedDB に保存されます。\n- チャットは既定で `deepseek-flash` を使い、Anthropic 互換の Messages / Files API 経由で呼び出します。音声機能には ASR / TTS エンドポイントを使います。\n- 検索、リンク読み取り、タイトル生成、`latest_reminder` といった拡張をリクエストに含めるため、接続先のサービスが対応している必要があります。API の向き先は `rspack.config.ts` の `createConfig({ apiOrigin, devServer })` で変更できます（既定は `https://api.deepseek.com`）。\n- 機能面では、会話の複数管理、メッセージのブランチ切り替え、ストリーミング応答、深い思考、添付、音声入力と読み上げ、Markdown / シンタックスハイライト / KaTeX / Mermaid に対応します。履歴は ZIP でインポート・エクスポートでき、インポート時は既存の会話と添付が置き換えられます。エクスポートに API キー、設定、画像以外の添付原本は含まれません。\n\n**使いどころ:** DeepSeek API の動作確認や、自前のチャット UI を作る際の参考実装として使えます。静的ホスティングに配置するだけの簡易なチャット環境としても利用できます。`index.html` を直接開く場合は、`file://` でのストレージ利用と、API 側のクロスオリジン許可がブラウザ・API 双方で必要です。\n\n**始め方:**\n```sh\ngit clone https://github.com/deepseek-ai/chat-demo.git\ncd chat-demo\npnpm install\npnpm dev\n```\nhttp://localhost:8090 を開き、初回のチャット前に Settings で API キーを入力します。"
     },
     {
       "fullName": "GoogleChrome/modern-web-guidance",
@@ -48,21 +48,21 @@
       "description": "Keep your coding agent up to date with the latest web best practices",
       "language": "",
       "stars": 12398,
-      "starsGained": 1394,
+      "starsGained": 1530,
       "createdAt": "2026-03-23T17:49:14Z",
       "url": "https://github.com/GoogleChrome/modern-web-guidance",
       "topics": [],
       "license": "Apache-2.0",
       "homepage": "https://goo.gle/modern-web-guidance",
       "archived": false,
-      "summary": "**一言で:** コーディングエージェントに、モダンな Web プラットフォームのベストプラクティスとブラウザ互換性情報を「スキル」として組み込み、レガシーなコードパターンを避けさせるための CLI／スキル集です。\n\n**解決する課題:** LLM の学習データには古いコードが大量に含まれるため、エージェントは今ではネイティブ機能で済む処理にも、肥大化した JavaScript やレガシーな実装を生成しがちです。API の存在自体は知っていても、実運用レベルのモダンな実装パターンの情報量が不足していることもあります。本プロジェクトは、専門家が整理したガイドをエージェントのコンテキストに直接渡すことで、このギャップを埋めることを狙っています。\n\n**技術的なポイント:**\n- スキルの CLI（`npx modern-web-guidance`）が、`search`（ガイド検索）、`retrieve`（ID 指定でガイド取得）、`legacy-scan`（コードベース内のレガシーパターン検出）といったコマンドを提供し、該当ガイドをエージェントのコンテキストに返します。\n- カバー範囲は、README の機能一覧によると 250 の Web 機能（CSS・レイアウトで 140 機能など）です。View Transitions、コンテナクエリ、Anchor Positioning、Popover API、`scheduler.yield`、組み込み AI（翻訳・要約・言語検出）などが含まれます。\n- ガイドはトークン効率を重視しており、評価（eval）を実行して、モデルが既に知っている最低限の内容は削る方針とのことです。評価結果は Eval Dashboard で公開されています。\n- 重いポリフィルやレガシーライブラリではなく、軽量で妥当なフォールバックを推奨する方針です。パフォーマンスやアクセシビリティ面で、ブラウザが最適化できるプラットフォーム標準 API を優先します。\n- Google Chrome、Microsoft Edge、Mozilla Firefox、MDN の各チームとコミュニティが運営に関わっているとされています。ライセンスは Apache-2.0 です。なお、このリポジトリは配布用で、ソースコードは別リポジトリ（modern-web-guidance-src）にあります。\n\n**使いどころ:** Claude Code など AI コーディングエージェントでフロントエンドを実装する際に、モダンな CSS／Web API ベースのコードを生成させたい場合に向いています。また、`legacy-scan` を使って既存コードベースの近代化候補を洗い出す用途も想定されています。\n\n**始め方:**\n```shell\n# 対話式ウィザードでインストール\nnpx modern-web-guidance@latest install\n\n# インストールせずに試す\nnpx modern-web-guidance@latest search \"animate a dialog modal backdrop\"\nnpx modern-web-guidance@latest retrieve \"animate-to-from-top-layer\"\nnpx modern-web-guidance@latest legacy-scan .\n```"
+      "summary": "**一言で:** コーディングエージェントに最新のウェブプラットフォームのベストプラクティスとブラウザ互換性情報を与え、レガシーなパターンではなくモダンな実装へ誘導するスキル（CLI 付き）です。\n\n**解決する課題:** LLM の学習データには古いコードが大量に含まれるため、エージェントはネイティブ機能で済む処理にも肥大化した JavaScript を生成しがちです。API の存在自体は知っていても、本番で使えるモダンな実装パターンの情報が不足していることもあります。このツールは、厳選されたガイドをエージェントのコンテキストに直接返すことで、その差を埋めます。\n\n**技術的なポイント:**\n- npm 経由の CLI（`modern-web-guidance`）が `search`（ガイド検索）、`retrieve`（ID 指定で取得）、`legacy-scan`（コードベース内のレガシーパターン検出）を提供します。\n- ガイドはトークン効率を重視して設計されています。評価（eval）を実施し、モデルがすでに知っている最大公約数的な内容は削ぎ落としています。評価結果は Eval Dashboard で公開されています。\n- 対象は CSS/レイアウト（container queries、subgrid、oklch など）、UX（View Transitions など）、パフォーマンス（`scheduler.yield`、INP 診断など）、フォーム/UI（Popover API、Anchor Positioning など）、アクセシビリティ、Built-in AI（翻訳・要約・言語検出 API）です。README 記載では 250 のモダンな Web 機能をカバーしています。\n- ポリフィルや重いレガシーライブラリではなく、軽量で妥当なフォールバックを推奨する方針です。また、ブラウザ側で最適化でき、アクセシビリティ機能が組み込まれたプラットフォーム API を優先します。\n- Google Chrome、Microsoft Edge、Mozilla Firefox、MDN の各チームとウェブ開発コミュニティが管理しています。ライセンスは Apache-2.0 です。なお、このリポジトリは配布用で、ソースコードは別リポジトリ（modern-web-guidance-src）にあります。\n\n**使いどころ:** AI コーディングエージェントでフロントエンドを開発する際に、モーダル、ツールチップ、アニメーション、レイアウトなどをネイティブ API で実装させたいときに向いています。既存コードの `legacy-scan` による、モダン化候補の洗い出しにも使えます。\n\n**始め方:**\n```shell\n# 対話式ウィザードでインストール\nnpx modern-web-guidance@latest install\n\n# インストールせずに試す\nnpx modern-web-guidance@latest search \"animate a dialog modal backdrop\"\nnpx modern-web-guidance@latest retrieve \"animate-to-from-top-layer\"\nnpx modern-web-guidance@latest legacy-scan .\n```"
     },
     {
       "fullName": "DevedevT/FFmpeg-GUI-Editor-Windows",
       "rank": 4,
       "description": "Lightweight portable FFmpeg GUI & lossless video trimmer for Windows (ready-to-use .exe). Supports English, Russian, Chinese, German, French & Italian.",
       "language": "Visual Basic .NET",
-      "stars": 1040,
+      "stars": 1042,
       "starsGained": 499,
       "createdAt": "2026-11-12T20:49:07Z",
       "url": "https://github.com/DevedevT/FFmpeg-GUI-Editor-Windows",
@@ -91,7 +91,7 @@
       "license": "MIT",
       "homepage": "",
       "archived": false,
-      "summary": "**一言で:** FFmpeg をコマンドラインなしで操作できる、Windows 向けのポータブルな GUI 動画編集・変換ツールです（VB.NET 製）。\n\n**解決する課題:** FFmpeg はトリミング、圧縮、変換などに強力ですが、コマンド引数の記述に慣れが必要です。このツールは主要な処理を GUI で設定して実行できるようにし、インストールや PATH 設定なしで使えるようにします。\n\n**技術的なポイント:**\n- 主要言語は Visual Basic .NET で、配布物は `FFmpeg-GUI-Editor.exe` と `libvlc.dll` の 2 ファイルです。`libvlc.dll` はプレビュー再生・レンダリングに必須で、同じフォルダに置く必要があります。\n- 再エンコードなしのロスレストリム、手動クロップと黒帯の自動クロップ、解像度ダウンスケールによる圧縮、MP4/MKV/WebM/GIF/MP3/FLAC などへの変換に対応しています。\n- 重複フレーム除去、再生速度・FPS 変更、クロマキー、連番画像から動画/GIF への変換、`.srt` 字幕のタイムライン編集、フレーム抽出など、FFmpeg の機能を GUI から使えます。\n- GUI で設定した内容から FFmpeg の CLI 引数を生成してコピーでき、バッチ処理用の `.bat` も出力できます。自分のスクリプトに組み込む用途にも使えます。\n- UI は英語・ロシア語・中国語・ドイツ語・フランス語・イタリア語の 6 言語で、追加の言語パックは不要です。\n- ライセンス表記に不整合があります。リポジトリのメタデータは MIT ですが、README 本文は GPL v3.0 としています。組み込みや再配布を考える場合は、リポジトリ内の LICENSE ファイルを確認してください。\n\n**使いどころ:** 動画の不要部分のカットや、Discord・Telegram 向けの容量圧縮、形式変換などを手早く済ませたい場面に向きます。コマンドを覚えずに FFmpeg を使いたい場合や、GUI から FFmpeg コマンドを生成して自動化したい場合にも使えます。\n\n**始め方:**\nREADME のリリース手順は次のとおりです。インストーラーはありません。\n1. Releases ページから `FFmpeg-GUI-Editor.exe` と `libvlc.dll` の両方をダウンロードします。\n2. 2 つのファイルを同じフォルダに置きます。\n3. `.exe` をダブルクリックして起動します。"
+      "summary": "**一言で:** FFmpeg をコマンドラインなしで扱える、Windows 向けのポータブルな動画編集・変換 GUI ツールです。\n\n**解決する課題:** FFmpeg は高機能ですが、トリミングや圧縮、変換のたびに CLI 引数を調べて組み立てる手間があります。このツールは GUI で設定するだけで、インストールや `PATH` 設定なしにそれらの操作ができるようにします。\n\n**技術的なポイント:**\n- 主要言語は Visual Basic .NET で、Windows 10/11 向けのデスクトップアプリです。配布物は `FFmpeg-GUI-Editor.exe` と `libvlc.dll` の 2 ファイルで、インストール不要で動作します。\n- 動画プレビューと再生には `libvlc.dll`（VLC のメディアエンジン）を使います。このため `.exe` と同じフォルダに置く必要があります。\n- 機能は、再エンコードなしのトリミング、手動/自動クロップ、リサイズ・圧縮、各種フォーマット変換（MP4, MKV, WebM, GIF, MP3, FLAC など）、回転・反転、音量調整、速度/FPS 変更、クロマキー、重複フレーム除去、連番画像から動画/GIF への変換、SRT 字幕エディタなど多岐にわたります。\n- GUI で設定した内容から FFmpeg の CLI 引数を生成してコピーできます。また `.bat` バッチスクリプトを書き出し、ドラッグ&ドロップで複数動画を一括処理できます。FFmpeg を学びながら使う用途や、自作スクリプトへの流用にも向きます。\n- UI は英語・ロシア語・中国語・ドイツ語・フランス語・イタリア語の 6 言語に対応し、追加の言語パックは不要です。\n- ライセンス表記に食い違いがあります。リポジトリのメタデータは MIT ですが、README 本文は GPL v3 としています。組み込みや再配布を検討する場合は、リポジトリ内の LICENSE ファイルを確認してください。\n\n**使いどころ:** 動画の不要部分を無劣化でカットしたい場合や、Discord・Telegram などにアップロードするためにサイズを縮めたい場合に向いています。FFmpeg のコマンドを毎回書かずに、形式変換やバッチ処理をしたい場面でも使えます。\n\n**始め方:**\nREADME の手順は次のとおりです。コマンドはなく、ダウンロードして実行する形式です。\n\n```text\n1. リポジトリの Releases ページを開く\n2. FFmpeg-GUI-Editor.exe と libvlc.dll の両方をダウンロードする\n3. 2 つのファイルを同じフォルダに置く\n4. FFmpeg-GUI-Editor.exe をダブルクリックして起動する\n```"
     },
     {
       "fullName": "dream-num/univer",
@@ -99,7 +99,7 @@
       "description": "Build your own AI office with Univer Office SDK. Bring editing, calculation, collaboration, and file processing into your product for people and AI agents. Built on an extensible open-source core.",
       "language": "TypeScript",
       "stars": 24215,
-      "starsGained": 476,
+      "starsGained": 479,
       "createdAt": "2022-09-29T12:09:14Z",
       "url": "https://github.com/dream-num/univer",
       "topics": [
@@ -127,7 +127,7 @@
       "license": "Apache-2.0",
       "homepage": "https://univer.ai",
       "archived": false,
-      "summary": "**一言で:** Web 上に Sheets（表計算）や Docs（文書）といった Office 編集機能を組み込むための TypeScript 製 Office SDK で、本リポジトリはそのオープンソース（Apache-2.0）のコア部分です。\n\n**解決する課題:** 自社プロダクトに表計算やリッチテキストの編集機能を載せようとすると、編集、数式計算、描画、Undo/Redo を一から作る必要があります。Univer はこれらをプラグイン構成のエンジンとして提供し、アプリケーションやエージェントから同じ API で操作できるようにします。\n\n**技術的なポイント:**\n- SDK は Web SDK、Server SDK、AI SDK の 3 部構成です。本リポジトリが Apache-2.0 で公開しているのは Web SDK のコア（コンテンツモデルとスナップショット形式、プラグインと依存管理、コマンドシステム、数式・描画エンジン、Facade API、UI 基盤、Sheets/Docs の編集機能）です。\n- 商用の Web SDK プラグイン、Server SDK（リアルタイム共同編集、編集履歴、Office ファイルのインポート/エクスポート）、商用 AI SDK 拡張は別配布・別ライセンスです。XLSX のインポート/エクスポートも OSS 範囲外と明記されています。\n- 機能はプラグインとプリセットで組み合わせます。手軽に始めるなら Preset、プラグインの選択や読み込みを細かく制御したいなら Plugin Mode を使います。\n- Facade API（アプリ向け API）でワークブック、シート、レンジを操作できます。`workbook.save()` で JSON スナップショットを取得でき、保存先はアプリ側で決めます。\n- 機能ごとに変更内容と Undo 用データを持ち、コマンドがそれらの実行と履歴を合成する設計です。たとえばフィルタ範囲内への行挿入では、元データとフィルタ範囲の両方が Undo で戻ります。\n- エディタ UI なしで Node.js からコンテンツモデル、コマンド、計算を使う Headless 利用も可能です。\n\n**使いどころ:** 自社の Web アプリに表計算や文書エディタを埋め込み、アプリのデータと連携させたい場合や、エージェントが同じ API でシートを編集・計算する仕組みを作りたい場合に向きます。共同編集や XLSX 変換が必要なときは、別ライセンスの Server SDK などが必要になる点に注意してください。\n\n**始め方:**\n```bash\npnpm add @univerjs/presets @univerjs/preset-sheets-core\n```\n```html\n<div id=\"app\" style=\"height: 100vh\"></div>\n```\n```ts\nimport { UniverSheetsCorePreset } from '@univerjs/preset-sheets-core'\nimport UniverPresetSheetsCoreEnUS from '@univerjs/preset-sheets-core/locales/en-US'\nimport { createUniver, LocaleType, mergeLocales } from '@univerjs/presets'\nimport '@univerjs/preset-sheets-core/lib/index.css'\n\nconst { univerAPI } = createUniver({\n  locale: LocaleType.EN_US,\n  locales: {\n    [LocaleType.EN_US]: mergeLocales(UniverPresetSheetsCoreEnUS),\n  },\n  presets: [UniverSheetsCorePreset({ container: 'app' })],\n})\n\nuniverAPI.createWorkbook({})\n```"
+      "summary": "**一言で:** Sheets / Docs などの Office 機能（編集・計算・共同編集・ファイル処理）を自社アプリやエージェントに組み込むための、TypeScript 製の Office SDK です。このリポジトリは、その Web SDK のコア部分を Apache-2.0 で公開しています。\n\n**解決する課題:** スプレッドシートやドキュメント編集機能をアプリに組み込むには、レンダリング、数式計算、Undo/Redo などを自前で実装する必要があり、負担が大きくなります。Univer はこれらを plugin 構成の SDK として提供し、独自のデータや権限と接続できるようにします。人間のユーザーだけでなく、エージェントからも同じ API で操作できる点が特徴です。\n\n**技術的なポイント:**\n- SDK は Web SDK / Server SDK / AI SDK の 3 構成です。本リポジトリが提供するのは Web SDK のコアで、コンテンツモデル、スナップショット形式、plugin・依存性管理、コマンドシステム、数式エンジン、レンダリングエンジン、Facade API、UI 基盤、Sheets / Docs の編集機能を含みます。\n- 機能は plugin と preset の組み合わせで構成します。簡単に導入するなら preset（例: Sheets Core preset）、plugin の選択や読み込みを細かく制御したいなら Plugin Mode を使います。\n- Facade API がアプリ向けの公開インターフェースで、ワークブック、シート、レンジを操作できます。アプリのコードでもエージェントでも同じ編集ができ、数式は自動で再計算されます。`workbook.save()` で JSON スナップショットを取得でき、保存先はアプリ側で決めます。\n- エディタ UI なしで、Node.js 上でコンテンツモデル、コマンド、計算を再利用する Headless 処理が可能です。\n- 複数機能にまたがる編集と Undo/Redo は、各機能が自分の変更と Undo データを提供し、コマンドがそれらをまとめて実行・履歴管理する設計です。例として、フィルタ範囲内への行挿入では、基本コンテンツとフィルタ範囲の両方を復元できます。\n- ライセンスに注意が必要です。商用の Web SDK plugin、Server SDK、商用 AI SDK 拡張は別配布・別ライセンスです。README の記述では、XLSX のインポート/エクスポートは別配布のファイル変換機能に当たります。README 冒頭のデモには商用機能を含むものがあり、OSS 版の標準構成より広い範囲を示しています。具体的な範囲は機能比較ページで確認してください。\n\n**使いどころ:** 自社の Web アプリにスプレッドシートやリッチテキストエディタを埋め込み、アプリのデータと連携させたい場合や、エージェントに表計算の編集・計算を行わせたい場合に向いています。また、Node.js 上でエディタなしにシートを処理する自動化にも使えます。\n\n**始め方:**\n```bash\npnpm add @univerjs/presets @univerjs/preset-sheets-core\n```\n```ts\nimport { UniverSheetsCorePreset } from '@univerjs/preset-sheets-core'\nimport UniverPresetSheetsCoreEnUS from '@univerjs/preset-sheets-core/locales/en-US'\nimport { createUniver, LocaleType, mergeLocales } from '@univerjs/presets'\nimport '@univerjs/preset-sheets-core/lib/index.css'\n\nconst { univerAPI } = createUniver({\n  locale: LocaleType.EN_US,\n  locales: { [LocaleType.EN_US]: mergeLocales(UniverPresetSheetsCoreEnUS) },\n  presets: [UniverSheetsCorePreset({ container: 'app' })],\n})\n\nuniverAPI.createWorkbook({})\n```\nHTML 側に `<div id=\"app\" style=\"height: 100vh\"></div>` が必要です。`@univerjs/*` パッケージはバージョンを揃えてください。"
     },
     {
       "fullName": "alibaba/open-code-review",
@@ -135,7 +135,7 @@
       "description": "Secure, fast, efficient, battle-tested at Alibaba's scale. Hybrid architecture code review tool: deterministic pipelines + LLM Agent, precise line-level comments, built-in multi-language ruleset (NPE, thread-safety, XSS, SQL injection), OpenAI & Anthropic compatible.",
       "language": "Go",
       "stars": 51025,
-      "starsGained": 418,
+      "starsGained": 456,
       "createdAt": "2026-05-18T02:16:36Z",
       "url": "https://github.com/alibaba/open-code-review",
       "topics": [
@@ -149,7 +149,7 @@
       "license": "Apache-2.0",
       "homepage": "https://open-codereview.ai",
       "archived": false,
-      "summary": "**一言で:** Git の diff（またはファイル全体）を読み、LLM エージェントで行単位のレビューコメントを生成する AI コードレビュー CLI（`ocr`）です。\n\n**解決する課題:** Claude Code + Skills のような汎用エージェントによるレビューでは、大きな変更で一部のファイルしか見ない、指摘の行位置がずれる、プロンプトの揺れで品質が安定しない、といった問題が起きがちです。README ではこれを「言語駆動のみでは、レビュー工程に強い制約をかけられないため」と説明しており、本ツールは工程の要所を決定論的な処理で固めることで解決を図っています。Alibaba 社内の公式 AI コードレビュー支援ツールが元になっています。\n\n**技術的なポイント:**\n- **決定論的処理 × エージェントのハイブリッド構成:** レビュー対象ファイルの選定・フィルタリング、ルールのマッチング、コメント位置の特定とリフレクション（コメントの検証）は LLM に任せずエンジニアリング側のロジックで担保し、動的なコンテキスト取得や判断だけをエージェントが担当します。\n- **ファイルのバンドル化とサブエージェント:** 関連ファイル（例: `message_en.properties` と `message_zh.properties`）を 1 単位にまとめ、バンドルごとに独立コンテキストのサブエージェントで実行します。大規模な変更でも安定し、並行レビューも可能とされています。\n- **レビュー特化のツールセット:** エージェントは全文読み取り、コードベース検索、他の変更ファイル参照などを行えます。ツールは本番データのツール呼び出しログ分析をもとに絞り込まれています。\n- **ベンチマーク結果（自社公開データ）:** AACR-Bench（50 リポジトリ・200 PR・10 言語・正解 1,505 件）で、同一モデルの Claude Code と比べ Precision と F1 が高く、トークン消費は約 1/9 とされています。一方で Recall は低く、ノイズを減らすため意図的に精度を優先しています。\n- **実行モードと連携:** 通常モード（OCR が設定された LLM を呼ぶ）に加え、デリゲートモード（ホストの AI コーディングエージェントのモデルでレビューし、OCR 側の API キー不要）があります。Claude Code / Codex / Cursor / Kimi Code / OpenCode 向けプラグイン、MCP サーバー、GitHub Actions・GitLab CI・Gerrit 連携、OpenTelemetry、セッションビューアも備えています。\n\n**使いどころ:** PR やブランチ間差分、単一コミットのレビューを CI やローカルで自動化し、誤検知の少なさとトークンコストを重視したい場合に向きます。`ocr scan` は、差分のない既存コードや不慣れなディレクトリの監査にも使えます。\n\n**始め方:** Git 2.41 以上が必要です。LLM のプロバイダ設定が必要です（デリゲートモードを除く）。\n\n```bash\nnpm install -g @alibaba-group/open-code-review\n\nocr config provider   # プロバイダ選択・APIキー設定\nocr config model      # モデル選択\n\ncd your-project\nocr review            # ワークスペースの変更をレビュー\nocr review --from main --to feature-branch   # ブランチ範囲\nocr scan --path internal/agent               # ファイル全体のスキャン\n```"
+      "summary": "**一言で:** Git の diff（または全ファイル）を読み、ツール呼び出し可能な LLM エージェントで行単位のレビューコメントを生成する、Alibaba 発の AI コードレビュー CLI です。\n\n**解決する課題:** Claude Code などの汎用エージェントに Skills でレビューさせると、変更が大きい場合に一部ファイルしか見ない、指摘の行番号や場所がずれる、プロンプトの小さな差で品質が揺れる、といった問題が起きがちです。README はその原因を、言語だけで駆動する構成にレビュー工程への強い制約がないことだと説明しています。OCR は、外してはいけない工程を決定論的なロジックで固定することでこれに対処します。\n\n**技術的なポイント:**\n- **決定論的処理と LLM エージェントのハイブリッド構成**: レビュー対象ファイルの選定・除外、ルールの割り当てはエンジニアリング側のロジックで保証し、動的な判断とコンテキスト取得だけをエージェントに任せます。\n- **ファイルのバンドル化とサブエージェント分割**: 関連ファイル（例: `message_en.properties` と `message_zh.properties`）を 1 単位にまとめ、コンテキストを分離したサブエージェントで実行します。大規模な変更でも安定し、並行レビューにも向くとされています。\n- **テンプレートエンジンによるルール照合と外部モジュール**: ファイルの特性に応じたルールを割り当て、コメントの位置特定とリフレクション（内容検証）は独立モジュールが担当します。\n- **ベンチマーク（README 記載）**: 50 リポジトリ・200 PR・10 言語の AACR-Bench で、同一モデルの Claude Code と比べ Precision と F1 が高く、トークン消費は約 1/9 とされています。一方 Recall は低く、ノイズ削減を優先したトレードオフだと明記されています。\n- **運用面の特徴**: Go 製の CLI で、`ocr scan` による全ファイル監査、セッションの再開、JSON 出力、MCP サーバー連携に対応します。CI/CD は GitHub Actions、GitLab CI、Gerrit などが対象です。Claude Code、Codex、Cursor などへのプラグイン提供もあり、OCR 側の LLM 設定が不要な委譲モード（Delegation Mode）も選べます。\n\n**使いどころ:** PR や CI パイプラインでの自動レビューで、誤検知を減らしつつトークンコストも抑えたいチームに向きます。見慣れないコードベースやディレクトリを `ocr scan` で監査する用途にも使えます。ただし Recall は汎用エージェントより低いため、見逃しを極力避けたい用途では注意が必要です。\n\n**始め方:** 前提は Git 2.41 以上です。\n\n```bash\nnpm install -g @alibaba-group/open-code-review\n\nocr config provider   # プロバイダーと API キーを設定\nocr config model      # モデルを選択\n\ncd your-project\nocr review            # ワークスペースの変更をレビュー\n```"
     },
     {
       "fullName": "ChromeDevTools/chrome-devtools-mcp",
@@ -157,7 +157,7 @@
       "description": "Chrome DevTools for coding agents",
       "language": "TypeScript",
       "stars": 55880,
-      "starsGained": 410,
+      "starsGained": 449,
       "createdAt": "2025-09-11T10:39:55Z",
       "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
       "topics": [
@@ -173,7 +173,7 @@
       "license": "Apache-2.0",
       "homepage": "https://developer.chrome.com/docs/devtools/agents",
       "archived": false,
-      "summary": "**一言で:** コーディングエージェントが実際の Chrome を操作・検査できるようにする、Chrome DevTools の MCP サーバー兼 CLI。\n\n**解決する課題:** AI コーディングアシスタントはコードを書けても、ブラウザ上での実際の挙動（描画、ネットワーク、コンソールエラー、性能）を確認できません。このツールはエージェントに DevTools の機能を渡し、Web ページのデバッグ、自動操作、パフォーマンス分析をエージェント自身が実行できるようにします。\n\n**技術的なポイント:**\n- TypeScript 製で、MCP サーバーとして動作します。同梱の `chrome-devtools` CLI を使えば MCP なしでもターミナルからブラウザを操作できます。\n- ブラウザ操作には Puppeteer を使い、アクションの結果を自動で待機する仕組みにより、自動操作の信頼性を高めています。\n- Chrome DevTools を利用してトレースを記録し、パフォーマンスの知見を抽出します。ネットワークリクエストの分析、スクリーンショット取得、ソースマップ対応のスタックトレース付きコンソールメッセージ確認も可能です。\n- アクセシビリティ、Cookie、LCP 改善、メモリリークなどのデバッグ手順を教える Skills を同梱しています。Claude Code、Copilot / VS Code、Gemini CLI ではプラグインとして一括導入できます。\n- `--headless`、`--isolated`、`--slim`（基本操作用の縮小ツールセット）などのオプションがあります。起動中の Chrome への接続や Android デバッグも可能です。\n\n**使いどころ:** 開発中のページの表示崩れ、コンソールエラー、ネットワーク不具合、LCP などの性能問題を、エージェントに調査・修正させたい場面に向きます。エージェント製品にブラウザサブエージェントを組み込む際の土台にもなります。\n\n**注意点:** ブラウザ内の内容が MCP クライアントに公開されるため、機密情報の扱いに注意が必要です。Google による利用統計の収集がデフォルトで有効で（`--no-usage-statistics` で無効化可能）、性能ツールは CrUX API にトレース URL を送信することがあります（`--no-performance-crux` で無効化可能）。公式サポートは Google Chrome と Chrome for Testing のみです。\n\n**始め方:**\nMCP クライアントの設定に以下を追加します（Node.js LTS、Chrome 安定版、npm が必要）。\n\n```json\n{\n  \"mcpServers\": {\n    \"chrome-devtools\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"chrome-devtools-mcp@latest\"]\n    }\n  }\n}\n```\n\n動作確認には、クライアントで `Check the performance of https://developers.chrome.com` と入力します。"
+      "summary": "**一言で:** コーディングエージェントが実際の Chrome を操作・検査できるようにする、Chrome DevTools の MCP サーバー兼 CLI。\n\n**解決する課題:** AI コーディングエージェントはコードを書けても、実際のブラウザ上での挙動、パフォーマンス、ネットワーク、コンソールエラーを自分で確認する手段を持たないことが多いです。このツールは DevTools の機能をエージェントに公開し、「書く→ブラウザで確かめる→直す」のループをエージェント自身が回せるようにします。\n\n**技術的なポイント:**\n- MCP サーバーとして動作し、同じパッケージに MCP なしでターミナルから操作できる `chrome-devtools` CLI も含まれます。\n- ブラウザ操作には Puppeteer を使い、アクションの結果を自動で待機します。\n- パフォーマンス面では Chrome DevTools（devtools-frontend）でトレースを記録し、インサイトを抽出します。トレース URL は CrUX API に送られ、実ユーザーデータも併せて確認できます（`--no-performance-crux` で無効化可能）。\n- ネットワークリクエストの分析、スクリーンショット取得、ソースマップ対応のスタックトレース付きコンソールメッセージ確認ができます。\n- アクセシビリティ、Cookie、LCP、メモリリークなどのデバッグ手順を教える Skills を同梱しています。Claude Code、Copilot / VS Code、Gemini CLI ではプラグインとして導入できます。`--slim` による縮小ツールセット、`--headless`、`--isolated`、既存 Chrome への接続などの設定も用意されています。\n\n**使いどころ:** フロントエンド開発中に、エージェントへ表示崩れ、パフォーマンス劣化、ネットワークエラー、メモリリークなどの調査を任せたい場面に向いています。ブラウザサブエージェントを組み込んだエージェント製品の土台にも使えます。\n\n**注意点:** ブラウザ内のデータは MCP クライアントに公開されるため、機密情報の扱いに注意が必要です。使用統計は既定で収集されます（`--no-usage-statistics` で無効化可能）。公式サポートは Google Chrome と Chrome for Testing のみです。\n\n**始め方:** Node.js（LTS）と Chrome が必要です。MCP クライアントの設定に以下を追加します。\n\n```json\n{\n  \"mcpServers\": {\n    \"chrome-devtools\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"chrome-devtools-mcp@latest\"]\n    }\n  }\n}\n```\n\n動作確認には、クライアントで「Check the performance of https://developers.chrome.com」と入力します。"
     },
     {
       "fullName": "cloudflare/kitesurf",
@@ -181,7 +181,7 @@
       "description": "Kitesurf is an experimental browser engine that runs on Cloudflare Workers.",
       "language": "TypeScript",
       "stars": 876,
-      "starsGained": 328,
+      "starsGained": 371,
       "createdAt": "2026-09-30T08:51:43Z",
       "url": "https://github.com/cloudflare/kitesurf",
       "topics": [
@@ -191,7 +191,7 @@
       "license": "Apache-2.0",
       "homepage": "https://kitesurf.dev/",
       "archived": false,
-      "summary": "**一言で:** Chrome やブラウザコンテナを使わず、Cloudflare Workers 上で HTML のパース・CSS 適用・ページ JavaScript 実行・スクリーンショット描画を行う実験的なブラウザエンジンです。\n\n**解決する課題:** ブラウザ自動化やエージェントによる Web 閲覧では、通常 Chrome 本体やそれを動かすコンテナが必要です。Kitesurf は Chrome Devtools Protocol (CDP) を話すエンジンを Workers 上で完結させ、Puppeteer などの既存 CDP クライアントからそのまま接続できるようにします。なお、フル機能の Chrome 実装ではなく、一部の DevTools 機能は未対応と README に明記されています。\n\n**技術的なポイント:**\n- HTML パース・DOM・レイアウト・描画に Blitz、CSS の解析・カスケード・計算済みスタイルに Stylo を使用しています。\n- ページの JavaScript は Rust 製エンジン Boa を WebAssembly 内で実行します。\n- テキストレイアウトと 2D 描画には Linebender 系ライブラリ（Parley、Vello、Kurbo、Peniko）、PDF 出力には Krilla を使用しています。\n- ページごと・レンダラーごとに Cloudflare Dynamic Workers（Worker Loader バインディング）で別 Worker を起動して分離します。Workers Paid プランが必須です。\n- ビルドは Bazel（Bazelisk）で統一されており、Rust 依存にはパッチ（`scripts/patches/`）を当てています。同梱の DevTools フロントエンドは `--config=devtools` で追加でき、デプロイ時は常に含まれます。\n\n**使いどころ:** Chrome を用意しにくい環境や、Workers 上で軽量にブラウザ操作・スクリーンショット取得をしたいエージェント／自動化用途の検証に向きます。実験的プロジェクトのため、Chrome との互換性を要する本番用途には事前の検証が必要です。\n\n**始め方:**（ローカル実行。Bazelisk、Node.js 22 以上、pnpm 9.15.4 が必要です）\n\n```bash\ngit clone https://github.com/cloudflare/kitesurf.git\ncd kitesurf\npnpm install --frozen-lockfile\npnpm run dev\n```\n\n`http://127.0.0.1:8787/health` で起動を確認でき、Puppeteer からは `ws://127.0.0.1:8787/devtools/browser` に `puppeteer.connect` で接続できます。Cloudflare へデプロイする場合、エンジン自体に認証がないため、Cloudflare Access などの認証を必ず前段に置いてください。"
+      "summary": "**一言で:** Chrome やブラウザコンテナを使わず、HTML のパース・CSS 適用・ページ JavaScript の実行・スクリーンショット描画までを Cloudflare Workers 上で行う実験的なブラウザエンジンです。\n\n**解決する課題:** ブラウザ自動化やエージェントによる Web 操作では、通常 Chrome やそれを載せたコンテナを用意する必要があります。Kitesurf は Workers 上で完結するエンジンとして、この前提を置き換えることを試みています。Chrome DevTools Protocol (CDP) を話すため、Puppeteer などの既存クライアントから接続できます。\n\n**技術的なポイント:**\n- Rust 製の OSS を組み合わせた構成です。Blitz（HTML パース・DOM・レイアウト・描画）、Stylo（CSS のパース・カスケード・計算済みスタイル）、Boa（ページ JS を WebAssembly 内で実行）、Linebender 系ライブラリ（Parley・Vello など、テキストレイアウトと 2D 描画）、Krilla（PDF 出力）を使っています。依存する Rust クレートにはパッチを当てています。\n- ページごと、レンダラーごとに Cloudflare Dynamic Workers で分離された Worker を起動します（Worker Loader binding を使用）。そのため Workers Paid プランが必須です。\n- CDP サーバーとして `ws://127.0.0.1:8787/devtools/browser` を公開し、`/json/version` による HTTP ディスカバリーにも対応しています。Chrome DevTools の UI（ホスト版または同梱版）からも検査できます。ただし完全な Chrome 実装ではなく、一部の DevTools 機能は未対応と明記されています。\n- ビルドは Bazel（Bazelisk）が Rust ツールチェーンや wasm-bindgen などを含めて一括管理し、pnpm スクリプトはそのフロントエンドです。初回ビルドは Rust コアとベンダリングしたクレートのコンパイルで時間がかかります。\n- モノレポ構成で、`engine`（Worker と CDP サーバー）、`page-script`、`page-renderer`、`core`（Rust）、`kitesurf-cli`（ターミナルクライアント）などに分かれています。\n\n**使いどころ:** Chrome コンテナを運用せずに、エージェントやスクリプトから軽量にページ取得・スクリーンショットを行う実験や検証に向いています。実験的プロジェクトで、対応する CDP 機能にも制限があるため、本番利用の前に自分のユースケースで対応状況を確認する必要があります。\n\nデプロイ時の注意として、エンジン自体に認証機能はありません。Cloudflare Access などの認証を必ず前段に置いてください。URL を知っていれば誰でも、あなたのアカウントから外向きリクエストを発行でき、課金対象のリソースも消費できます。\n\n**始め方:**\n前提として Bazelisk（`bazel` として導入）、Node.js 22 以上、pnpm 9.15.4 が必要です。macOS では GNU tar も必要です。\n\n```bash\ngit clone https://github.com/cloudflare/kitesurf.git\ncd kitesurf\npnpm install --frozen-lockfile\npnpm run dev\n```\n\n`http://127.0.0.1:8787/health` で起動を確認できます。Puppeteer からは `puppeteer-core` の `connect` で `browserWSEndpoint: \"ws://127.0.0.1:8787/devtools/browser\"` を指定して接続します。"
     },
     {
       "fullName": "libracoder/kiri",
@@ -199,7 +199,7 @@
       "description": "A small, fast container runtime for macOS, Windows and Linux",
       "language": "Rust",
       "stars": 2612,
-      "starsGained": 411,
+      "starsGained": 441,
       "createdAt": "2026-11-02T16:11:30Z",
       "url": "https://github.com/libracoder/kiri",
       "topics": [
@@ -214,7 +214,7 @@
       "license": "Apache-2.0",
       "homepage": "https://runkiri.com",
       "archived": false,
-      "summary": "**一言で:** macOS・Windows・Linux 上で Docker イメージを動かす、Rust 製の軽量コンテナランタイムで、Docker Desktop や OrbStack の代替を目指すものです。\n\n**解決する課題:** Docker Desktop や OrbStack はデスクトップ環境でのコンテナ実行に広く使われていますが、起動の遅さやリソース消費が気になる場面があります。Kiri は小さな Linux VM（Linux では直接カーネル上）でコンテナを動かし、Docker Engine API を話すことで、既存の `docker` CLI、Compose、buildx をそのまま使えるようにしています。\n\n**技術的なポイント:**\n- **独自の実行基盤:** VM には約 10 MB のカスタムカーネルを使い、PID 1 は約 900 KB の Rust 製ゲストエージェントです。コンテナは `clone3` 一発で namespace と cgroup に起動し、runc・shim・dockerd は使いません。\n- **構成:** `docker` CLI / Compose / buildx / Kiri UI → Docker Engine API → kiri デーモン → vsock → ゲストエージェント、という流れです。\n- **性能（README 記載値）:** alpine で `true` を実行して削除するまでの中央値は、Docker Engine API 経由で Kiri 2.55 ms、Docker Desktop 213 ms、OrbStack 380 ms です。`docker` CLI 経由では Kiri 14.2 ms です。手法と詳細は `bench/results.json` にあり、`kiri bench` で再計測できます。\n- **省リソース:** VM は 60 秒アイドルで休止し、デーモンは約 15 MB で、約 0.15 秒で復帰するとされています。\n- **付加機能:** `http://<name>.kiri.local` のローカルドメイン（独自 CA による HTTPS 対応）、1 コマンドでの単一ノード Kubernetes、Linux マシン作成、OrbStack / Docker Desktop からの `kiri import`、ネイティブ GUI とメニューバー常駐、日本語を含む 38 言語対応があります。amd64 イメージは Rosetta 経由で動作します。\n- **現状の制約:** 組み込みビルダーはロードマップ上の項目で、現時点では未実装です。Windows は WSL 2 経由です。ライセンスは Apache-2.0 ですが、名称とロゴは対象外です。\n\n**使いどころ:** Docker Desktop や OrbStack からの乗り換えを検討している開発者が、ローカルで Compose 中心の開発や Kubernetes の検証を軽く回したい場合に向きます。ただし、組み込みビルダーが未実装である点や、本番運用での実績が README からは確認できない点に注意が必要です。\n\n**始め方:** [runkiri.com/releases](https://runkiri.com/releases/) から各 OS 向けのパッケージ（macOS 14+ は `.dmg`、Windows 10/11 は `.msi`、Linux は `.deb` / `.rpm`）を入手します。初回起動時に `kiri` という Docker コンテキストが設定されます。\n\n```sh\ndocker --context kiri run --rm alpine echo hello\ndocker --context kiri compose up -d\nkiri import   # OrbStack / Docker Desktop から移行\n```"
+      "summary": "**一言で:** Docker Desktop や OrbStack の代替を目指す、Rust 製の軽量コンテナランタイムで、macOS・Windows・Linux で動作し、Docker Engine API を話すため既存の `docker` CLI などをそのまま使えます。\n\n**解決する課題:** Docker Desktop などの既存ツールは、コンテナ起動の遅さやアイドル時のリソース消費が課題になることがあります。Kiri は小さな Linux VM（Linux では直接カーネル上）でコンテナを動かし、`docker`、Compose、buildx といった既存のワークフローを変えずに、より軽く速い実行環境を提供することを目指しています。\n\n**技術的なポイント:**\n- **独自の起動経路:** VM 内の PID 1 は約 900 KB の Rust 製ゲストエージェントで、`clone3` 一発で namespace と cgroup 内にコンテナを起動します。runc、shim、dockerd は使いません。VM のカーネルは独自の約 10 MB のものです。\n- **Docker 互換:** Docker Engine API を実装し、`docker`、Compose、buildx、`docker login` が動作します。Rosetta 経由で amd64 イメージも実行できます。初回起動時に `kiri` Docker context が設定されます。\n- **ベンチマーク（README 掲載値）:** alpine で `true` を実行して削除する処理の中央値（30 回）は、Docker Engine API 経由で Kiri 2.55 ms、Docker Desktop 213 ms、OrbStack 380 ms です。`docker` CLI 経由では Kiri 14.2 ms、Docker Desktop 243 ms、OrbStack 442 ms です。計測方法は `bench/results.json` に記載され、`kiri bench` で再実行できます。\n- **省リソース設計:** VM は 60 秒アイドルでスリープし、約 0.15 秒で復帰します。デーモンは約 15 MB で動作するとされています。\n- **付加機能:** `<name>.kiri.local` のローカルドメイン（独自 CA による HTTPS 対応）、`kiri k8s start` による単一ノード Kubernetes、`kiri machine` による Linux マシン、OrbStack / Docker Desktop からの `kiri import`、ネイティブ UI とメニューバー項目、38 言語対応（日本語を含む）があります。\n\n**使いどころ:** Docker Desktop や OrbStack を使っているローカル開発環境で、起動速度やメモリ消費を改善したい場合に向きます。Compose や Kubernetes を使う開発も、同じツールのまま試せます。ロードマップに挙がっている組み込みビルダーは未実装のため、buildx まわりは現状の対応状況を `docs/features.md` で確認するのが安全です。\n\n**始め方:**\nmacOS 14+（`.dmg`）、Windows 10/11（`.msi`、WSL 2 経由）、Linux（`.deb` / `.rpm`）のインストーラーを [runkiri.com/releases](https://runkiri.com/releases/) から入手します。初回起動後は次のように使えます。\n\n```sh\ndocker --context kiri run --rm alpine echo hello\ndocker --context kiri compose up -d\nkiri k8s start\n```"
     },
     {
       "fullName": "opencoredev/islandcn",
@@ -222,7 +222,7 @@
       "description": "The open-source Dynamic Island for React, installed with shadcn.",
       "language": "TypeScript",
       "stars": 555,
-      "starsGained": 284,
+      "starsGained": 307,
       "createdAt": "2026-11-13T11:50:50Z",
       "url": "https://github.com/opencoredev/islandcn",
       "topics": [
@@ -236,7 +236,7 @@
       "license": "MIT",
       "homepage": "https://islandcn.dev",
       "archived": false,
-      "summary": "**一言で:** Apple の Dynamic Island 風 UI を、shadcn のレジストリ経由で任意の React アプリに組み込めるコンポーネント集です。\n\n**解決する課題:** アップロード進捗、タイマー、再生中の曲、通話着信、録音などの「進行中のアクティビティ」を、アプリ上部の 1 つの島状 UI にまとめて表示したい場面があります。README によれば、islandcn はそのための状態管理とアニメーションを備えたエンジンとプリセットを提供し、アプリ固有のアクションに合わせてアクティビティを組み立てられるようにします。\n\n**技術的なポイント:**\n- **shadcn レジストリ方式の配布**: npm パッケージではなく、`island-core` というレジストリアイテムとしてコードがプロジェクトに `lib/island/` として展開されます。コードを直接手元で編集できる形です。\n- **エンジンは React のみで構成**: アクティビティのスタック管理、4 種類の表示状態（idle、compact、split、expanded）、長押し、アラート、reduced motion への対応を含みます。\n- **API は Provider + フック**: `IslandProvider` をルート付近に 1 度マウントし、任意のコンポーネントから `useIsland()` で `start` / `update` / `end` を呼ぶ形です。compact / expanded の各領域（leading、trailing、center、bottom など）に React 要素を渡せます。\n- **モーションを実機に合わせて調整**: README では、スプリングを実際の Dynamic Island のフレーム単位の録画に合わせてフィッティングしたと説明しています（録画自体はリポジトリに含まれません）。\n- **プリセットとプレイグラウンド**: upload、timer、now playing、incoming call、ETA、recording、nearby transfer、battery などのプリセットが各 1 ファイルで用意されています。`/playground` ではモーションを調整し、インストールコマンドとコードをコピーできます。\n\n**使いどころ:** Web アプリやダッシュボードで、アップロード、タイマー、通話、録音など複数の進行中タスクの状態を、画面上部に集約して見せたい場合に向いています。なお Apple の外観とモーションを模したもので、Apple の資産は使っておらず、Apple とは無関係と明記されています（ライセンスは MIT）。\n\n**始め方:**\n```bash\nnpx shadcn@latest add https://islandcn.dev/r/island-core.json\n```"
+      "summary": "**一言で:** Apple の Dynamic Island 風の UI を、shadcn のレジストリ経由で任意の React アプリに組み込めるコンポーネント群です。\n\n**解決する課題:** アップロード進捗、タイマー、再生中の曲、通話着信、配車の到着予定などの「進行中のアクティビティ」を、アプリ上部の 1 か所にまとめて表示する UI を自前で作るのは手間がかかります。islandcn は、その状態管理とアニメーションを含む実装を、アプリ固有のアクションに合わせて形を変えられる形で提供します。\n\n**技術的なポイント:**\n- **エンジン（`lib/island/`、registry item `island-core`）:** アクティビティのスタック管理、4 種類の表示形態（idle、compact、split、expanded）、長押し、アラート、reduced motion への対応を含みます。依存は React のみと記載されています。\n- **モーション:** 実際の Dynamic Island のフレーム単位の録画に合わせてスプリングを調整したとされています。ただし、その録画自体はリポジトリに含まれません。\n- **API:** `IslandProvider` をルート付近に 1 回置き、`Island` を配置します。その後は任意のコンポーネントから `useIsland()` で `start` / `update` / `end` を呼び出す形です。\n- **プリセット（`components/islandcn/`）:** upload、timer、now playing、incoming call、ride/delivery ETA、recording、nearby transfer、battery、split が用意されています。いずれもエンジンの上に 1 ファイルで実装され、共通のコンテンツキットを使います。\n- **配布と周辺ツール:** shadcn のレジストリ方式で、コードをプロジェクトにコピーして使います。`/playground` ではプリセットから island を組み立て、モーションを調整し、インストールコマンドとコードをコピーできます。コーディングエージェント向けの任意の `islandcn-skill` もあります。\n\n**使いどころ:** ファイル転送、タイマー、メディア再生、通話、配送状況など、バックグラウンドで進む状態を画面上部に常駐表示したい React / Next.js アプリに向きます。見た目と動きは Apple のものに寄せていますが、Apple のアセットは使用しておらず、Apple とは無関係です（Dynamic Island は Apple Inc. の商標）。\n\n**始め方:**\n```bash\nnpx shadcn@latest add https://islandcn.dev/r/island-core.json\n```"
     },
     {
       "fullName": "Edge0-AI/Edge0",
@@ -244,7 +244,7 @@
       "description": "Device-native foundation models: 145B on a laptop, 35B on a phone. Latent MoE, SSD-streamed weights, a router that predicts loads a step ahead. Mac, iPhone, Android, Windows.",
       "language": "C++",
       "stars": 11337,
-      "starsGained": 422,
+      "starsGained": 439,
       "createdAt": "2026-09-08T13:41:47Z",
       "url": "https://github.com/Edge0-AI/Edge0",
       "topics": [
@@ -255,7 +255,7 @@
       "license": "Apache-2.0",
       "homepage": "https://edge0.ai/",
       "archived": false,
-      "summary": "**一言で:** 大規模なスパース MoE モデルを、コンシューマ向けハードウェア（NVIDIA GPU 搭載 PC や Apple Silicon Mac など）上でストリーミングしながらローカル実行するための、オープンソースの推論フレームワークです。\n\n**解決する課題:** 100B 超の MoE モデルは、全パラメータを VRAM や RAM に載せる前提だと一般的な PC では動かしにくいという問題があります。Edge0 は、必要な expert だけを VRAM / RAM にキャッシュし、残りは SSD から読み出す構成で、限られたメモリでも大きなモデルを動かすことを目指しています。CLI、ローカル API サーバー、デスクトップのチャットアプリから利用できます。\n\n**技術的なポイント:**\n- **Latent MoE モデル:** 最新の `edge0-145b` / `edge0-120b` は Qwen3.8-Flash-Next から派生したモデルで、4 bit でネイティブ学習されています。expert の入力を圧縮し、attention はフル幅のままです。latent 幅は 145B が 1792、120B が 1280 で、どちらも 512 expert から 10 個をルーティングし、shared expert が 1 つ加わります。\n- **量子化形式:** Q3_K と NVFP4 の 2 種類のチェックポイントが Hugging Face で公開されています。\n- **メモリ制御:** `--mmap-experts` で未キャッシュの expert を SSD からオンデマンドで読み出せます。`--resident-budget-gib` と静的な expert profile を併用すると、ホスト RAM 上の expert キャッシュを上限付きで使えます。VRAM と RAM のキャッシュは重複しない設計です。\n- **エンジン構成:** `edge0-infer` が共通の `serve` / `chat` コマンドを提供し、モデルフォルダの `model.json` からエンジンを選択します。145B / 120B は Strata のフォークである edge0-strata、旧 35B は GGML ベースのネイティブエンジンで動作します。サーバーは OpenAI 互換と Anthropic 互換のエンドポイントを提供します。\n- **対応プラットフォームはモデルごとに異なる:** 145B / 120B は Linux / Windows の NVIDIA GPU（CUDA 13）と macOS（Apple Silicon、Metal）に対応し、iOS と Android は対象外です。35B は macOS、iOS、Android、Windows、Linux に対応し、バックエンドは CPU、Metal、Vulkan と環境により異なります。8B はチェックポイントのみ公開で、ネイティブエンジン対応は予定とされています。\n- **公表されている性能（README 記載値）:** 145B Q3_K は RTX 5090 D 24 GB でエージェント用途の decode が 121.2 tok/s、16K prefill が 3554.9 tok/s です。Apple M2 Ultra（Metal）では Q3_K の chat decode が 60.9 tok/s です。いずれも作者による計測値で、第三者による検証は README からは確認できません。\n\n**使いどころ:** クラウドに送れないコードやデータを扱うローカルのコーディングエージェントや、OpenAI 互換 API を前提としたツールのローカルバックエンドとして、大規模モデルを自前の GPU や Mac で動かしたい場合に向きます。メモリが限られる環境でも、SSD オフロードで動作させる選択肢があります。\n\n**始め方:**\n```bash\ngit clone https://github.com/Edge0-AI/Edge0.git edge0\n\n# edge0-strata と edge0-infer をビルド（手順は edge0-strata/EDGE0.md と edge0-infer/docs/getting-started.md を参照）\n\n# モデルフォルダ（例: Edge0-145B-q3k）を 1 つ指定して起動\nbuild/cpu/bin/edge0-infer serve --model /path/to/Edge0-145B-q3k\n\n# 対話セッションの場合\nbuild/cpu/bin/edge0-infer chat --model /path/to/Edge0-145B-q3k\n```\n\nWindows と macOS では、GitHub Releases から Edge0 Chat デスクトップアプリも入手できます。"
+      "summary": "**一言で:** コンシューマ向けハードウェア（NVIDIA GPU 搭載 PC や Apple Silicon Mac など）で大規模なスパース MoE モデルをローカル実行するための、オープンソースのストリーミング MoE 推論フレームワークです。\n\n**解決する課題:** 大規模モデルは VRAM やメモリ容量の壁に阻まれ、手元の PC では動かしにくいのが実情です。Edge0 は MoE の疎性を利用し、必要なエキスパートだけを VRAM・RAM・SSD から読み込むことで、145B / 120B クラスのモデルを単一 GPU や Mac で動かすことを目指しています。ローカルのエージェント用途を想定し、CLI・ローカル API サーバー・チャットアプリで利用できます。\n\n**技術的なポイント:**\n- **Latent MoE モデル**: 最新の 145B / 120B は Qwen3.8-Flash-Next を基にした Latent MoE で、エキスパート入力を圧縮しつつ attention はフル幅を保ちます。48 層、512 エキスパートから 1 トークンあたり 10 個をルーティングし、共有エキスパートが 1 つあります（潜在幅は 145B が 1792、120B が 1280）。4 ビットでネイティブ学習され、Q3_K と NVFP4 の 2 形式で配布されています。\n- **エンジン構成**: `edge0-infer` が共通の `serve` / `chat` コマンドを提供し、モデルフォルダの `model.json` の `model_name` に応じてエンジンを選びます。145B / 120B は Strata のフォークである edge0-strata、旧 35B は GGML ベースのネイティブ C++ エンジンで動作します。\n- **メモリ制御**: `--mmap-experts` でキャッシュにないエキスパートを SSD からオンデマンドで読み込めます。`--resident-budget-gib` と静的な expert profile を併用すると、ホスト RAM のエキスパートキャッシュ上限を指定でき、VRAM と RAM のキャッシュは重複しないようになります。\n- **API 互換**: ローカルサーバーは OpenAI 互換および Anthropic 互換のエンドポイントを提供します。\n- **ベンチマーク（README 記載値）**: 145B Q3_K は RTX 5090 D 24GB でエージェント用デコード 121.2 tok/s、16K プリフィル 3554.9 tok/s です。M2 Ultra（Metal）では同じ 145B Q3_K でチャット用デコード 60.9 tok/s です。これらは作者による測定値で、環境によって異なります。\n- **対応プラットフォームの差**: 145B / 120B は Linux・Windows（NVIDIA GPU、CUDA 13）と macOS（Apple Silicon、Metal、Q3_K のみ）に対応します。iOS と Android は旧 35B モデルのみ対応で、145B / 120B には未対応です。なお 8B はチェックポイントのみ公開済みで、ネイティブエンジンでの対応は予定とされています。\n\n**使いどころ:** 手元の GPU 搭載 PC や Mac で、大規模モデルをクラウドに頼らずローカルのコーディングエージェントやチャット用途に使いたい場合に向きます。iPhone や Android で動かしたい場合は、旧 35B モデルが対象です。\n\n**始め方:**\n```bash\ngit clone https://github.com/Edge0-AI/Edge0.git edge0\n\n# edge0-strata と edge0-infer をビルド（手順は以下を参照）\n#   edge0-strata/EDGE0.md\n#   edge0-infer/docs/getting-started.md\n\n# edge0-infer/ から実行（モデルフォルダを 1 つ指定）\nbuild/cpu/bin/edge0-infer serve --model /path/to/Edge0-145B-q3k\n\n# 対話モード\nbuild/cpu/bin/edge0-infer chat --model /path/to/Edge0-145B-q3k\n```"
     },
     {
       "fullName": "tradermonty/claude-trading-skills",
@@ -263,14 +263,14 @@
       "description": "Claude Code skills for equity investors and traders — market analysis, technical charting, economic calendars, screeners, and trading strategy development.",
       "language": "Python",
       "stars": 4417,
-      "starsGained": 249,
+      "starsGained": 273,
       "createdAt": "2025-10-19T16:37:29Z",
       "url": "https://github.com/tradermonty/claude-trading-skills",
       "topics": [],
       "license": "MIT",
       "homepage": "https://tradermonty.github.io/claude-trading-skills/",
       "archived": false,
-      "summary": "**一言で:** 個人投資家向けに、市場環境の確認・リスク管理・トレード計画・ジャーナリング・振り返りを Claude の Skills として構造化した、トレーディングワークフロー用ツールキットです。\n\n**解決する課題:** 時間に制約のある個人投資家が、長期投資（ETF・配当株）を軸にしつつスイングトレードを補助的に行う際の判断プロセスを整えることを目的としています。売買判断を AI に任せるのではなく、市場レビュー、リスク管理、トレード計画、記録、改善を体系化する位置づけです。シグナル配信や収益の保証はしないと明記されています。\n\n**技術的なポイント:**\n- `skills/<skill-name>/` に各スキルを置く構成で、`SKILL.md`、参考資料、補助スクリプト（主に Python）を含みます。Market Regime、Core Portfolio、Dividend Income、Swing Opportunities、Trade Planning、Trade Memory、Strategy Research などの領域に分かれています。\n- `skills-index.yaml` が全スキルの正式なメタデータ索引（カテゴリ、必要な外部連携、ワークフローとの対応など）で、README の詳細カタログもこの索引から自動生成されます。記述が食い違う場合は索引が正とされています。\n- `workflows/*.yaml` に、使うスキル、判断ゲート、成果物を順に定義した機械可読なワークフローマニフェストがあります。日次の市場チェック、週次のポートフォリオレビュー、スイング候補探索、取引記録ループ、月次レビューなどが用意されています。\n- 外部連携は用途ごとに分かれています。FMP、FINVIZ Elite、Alpaca は任意で、有料データ API なしでも始められる5スキル構成（`market-breadth-analyzer`、`uptrend-analyzer`、`position-sizer`、`trader-memory-core`、`signal-postmortem`）が用意されています。ただし公開 CSV、チャートのスクリーンショット、ローカルファイルなどの入力は必要です。\n- Claude Web アプリ向けには `.skill` パッケージ（`scripts/package_skills.py` でビルド可能）、Claude Code 向けにはスキルフォルダのコピーで導入できます。対応 Python は 3.11〜3.13（Linux / Windows / macOS）、単体パッケージ化したスキルは 3.9 が下限です。ライセンスは MIT です。\n\n**使いどころ:** 毎日 15 分程度の市場環境チェックや、週次・月次のポートフォリオ見直し、取引後の振り返りを、決まった手順で回したい個人投資家に向いています。完全自動売買、シグナルの外注、短期スキャルピングは対象外です。\n\n**始め方:**\n```bash\n# Claude Code で使う場合（例: backtest-expert スキル）\ngit clone https://github.com/tradermonty/claude-trading-skills.git\ncp -r claude-trading-skills/skills/backtest-expert ~/.claude/skills/\n```\nClaude Web アプリで使う場合は、最新の GitHub Release から `.skill` ファイルをダウンロードし、**Customize > Skills** からアップロードします。"
+      "summary": "**一言で:** 個人投資家向けに、相場環境の確認・リスク管理・トレード計画・ジャーナル・振り返りといった判断プロセスを構造化する、Claude Skills 形式のトレーディング支援ツール集です。\n\n**解決する課題:** 時間に制約のある個人投資家が、長期投資(ETF・配当株)を軸にスイングトレードを補完的に行う際、市場確認からリスク管理、記録、改善までを一貫して回すのは負担が大きくなります。本リポジトリは売買判断を AI に任せるのではなく、チェックリストやワークフローで判断プロセスそのものを整えることを目的としています。シグナル配信や収益の保証を行うものではありません。\n\n**技術的なポイント:**\n- `skills/<skill-name>/` に各スキルが `SKILL.md`、参照資料、補助スクリプト(主に Python)としてまとまっており、Claude Code とウェブ版 Claude の両方で使えます。\n- `skills-index.yaml` が全スキルの正式なメタデータ索引(カテゴリ、必要な外部連携、ワークフローとの対応など)で、README のカタログもこれから自動生成されます。\n- `workflows/*.yaml` が、使うスキル・判断ゲート・成果物を順に定義した機械可読なマニフェストです(日次の市場チェック、週次ポートフォリオレビュー、スイング候補探索、月次レビューなど)。バリデータによる検証も行われます。\n- 外部 API への依存度がスキルごとに明示されています。FMP、FINVIZ Elite、Alpaca は一部のワークフローで使うオプション連携で、公開 CSV・チャート画像・ローカルファイルだけで動く 5 スキルの「API キー不要スタートパス」も用意されています。\n- 市場環境、コアポートフォリオ、配当、スイング、トレードメモリ、戦略リサーチなどの領域を網羅し、`skillsets/` で目的別の導入バンドルも提供されます。対応 Python は 3.11〜3.13 です。ライセンスは MIT で、自動売買や発注は行いません。\n\n**使いどころ:** 毎日 15 分程度の市場リスク確認、週次のポートフォリオ見直し、クローズ済みトレードの記録と月次レビューなど、判断プロセスを習慣化したい場面に向いています。短期スキャルピングや完全自動売買を目的とする用途には向きません。\n\n**始め方:**\nClaude Code で使う場合は、リポジトリをクローンして必要なスキルフォルダをコピーします(README の手順に基づく例)。\n\n```bash\ngit clone https://github.com/tradermonty/claude-trading-skills.git\ncp -r claude-trading-skills/skills/backtest-expert ~/.claude/skills/\n```\n\nウェブ版 Claude では、GitHub Releases から `.skill` ファイルをダウンロードし、**Customize > Skills** でアップロードします。"
     },
     {
       "fullName": "ZhuLinsen/daily_stock_analysis",
@@ -278,7 +278,7 @@
       "description": "LLM 驱动的多市场股票智能分析系统：多源行情、实时新闻、决策看板与自动推送，支持零成本定时运行。  LLM-powered multi-market stock analysis system with multi-source market data, real-time news, decision dashboard, automated notifications, and cost-free scheduled runs.",
       "language": "Python",
       "stars": 72062,
-      "starsGained": 469,
+      "starsGained": 504,
       "createdAt": "2026-01-10T06:43:20Z",
       "url": "https://github.com/ZhuLinsen/daily_stock_analysis",
       "topics": [
@@ -293,7 +293,7 @@
       "license": "MIT",
       "homepage": "https://dsa.zhulinsen.tech",
       "archived": false,
-      "summary": "**一言で:** A股・港股・米株・日株・韓株・台株の自選株を LLM で毎日自動分析し、「決策仪表盘（意思決定ダッシュボード）」として企業微信・Feishu・Telegram・Discord・Slack・メールへ push 通知する Python 製システム。\n\n**解決する課題:** 複数市場の銘柄について、相場・K 線・テクニカル指標・ニュース・公告・ファンダメンタルズを手作業で集めて確認するのは手間がかかります。本プロジェクトはデータ収集から LLM による結論・スコア・売買ポイント・リスク警告の生成、通知までを定時実行で自動化します。サーバー不要で、GitHub Actions 上でゼロコスト運用できることを謳っています。\n\n**技術的なポイント:**\n- **マルチソース構成**: 相場データは AkShare・Baostock・YFinance などの無料ソースを標準搭載し、設定なしで動作します。より安定させたい場合は Tushare、Longbridge、TickPlus などトークン型ソースを追加できます。無料ソースは上流の制限や仕様変更の影響を受け、安定性は保証されないと README に明記されています。\n- **LLM は差し替え可能**: Gemini、OpenAI 互換 API（DeepSeek、通義千問など）、Claude、Ollama によるローカルモデル、AIHubMix や Modelflare などのゲートウェイに対応します。\n- **ニュース検索の統合**: SerpAPI、Tavily、Bocha、Brave、MiniMax、SearXNG（セルフホスト）などを組み合わせ、センチメントや催化要因の材料にします。米株向けには Reddit/X/Polymarket のソーシャル感情 API（任意）もあります。\n- **複数の実行形態**: GitHub Actions、Docker、ローカルの定時実行、FastAPI サービス、Web／デスクトップ UI（履歴レポート、バックテスト、保有管理、設定管理）に対応します。\n- **Agent による対話分析**: Web の `/chat` から、移動平均、纏論、波動理論、トレンド、イベントドリブンなど 15 種の内蔵ストラテジーで多段階の追加質問ができます。カスタムストラテジーファイルとマルチ Agent（実験的）も利用可能です。\n\n**使いどころ:** 日々の自選株チェックを自動化し、指定時刻に通知として受け取りたい個人投資家や、LLM とマルチソースデータを組み合わせた分析パイプラインの実装例を参考にしたい開発者向けです。ただし README には「学習・研究目的であり、投資助言ではない」との免責があります。\n\n**始め方:**\n```bash\ngit clone https://github.com/ZhuLinsen/daily_stock_analysis.git && cd daily_stock_analysis\npip install -r requirements.txt\ncp .env.example .env && vim .env   # LLM の API キー、通知先、STOCK_LIST を設定\npython main.py\n```\n\nGitHub Actions で動かす場合は、リポジトリを Fork して Secrets（LLM キー、通知先、`STOCK_LIST`）を設定し、Actions を有効化します。デフォルトでは平日 18:00（北京時間）に実行されます。"
+      "summary": "**一言で:** LLM を使って A株・港株・米株・日株・韓株・台株の自選株を毎日自動分析し、「決策仪表盘（意思決定ダッシュボード）」を企業微信・飛書・Telegram・Discord・Slack・メールへ push 通知する Python 製システム。\n\n**解決する課題:** 複数市場の銘柄について、行情・ニュース・テクニカル指標・センチメントを人手で集めて判断材料にまとめる作業は手間がかかります。本プロジェクトはデータ収集から LLM による分析レポート生成、通知配信までを定時実行で自動化します。GitHub Actions を使えばサーバーなしで運用できます。\n\n**技術的なポイント:**\n- 分析レポートには、結論、スコア、トレンド、売買ポイント、リスク警告、好材料、操作チェックリストが含まれます。\n- 行情ソースは AkShare、Baostock、YFinance などの無料ソースを標準搭載し、設定なしで動作します。より安定した取得が必要な場合は TickPlus、Tushare、Longbridge などのトークン型ソースを追加できます。無料ソースは上流の制限や変更の影響を受け、安定性は保証されていません。\n- LLM は Gemini、OpenAI 互換 API（DeepSeek、通義千問など）、Claude、Ollama によるローカルモデルなどに対応します。ニュース検索には SerpAPI、Tavily、Bocha、Brave、SearXNG などを使えます。\n- 実行形態は GitHub Actions、Docker、ローカルのスケジュール実行、FastAPI サービスから選べます。Web／デスクトップのワークスペースでは、手動分析、履歴レポート、バックテスト、保有銘柄管理、設定管理ができます。\n- Agent 機能の「策略問股」では、移動平均、缠论、波動理論など 15 種の内蔵戦略について、多段階の追問ができます。カスタム戦略ファイルにも対応しますが、マルチ Agent オーケストレーションは実験的機能です。\n\n**使いどころ:** 中国語圏・アジア市場を中心に自選株の日次レポートを自動で受け取りたい個人投資家や、LLM を使った金融分析パイプラインの実装例を参考にしたいエンジニア向けです。なお、本プロジェクトは学習・研究目的で、投資助言ではないと明記されています。\n\n**始め方:**\n```bash\ngit clone https://github.com/ZhuLinsen/daily_stock_analysis.git && cd daily_stock_analysis\npip install -r requirements.txt\ncp .env.example .env && vim .env   # LLM の API Key、STOCK_LIST、通知先などを設定\npython main.py\n```\nGitHub Actions で動かす場合は、リポジトリを Fork し、Secrets に LLM の API Key、通知先、`STOCK_LIST` を登録して Actions を有効化します。"
     },
     {
       "fullName": "GoogleChrome/modern-web-guidance-src",
@@ -301,47 +301,39 @@
       "description": "Keep your coding agent up to date with the latest web best practices",
       "language": "TypeScript",
       "stars": 5317,
-      "starsGained": 486,
+      "starsGained": 533,
       "createdAt": "2026-01-27T20:22:24Z",
       "url": "https://github.com/GoogleChrome/modern-web-guidance-src",
       "topics": [],
       "license": "Apache-2.0",
       "homepage": "https://goo.gle/modern-web-guidance",
       "archived": false,
-      "summary": "**一言で:** コーディングエージェントに最新のウェブプラットフォームのベストプラクティスと対応ブラウザ情報を渡し、古い実装パターンを避けさせるためのスキル（Modern Web Guidance）の、ガイド作成・調整・評価用ソースリポジトリです。\n\n**解決する課題:** LLM の学習データには古いコードが大量に含まれるため、エージェントはネイティブ API で済む処理にも肥大化した JavaScript を書きがちです。API の存在を知っていても、本番向けの現代的な実装パターンの蓄積が不足していることがあります。このプロジェクトは、専門家が整えたガイドをエージェントのコンテキストへ直接渡すことで、そのギャップを埋めることを狙っています。\n\n**技術的なポイント:**\n- 配布は CLI（`npx modern-web-guidance`）経由で、`install`（対話ウィザード）、`search`、`retrieve`（ID 指定でガイド取得）、`legacy-scan`（コードベース内の旧式パターン検出）といったサブコマンドを備えます。\n- 公開用リポジトリ（GoogleChrome/modern-web-guidance）の元となるソースリポジトリで、ガイドの作成・調整（calibrate）・評価（eval）のためのコードとドキュメントを含みます。評価結果は Eval Dashboard で公開されています。\n- ガイドはトークン効率を重視して設計されています。評価を実施し、モデルがすでに知っている最小公約数的な内容は削る方針です。\n- 対象は CSS・レイアウト、UX、パフォーマンス、フォーム/UI、アクセシビリティ、ビルトイン AI など。README 時点で 250 のウェブ機能を扱い、各機能は web-features-explorer にリンクされています。\n- 重い polyfill や旧来のライブラリではなく、軽量で妥当なフォールバックを促す方針です。Chrome、Edge、Firefox、MDN の各チームとコミュニティが運営しています。\n\n**使いどころ:** Claude Code などのコーディングエージェントでフロントエンドを生成させる際に、View Transitions、Popover API、Anchor Positioning、コンテナクエリなどネイティブ機能を優先させたい場合に向きます。既存コードの旧式パターンを洗い出してモダン化したい場面にも使えます。\n\n**始め方:**\n```shell\nnpx modern-web-guidance@latest install\n```\nインストールせずに試す場合:\n```shell\nnpx modern-web-guidance@latest search \"animate a dialog modal backdrop\"\nnpx modern-web-guidance@latest legacy-scan .\n```"
+      "summary": "**一言で:** コーディングエージェントに最新の Web プラットフォームのベストプラクティスとブラウザ互換性情報を供給し、レガシーなパターンではなくモダンな実装へ誘導するスキル「Modern Web Guidance」のソースリポジトリです。\n\n**解決する課題:** LLM の学習データには古いコードが大量に含まれるため、エージェントはネイティブ API で済む処理でも肥大化した JavaScript を生成しがちです。API の存在自体を知っていても、本番水準のモダンな実装パターンの蓄積が足りず、誤用することもあります。このプロジェクトは、専門家が整えたガイドラインをエージェントのコンテキストに直接返すことで、そのギャップを埋めることを狙っています。\n\n**技術的なポイント:**\n- 本リポジトリは、配布用リポジトリ `GoogleChrome/modern-web-guidance` の元になるソースで、ガイドの作成・調整（キャリブレーション）・評価を行うためのコードとドキュメントを含みます。主要言語は TypeScript です。\n- エージェントのスキルとして動作し、CLI（`npx modern-web-guidance`）の `search`、`retrieve`、`legacy-scan` で、ガイドの検索、ID 指定での取得、コードベース内のレガシーパターンの検出を行えます。\n- ガイドは Markdown で書かれ、コンテキストを圧迫しないよう token-efficient に設計されています。評価（eval）を実施し、モデルが既に知っている汎用的な内容は削る方針です。評価結果は Eval Dashboard で公開されています。\n- カバー範囲は CSS・レイアウト、UX（View Transitions など）、パフォーマンス（`scheduler.yield`、INP）、フォーム・UI（Popover、Anchor Positioning）、アクセシビリティ、Built-in AI など。README では 250 の機能が挙げられ、CSS・レイアウトだけで 140 機能です。\n- 方針として、ブラウザが最適化できるプラットフォーム標準 API を優先し、重いポリフィルやレガシーライブラリではなく軽量なフォールバックを推奨します。Chrome、Edge、Firefox、MDN の各チームとコミュニティが共同で運営しています。\n\n**使いどころ:** AI コーディングエージェントで UI やフロントエンドを実装する際に、古い書き方や不要なライブラリ依存を避けたい場合に向いています。既存コードベースのモダナイズ候補を `legacy-scan` で洗い出す用途にも使えます。\n\n**始め方:**\n```shell\n# 対話式ウィザードでインストール\nnpx modern-web-guidance@latest install\n\n# インストールせずに試す\nnpx modern-web-guidance@latest search \"animate a dialog modal backdrop\"\n```"
     },
     {
-      "fullName": "dulaiduwang003/Pavise-Game",
+      "fullName": "backnotprop/plannotator",
       "rank": 15,
-      "description": "Open-source Windows game resource manager. Suppresses background processes, gives games exclusive CPU cores, steers device interrupts off game cores, applies per-game GPU driver, memory and power policies, and restores every change after play. No injection, no telemetry. GPL-3.0.",
-      "language": "C#",
-      "stars": 1750,
-      "starsGained": 219,
-      "createdAt": "2026-08-02T14:24:18Z",
-      "url": "https://github.com/dulaiduwang003/Pavise-Game",
+      "description": "The workspace to stay in the loop and on top of agents - shape, decide, plan, annotate, review code, share with team, and send all feedback to agents with one click. ",
+      "language": "TypeScript",
+      "stars": 10676,
+      "starsGained": 231,
+      "createdAt": "2025-12-28T02:09:40Z",
+      "url": "https://github.com/backnotprop/plannotator",
       "topics": [
-        "cpu-affinity",
-        "csharp",
-        "dotnet",
-        "frame-time",
-        "game-optimizer-2026",
-        "gaming",
-        "low-latency",
-        "nvidia",
-        "optimization",
-        "performance",
-        "process-management",
-        "process-priority",
-        "scheduler",
-        "system-utility",
-        "windows",
-        "windows-11",
-        "winforms"
+        "agents",
+        "claude-code",
+        "code-review",
+        "codex",
+        "obsidian",
+        "opencode",
+        "pi-mono",
+        "plan-mode",
+        "skills"
       ],
-      "license": "GPL-3.0",
-      "homepage": "https://pavise.club",
+      "license": "Apache-2.0",
+      "homepage": "https://plannotator.ai",
       "archived": false,
-      "summary": "**一言で:** Windows ゲーム向けに、プレイ中だけバックグラウンド処理を抑制し、CPU コアや電源・GPU などの設定をゲームごとに最適化して、終了後に元へ戻す C#（WinForms）製のリソース管理ツールです。\n\n**解決する課題:** ブラウザ、ランチャー、アップデータ、Windows 標準のバックグラウンド処理は、ゲームと CPU・ディスク I/O・GPU を取り合います。Pavise はこの競合を減らし、手持ちのハードウェア性能をゲームに多く振り向けることを狙っています。変更はセッション単位で記録され、プレイ後に復元されます。\n\n**技術的なポイント:**\n- **バックグラウンド抑制が中核:** 対象プロセスの CPU・ディスク I/O・メモリページ・GPU の優先度を下げ、効率モード（EcoQoS）を要求します。Job による CPU クォータやコア制限も使います。DiagTrack、WSearch、Widgets などの Microsoft 組み込み対象には、Normal で CPU 5%・物理コア最大 2、Aggressive で 2%・最大 1 コアの制限がかかります。\n- **2 つのモードと 3 段階の強度:** Smart は負荷とフォアグラウンド状態に応じて対象範囲を調整します。Competitive はゲーム切り替え中も抑制を維持します。強度は Off / Normal / Aggressive で、モードとは別に設定します。\n- **ゲームごとの細かな設定:** CPU 配置（P/E コア、CCD、キャッシュドメイン、手動選択）、レンダースレッドのアフィニティ、電源プラン、タイマー解像度、メモリのスタンバイリスト整理、NVIDIA 設定や HAGS などを個別に構成できます。システム診断機能には GPU 割り込み配置の確認と検証・ロールバックも含まれます。\n- **安全性への配慮:** 説明文では、インジェクションとテレメトリを使わないとされています。ホワイトリストで、ゲーム本体、依存プロセス、アンチチートやストリーミングツールなどを保護します。異常終了後の復旧ガードも備えます。\n- **検証可能性:** GPL-3.0 でソースが公開されています。ビルドは Windows 標準の .NET Framework C# コンパイラと PowerShell で行え、Visual Studio は不要です。公開リグレッションテストと実験資料も用意されています。\n\n**使いどころ:** 常駐アプリが多い PC で、フレームタイムの安定性や操作の応答性を、設定を戻せる形で試したいときに向きます。ただし、効果はゲーム・ハードウェア・ドライバー・負荷によって変わるため、再現できるシーンでの比較が推奨されています。\n\n注意点として、動作には管理者権限が必要です。プロセススケジューリング、サービス、電源設定、レジストリ、PowerShell を扱うため、セキュリティソフトに検知される可能性があります。他のプロセス優先度・アフィニティ管理ツールとの併用は避けるよう書かれています。\n\n**始め方:** 要件は Windows 10 2004（build 19041）以降、.NET Framework 4.7.2 以降、管理者権限です。ソースからビルドする場合は次のとおりです。\n\n```bat\nbuild.cmd -b prod\n```\n\n出力は `build\\Pavise.exe` です。ビルド済みの配布物は GitHub Releases から入手できます。"
+      "summary": "**一言で:** Plannotator は、Claude Code や Codex などの AI コーディングエージェントが出した計画・ドキュメント・差分を、ローカルのブラウザ UI 上で注釈・レビューし、そのフィードバックをエージェントへ送り返すためのツールです。\n\n**解決する課題:** エージェントに作業を任せると、計画の承認、仕様の確認、コードレビューといった「人間の判断」が必要な場面がターミナルの外に散らばりがちです。Plannotator はそれらを一つのレビュー画面にまとめ、コメントや修正指示をそのままエージェントの次のターンとして返せるようにします。複数エージェントを並行で動かす場合の確認待ちの管理にも対応します（Inbox 機能）。\n\n**技術的なポイント:**\n- 各エージェントのプラグイン、フック、コマンド経由で連携します。プラン作成時やタスク完了時に自動でブラウザ UI が開きます。対応はClaude Code、Codex、Copilot CLI、Gemini CLI、OpenCode、Kiro、Droid、Amp、DeepSeek Harness、Pi などです。\n- 機能は 3 系統あります。Markdown・HTML・URL などの注釈、Git・GitButler・Jujutsu・Perforce・GitHub・GitLab に対応したコードレビュー、複数エージェントからの質問や成果物を集約する Inbox です。\n- Inbox は Claude Code・Pi・OpenCode ではプラグインで連携し、それ以外のエージェントは `plannotator inbox mcp` による MCP 経由で接続します。返信はセッションを開いたままにせず、次のターンとして届きます。\n- プライバシー面では、テレメトリや分析は収集せず、計画・差分・注釈などは既定でローカルに保存されます。ただしリリース確認のため GitHub へのリクエストが発生し、現状オプトアウト設定はありません。Git の `ls-remote` チェックは `--no-git-remote-check` で無効化できます。\n- 共有機能は、小規模な Markdown は URL フラグメントに圧縮し、大きいものは AES-256-GCM で暗号化した上で短縮リンクサービスにアップロードします（7 日で失効）。ただしオープンソースのリンク共有は非推奨化へ向かっており、チーム共有の主軸はホスト型の Workspaces（別製品）とされています。\n- ターミナル向けには別リポジトリの Herdr Annotate と Plannotator TUI があります。ライセンスは Apache-2.0 です。\n\n**使いどころ:** エージェントが作った計画や差分を、チャットでの文章指示ではなく、箇所を指定した注釈やコードコメントで返したい開発者に向いています。また、複数のエージェントを並行運用していて、確認待ちや判断依頼を一箇所で処理したい場合にも使えます。\n\n**始め方:**\n```bash\n# macOS / Linux / WSL\ncurl -fsSL https://plannotator.ai/install.sh | bash\n```\nインストーラーが導入済みのエージェントを自動検出して設定します。Claude Code ではこの後に `/plugin marketplace add backnotprop/plannotator` と `/plugin install plannotator@plannotator` を実行し、再起動が必要です。Pi は `pi install npm:@plannotator/pi-extension` のみで導入できます。"
     }
   ],
   "carried": []
