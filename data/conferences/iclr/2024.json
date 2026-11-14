@@ -1,0 +1,161 @@
+{
+  "conf": "iclr",
+  "year": 2024,
+  "updated": "2026-11-14",
+  "headline": "ウィーン開催。ViT のレジスタトークン、実世界シミュレータ、拡散モデルの汎化理論が最優秀論文になった回",
+  "summary": "ウィーンで開催され、投稿7,304本・採択約2,250本（約31%）、参加者は約6,500人でした。最優秀論文は6本で、Vision Transformer の特徴マップに現れる異常なトークンを「レジスタ」用の追加トークンで解消する研究、実世界の映像から対話的なシミュレータを学習する UniSim、拡散モデルが暗記ではなく汎化する仕組みを幾何的な表現から説明した研究、長系列モデルの公平な比較には事前学習が必要だとする研究などが選ばれました。佳作には LLM の KV キャッシュ圧縮、ブラックボックス LLM のテストデータ混入の証明などが入っています。",
+  "stats": {
+    "submissions": 7304,
+    "accepted": 2250,
+    "rate": "30.8%"
+  },
+  "attendees": "約6,533人（79か国）",
+  "trends": [
+    "Vision Transformer の内部の理解: 高ノルムの異常トークンとレジスタによる解消",
+    "世界モデル・シミュレータ: UniSim（実世界の映像からロボット・エージェント用シミュレータを学習）",
+    "拡散モデルの汎化理論: 幾何適応的な調和表現による説明",
+    "LLM の効率化と評価の信頼性: KV キャッシュ圧縮、テストデータ混入（コンタミネーション）の検出"
+  ],
+  "implications": [
+    "画像基盤モデル（DINOv2 など）の細かな欠陥が見つかり改良されたことで、セグメンテーションや物体検出への転用品質が上がった",
+    "ベンチマークの混入問題が理論的に検証できるようになり、公開ベンチマークのスコアだけでモデルを選ぶ危うさが明確になった",
+    "LLM の推論コストの大部分を占める KV キャッシュの削減は、その後の長文脈・低コスト推論の主要テーマになった"
+  ],
+  "awards": [
+    {
+      "award": "Outstanding Paper",
+      "title": "Vision Transformers Need Registers",
+      "authors": "Timothée Darcet, Maxime Oquab, Julien Mairal, Piotr Bojanowski",
+      "url": "https://arxiv.org/abs/2309.16588"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Learning Interactive Real-World Simulators",
+      "authors": "Sherry Yang ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Generalization in diffusion models arises from geometry-adaptive harmonic representations",
+      "authors": "Zahra Kadkhodaie ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Protein Discovery with Discrete Walk-Jump Sampling",
+      "authors": "Nathan Frey ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Never Train from Scratch: Fair Comparison of Long-Sequence Models Requires Data-Driven Priors",
+      "authors": "Ido Amos ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Beyond Weisfeiler-Lehman: A Quantitative Framework for GNN Expressiveness",
+      "authors": "Bohang Zhang ほか"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "Model Tells You What to Discard: Adaptive KV Cache Compression for LLMs",
+      "authors": "Suyu Ge ほか"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "Proving Test Set Contamination in Black-Box Language Models",
+      "authors": "Yonatan Oren ほか"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "Robust agents learn causal world models",
+      "authors": "Jonathan Richens, Tom Everitt"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "Flow Matching on General Geometries",
+      "authors": "Ricky T. Q. Chen, Yaron Lipman"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "Is ImageNet worth 1 video? Learning strong image encoders from 1 long unlabelled video",
+      "authors": "Shashank Venkataramanan ほか"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "Amortizing intractable inference in large language models",
+      "authors": "Edward Hu ほか"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "Approximating Nash Equilibria in Normal-Form Games via Stochastic Optimization",
+      "authors": "Ian Gemp ほか"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "Towards a statistical theory of data selection under weak supervision",
+      "authors": "Germain Kolossov ほか"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "Meta Continual Learning Revisited: Implicitly Enhancing Online Hessian Approximation via Variance Reduction",
+      "authors": "Yichen Wu ほか"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "The mechanistic basis of data dependence and abrupt learning in an in-context classification task",
+      "authors": "Gautam Reddy"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Vision Transformers Need Registers",
+      "titleJa": "Vision Transformer にはレジスタが必要",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Timothée Darcet",
+        "Maxime Oquab",
+        "Julien Mairal",
+        "Piotr Bojanowski"
+      ],
+      "url": "https://arxiv.org/abs/2309.16588",
+      "why": "大規模な ViT では、背景など情報の少ない領域のトークンが計算の「メモ用」に使われ、特徴マップにノイズが出ることを発見しました。入力に数個の追加トークン（レジスタ）を足すだけで解消し、物体発見などの性能も上がります。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "教師あり・自己教師ありを問わず大規模なViTの特徴マップやアテンションマップに現れるアーティファクト（高ノルムの外れ値トークン）を特定・特徴づけ、その原因についての解釈を示した研究。さらに入力系列に学習可能な追加トークン（レジスタ）を加えるだけでこれを解消する簡潔な方法を提案した。",
+        "novelty": "DINOでは見られなかったアーティファクトがDINOv2、DeiT-III、OpenCLIPなど多くの現代的ViTに共通して存在することを示し、高ノルムトークンが冗長なパッチを再利用して大域情報を保持するという解釈を与えた点が新しい。Memory Transformerなどの追加トークン手法とは異なり、新たな挙動を作るのではなくモデルが自然に行っている挙動をレジスタに分離するという位置づけで、出力が使われないトークンを事前学習時に加える。",
+        "method": "パッチ埋め込み層の後に、[CLS]と同様に学習可能な値を持つN個の[reg]トークンを系列に追加し、ネットワーク最終出力では破棄して[CLS]とパッチトークンのみを使う。アーティファクトは出力ノルムが約150を超えるトークンとして検出し、近傍パッチとのコサイン類似度、位置予測・画素再構成・分類の線形プローブでその性質を分析した。この方法は構造変更のみなので、DeiT-III、OpenCLIP、DINOv2の各学習手順にそのまま適用できる。",
+        "validation": "レジスタ導入で3モデルとも出力ノルムの外れ値が消え、ImageNet線形分類・ADE20kセグメンテーション・NYUd深度推定で性能は維持または向上した（例：DINOv2はADE20kで46.6→47.9 mIoU、NYUdのrmseで0.378→0.366）。LOSTによる物体発見ではDINOv2のVOC2007 corlocが35.3→55.4、DeiT-IIIが11.7→27.1に改善した一方、OpenCLIPはわずかに低下した（38.8→37.1）。レジスタ数の検討では1個でアーティファクトが消え、増やすと下流性能が上がる傾向があり、実験では4個を採用した。4個での計算量増加は2%未満である。",
+        "discussion": "アーティファクトの発生要因（学習方式、モデルサイズ、学習長）を完全には特定できていない。レジスタごとのアテンションの多様性（スロットアテンションに似た挙動）や正則化の研究、レジスタのノルムが量子化されたように見える現象、OpenCLIPで外れ値がvalue射影の零空間に入るように見える現象は今後の課題とされている。ハイパーパラメータのカットオフ値（150）はモデルごとに調整が必要で、MAEには同様のアーティファクトが見られない点も議論の余地がある。",
+        "next": [
+          {
+            "title": "DINOv2: Learning Robust Visual Features without Supervision",
+            "reason": "本研究が主な分析対象とし、アーティファクトが観測されたモデルであり、下流評価の実験プロトコルも踏襲しているため。"
+          },
+          {
+            "title": "Emerging Properties in Self-Supervised Vision Transformers (DINO)",
+            "reason": "アーティファクトのないきれいなアテンションマップの基準として比較されており、本研究の動機を理解するうえで重要なため。"
+          },
+          {
+            "title": "Localizing Objects with Self-Supervised Transformers and No Labels (LOST)",
+            "reason": "レジスタ導入の効果を検証した物体発見手法であり、特徴マップの滑らかさへの依存を理解できるため。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "ICLR 2024 Awards（公式・受賞一覧）",
+      "url": "https://iclr.cc/virtual/2024/awards_detail"
+    },
+    {
+      "title": "ICLR 2024（公式サイト）",
+      "url": "https://iclr.cc/Conferences/2024"
+    },
+    {
+      "title": "International Conference on Learning Representations（Wikipedia・開催地と投稿数の表）",
+      "url": "https://en.wikipedia.org/wiki/International_Conference_on_Learning_Representations"
+    }
+  ],
+  "unreachable": [
+    "招待講演者の一覧は公式ページから取得できなかったため省略しています"
+  ]
+}

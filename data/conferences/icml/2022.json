@@ -1,0 +1,141 @@
+{
+  "conf": "icml",
+  "year": 2022,
+  "updated": "2026-11-14",
+  "headline": "現地開催の再開（ボルチモア）。公平性・プライバシー・データの難しさなど「信頼できる ML」が最優秀論文の多くを占めた回",
+  "summary": "ボルチモアで3年ぶりに現地開催されました。投稿5,630本・採択1,233本（約21.9%）です。最優秀論文は10本で、因果的な公平性の定義が実際には望ましくない結果を招きうることを示した研究、データセット凝縮がプライバシー保護にも効くこと、データセットの難しさを情報量で測る V-usable information、周辺尤度によるモデル選択の落とし穴、安定した共形予測など、モデルの信頼性・評価・データを問う研究が目立ちました。次点には Monarch 行列による効率的な Transformer（Tri Dao ら）なども入りました。Test of Time 賞はサポートベクターマシンへのデータ汚染攻撃（Poisoning Attacks）です。",
+  "stats": {
+    "submissions": 5630,
+    "accepted": 1233,
+    "rate": "21.9%"
+  },
+  "trends": [
+    "公平性と因果: 因果的な公平性の定義の帰結を分析した論文が受賞",
+    "プライバシーとセキュリティ: データセット凝縮によるプライバシー保護、Test of Time はデータ汚染攻撃",
+    "データの理解: データセットの難しさの定量化（V-usable information）、グラフデータ拡張（G-Mixup）",
+    "不確実性の定量化: 共形予測（Stable conformal prediction sets）、周辺尤度と汎化の関係"
+  ],
+  "implications": [
+    "AI の社会実装が進むにつれ、公平性・プライバシー・攻撃耐性が「あれば良い」から「必須要件」へ変わりつつあることを示している",
+    "データ汚染攻撃が10年越しで評価されたことは、学習データの供給元管理（データのサプライチェーン）の重要性を物語る",
+    "予測に信頼区間をつける共形予測は、製造・医療など判断ミスのコストが大きい現場で導入しやすい技術として注目に値する"
+  ],
+  "awards": [
+    {
+      "award": "Outstanding Paper",
+      "title": "Causal Conceptions of Fairness and their Consequences",
+      "authors": "Hamed Nilforoshan ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Privacy for Free: How does Dataset Condensation Help Privacy?",
+      "authors": "Tian Dong ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Understanding Dataset Difficulty with V-Usable Information",
+      "authors": "Kawin Ethayarajh, Yejin Choi, Swabha Swayamdipta"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Bayesian Model Selection, the Marginal Likelihood, and Generalization",
+      "authors": "Sanae Lotfi, Pavel Izmailov, Gregory Benton, Micah Goldblum, Andrew Gordon Wilson",
+      "url": "https://arxiv.org/abs/2202.11678"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Stable Conformal Prediction Sets",
+      "authors": "Eugene Ndiaye"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "G-Mixup: Graph Data Augmentation for Graph Classification",
+      "authors": "Xiaotian Han ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Do Differentiable Simulators Give Better Policy Gradients?",
+      "authors": "H.J. Terry Suh ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Learning Mixtures of Linear Dynamical Systems",
+      "authors": "Yanxi Chen, H. Vincent Poor"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "The Importance of Non-Markovianity in Maximum State Entropy Exploration",
+      "authors": "Mirco Mutti ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Solving Stackelberg Prediction Game with Least Squares Loss via Spherically Constrained Least Squares Reformulation",
+      "authors": "Jiali Wang ほか"
+    },
+    {
+      "award": "Test of Time",
+      "title": "Poisoning Attacks Against Support Vector Machines",
+      "authors": "Battista Biggio, Blaine Nelson, Pavel Laskov"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Bayesian Model Selection, the Marginal Likelihood, and Generalization",
+      "titleJa": "ベイズモデル選択・周辺尤度・汎化",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Sanae Lotfi",
+        "Pavel Izmailov",
+        "Gregory Benton",
+        "Micah Goldblum",
+        "Andrew Gordon Wilson"
+      ],
+      "url": "https://arxiv.org/abs/2202.11678",
+      "why": "モデル選択の基準として古くから使われる周辺尤度が、汎化性能の予測としては誤解を招く場合があることを示し、代わりに条件付き周辺尤度を提案しました。ニューラルネットワークの構造探索にも関わる結果です。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ベイズ的モデル選択で広く使われる周辺尤度（ベイズエビデンス）が、訓練後モデルの汎化性能の指標としてどこまで適切かを再評価した研究。周辺尤度は事前分布に基づく仮説検定には適する一方、汎化の代理指標やハイパーパラメータ学習では不整合が生じることを理論と実験で示し、部分的な対処として条件付き周辺尤度（CLML）を提案している。",
+        "novelty": "周辺尤度の「事前モデルがデータを生成する確率」という問いと、「訓練後の事後分布が未観測データでうまく働くか」という問いを明確に区別した。また、周辺尤度が汎化と負の相関を持ち得ること、データ空間での過少適合・過剰適合の両方を招くことを機構とともに示した。CLMLは先行研究（intrinsic Bayes factor等）に類似するが、動機と用途が異なり、ハイパーパラメータ学習・ニューラルネットのモデル比較・近似推論・分類に初めて適用した点が新しい。",
+        "method": "対数周辺尤度を逐次予測の和 Σ log p(D_i | D_<i, M) に分解し、先頭の m−1 項を除いた和をCLML（log p(D_≥m | D_<m)）と定義した。初期項は汎化と関係が薄いが周辺尤度に同程度寄与するため、これを除いて汎化との整合性を高める。またCLMLは事後 p(w | D_<m) からのモンテカルロ推定が可能で、事前からのサンプリングより推定しやすい。さらに周辺尤度を「事後サンプルの期待尤度 − KL(事後||事前)」と書き直し、ベイズモデル平均（BMA）の性能とは整合しないことを示した。ラプラス近似（単峰のみ捉える、パラメータ数に過敏、局所的）、BIC、ELBOの限界やPAC-Bayes境界との関係も分析している。",
+        "validation": "本文（一部省略されている）では、GP回帰で平均関数をMLPにすると周辺尤度最適化が過剰適合する例（図2）や、sin(w)を用いた玩具例でラプラス近似の周辺尤度が事前の幅αに対して線形に低下する一方、真の値はほぼ一定であること（図3）が示されている。加えて、CLMLはデータ量の範囲で汎化と相関し、ニューラルアーキテクチャ探索ではラプラス周辺尤度が汎化と負の相関を示し得ること、深層カーネル学習でCLMLが有望な性能を示すことが述べられているが、提示された本文には具体的な数値結果は含まれていない。",
+        "discussion": "CLMLは訓練に使わない保持点へ適合させるため、過剰適合の問題自体は解消されない。また最も効果を発揮するのは小規模データのときで、データが増えると周辺尤度との差は縮まる。カットオフ m の選び方にも依存する（本文では感度を付録で検討）。",
+        "next": [
+          {
+            "title": "Scalable marginal likelihood estimation for model selection in deep learning",
+            "reason": "深層学習でのラプラス近似による周辺尤度モデル選択という、本論文が批判的に検討する主要手法を理解できる。"
+          },
+          {
+            "title": "A Bayesian perspective on training speed and model selection",
+            "reason": "周辺尤度と訓練速度の関係を論じ、本論文が反証を試みる主張の元になっている。"
+          },
+          {
+            "title": "On the marginal likelihood and cross-validation",
+            "reason": "条件付き周辺尤度と交差検証の関係を示し、CLMLの理論的背景を補える。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "ICML 2022 Awards（公式・受賞一覧）",
+      "url": "https://icml.cc/virtual/2022/awards_detail"
+    },
+    {
+      "title": "Congratulations to the #ICML2022 outstanding paper award winners（AIhub）",
+      "url": "https://aihub.org/2022/07/21/congratulations-to-the-icml2022-outstanding-paper-award-winners"
+    },
+    {
+      "title": "ICML 2022（公式サイト）",
+      "url": "https://icml.cc/Conferences/2022"
+    },
+    {
+      "title": "International Conference on Machine Learning（Wikipedia・投稿数と採択数の表）",
+      "url": "https://en.wikipedia.org/wiki/International_Conference_on_Machine_Learning"
+    }
+  ],
+  "unreachable": [
+    "招待講演者の一覧は公式ページから取得できなかったため省略しています",
+    "次点（Runner-up）論文の題名は公式ページで表示されなかったため、一覧から省いています"
+  ]
+}

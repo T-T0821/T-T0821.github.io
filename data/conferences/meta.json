@@ -1,0 +1,276 @@
+{
+  "since": 2020,
+  "fields": [
+    {
+      "key": "ml",
+      "icon": "🤖",
+      "label": "AI・機械学習全般",
+      "position": "「機械学習の3大トップ会議」と呼ばれ、深層学習や基盤モデルの最重要論文が集中します。",
+      "conferences": [
+        "neurips",
+        "icml",
+        "iclr"
+      ]
+    },
+    {
+      "key": "ai",
+      "icon": "🏛️",
+      "label": "AI全般（老舗・総合）",
+      "position": "AI分野で最も歴史と権威のある総合国際会議で、理論から応用まで幅広いテーマを扱います。",
+      "conferences": [
+        "aaai",
+        "ijcai"
+      ]
+    },
+    {
+      "key": "cv",
+      "icon": "👁️",
+      "label": "画像認識・CV",
+      "position": "コンピュータビジョン分野の最高峰会議です。特にCVPRは全科学分野でもトップクラスの影響力を持ちます。",
+      "conferences": [
+        "cvpr",
+        "iccv",
+        "eccv"
+      ]
+    },
+    {
+      "key": "nlp",
+      "icon": "💬",
+      "label": "自然言語処理",
+      "position": "言語モデルやテキスト解析など、NLP分野における世界最高峰の国際会議です。",
+      "conferences": [
+        "acl",
+        "emnlp"
+      ]
+    },
+    {
+      "key": "dm",
+      "icon": "🔎",
+      "label": "データマイニング・Web",
+      "position": "検索技術、推薦システム、ビッグデータ解析など、ITサービスの実装に直結する研究が集まります。",
+      "conferences": [
+        "kdd",
+        "www"
+      ]
+    }
+  ],
+  "conferences": {
+    "neurips": {
+      "name": "NeurIPS",
+      "fullName": "Conference on Neural Information Processing Systems",
+      "field": "ml",
+      "cadence": "毎年12月",
+      "site": "https://neurips.cc/",
+      "editions": {
+        "2020": {
+          "start": "2020-12-06",
+          "end": "2020-12-12",
+          "location": "オンライン開催（当初予定はバンクーバー）"
+        },
+        "2021": {
+          "start": "2021-12-06",
+          "end": "2021-12-14",
+          "location": "オンライン開催"
+        },
+        "2022": {
+          "start": "2022-11-28",
+          "end": "2022-12-09",
+          "location": "米国・ニューオーリンズ（第2週はオンライン）"
+        },
+        "2023": {
+          "start": "2023-12-10",
+          "end": "2023-12-16",
+          "location": "米国・ニューオーリンズ"
+        },
+        "2024": {
+          "start": "2024-12-10",
+          "end": "2024-12-15",
+          "location": "カナダ・バンクーバー"
+        },
+        "2025": {
+          "start": "2025-12",
+          "end": "2025-12",
+          "location": "米国・サンディエゴ／メキシコ・メキシコシティ"
+        },
+        "2026": {
+          "start": "2026-12-06",
+          "end": "2026-12-13",
+          "location": "オーストラリア・シドニー（アトランタ・パリにサテライト会場）",
+          "source": "https://neurips.cc/Conferences/2026/Dates"
+        }
+      }
+    },
+    "icml": {
+      "name": "ICML",
+      "fullName": "International Conference on Machine Learning",
+      "field": "ml",
+      "cadence": "毎年7月",
+      "site": "https://icml.cc/",
+      "editions": {
+        "2020": {
+          "start": "2020-07",
+          "end": "2020-07",
+          "location": "オンライン開催（当初予定はウィーン）"
+        },
+        "2021": {
+          "start": "2021-07-18",
+          "end": "2021-07-24",
+          "location": "オンライン開催"
+        },
+        "2022": {
+          "start": "2022-07-17",
+          "end": "2022-07-23",
+          "location": "米国・ボルチモア"
+        },
+        "2023": {
+          "start": "2023-07-23",
+          "end": "2023-07-29",
+          "location": "米国・ホノルル"
+        },
+        "2024": {
+          "start": "2024-07-21",
+          "end": "2024-07-27",
+          "location": "オーストリア・ウィーン"
+        },
+        "2025": {
+          "start": "2025-07-13",
+          "end": "2025-07-19",
+          "location": "カナダ・バンクーバー"
+        },
+        "2026": {
+          "start": "2026-07-06",
+          "end": "2026-07-11",
+          "location": "韓国・ソウル"
+        },
+        "2027": {
+          "start": "2027-07-31",
+          "end": "2027-08-06",
+          "location": "ブラジル・リオデジャネイロ",
+          "source": "https://icml.cc/Conferences/2027"
+        }
+      }
+    },
+    "iclr": {
+      "name": "ICLR",
+      "fullName": "International Conference on Learning Representations",
+      "field": "ml",
+      "cadence": "毎年4〜5月",
+      "site": "https://iclr.cc/",
+      "editions": {
+        "2020": {
+          "start": "2020-04-26",
+          "end": "2020-04-30",
+          "location": "オンライン開催（当初予定はアディスアベバ）"
+        },
+        "2021": {
+          "start": "2021-05-03",
+          "end": "2021-05-07",
+          "location": "オンライン開催"
+        },
+        "2022": {
+          "start": "2022-04-25",
+          "end": "2022-04-29",
+          "location": "オンライン開催"
+        },
+        "2023": {
+          "start": "2023-05-01",
+          "end": "2023-05-05",
+          "location": "ルワンダ・キガリ"
+        },
+        "2024": {
+          "start": "2024-05-07",
+          "end": "2024-05-11",
+          "location": "オーストリア・ウィーン"
+        },
+        "2025": {
+          "start": "2025-04-24",
+          "end": "2025-04-28",
+          "location": "シンガポール"
+        },
+        "2026": {
+          "start": "2026-04-23",
+          "end": "2026-04-27",
+          "location": "ブラジル・リオデジャネイロ"
+        },
+        "2027": {
+          "start": "2027-04-26",
+          "end": "2027-04-30",
+          "location": "未発表",
+          "source": "https://iclr.cc/Conferences/2027/Dates"
+        }
+      }
+    },
+    "aaai": {
+      "name": "AAAI",
+      "fullName": "AAAI Conference on Artificial Intelligence",
+      "field": "ai",
+      "cadence": "毎年1〜2月",
+      "site": "https://aaai.org/conference/aaai/",
+      "editions": {}
+    },
+    "ijcai": {
+      "name": "IJCAI",
+      "fullName": "International Joint Conference on Artificial Intelligence",
+      "field": "ai",
+      "cadence": "毎年8月ごろ",
+      "site": "https://www.ijcai.org/",
+      "editions": {}
+    },
+    "cvpr": {
+      "name": "CVPR",
+      "fullName": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "field": "cv",
+      "cadence": "毎年6月",
+      "site": "https://cvpr.thecvf.com/",
+      "editions": {}
+    },
+    "iccv": {
+      "name": "ICCV",
+      "fullName": "IEEE/CVF International Conference on Computer Vision",
+      "field": "cv",
+      "cadence": "奇数年の秋",
+      "site": "https://iccv.thecvf.com/",
+      "editions": {}
+    },
+    "eccv": {
+      "name": "ECCV",
+      "fullName": "European Conference on Computer Vision",
+      "field": "cv",
+      "cadence": "偶数年の秋",
+      "site": "https://eccv.ecva.net/",
+      "editions": {}
+    },
+    "acl": {
+      "name": "ACL",
+      "fullName": "Annual Meeting of the Association for Computational Linguistics",
+      "field": "nlp",
+      "cadence": "毎年7〜8月",
+      "site": "https://www.aclweb.org/",
+      "editions": {}
+    },
+    "emnlp": {
+      "name": "EMNLP",
+      "fullName": "Conference on Empirical Methods in Natural Language Processing",
+      "field": "nlp",
+      "cadence": "毎年11〜12月",
+      "site": "https://aclanthology.org/venues/emnlp/",
+      "editions": {}
+    },
+    "kdd": {
+      "name": "KDD",
+      "fullName": "ACM SIGKDD Conference on Knowledge Discovery and Data Mining",
+      "field": "dm",
+      "cadence": "毎年8月",
+      "site": "https://kdd.org/",
+      "editions": {}
+    },
+    "www": {
+      "name": "WWW",
+      "fullName": "The ACM Web Conference (WWW)",
+      "field": "dm",
+      "cadence": "毎年4〜5月",
+      "site": "https://www2026.thewebconf.org/",
+      "editions": {}
+    }
+  }
+}

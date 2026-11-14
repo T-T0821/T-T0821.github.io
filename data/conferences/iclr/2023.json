@@ -1,0 +1,125 @@
+{
+  "conf": "iclr",
+  "year": 2023,
+  "updated": "2026-11-14",
+  "headline": "アフリカ初の主要 ML 会議（キガリ）。テキストから3Dを作る DreamFusion が最優秀論文に選ばれた回",
+  "summary": "ルワンダのキガリで開催され、主要な機械学習会議として初めてアフリカで現地開催されました。投稿約4,950本・採択約1,575本（約32%）、参加者は約3,800人です。最優秀論文は4本で、学習済みの2D画像拡散モデルだけを使ってテキストから3Dモデルを生成する DreamFusion、少数例で多様な密な予測タスクに対応する Visual Token Matching、目の見えない移動エージェントの記憶に地図が自然に現れることを示した研究、GNN の表現力をグラフの二連結性で捉え直す理論が選ばれました。",
+  "stats": {
+    "submissions": 4956,
+    "accepted": 1574,
+    "rate": "32.0%"
+  },
+  "attendees": "約3,758人（73か国）",
+  "trends": [
+    "2D 生成モデルの 3D への応用: DreamFusion（Score Distillation Sampling）",
+    "汎用的な視覚モデル: 少数例で様々な密な予測（セグメンテーション・深度など）に対応",
+    "エージェントの内部表現: 視覚なしのナビゲーションエージェントの記憶に地図が出現",
+    "GNN の理論: グラフの二連結性による表現力の新しい評価軸"
+  ],
+  "implications": [
+    "3D データがなくても 2D の生成モデルから 3D を作れることが示され、ゲーム・EC・製造の3Dコンテンツ制作の自動化が現実的になった",
+    "「学習済み生成モデルを別タスクの事前知識として使う」発想は、その後の動画・3D・ロボット分野へ広く波及した"
+  ],
+  "awards": [
+    {
+      "award": "Outstanding Paper",
+      "title": "DreamFusion: Text-to-3D using 2D Diffusion",
+      "authors": "Ben Poole, Ajay Jain, Jonathan T. Barron, Ben Mildenhall",
+      "url": "https://arxiv.org/abs/2209.14988"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Universal Few-shot Learning of Dense Prediction Tasks with Visual Token Matching",
+      "authors": "Donggyun Kim ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Emergence of Maps in the Memories of Blind Navigation Agents",
+      "authors": "Erik Wijmans ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Rethinking the Expressive Power of GNNs via Graph Biconnectivity",
+      "authors": "Bohang Zhang ほか"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "Conditional Antibody Design as 3D Equivariant Graph Translation",
+      "authors": "Xiangzhe Kong ほか"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "Mastering the Game of No-Press Diplomacy via Human-Regularized Reinforcement Learning and Planning",
+      "authors": "Anton Bakhtin ほか"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "On the duality between contrastive and non-contrastive self-supervised learning",
+      "authors": "Quentin Garrido ほか"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "Towards Understanding Ensemble, Knowledge Distillation and Self-Distillation in Deep Learning",
+      "authors": "Zeyuan Allen-Zhu, Yuanzhi Li"
+    },
+    {
+      "award": "Honorable Mention",
+      "title": "Disentanglement with Biological Constraints: A Theory of Functional Cell Types",
+      "authors": "James Whittington ほか"
+    }
+  ],
+  "featured": [
+    {
+      "title": "DreamFusion: Text-to-3D using 2D Diffusion",
+      "titleJa": "DreamFusion：2D拡散モデルによるテキストからの3D生成",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Ben Poole",
+        "Ajay Jain",
+        "Jonathan T. Barron",
+        "Ben Mildenhall"
+      ],
+      "url": "https://arxiv.org/abs/2209.14988",
+      "why": "3D の学習データを一切使わず、学習済みのテキスト→画像拡散モデルを「採点役」にして NeRF（3D表現）を最適化する Score Distillation Sampling を提案し、テキストから3Dを生成する研究の流れを作りました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "テキストから3Dモデルを生成する手法DreamFusionの提案。3Dの学習データを一切使わず、事前学習済みの2Dテキスト画像拡散モデル（Imagen）を事前分布として利用し、任意の角度から見られ、再照明や任意の3D環境への合成も可能なNeRFを生成する。",
+        "novelty": "拡散モデルの学習損失を確率密度蒸留に基づく損失（Score Distillation Sampling, SDS）に置き換え、画素空間ではなくパラメータ空間での最適化による生成を可能にした。CLIPを用いる先行手法Dream Fieldsに比べ、拡散モデルを用いることで高い一貫性とリアリズムを得ている。3Dデータも拡散モデルの改変も不要である点が優れている。",
+        "method": "ランダム初期化したNeRF（mip-NeRF 360ベース）を、ランダムなカメラ位置と照明から64×64で描画する。描画画像にノイズを加えて凍結Imagenでノイズを予測させ、U-NetのJacobian項を省いた勾配 w(t)(ε̂−ε)∂x/∂θ をNeRFへ逆伝播する（SDS）。アルベドと法線によるシェーディング、テクスチャなし描画、視点依存のテキスト付加（overhead/front/side/back view）、不透明度正則化、向き損失、大きなガイダンス重みω=100などの工夫で形状の破綻を防ぐ。",
+        "validation": "COCO検証セットのオブジェクト中心の153プロンプトでCLIP R-Precisionを評価し、カラー画像ではDream FieldsとCLIP-Meshを上回り、正解画像に迫る性能を示した（CLIP B/32で75.1、B/16で77.5、L/14で79.7）。テクスチャなし描画による形状評価では、再実装版Dream Fieldsがほぼ偶然水準なのに対しDreamFusionは58.5%を達成した。アブレーションでは、視点拡張、視点依存プロンプト、照明、テクスチャなし描画を加えることで形状が大きく改善し、フルレンダリングで+12.5%向上した。",
+        "discussion": "SDSは過飽和・過平滑な結果になりやすく、多様性も低い（乱数シード間の差が小さい）。64×64のImagenを使うため細部が不足し、高解像度化は計算コスト上現実的でない。また2Dから3Dへの持ち上げは本質的に不良設定であり、平面に絵が描かれる局所解に陥ることがあるため、より頑健な3D事前分布が有効と考えられる。",
+        "next": [
+          {
+            "title": "Zero-Shot Text-Guided Object Generation with Dream Fields",
+            "reason": "DreamFusionが直接の比較対象とし、CLIPを用いたNeRF最適化によるテキストから3D生成の先行手法であるため。"
+          },
+          {
+            "title": "Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding",
+            "reason": "DreamFusionが事前分布として使うImagenの論文で、SDSが依拠する拡散モデルの性質を理解できるため。"
+          },
+          {
+            "title": "Mip-NeRF 360: Unbounded Anti-Aliased Neural Radiance Fields",
+            "reason": "DreamFusionの3D表現とレンダリングの基盤であり、NeRF部分の詳細を理解するのに役立つため。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "ICLR 2023 Awards（公式・受賞一覧）",
+      "url": "https://iclr.cc/virtual/2023/awards_detail"
+    },
+    {
+      "title": "ICLR 2023（公式サイト）",
+      "url": "https://iclr.cc/Conferences/2023"
+    },
+    {
+      "title": "International Conference on Learning Representations（Wikipedia・開催地と投稿数の表）",
+      "url": "https://en.wikipedia.org/wiki/International_Conference_on_Learning_Representations"
+    }
+  ],
+  "unreachable": [
+    "招待講演者の一覧は公式ページから取得できなかったため省略しています"
+  ]
+}

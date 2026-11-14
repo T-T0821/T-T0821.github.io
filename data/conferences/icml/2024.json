@@ -1,0 +1,177 @@
+{
+  "conf": "icml",
+  "year": 2024,
+  "updated": "2026-11-14",
+  "headline": "ウィーン開催。Genie・VideoPoet・SD3 など生成 AI と、本番 LLM の一部を盗み出す攻撃が最優秀論文に並んだ回",
+  "summary": "ウィーンで開催され、投稿は約9,500本、採択は約2,600〜2,900本（出典により差あり）と急拡大しました。最優秀論文は10本で、動画から操作可能な2D世界を生成する Genie、LLM で動画を生成する VideoPoet、Stable Diffusion 3 の基礎となった Rectified Flow Transformer、離散データの拡散モデル（SEDD）など生成モデルが半数近くを占めました。一方で、API 経由で商用 LLM の最終層の重みの一部を復元する攻撃や、より説得力のある LLM 同士に議論させると真実に近づくという研究、データセットの多様性を主張するなら測定せよという「ポジション論文」も受賞し、安全性と研究のあり方への関心も示されました。Test of Time 賞は DeCAF（深層特徴の転移学習）です。",
+  "stats": {
+    "submissions": 9473,
+    "accepted": 2610,
+    "rate": "27.5%",
+    "note": "Wikipedia では投稿9,653本・採択2,944本"
+  },
+  "trends": [
+    "世界モデル・動画生成: Genie（操作できる環境の生成）、VideoPoet（LLM による動画生成）",
+    "拡散・フローの新展開: Rectified Flow Transformer（SD3）、離散拡散（SEDD）",
+    "LLM のセキュリティ: 本番 LLM の埋め込み射影層を API から復元する攻撃",
+    "スケーラブルな監督: LLM 同士の議論（Debate）で人間が正解を見抜きやすくなる",
+    "ポジション論文の導入: 研究の進め方への提言が論文として採択・受賞されるように"
+  ],
+  "implications": [
+    "生成 AI が「画像・動画を作る」から「操作可能な環境（世界モデル）を作る」へ広がり、ロボットやゲーム開発への応用が視野に入った",
+    "商用 LLM も API 経由の攻撃で内部情報が漏れうることが示され、モデル提供側の防御が実務課題になった",
+    "人間を超える AI をどう監督するかという「スケーラブルな監督」が、実験で検証できる研究テーマになった"
+  ],
+  "awards": [
+    {
+      "award": "Best Paper",
+      "title": "Genie: Generative Interactive Environments",
+      "authors": "Jake Bruce ほか（Google DeepMind）",
+      "url": "https://arxiv.org/abs/2402.15391"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Stealing Part of a Production Language Model",
+      "authors": "Nicholas Carlini ほか",
+      "url": "https://arxiv.org/abs/2403.06634"
+    },
+    {
+      "award": "Best Paper",
+      "title": "VideoPoet: A Large Language Model for Zero-Shot Video Generation",
+      "authors": "Dan Kondratyuk ほか"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Scaling Rectified Flow Transformers for High-Resolution Image Synthesis",
+      "authors": "Patrick Esser ほか（Stability AI）"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Discrete Diffusion Modeling by Estimating the Ratios of the Data Distribution",
+      "authors": "Aaron Lou, Chenlin Meng, Stefano Ermon"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Debating with More Persuasive LLMs Leads to More Truthful Answers",
+      "authors": "Akbir Khan ほか"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Probabilistic Inference in Language Models via Twisted Sequential Monte Carlo",
+      "authors": "Stephen Zhao ほか"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Information Complexity of Stochastic Convex Optimization: Applications to Generalization, Memorization, and Tracing",
+      "authors": "Idan Attias ほか"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Position: Measure Dataset Diversity, Don't Just Claim It",
+      "authors": "Dora Zhao ほか"
+    },
+    {
+      "award": "Best Paper",
+      "title": "Position: Considerations for Differentially Private Learning with Large-Scale Public Pretraining",
+      "authors": "Florian Tramèr ほか"
+    },
+    {
+      "award": "Test of Time",
+      "title": "DeCAF: A Deep Convolutional Activation Feature for Generic Visual Recognition",
+      "authors": "Jeff Donahue ほか"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Genie: Generative Interactive Environments",
+      "titleJa": "Genie：操作できる環境を生成するモデル",
+      "award": "Best Paper",
+      "authors": [
+        "Jake Bruce",
+        "Michael Dennis",
+        "Ashley Edwards",
+        "ほか"
+      ],
+      "url": "https://arxiv.org/abs/2402.15391",
+      "why": "ラベルのないインターネット上のゲーム動画だけから学習し、画像1枚やテキストから「プレイヤーが操作できる」2D世界を生成します。行動のラベルなしに潜在的な行動を学ぶ点が新しく、世界モデル研究の流れを作りました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ラベルなしのインターネット動画のみから教師なしで学習した、初の生成的インタラクティブ環境「Genie」を提案した研究。テキスト・合成画像・写真・スケッチなどのプロンプトから、フレーム単位で操作可能な仮想世界を生成できる。11Bパラメータの基盤世界モデルとして位置づけられる。",
+        "novelty": "従来の世界モデルは行動ラベル付きデータを必要とし、動画モデルは動画単位のテキスト制御に留まっていたが、Genieは動画のみを学習データとしてフレーム単位の制御を実現した。潜在行動空間を教師なしで学習することで、大規模なインターネット動画の活用と、未見の画像プロンプトからの環境生成を可能にした。また、ST-transformerに基づくトークナイザ（ST-ViViT）はC-ViViTより計算効率が良く、品質も高い。",
+        "method": "モデルは、動画を離散トークン化するビデオトークナイザ（VQ-VAE+ST-transformer）、連続フレーム間の潜在行動を推定する潜在行動モデル（LAM、VQ-VAE目的、語彙数|A|=8）、次フレームのトークンをMaskGITで自己回帰的に予測するダイナミクスモデルの3要素からなる。全コンポーネントに空間・時間注意を交互に重ねるST-transformerを採用し、計算量がフレーム数に対し線形に増える。潜在行動は加算埋め込みとして与えて制御性を高めている。推論時はLAMを捨て、ユーザーが選んだ離散行動で1フレームずつ生成する。",
+        "validation": "約3万時間（フィルタ後）の2Dプラットフォーマーゲーム動画で学習し、モデルサイズ40M〜2.7B、バッチサイズを変えたスケーリング実験で、規模拡大に伴い学習損失が一貫して低下することを示した。ロボット動画（RT1等）で学習した2.5BモデルはFVD 82.7を達成し、ラベルなしで一貫した潜在行動を獲得した。CoinRunでは、潜在行動を使った模倣学習が、わずか200個程度の専門家サンプルでオラクルBCと同等のスコアを達成した。アブレーションでは、LAMへの入力はピクセルがトークンよりΔtPSNRで優れ（Platformers: 1.91対1.33）、トークナイザはST-ViViTがFVD 81.4、ΔtPSNR 1.66でViT・C-ViViTを上回った。",
+        "discussion": "自己回帰トランスフォーマー特有の非現実的な未来の幻覚、16フレームの記憶長による長期的な一貫性の欠如、約1FPSという低い推論速度がインタラクションの課題として挙げられている。今後は、より大規模なインターネット動画での学習や、汎用エージェント訓練用の多様な環境生成への応用が期待される。なお、モデルの重みやデータセットは非公開とされている。",
+        "next": [
+          {
+            "title": "Phenaki: Variable Length Video Generation From Open Domain Textual Description",
+            "reason": "時間方向を考慮したトークナイザC-ViViTを提案しており、Genieの ST-ViViTと比較される直接の先行研究であるため。"
+          },
+          {
+            "title": "MaskGIT: Masked Generative Image Transformer",
+            "reason": "Genieのダイナミクスモデルが採用する、マスクトークン予測による反復生成の基礎手法であるため。"
+          },
+          {
+            "title": "Playable Video Generation",
+            "reason": "動画から潜在行動を学習して操作可能な生成を行う、Genieが一般化した直接の先行課題であるため。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Stealing Part of a Production Language Model",
+      "titleJa": "本番運用中の言語モデルの一部を盗む",
+      "award": "Best Paper",
+      "authors": [
+        "Nicholas Carlini",
+        "Daniel Paleka",
+        "Krishnamurthy Dj Dvijotham",
+        "ほか"
+      ],
+      "url": "https://arxiv.org/abs/2403.06634",
+      "why": "通常の API 問い合わせだけで、OpenAI の商用モデルの隠れ層の次元数と最終射影層の重みを（対称性を除いて）復元できることを示しました。公開前に提供元へ報告され、API 側で対策が取られています。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "OpenAIのChatGPT系やGoogleのPaLM-2のようなブラックボックスの商用LLMに対し、通常のAPIアクセスだけでTransformerの最終層である埋め込み射影層（対称性を除く）を復元するモデル窃取攻撃を提案した研究。隠れ次元の特定と、射影行列全体の抽出ができる。OpenAIのada・babbageでは20ドル未満で射影行列全体を抽出し、隠れ次元が1024と2048であることを確認した。gpt-3.5-turboでは正確な隠れ次元を復元している。",
+        "novelty": "従来の高忠実度の窃取攻撃は小規模なReLUネットワークが対象で、入力層から積み上げる方式だったため、Attentionや正規化層を持つ商用LLMには適用できなかった。本研究は最終層から攻める「トップダウン」の方針をとり、商用の大規模Transformerから精密で自明でない情報を取り出すことに初めて成功した。",
+        "method": "最終層は隠れ次元hからより大きな語彙次元lへの射影なので、出力ロジットはh次元の部分空間に収まる。多数のランダムなプロンプトでロジットベクトルを集めて行列Qを作り、特異値分解（SVD）をかける。特異値の乗法的ギャップが最大となる位置からhを推定し、U·Σから射影行列をh×hの線形変換G（W·G）を除いて復元する。実際のAPIは上位K個のlogprobしか返さないため、logit biasで対象トークンをtop-5に押し上げて基準トークンとの差から全ロジットを再構成する。さらに、複数トークンを強制出力させて1クエリあたりの復元量を増やす改良版を用いる。logprobが得られないAPIでも、二分探索などによりコストは高いが抽出できる。",
+        "validation": "GPT-2、Pythia、LLaMAの6つのオープンモデルでは、隠れ次元を誤差0〜2程度で推定し、射影行列のRMS誤差は3×10^-5〜6×10^-4だった。ランダム初期化モデルとのRMS誤差は2×10^-2で、これと比べて100〜500倍小さい。OpenAIのada・babbage・babbage-002では隠れ次元（1024・2048・1536）がOpenAIにより正しいと確認され、ada・babbageの行列全体の抽出コストは約4ドルと約12ドルだった。gpt-3.5-turbo系では隠れ次元の抽出に200〜800ドルを要したが、行列全体の抽出は重みの安全のため実施せず、2,000〜8,000ドルと推定している。ロジット推定の精度は、4-logprob攻撃が23.0ビット・1ロジットあたり0.25クエリで最良だった。",
+        "discussion": "復元できるのは最終層の1層のみで、h×hの変換の曖昧さが残る。非線形性のため他の層へ拡張する明確な方法もない。防御としては、logit biasの削除やlogit biasとlogprobsの併用禁止、ノイズ付加、ブロックリスト化、最終層のアーキテクチャ変更などが挙げられるが、いずれも機能や性能とのトレードオフがある。責任ある開示の結果、OpenAIとGoogleはすでに緩和策を導入済みである。今後の課題として、量子化重みによる対称性の解消や、temperatureやtop-kなど他のAPIパラメータを使った攻撃などが挙げられている。",
+        "next": [
+          {
+            "title": "Stealing Machine Learning Models via Prediction APIs",
+            "reason": "モデル窃取という研究分野の出発点となる論文で、本研究の問題設定の背景を押さえられる。"
+          },
+          {
+            "title": "High Accuracy and High Fidelity Extraction of Neural Networks",
+            "reason": "精度（accuracy）と忠実度（fidelity）という窃取の目的の区別や、従来の高忠実度攻撃の限界を理解できる。"
+          },
+          {
+            "title": "Logits of API-Protected LLMs Leak Proprietary Information",
+            "reason": "同時期にAPI経由でLLMのロジット情報が漏れる問題を扱った関連研究で、本攻撃との比較に役立つ。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "ICML 2024 Awards（公式・受賞一覧）",
+      "url": "https://icml.cc/virtual/2024/awards_detail"
+    },
+    {
+      "title": "ICML 2024（公式サイト）",
+      "url": "https://icml.cc/Conferences/2024"
+    },
+    {
+      "title": "International Conference on Machine Learning（Wikipedia・投稿数と採択数の表）",
+      "url": "https://en.wikipedia.org/wiki/International_Conference_on_Machine_Learning"
+    },
+    {
+      "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
+      "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    }
+  ],
+  "unreachable": [
+    "招待講演者の一覧は公式ページから取得できなかったため省略しています"
+  ]
+}

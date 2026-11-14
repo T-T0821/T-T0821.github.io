@@ -1,0 +1,135 @@
+{
+  "conf": "icml",
+  "year": 2025,
+  "updated": "2026-11-14",
+  "headline": "投稿1.2万本（バンクーバー）。マスク型拡散 LM、受け身でない協働型 LLM、次トークン予測の創造性の限界が受賞した回",
+  "summary": "バンクーバーで開催され、投稿12,107本・採択3,260本（約27%）でした。最優秀論文は6本で、マスク型拡散言語モデルのトークン生成順序の理論（Train for the Worst, Plan for the Best）、次トークン予測は創造的な課題に弱く、複数トークン予測や拡散モデルが有利だとする研究、ユーザーの意図を能動的に確認する協働型 LLM（CollabLLM）、共形予測のベイズ的解釈などが選ばれました。ポジション論文部門では、査読危機への提言と、AI 安全性は仕事の未来を優先すべきという主張が受賞しています。Test of Time 賞は Batch Normalization です。",
+  "stats": {
+    "submissions": 12107,
+    "accepted": 3260,
+    "rate": "26.9%"
+  },
+  "trends": [
+    "拡散言語モデル: 自己回帰でない生成（マスク型拡散）の学習・推論順序を理論と実験で分析",
+    "次トークン予測の限界: 創造性・計画が必要な課題で多トークン予測や拡散が有利",
+    "人と協働する LLM: 長期的な会話の成果を報酬にして、質問を返す能動的なアシスタントを学習",
+    "学会運営と社会: 査読の危機、AI と雇用に関するポジション論文が受賞"
+  ],
+  "implications": [
+    "自己回帰（左から右へ1語ずつ）以外の生成方式が本格的な研究対象になり、拡散 LLM の実用化に向けた理論の整備が進んだ",
+    "アシスタント型 AI の評価軸が「1回の回答の良さ」から「会話全体でユーザーの目的を達成できたか」へ移りつつある",
+    "投稿数の急増で査読の質が問われており、論文の数値をそのまま信じず再現を確認する姿勢が実務でも大切になっている"
+  ],
+  "awards": [
+    {
+      "award": "Outstanding Paper",
+      "title": "Train for the Worst, Plan for the Best: Understanding Token Ordering in Masked Diffusions",
+      "authors": "Jaeyeon Kim ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Roll the dice & look before you leap: Going beyond the creative limits of next-token prediction",
+      "authors": "Vaishnavh Nagarajan, Chen Henry Wu, Charles Ding, Aditi Raghunathan",
+      "url": "https://arxiv.org/abs/2504.15266"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "CollabLLM: From Passive Responders to Active Collaborators",
+      "authors": "Shirley Wu ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Conformal Prediction as Bayesian Quadrature",
+      "authors": "Jake Snell, Thomas L. Griffiths"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "Score Matching with Missing Data",
+      "authors": "Josh Givens ほか"
+    },
+    {
+      "award": "Outstanding Paper",
+      "title": "The Value of Prediction in Identifying the Worst-Off",
+      "authors": "Unai Fischer Abaigar ほか"
+    },
+    {
+      "award": "Outstanding Position Paper",
+      "title": "Position: The AI Conference Peer Review Crisis Demands Author Feedback and Reviewer Rewards",
+      "authors": "Jaeho Kim ほか"
+    },
+    {
+      "award": "Outstanding Position Paper",
+      "title": "Position: AI Safety should prioritize the Future of Work",
+      "authors": "Sanchaita Hazra ほか"
+    },
+    {
+      "award": "Test of Time",
+      "title": "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift",
+      "authors": "Sergey Ioffe, Christian Szegedy"
+    },
+    {
+      "award": "Test of Time Honorable Mention",
+      "title": "Variational Inference with Normalizing Flows",
+      "authors": "Danilo Jimenez Rezende, Shakir Mohamed"
+    },
+    {
+      "award": "Test of Time Honorable Mention",
+      "title": "Trust Region Policy Optimization",
+      "authors": "John Schulman ほか"
+    }
+  ],
+  "featured": [
+    {
+      "title": "Roll the dice & look before you leap: Going beyond the creative limits of next-token prediction",
+      "titleJa": "次トークン予測の創造性の限界を超える",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Vaishnavh Nagarajan",
+        "Chen Henry Wu",
+        "Charles Ding",
+        "Aditi Raghunathan"
+      ],
+      "url": "https://arxiv.org/abs/2504.15266",
+      "why": "言葉遊びや類推、問題作成のような「先を見通した飛躍」が必要な課題を最小限のアルゴリズム課題として設計し、次トークン予測は近視眼的で、教師なし多トークン学習や拡散モデルの方が多様で独創的な出力を出せることを示しました。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "現在の言語モデルの「創造性の限界」を定量的に測るため、実世界の創造的タスクを抽象化した最小限のアルゴリズミックタスク群（Sibling Discovery、Triangle Discovery、Circle Construction、Line Construction）を設計した研究である。これらのタスクで、次トークン予測の近視眼性と、出力層の温度サンプリングによる多様性確保の問題を示し、代替として複数トークン予測と入力側のノイズ注入（seed-conditioning）を提案・検証している。",
+        "novelty": "創造性を、コヒーレントかつ独創的（学習データに無い）かつ重複しない生成の割合という「アルゴリズミック創造性」指標で客観的に評価できるタスク群を、Bodenの結合的創造性・探索的創造性に着想して作った点が新しい。path-star課題が示す正答性の差とは異なり、オープンエンドな課題での多様性の差、2トークン先読み程度の単純なタスク、トークンの並べ替えでは次トークン学習に有利にできないタスクでも差が出ることを示し、複数トークン予測を支持する新たな論拠を与えた。また、ランダムなプレフィックス（seed）を入力に与えるseed-conditioningが温度サンプリングに匹敵し、条件によっては上回ることを示した。",
+        "method": "次トークン学習は、後続トークンを予測する際に前のトークンから答えが分かる「Clever Hansの近道」に頼り、潜在的な計画を学べず、データ効率が悪くなる（親ノードが最後に来る兄弟タスクで O(m·n) に対し O(m·n²) のデータが必要になりうる）と論じる。比較対象の複数トークン手法として、teacherless学習（ダミートークンを入力にして全トークンを同時予測、次トークン目的との併用）と離散拡散モデルSEDD（90M）を用いる。ランダムな文字列を各学習例の先頭に付けて学習し、推論時には新しいseedを与えるseed-conditioningを導入し、貪欲デコードでも多様な出力を得る。",
+        "validation": "Gemma v1 (2B) では、4つのタスクすべてで複数トークン（teacherless）学習がアルゴリズミック創造性を大きく向上させ、discoveryタスクでは約5倍になり、記憶化（学習データと同一の生成の割合）も減少した。小型モデル（GPT-2 86MとSEDD 90M）では、拡散モデルがSibling Discoveryを除く3タスクで次トークン学習を上回ったが、teacherlessでは全体の向上は見られなかった。seed-conditioningはGemmaでnullプレフィックスより明確に創造性を高め、GPT-2でもSibling Discoveryを除いて向上した。XSUMなどの要約でも、大型GPT-2では同じ品質で多様性がわずかに高まった。",
+        "discussion": "最小タスクでの成功が複雑な実世界タスクでの成功を保証するわけではなく、teacherlessは小型モデルでは最適化が難しく、全アルゴリズムとも十分な多様性にはほど遠いタスクがある。seed-conditioningがなぜ無意味な乱数から有意義なランダム性を生むのか、また温度サンプリングを上回る理由（GPT-2ではtop-K設定への依存もある）は十分に解明されておらず、現実のタスクでの有用性は未検証である。RL、CoT、テスト時計算スケーリングで限界がどこまで緩和されるかも、本研究では扱っていない。",
+        "next": [
+          {
+            "title": "The pitfalls of next-token prediction",
+            "reason": "本論文が拡張しているpath-star課題とClever Hansの近道の議論、およびteacherless学習の原典であり、理論的背景を理解できる。"
+          },
+          {
+            "title": "Discrete Diffusion Modeling by Estimating the Ratios of the Data Distribution (SEDD)",
+            "reason": "本論文で複数トークン手法として使われた離散拡散モデルSEDDの仕組みを理解するため。"
+          },
+          {
+            "title": "Better & faster large language models via multi-token prediction",
+            "reason": "複数トークン予測の代表的手法で、小型モデルでは効果が限定的だとする本論文の議論と対比できる。"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "ICML 2025 Awards（公式・受賞一覧）",
+      "url": "https://icml.cc/virtual/2025/awards_detail"
+    },
+    {
+      "title": "ICML 2025（公式サイト）",
+      "url": "https://icml.cc/Conferences/2025"
+    },
+    {
+      "title": "International Conference on Machine Learning（Wikipedia・投稿数と採択数の表）",
+      "url": "https://en.wikipedia.org/wiki/International_Conference_on_Machine_Learning"
+    }
+  ],
+  "unreachable": [
+    "招待講演者の一覧は公式ページから取得できなかったため省略しています"
+  ]
+}
