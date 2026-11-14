@@ -1,0 +1,73 @@
+name: Daily Trending OSS Digest
+
+on:
+  schedule:
+    # 毎日 00:00 UTC = 09:00 JST（GitHub 側の混雑で数分〜数十分遅れることがあります）
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "要約するリポジトリ数"
+        required: false
+        default: "15"
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: trending-digest
+  cancel-in-progress: false
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate ANTHROPIC_API_KEY secret
+        env:
+          TOKEN: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          [ -n "$TOKEN" ] || {
+            echo "::error::ANTHROPIC_API_KEY が未設定です。Settings > Secrets and variables > Actions に登録してください。"
+            exit 1
+          }
+
+      - name: Collect and summarize trending OSS
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # リポジトリ変数 CLAUDE_MODEL でモデルを変更できます（未設定時は claude-sonnet-5-5）
+          CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
+          TRENDING_LIMIT: ${{ inputs.limit || '15' }}
+        run: node scripts/trending/collect.mjs
+
+      - name: Commit and push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/trending data/trending
+          if git diff --cached --quiet; then
+            echo "変更なし。コミットをスキップします。"
+            exit 0
+          fi
+          DATE=$(TZ=Asia/Tokyo date +%Y-%m-%d)
+          git commit -m "docs(trending): ${DATE} のトレンド OSS を追加"
+          for i in 1 2 3; do
+            git pull --rebase && git push && exit 0
+            sleep $((i * 5))
+          done
+          exit 1

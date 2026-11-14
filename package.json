@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
     "@types/node": "^25.3.5",
     "vitepress": "^2.0.0-alpha.16"
   },
