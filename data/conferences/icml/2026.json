@@ -109,6 +109,114 @@
           }
         ]
       }
+    },
+    {
+      "title": "High-accuracy sampling for diffusion models and log-concave distributions",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Fan Chen",
+        "Sinho Chewi",
+        "Constantinos Daskalakis",
+        "Alexander Rakhlin"
+      ],
+      "url": "https://arxiv.org/abs/2602.01338",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "拡散モデルのサンプリングにおいて、スコア（対数密度の勾配）の評価のみを用い、目標精度δに対して polylog(1/δ) ステップで済む「高精度（high-accuracy）」サンプラーを提案した研究。最小限のデータ仮定（有限の2次モーメント）の下で O(d⋆ log³((d+M₂²)/δ)) クエリ（d⋆は内在次元）、非一様L-Lipschitz条件の下で O(L log³(...)) ステップを達成する。同じ手法から、勾配評価のみを使う一般の対数凹分布サンプラーも得られる。",
+        "novelty": "従来の拡散モデル理論は DDPM で 1/δ²、改良でも d/δ、高次離散化でも poly(1/δ) より少し良い程度に留まり、polylog(1/δ) は密度評価（zeroth-order）や量子化スコアの学習を必要としていた。本研究はスコア評価のみ、L²のスコア誤差（C_apx=O(1)）という標準的設定で、1/δ に対する指数的改善を初めて示した。対数凹サンプリングでも密度評価なしで Fan et al. (2023) の最先端結果を再現する。",
+        "method": "核心は first-order rejection sampling (FORS) で、棄却サンプリングの受理確率 e^{w(x)} を、w(x) の不偏推定量 W_j（勾配の経路積分から構成）を用いたベルヌーイ・ファクトリーで実現する。具体的には J~Poisson(2B) 個の推定量を引き、∏(B+W_j)/(2B) の確率で受理することで、w の値自体を計算せずに p̂(x)∝q(x)e^{E[W|x]} から厳密にサンプルする。拡散モデルでは逆遷移核 ρ_k(x|x')∝p_k(x)exp(-‖x-α_k^{-1}x'‖²/2η_k) をガウス型の傾き（Gaussian tilt）とみなし、指数積分器に基づくガウス提案分布とスコア推定から作る推定量（円弧状の経路関数と clip を使用）に FORS を適用する。ステップ幅 η_k は σ_k²/η_k ≫ d⋆log(1/δ)+log²(1/δ) を満たすよう選ぶ。",
+        "validation": "実験ではなく理論解析による検証で、KL/χ²に関する上界を証明している。Theorem 4.3 は D_KL(p₁‖p̂₁) ≲ D_KL(p_K‖p̂_K)+Kδ+Σ η_k ε²_{k,score} を示し、Corollary 4.4 では K=O((d⋆+log(κ/δ))log²(d⋆κ/δ)) ステップ、確率1−δ で O(K) クエリを達成する。有界Lipschitz距離での総計算量は d⋆·log³((d+M₂²)/δ²) で、非一様Lipschitz条件下では O~(min{d⋆^{2/3}L^{1/3}, √(dL)}) となる。並行研究 Gatmiry et al. (2026) の設定（ガウス畳み込み、半径R）では O~((R/σ)² log³(1/δ)) を、L²スコア誤差のみで得る。",
+        "discussion": "ステップ幅を内在次元 d⋆ に比例して小さく取る必要があり、スコア推定誤差の項 Σ η_k ε²_{k,score} が結果に残る点、また提示された結果は早期停止分布 p₁ に対するもの（p_data へは W₂ から有界Lipschitz距離への変換が必要）である点が制約である。理論結果であり、実際の拡散モデルでの実装・数値実験による有効性は本文には示されていない（提示範囲の限り）。また本文は途中省略されており、非一様Lipschitz条件の詳細な証明や対数凹サンプリングの詳細は確認できていない。",
+        "next": [
+          {
+            "title": "Improved dimension dependence of a proximal algorithm for sampling (Fan, Yuan, Chen, 2023)",
+            "reason": "本研究の対数凹サンプリングへの応用の比較対象であり、Gaussian tilt のサンプリング（proximal sampler）の基礎となる。"
+          },
+          {
+            "title": "High-accuracy and dimension-free sampling with diffusions (Gatmiry, Chen, Salim, 2026)",
+            "reason": "並行研究として別のアプローチ（加速ODEフロー）で拡散モデルの高精度保証を得ており、仮定と結果の比較に有用。"
+          },
+          {
+            "title": "Sampling is as easy as learning the score: theory for diffusion models with minimal data assumptions (Chen et al., 2023)",
+            "reason": "最小限のデータ仮定とL²スコア誤差の下でのDDPM保証という、本研究が改善する出発点となる基礎的論文。"
+          }
+        ]
+      },
+      "titleJa": "拡散モデルと対数凹分布のための高精度サンプリング",
+      "why": "拡散モデルのサンプリングで、スコア評価のみを用い、目標精度δに対し polylog(1/δ) ステップで済む高精度サンプラーを提案した研究です。従来は DDPM で 1/δ²、改良でも d/δ などの多項式依存に留まり、polylog(1/δ) には密度評価や量子化スコアの学習が必要でしたが、L²のスコア誤差という標準的設定で 1/δ に対する指数的改善を初めて示しました。同じ手法から、密度評価なしで Fan et al. (2023) の最先端結果を再現する対数凹分布のサンプラーも得られる点も注目されます。"
+    },
+    {
+      "title": "To Grok Grokking: Provable Grokking in Ridge Regression",
+      "award": "Outstanding Paper Honorable Mention",
+      "authors": [
+        "Mingyue Xu",
+        "Gal Vardi",
+        "Itay Safran"
+      ],
+      "url": "https://arxiv.org/abs/2601.19791",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "過剰パラメータ化されたリッジ回帰（重み減衰付き勾配降下法）において、訓練データへの早期過適合、長期にわたる低い汎化、そして最終的な汎化の達成という「グロッキング」の3段階を厳密に証明した研究。グロッキング時間（汎化の遅れ）をハイパーパラメータで定量的に評価し、増幅も解消も可能であることを理論と実験で示した。",
+        "novelty": "線形・リッジ回帰という基本的設定で、過適合から汎化までのエンドツーエンドの証明付きグロッキング結果を初めて与えた点が新しい。Levi et al.(2024)はガウスデータかつ重み減衰なしで非厳密な解析だったのに対し、本研究は任意の特徴写像上の実現可能な教師と任意の過剰パラメータ化を扱い、グロッキング時間のハイパーパラメータに関する初の厳密な定量的境界を与える。",
+        "method": "学習を、データ張成空間への射影成分θ∥と補空間成分θ⟂に分けて解析する。θ∥は約(1−ηλ_min⁺(ΦᵀΦ)/n−ηλ)^tの速さで収束して訓練誤差が急速に下がるが、θ⟂は重み減衰のみで(1−ηλ)^tというゆっくりした速さで減衰するため、汎化誤差の収束が遅れる。この速度差から、訓練損失の上界(t1の上界、定理4.4)、汎化損失の下界(t2の下界、定理4.5)、重み減衰解の汎化保証（Rademacher複雑度による一様収束、定理4.6）を導く。小さいλでt2∝1/λ、初期化スケールν²に対してt1,t2∝ln(ν²)となる。",
+        "validation": "恒等写像の特徴を用いた実現可能な教師（‖θ*‖=1）のリッジ回帰で、ε=c=0.01、n=100、m=1000、λ=10⁻⁴、ν²=1を既定値としてλ、n、m、ν²を変えて実験し、観測されたt1とt2が理論境界の挙動とよく一致することを示した。さらに、単一ReLUニューロン教師を学ぶ2層ランダムReLU特徴ネットワーク（非実現可能設定）でも、重み減衰を小さくすると汎化が遅れ、サンプル数を減らすとグロッキングが増幅されるなど、定性的に理論予測と整合した。",
+        "discussion": "グロッキング時間に対するnやmの明確な依存性は、λ_min⁺(ΦᵀΦ)の定量的境界が知られていないため理論的に導けず、実験的な確認にとどまる。また、λが大きい場合は上界が緩くなり、非線形ネットワークへの結果は経験的な示唆であって証明されてはいない。",
+        "next": [
+          {
+            "title": "Dichotomy of early and late phase implicit biases can provably induce grokking",
+            "reason": "重み減衰付き勾配流で同質ニューラルネットのグロッキングを遅延相の暗黙的バイアスの転換として扱っており、本研究の線形設定との比較に適する。"
+          },
+          {
+            "title": "Grokking in linear estimators – a solvable model that groks without understanding",
+            "reason": "線形回帰でのグロッキングを扱う唯一の先行理論研究であり、本研究との設定・厳密性の違いを確認できる。"
+          },
+          {
+            "title": "Benign overfitting and grokking in ReLU networks for XOR cluster data",
+            "reason": "証明付きグロッキングに最も近い先行研究で、非線形ネットワークでの結果と本研究の差を理解するのに役立つ。"
+          }
+        ]
+      },
+      "titleJa": "グロッキングを理解する：リッジ回帰における証明可能なグロッキング",
+      "why": "過剰パラメータ化されたリッジ回帰（重み減衰付き勾配降下法）で、早期の過適合、長期の低汎化、最終的な汎化というグロッキングの3段階を厳密に証明し、グロッキング時間をハイパーパラメータで定量的に評価した研究です。任意の特徴写像上の実現可能な教師と任意の過剰パラメータ化を扱い、グロッキング時間に関する初の厳密な定量的境界を与えた点が注目されます。理論境界は数値実験とよく一致し、単一ReLUニューロン教師を学ぶ2層ランダムReLU特徴ネットワークでも定性的に整合したことから、ICML 2026のOutstanding Paper Honorable Mentionに選ばれています。"
+    },
+    {
+      "title": "Motion Attribution for Video Generation",
+      "award": "Outstanding Paper Honorable Mention",
+      "authors": [
+        "Xindi Wu",
+        "Despoina Paschalidou",
+        "Jun Gao",
+        "Antonio Torralba",
+        "Laura Leal-Taixé",
+        "Olga Russakovsky",
+        "Sanja Fidler",
+        "Jonathan Lorraine"
+      ],
+      "url": "https://arxiv.org/abs/2601.08828",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "動画生成モデルにおいて、どの学習（ファインチューニング）クリップが生成される動きに影響するかを特定する、動き中心の勾配ベースのデータ帰属フレームワークMotiveを提案した研究。帰属結果を使って動きを改善するファインチューニングデータを選別し、動きの滑らかさや物理的妥当性の向上につなげる。",
+        "novelty": "従来の拡散モデル向けデータ帰属は静止画の見た目を対象としており、動画に素朴に適用すると動きが外見に埋もれてしまう。本研究は、動画生成で外見ではなく動きを帰属させ、それをデータ選別に使う初のフレームワークだと主張している。加えて、クリップ長による勾配の大きさのバイアス補正も行う。",
+        "method": "AllTrackerで動きを検出して動き量のパッチを作り、損失空間の動き重み付けマスクで動的領域に勾配を集中させる。逆ヘッセ行列は恒等行列で近似して勾配の類似度（コサイン類似度）で影響度を測る。計算量の削減には、全ペアで共通の固定タイムステップとノイズを使う単一サンプル推定と、Fastfoodによる Johnson–Lindenstrauss 射影（射影後に正規化）を用いる。複数のクエリ動作に対する選択結果は集約して最終ランキングとし、上位K件をファインチューニング用サブセットとする。",
+        "validation": "テキストから動画を生成するモデルを対象に、VBenchで動きの滑らかさ（motion smoothness）と動きの大きさ（dynamic degree）の両方が改善することを示した。人間評価では、事前学習済みベースモデルに対して74.1%の勝率を達成した。また、データの10%だけで全データでのファインチューニングと同等以上の性能を示し、動きを考慮しない帰属ベースラインを上回ったと述べている（表1、表2）。",
+        "discussion": "提示された本文は中略されており、限界や今後の課題に関する記述は確認できなかった。なお、影響度は恒等行列によるヘッセ近似や単一タイムステップ・ノイズの推定に依存しているため、近似の影響の検証が議論の余地として残る。また、本研究は事前学習ではなくファインチューニング段階を対象としている。",
+        "next": [
+          {
+            "title": "Diffusion attribution score: Evaluating training data influence in diffusion models",
+            "reason": "共通乱数と単一サンプルの推定で拡散モデルの影響度を安定して計算する考え方の元になっており、Motiveの土台を理解できる。"
+          },
+          {
+            "title": "TRAK: Attributing model behavior at scale",
+            "reason": "勾配の射影を使って大規模にデータ帰属を行う代表的手法で、Motiveの射影・近似の背景を押さえられる。"
+          },
+          {
+            "title": "Alltracker: Efficient dense point tracking at high resolution",
+            "reason": "Motiveが動きの検出・動きマスクの作成に使う点追跡手法であり、動きの表現部分の理解に役立つ。"
+          }
+        ]
+      },
+      "titleJa": "動画生成のための動き帰属（Motion Attribution for Video Generation）",
+      "why": "動画生成モデルで、どのファインチューニング用クリップが生成される動きに影響するかを特定する、動き中心の勾配ベースのデータ帰属フレームワークMotiveを提案した研究です。従来の拡散モデル向け帰属は静止画の見た目が対象で、動画では動きが外見に埋もれていましたが、本研究は外見ではなく動きを帰属させ、それをデータ選別に使う初のフレームワークだと主張しています。VBenchで動きの滑らかさと動きの大きさがともに改善し、人間評価ではベースモデルに対し74.1%の勝率を達成、データの10%だけで全データでのファインチューニングと同等以上の性能を示した点が注目されます。"
     }
   ],
   "sources": [
