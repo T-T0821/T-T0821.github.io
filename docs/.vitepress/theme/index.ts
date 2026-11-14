@@ -1,11 +1,13 @@
 import DefaultTheme from 'vitepress/theme'
 import type { EnhanceAppContext } from 'vitepress'
-import ArticleCards from './ArticleCards.vue'
+import ArticleList from './ArticleList.vue'
+import HomeDashboard from './HomeDashboard.vue'
 import './custom.css'
 
 export default {
     extends: DefaultTheme,
     enhanceApp({ app }: EnhanceAppContext) {
-        app.component('ArticleCards', ArticleCards)
+        app.component('ArticleList', ArticleList)
+        app.component('HomeDashboard', HomeDashboard)
     },
 }
