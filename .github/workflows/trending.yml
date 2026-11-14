@@ -1,9 +1,11 @@
-name: Daily Trending OSS Digest
+name: Trending OSS Digest
 
+# 毎朝の定期実行は Claude Code のスケジュールタスク（Max プランの枠）で行っています。
+# このワークフローは GitHub Actions から手動で生成したい場合の代替手段です。
+# 定期実行を Actions に移す場合は、下の schedule のコメントを外してください。
 on:
-  schedule:
-    # 毎日 00:00 UTC = 09:00 JST（GitHub 側の混雑で数分〜数十分遅れることがあります）
-    - cron: "0 0 * * *"
+  # schedule:
+  #   - cron: "0 0 * * *" # 09:00 JST
   workflow_dispatch:
     inputs:
       limit:

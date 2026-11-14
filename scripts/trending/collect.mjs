@@ -7,6 +7,8 @@
 //   CLAUDE_CODE_OAUTH_TOKEN  Claude Pro/Max プランのトークン（`claude setup-token` で発行）。
 //                            Claude Code CLI 経由で要約し、プランの使用枠を消費する
 //   ANTHROPIC_API_KEY        Claude API キー。設定されていればこちらを優先し、従量課金で要約する
+//   （Claude Code のクラウドセッションなど、claude CLI が既にログイン済みの環境では
+//     SUMMARY_BACKEND=cli を指定すればどちらも不要）
 // その他:
 //   GITHUB_TOKEN       GitHub API 用トークン（Actions では自動付与）
 // 任意の環境変数:
@@ -209,7 +211,8 @@ async function enrich(repo) {
 }
 
 // ---------- Claude による要約 ----------
-const USE_API = Boolean(process.env.ANTHROPIC_API_KEY)
+const FORCE_CLI = process.env.SUMMARY_BACKEND === 'cli'
+const USE_API = Boolean(process.env.ANTHROPIC_API_KEY) && !FORCE_CLI
 const client = USE_API ? new Anthropic() : null
 
 const SYSTEM = `あなたは日本のソフトウェアエンジニア向けに OSS の技術解説を書くテクニカルライターです。
@@ -404,7 +407,7 @@ function slug(fullName) {
 
 // ---------- メイン ----------
 async function main() {
-  if (!process.env.ANTHROPIC_API_KEY && !process.env.CLAUDE_CODE_OAUTH_TOKEN) {
+  if (!FORCE_CLI && !process.env.ANTHROPIC_API_KEY && !process.env.CLAUDE_CODE_OAUTH_TOKEN) {
     throw new Error('CLAUDE_CODE_OAUTH_TOKEN または ANTHROPIC_API_KEY を設定してください')
   }
   log(`要約バックエンド: ${USE_API ? 'Claude API' : 'Claude Code CLI (サブスクリプション)'} / モデル: ${MODEL}`)

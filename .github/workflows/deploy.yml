@@ -14,7 +14,7 @@ on:
   # GITHUB_TOKEN による push では push トリガーが発火しないため、
   # 記事を自動コミットするワークフローの完了後にデプロイする
   workflow_run:
-    workflows: ["Daily Trending OSS Digest", "Deep Research Article Generator"]
+    workflows: ["Trending OSS Digest", "Deep Research Article Generator"]
     types: [completed]
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
