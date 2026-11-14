@@ -8,7 +8,7 @@
 // 任意の環境変数:
 //   CLAUDE_MODEL   既定 claude-sonnet-5-5
 //   DIGEST_DATE    出力日付 YYYY-MM-DD（既定は JST の今日）
-//   OCHIAI_PER_FIELD  分野ごとに落合フォーマットで詳しくまとめる論文数（既定 3、0 で無効）
+//   OCHIAI_PER_FIELD  分野ごとに落合フォーマットで詳しくまとめる論文数（既定 5、0 で無効）
 
 import fs from 'node:fs'
 import path from 'node:path'
@@ -30,7 +30,7 @@ const MAX_NEWS = 12 // 1 号あたりに載せるニュースの最大数
 const MAX_PAPERS = 8 // 1 号あたりに載せる論文の最大数
 // 重要度の高い順に並んだ論文のうち、先頭から何件を落合フォーマットでまとめるか。
 // 1 件ごとに本文を読ませるため、Max プランの使用量を見ながら調整する
-const OCHIAI_PER_FIELD = Number(process.env.OCHIAI_PER_FIELD ?? 3)
+const OCHIAI_PER_FIELD = Number(process.env.OCHIAI_PER_FIELD ?? 5)
 
 const now = Date.now()
 const within = (date, ms) => date && !Number.isNaN(date.getTime()) && now - date.getTime() <= ms
