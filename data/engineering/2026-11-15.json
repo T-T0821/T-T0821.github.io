@@ -1,0 +1,378 @@
+{
+  "date": "2026-11-15",
+  "model": "claude-sonnet-5-5",
+  "overview": "今週はAIコーディングエージェントを前提とした開発プロセスの再設計が目立ちました。AIが書いたコードの品質保証（テストをデータとして扱う考え方、技術的負債の捉え直し）や、エージェントの実行基盤（Nitro Sandboxes、Agent Substrate、durable execution）に関する話題が続きました。プラットフォーム面では、LinkedInによる独自GitOpsエンジンへの移行事例が公開されました。.NET 11のリリースと.NET 8/9のサポート終了、Node.js 26のコア機能追加など、ランタイムの更新も重なりました。",
+  "news": [
+    {
+      "title": "テストをデータとして扱う：AI生成コードが意図どおり動くことを担保する",
+      "original": "Tests as data: ensuring AI-generated code does what we want",
+      "url": "https://martinfowler.com/articles/tests-as-data.html",
+      "source": "Martin Fowler",
+      "date": "2026-11-11",
+      "authors": [
+        "Martin Fowler"
+      ],
+      "summary": "AIがプロダクションコードとテストコードの両方を書くと、自動テストが機能的な誤りを防ぐ保証として働かなくなる恐れがあります。Matteo Vaccari氏は、開発者はAIの顧客になる、人間とAIの主契約は開発者テストではなく顧客テストになる、その契約をテストコードではなくテストデータに移すと保護しやすくなる、という3点を主張しています。",
+      "impact": "AIに実装を任せるチームが、テストの置き場所と責任分担を見直す際の参考になります。"
+    },
+    {
+      "title": "LinkedIn、Argo CDを独自のGitOpsエンジンに置き換え",
+      "original": "LinkedIn Replaces Argo CD with a Custom GitOps Engine for Kubernetes Deployments",
+      "url": "https://www.infoq.com/news/2026/11/kubernetes-argocd-linkedin/?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global",
+      "source": "InfoQ",
+      "date": "2026-11-12",
+      "authors": [],
+      "summary": "LinkedInは、Argo CDを自社開発のGitOpsエンジンに置き換えたと公表しました。新システムは250超のKubernetesクラスタ、4,000超のサービスにデプロイし、週に10万件を超えるデプロイを管理しています。",
+      "impact": "大規模環境でのGitOps運用の限界と、自作に踏み切る判断材料として参照できます。"
+    },
+    {
+      "title": "技術的負債は社会的なもの：実践して学ぶことの対価",
+      "original": "Technical Debt is Social; it is the Price of Learning by Doing",
+      "url": "https://www.infoq.com/news/2026/11/tech-debt-learning-doing/?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global",
+      "source": "InfoQ",
+      "date": "2026-11-12",
+      "authors": [],
+      "summary": "技術的負債は必ずしも低品質なエンジニアリングの表れではなく、ソフトウェアを使いながら学ぶことの対価でもあると論じています。AIがコード生成を人間の理解を超える速さで進めるため、技術的負債はますます社会技術的な課題になるとしています。",
+      "impact": "AI時代の負債管理を、コード品質だけでなくチームの理解や文脈の共有という観点から考え直すきっかけになります。"
+    },
+    {
+      "title": "長時間稼働エージェントと durable execution",
+      "original": "Long-horizon agents and durable execution",
+      "url": "https://martinfowler.com/articles/durable-execution-agents.html",
+      "source": "Martin Fowler",
+      "date": "2026-11-10",
+      "authors": [
+        "Martin Fowler"
+      ],
+      "summary": "数日から数週間かかり、人や外部システムとのやり取りを伴うタスクでは、プロセスのクラッシュやネットワーク障害などが起こり得ます。Kiran Prakash氏は、ランタイムが各ステップの結果を記録して障害から復旧できるようにする durable execution というパターンを解説しています。",
+      "impact": "長時間動くエージェントを設計する際の、状態管理と障害復旧の設計指針になります。"
+    },
+    {
+      "title": "AWS、AIエージェント向け軽量VM「AWS Nitro Sandboxes」提供開始",
+      "original": "AWS、AIエージェント向けに強力な隔離環境とネイティブなEC2性能を備えた軽量VM「AWS Nitro Sandboxes」提供開始",
+      "url": "https://www.publickey1.jp/blog/26/awsaiec2vmaws_nitro_sandboxes.html",
+      "source": "Publickey",
+      "date": "2026-11-11",
+      "authors": [
+        "jniino"
+      ],
+      "summary": "AWSは、EC2インスタンス上でほぼネイティブの性能で動作し、Nitroシステムのハードウェアレベルの強力な隔離を備えた軽量VM「AWS Nitro Sandboxes」の提供を開始しました。AIエージェント向けの隔離環境として位置づけられています。",
+      "impact": "エージェントにコード実行を任せる際の隔離基盤の選択肢が増えます。"
+    },
+    {
+      "title": "Google、Agent SubstrateとgVisorをCNCFに寄贈",
+      "original": "Google、Kubernetesで10倍高密度にAIエージェントを実行可能にする「Agent Sustrate」と「gVisor」、オープンソースとしてCNCFに寄贈と発表",
+      "url": "https://www.publickey1.jp/blog/26/googlekubernetes10aiagent_sustrategvisorcncf.html",
+      "source": "Publickey",
+      "date": "2026-11-09",
+      "authors": [
+        "jniino"
+      ],
+      "summary": "Googleは、Kubernetes上でAIエージェントを効率よく動かすためのOSS「Agent Substrate」と「gVisor」をCNCFに寄贈すると発表しました。見出しでは、Kubernetes上で10倍高密度にエージェントを実行できるとされています。",
+      "impact": "Kubernetesでエージェント基盤を構築するプラットフォームチームが、標準的な選択肢として注視できます。"
+    },
+    {
+      "title": "Dropbox、200以上のWebサーフェスでCookie同意挙動をテストする社内監査ツールを紹介",
+      "original": "Dropbox Shares How Its In-House Cookie Auditor Tests Consent Behaviour Across 200+ Web Surfaces",
+      "url": "https://www.infoq.com/news/2026/11/dropbox-cookie-auditor/?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global",
+      "source": "InfoQ",
+      "date": "2026-11-13",
+      "authors": [],
+      "summary": "DropboxはPlaywrightベースの監査ツールで、200以上のWebサーフェスのCookie同意挙動を検証しています。各ページで米国訪問者、EU訪問者、Global Privacy Controlシグナルの3種類のテストを実行し、ルールはコード外に置いています。週次レポートでは違反の可能性が高いものと誤検知を分けています。",
+      "impact": "コンプライアンス要件をE2Eテストとして継続的に検証する実装例として参考になります。"
+    },
+    {
+      "title": "Playwright、Bunでのテストランナー実行を正式サポート",
+      "original": "テストフレームワーク「Playwright」がBunを正式サポート。テストランナーの実行を可能に",
+      "url": "https://www.publickey1.jp/blog/26/playwrightbun.html",
+      "source": "Publickey",
+      "date": "2026-11-11",
+      "authors": [
+        "jniino"
+      ],
+      "summary": "Playwright v1.65.0で、Bunによるテストランナーの実行が正式にサポートされました。これまでテストランナーはNode.jsで動かしていました。",
+      "impact": "Bunを採用しているプロジェクトで、E2Eテストの実行環境を統一しやすくなります。"
+    },
+    {
+      "title": ".NET 11正式リリース、C#に共用型を導入",
+      "original": "マイクロソフト、.NET 11正式リリース。C#に共用型を導入、JITやAOTコンパイラの高速化、コマンドラインツール強化など新機能",
+      "url": "https://www.publickey1.jp/blog/26/net_11cjitaot.html",
+      "source": "Publickey",
+      "date": "2026-11-10",
+      "authors": [
+        "jniino"
+      ],
+      "summary": "マイクロソフトは.NET Conf 2026で.NET 11の正式版を発表しました。C#への共用型の導入、JITやAOTコンパイラの高速化、コマンドラインツールの強化などが含まれます。",
+      "impact": ".NETを使うチームは、新機能の評価と移行計画の検討を始める時期です。"
+    },
+    {
+      "title": ".NET 8と.NET 9のサポートが終了",
+      "original": ".NET 8と.NET 9のサポートは昨日で終了。脆弱性が社会問題化している現在、.NET 10への移行を推奨",
+      "url": "https://www.publickey1.jp/blog/26/net_8net_9net_10.html",
+      "source": "Publickey",
+      "date": "2026-11-10",
+      "authors": [
+        "jniino"
+      ],
+      "summary": "2026年11月10日に.NET 8と.NET 9のサポートが終了しました。脆弱性が社会問題化していることから、.NET 10への移行が推奨されています。",
+      "impact": "該当バージョンを使う本番環境は、早急にサポート対象のバージョンへの移行計画が必要です。"
+    },
+    {
+      "title": "Node.js 26.10.0、debounce/throttleとPKCS#12解析をコアに追加",
+      "original": "Node.js Brings Debounce, Throttle, and PKCS#12 Parsing Into Core Modules",
+      "url": "https://www.infoq.com/news/2026/11/nodejs-debounce-throttle/?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global",
+      "source": "InfoQ",
+      "date": "2026-11-14",
+      "authors": [],
+      "summary": "Node.js 26.10.0で、util.debounce()、util.throttle()、util.markPromiseAsHandled()が追加されました。crypto.parsePKCS12()による.p12/.pfxの読み取りも加わり、一部のユーザーランド依存を減らせるとされています。Node.js 26はActive LTSになっています。",
+      "impact": "小さなユーティリティ系の依存パッケージを整理できる可能性があります。"
+    },
+    {
+      "title": "Thoughtworks Technology Radar 11月版",
+      "original": "Fragments: November 10",
+      "url": "https://martinfowler.com/fragments/2026-11-10.html",
+      "source": "Martin Fowler",
+      "date": "2026-11-10",
+      "authors": [
+        "Martin Fowler"
+      ],
+      "summary": "Martin Fowler氏が、半年ぶりのThoughtworks Technology Radarの公開に触れています。この半年もAIが中心で、多数のAI関連ブリップが載っているとのことです。",
+      "impact": "現場で使われている技術の動向を把握する資料として確認する価値があります。"
+    },
+    {
+      "title": "Azure Logic Apps Standard向けローカルCLIがプレビュー公開",
+      "original": "Azure Logic Apps Standard Gets a Local CLI in Preview",
+      "url": "https://www.infoq.com/news/2026/11/logic-apps-local-cli/?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global",
+      "source": "InfoQ",
+      "date": "2026-11-12",
+      "authors": [],
+      "summary": "Azure CLIのlogicapp拡張がパブリックプレビューになり、ローカルでのプロジェクト作成、ワークフロー作成、ランタイム管理、コネクタ管理、実行結果の確認、テストの雛形作成ができます。これまではVS Code拡張が必要でした。",
+      "impact": "Logic Appsの開発をCLIとCI中心に組み立てたいチームに選択肢が増えます。"
+    }
+  ],
+  "papers": [
+    {
+      "title": "AI時代のコード行数か？エンジニアのトークン消費量は何を測っているのか",
+      "original": "The AI Era's Lines of Code? A Case Study on What an Engineer's Token Spend Measures",
+      "url": "https://arxiv.org/abs/2611.13396",
+      "source": "arXiv",
+      "date": "2026-11-10",
+      "authors": [
+        "Shyam Agarwal",
+        "Olga Lvova",
+        "Agnia Sergeyuk",
+        "Anastasiia Serova"
+      ],
+      "summary": "JetBrainsの404人のエンジニアについて、5週間のコーディングエージェントのトークン使用量とコミットを突き合わせ、社内調査も分析しています。トークン消費は主に個人間で差があり、消費の多い人は週をまたいでほぼ変わりませんでした。",
+      "why": "AI導入の指標としてトークン消費を使う組織が増える中、その指標の意味を実データで検証している点が注目されます。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "エンジニアのトークン消費量（token spend）が、生産性や成果の指標として何を測っているのかを、JetBrainsの404人のエンジニアの5週間分のコーディングエージェント利用ログとコミット、および412人の社内サーベイを結び付けて調べた事例研究である。トークン消費は成果ではなく「エージェントをどれだけ多様な業務に使ったか」を測るものだと結論づけ、資源会計に限った利用と、タスクと成果の証拠に基づく評価を推奨している。",
+        "novelty": "従来の研究は、ベンチマーク上のエージェント軌跡の分析か、エンジニア間・組織間の比較に限られ、同じエンジニアのトークン消費と成果を時間を追って追った研究はなかった。本研究は、同一ツール環境で計測されたトークン数を使った人×週のパネルにより、個人の習慣的な利用量と週ごとの変動を分離した。さらにサーベイで、コミットにならない利用の中身まで確認した。",
+        "method": "社内ゲートウェイの計測ログから週ごとのトークン消費を集計し、author dateで日付付けしたコミット数と結び付けて人×週パネルを作った。トークン数にはポアソン回帰（擬似最尤推定）を使い、個人・週の固定効果で個人内の弾力性を、Mundlak形式で個人間との差を推定した。成果に連動しない消費の割合は、成果ゼロの週の消費割合を下限（floor）、成果ゼロでの予測消費を外挿した曲線推定（スプラインなど）を上限として評価した。サーベイは、エージェントの用途や報告された削減時間を回帰分析し、自由記述を主題分析で整理した。",
+        "validation": "個人内ではトークンを2倍にするとコミットは約10%増にとどまり、コミット数が近い週同士でも消費の90パーセンタイルは10パーセンタイルの39〜240倍だった。利用可能な作業指標は、消費の個人間変動の38%、個人内の週ごとの変動の13%しか説明せず、個人そのものが偏差の79%を説明した。成果に連動しない消費は下限で約4%、曲線推定では最大約39〜42%と見積もられた。サーベイでは、技術職のコーディングエージェント評価の89%でコーディング以外（分析・調査・計画など）の用途が報告された。",
+        "discussion": "エンジニアが自分で消費量を選ぶため、結果は因果効果ではなく関連であり、1社・5週間・コミット数という限られた成果指標（品質やレビュー・設計は含まない）という制約がある。成果に連動しない消費の上限値には、エージェント利用の固定コストや手書きコードに伴う消費が含まれ、過大評価になりうる。サーベイは個人のログと結び付けられず、回答率も15.8%と低い。今後は、タスク内容や成果に基づく評価の手法が必要になる。",
+        "next": [
+          {
+            "title": "AI writes faster than humans can review: a longitudinal study of an enterprise 2x mandate",
+            "reason": "AIによる出力の増加とトークン消費の増加を企業で追跡した最も近いパネル研究で、本研究の結果と比較できる。"
+          },
+          {
+            "title": "Agentic coding in the wild: characterizing GitHub Copilot traces at production scale",
+            "reason": "本番環境でのエージェント利用ログの特性（利用量の個人差、探索・推論の比重）を理解する助けになる。"
+          },
+          {
+            "title": "How do AI agents spend your money? Analyzing and predicting token consumption in agentic coding tasks",
+            "reason": "タスクレベルでのトークン消費の内訳と、消費が成功率に結び付かない理由を押さえられる。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "コーディングエージェントは指示に従うか：コンテキストファイルの明示的指示への遵守を調査",
+      "original": "Do They Do as They Are Told? Investigating Coding Agents' Adherence to Explicit Instructions in Context Files",
+      "url": "https://arxiv.org/abs/2611.13709",
+      "source": "arXiv",
+      "date": "2026-11-10",
+      "authors": [
+        "Gianmario Voria",
+        "Yutaro Kashiwa",
+        "Gemma Catolino",
+        "Fabio Palomba"
+      ],
+      "summary": "AGENTS.mdなどのエージェントコンテキストファイルに書いた指示が実際に守られるかを調べた研究です。従来の研究が内容の記述にとどまっていたのに対し、個々の指示の遵守を検証する点が特徴です。",
+      "why": "コンテキストファイルによるガバナンスが前提とする「書けば守られる」という仮定を検証しています。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "AGENTS.md などのエージェントコンテキストファイル（ACF）に書かれた明示的・実行可能な指示が、コーディングエージェントが生成した実際のコミットに反映されているかを、指示単位で調べた実証研究。ACFの指示を抽出・分類し、実行可能な計測スクリプトに変換して遵守度を測定する。",
+        "novelty": "従来のACF研究は内容を高位カテゴリで記述するにとどまり、個々の指示が守られているかは未検証だった。本研究は指示を「明示的・実行可能・観測可能」の3基準で絞り込み、指示ごとの計測スクリプトで、実リポジトリから採取したコミットに対する遵守度をカテゴリ別・エージェント別に分析した点が新しい。既存の遵守研究（RepoComplianceBenchなど）は統制された課題やAI貢献ポリシーが対象で、実際のコミットは扱っていない。",
+        "method": "3段階のパイプラインを用いる。(1) 15件の手動キャリブレーションの後、Qwen 3.5 9Bによる少数例プロンプトでACFスナップショットから指示を抽出・分類し、84スナップショットを人手で検証した。(2) 各指示の「観測可能な振る舞い」記述から、Qwen2.5-Coder-14Bが計測スクリプト10本とテストフィクスチャ（準拠／非準拠のコミット対）10組を独立に生成する（CodeT型）。フィクスチャを2つ以上通過し、かつ別スクリプトと60%以上通過集合が重なるスクリプトのみ採用する。(3) 採用スクリプトを、AIDev由来の再構築コミット（6,541件、268リポジトリ）に適用して遵守を判定し、記述統計と比較検定で分析する。",
+        "validation": "データは621のACFスナップショットと6,541件のエージェントコミットで、LLMは14,902件の指示を抽出した。人手検証の標本は84スナップショット（2,202指示）で、スクリプトの採用は4,123件、そのうち94件を抽出して人手で正しさを確認する設計とした。主な結果は、観測可能な指示の多くがスクリプト化でき、エージェントは平均して指示に「従う場合の方が多い」が、常に守られる指示とほぼ守られない指示に大きく二極化し、カテゴリとエージェントによって差があるというもの。本文の提供範囲では、遵守率や精度などの具体的な数値は確認できない。",
+        "discussion": "遵守は成果物ベースの代理指標で測っており、エージェントの意図や内部推論は見ていない。人手検証は単一アノテータで、スクリプトの採用基準（2フィクスチャ・60%重なり）もパイロットで決めており、誤ったスクリプトを採用するリスクがある。観測不能な指示は分析対象外で、LLMの非決定性も限界となる。今後は、守られにくい指示の書き換えや、ACFの外側で検証・強制する仕組みの設計が課題となる。",
+        "next": [
+          {
+            "title": "Agent READMEs: An Empirical Study of Context Files for Agentic Coding",
+            "reason": "本研究が指示分類（19カテゴリ）とACFデータセットの土台にしており、ACF内容の全体像を把握できる。"
+          },
+          {
+            "title": "The Rise of AI Teammates in Software Engineering (SE) 3.0: How Autonomous Coding Agents Are Reshaping Software Engineering",
+            "reason": "エージェント生成コミットの出所となるAIDevデータセットを提示しており、本研究のデータ構築を理解するのに必要。"
+          },
+          {
+            "title": "CodeT: Code Generation with Generated Tests",
+            "reason": "計測スクリプトの生成・採用に用いられたサンプリングと二重実行合意の手法の原典である。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Spec-Driven PBT：コード仕様から意味的不変条件を導くエージェント型プロパティベーステスト",
+      "original": "Spec-Driven PBT: Deriving Semantic Invariants from Code Specifications for Agentic Property-based Testing",
+      "url": "https://arxiv.org/abs/2611.15920",
+      "source": "arXiv",
+      "date": "2026-11-11",
+      "authors": [
+        "Aditya Shukla",
+        "Kartik Gupta",
+        "Ali Alavi",
+        "Pashootan Vaezipoor"
+      ],
+      "summary": "エージェントによるコーディングで、コード生成がレビューより速くなっている問題に対し、仕様から不変条件を導出してプロパティベーステストに使う手法を提案しています。LLMエージェントにプロパティを書かせる流れを踏まえた研究です。",
+      "why": "AI生成コードの検証手段として、前述のテスト議論と関連する具体的な手法です。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "エージェントが自然言語の仕様書（PRD）からセマンティックな不変条件を導出し、それを基にPython Hypothesisのプロパティベーステスト（PBT）を書いてAI生成コードのバグを探す手法「Spec-Driven PBT」を提案した研究。実装だけから性質を導く従来のCode-driven PBTと比較し、仕様を情報源とする価値を検証している。",
+        "novelty": "既存のエージェント型PBT（Agentic PBT）は実装・docstring・コメントから性質を導くため、実装が一貫して誤っている挙動を検出できない。本手法は「まず実装を見ずに仕様から不変条件を自然言語で記録し、その後でコードを反証入力探索にのみ使う（オラクルにしない）」という情報境界を設け、不変条件を監査可能な台帳（invariants.md）として残す点が新しい。",
+        "method": "エージェントは(1)仕様のみから初期不変条件をinvariants.mdに記録、(2)コードを調べて不変条件を精緻化しつつ反証しうる入力・境界・操作列を探す、(3)影響の大きい少数を優先、(4)Hypothesisテストへ変換、(5)pytestで実行し失敗を正当性確認、(6)再現手順・修正案付きのバグ報告を作成する。Claude Opus 5をClaude Codeで動かし、プロンプトのみで構築する軽量な設計で、ベースラインはMaaz et al.のAgentic PBTを適応したもの。",
+        "validation": "ViBenchの25アプリで、ブラインドLLMレビュアーが両手法の失敗テストを統合・重複排除したところ、全169件のバグのうち70件が両方、56件が提案手法のみ、43件がベースラインのみで検出され（Jaccard 41%）、テスト数は566対1,384（約2.4倍少ない）、バグに結びつくテスト割合は34%対13%だった。PBTBench（注入バグ365件）では再現率88%対85%、重複は大きく（Jaccard 84%）、仕様がAPIリファレンス型でコード寄りなためと推測されている。質的分析では、提案手法固有のバグは状態・ライフサイクルや論理・計算（61%）、Code-driven固有は入力処理（49%）が中心だった。",
+        "discussion": "ViBenchには正解バグラベルがなくLLMレビュアーに依存し、手動検証も25件の部分集合に限られる。また両手法はプロンプトやワークフローも異なるため、効率差が仕様根拠のみによるとは断定できず、仕様が薄い・古い場合は性能低下が予想される。PBTは網羅的でなく、人間によるレビューを完全に代替しない。",
+        "next": [
+          {
+            "title": "Agentic Property-Based Testing: Finding Bugs Across the Python Ecosystem",
+            "reason": "本論文のベースラインであるCode-driven PBTの元手法で、write–run–triageループの基礎を理解できる。"
+          },
+          {
+            "title": "Specification grounding drives test effectiveness for LLM code",
+            "reason": "仕様に基づくテスト作成が有効であり、コードを読むテスト作成者がバグを意図された挙動とみなす偏りを示した、本研究の動機に直結する先行研究。"
+          },
+          {
+            "title": "ViBench: A benchmark on vibe coding",
+            "reason": "本論文の主要評価基盤であるPRDからのアプリ生成ベンチマークの詳細と失敗分析を把握できる。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "ADAPT：プルリクエスト向けのエージェント型差分対応パッチテスト",
+      "original": "ADAPT: Agentic Diff-Aware Patch Testing for Pull Requests",
+      "url": "https://arxiv.org/abs/2611.16114",
+      "source": "arXiv",
+      "date": "2026-11-11",
+      "authors": [
+        "Vahid Haratian",
+        "Atakan Akar",
+        "Eray Tüzün"
+      ],
+      "summary": "PRで導入された変更の振る舞いを守るテストが欠けがちな点に着目し、差分を意識してテストを生成するエージェント手法を提案しています。コードカバレッジではなく、PRが導入する振る舞いを対象にします。",
+      "why": "コードレビューのプロセスにテスト生成を組み込む実務的な方向性です。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "プルリクエスト（PR）の差分だけから、その変更が導入した振る舞いを検証する回帰テストを自動生成するエージェント型手法 ADAPT を提案した研究。PRにテストが付かないまま取り込まれ、新しい振る舞いが将来の退行から守られない問題に対処する。",
+        "novelty": "従来のテスト生成はクラスやモジュール全体を対象にカバレッジを最適化するものが多く、差分を考慮した先行手法（BLAST など）も成功率が限られていた。ADAPT はPR単位のテスト生成にエージェント型ワークフローを初めて適用し、issue 記述なしにコード変更のみから生成する点が新しい。base/head 両バージョンでの Fail-to-Pass（F2P）検証をツール化し、生成中の能動的なフィードバックとして使う点も特徴である。",
+        "method": "OpenHands 上に構築した自律エージェントが、diff から変更関数と文脈を把握し、既存テストの規約を学んでテストを計画・生成する。独自の F2P 検証ツールが、別ワークスペースで head と base の両方に候補テストを実行し、「head で通らない」「base でも通ってしまう（汎用的すぎる）」といった失敗原因を診断として返す。F2P 成功後は、実行可能な変更行のうち未カバーの行をソースとともに報告し、パッチカバレッジ100%を目指して反復的にテストを改良させる。リーク防止のため .git とテストパッチは生成環境から除外し、既存ファイルの編集も禁止している。",
+        "validation": "SWE-bench Verified の426件のPR（BLAST と同一のデータセット）で評価した。同じ GPT-4o での F2P 率は ADAPT 62.0%（264/426）、BLAST 35.4%（151/426）で、+26.6ポイントとなった。GPT-5-mini では 89.9%（383/426）で、総コストは GPT-4o の約29分の1（$16.62 対 $478.95）だった。ChaCo との共通137件のPRでは完全パッチカバレッジが 83.9% 対 79.6% で、時間・コストも低いと報告されている。人手評価（70件、4名）では F2P 有効テストの平均が重要度 4.54、アサーション強度 4.35、可読性 4.49（GPT-5-mini、5点満点）で、開発者作成テストより広い振る舞いを含む割合は64〜66%だった。",
+        "discussion": "エラーは GPT-4o では主にステップ上限超過、GPT-5-mini ではすべてタイムアウトであり、効率面に課題が残る。開発者作成テストが生成テストにない振る舞いをカバーしている割合も78〜81%と高く、生成テストは開発者テストを完全には代替しない。評価は主に Python リポジトリが対象で、F2P 判定にはPR後の head 実装が前提となるため、他言語や実運用への一般化、および比較条件の差（ステップ・時間上限など）には議論の余地がある。",
+        "next": [
+          {
+            "title": "Automated generation of issue-reproducing tests by combining LLMs and search-based testing (BLAST)",
+            "reason": "本研究の主要ベースラインであり、F2P テスト生成の先行手法と評価設定を理解できる。"
+          },
+          {
+            "title": "Change and Cover: Last-mile, pull request-based regression test augmentation (ChaCo)",
+            "reason": "PRの変更行カバレッジを目的とする関連手法で、RQ4 の比較対象として手法の違いを把握できる。"
+          },
+          {
+            "title": "OpenHands: An open platform for AI software developers as generalist agents",
+            "reason": "ADAPT の基盤となるエージェントのアクション・観測ループの仕組みを理解できる。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "AgentTorrent：GitHub上のコンテキスト・ハーネスエンジニアリング成果物のデータセット",
+      "original": "AgentTorrent: A Dataset of Context and Harness Engineering Artifacts on GitHub",
+      "url": "https://arxiv.org/abs/2611.15436",
+      "source": "arXiv",
+      "date": "2026-11-11",
+      "authors": [
+        "Sebastian Baltes",
+        "Seyedmoein Mohsenimofidi",
+        "Levi Böhme",
+        "Vahram Nersesyan"
+      ],
+      "summary": "コンテキストファイル、スキル、フック、MCP設定、仕様やプラン、タスクファイルなど、エージェント型コーディングツールの設定成果物をGitHubから集めたデータセットです。開発者がプロンプトからコンテキストとハーネスの設計へ移行している状況を背景にしています。",
+      "why": "コンテキストエンジニアリングの実態を研究・分析するための基礎資料になります。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "GitHub上の10,944件の「エンジニアリングされたソフトウェアプロジェクト」から、エージェント型コーディングツール6種（Claude Code、Copilot、Codex、Cursor、Gemini、OpenCode）の設定アーティファクト（コンテキストファイル、スキル、フック、MCP設定など）、それがimportするファイル、計画文書（仕様・計画・タスク）、AIツールをクレジットしたコミットを収集したデータセットAgentTorrentを提案している。62,374件の設定アーティファクト、27,593件の計画文書、120万件超のクレジット付きコミットを含み、パイプラインとともにZenodoで公開されている。",
+        "novelty": "既存データセットは個別のアーティファクト種別に限られ、リポジトリのサンプルや収集時期も異なるため統合が難しかった。本データセットは設定アーティファクト、import、計画文書、クレジット付きコミットを同一リポジトリ内で結びつけた唯一のデータセットである。また、各検出ヒューリスティクスがベンダー文書やGitHub上の事例に根拠を持ち、精度だけでなく再現率も評価している点、設定の有無と独立にサンプリングして普及率の分母を提供する点が優れている。前身のAgentConfigs（15,591件・5ツール）から約4倍に拡大した。",
+        "method": "SEART GitHub Searchで条件に合う46,503リポジトリを抽出し、オープンウェイトモデル（DeepSeek V4.1 Flash）がREADMEやメタデータなどから、教材やテンプレートを除外しつつ2つ以上のエンジニアリング実践があるかを判定して、40,901件のエンジニアリングされたプロジェクトを得る。次に、ベンダー文書に根拠を持つ358のパスヒューリスティクスで設定ファイルを収集し、各ツールの読み込み規則（Claude Codeのimport深さ上限4など）に従ってimportを解決し、73のフレームワークに対応する523のヒューリスティクスで計画文書を検出する。コミットの帰属は著者・コミッタ識別子とメッセージ（共著トレーラー等）から、431のヒューリスティクスで判定する。週次でベンダー文書438ページを監視し、未知のパスやクレジットを検出する自動チェックを備え、四半期ごとの更新を想定している。",
+        "validation": "リポジトリ分類では、第2のモデル（GLM-5.3）との一致率が1,039件中1,018件（98.0%、κ=0.87）だった。検出精度は、設定アーティファクト99.87%、6ツールのクレジットコミット99.96%、import 99.98%、計画文書99.8%と推定された（信頼区間の下限はいずれも比較的広く、90.5〜96.6%）。再現率は、検出のある100リポジトリで386件中383件を検出し、検出のない200リポジトリで見逃しは1件、コミットの一様サンプル1,000件ではクレジット付き19件中18件を検出した。また、リポジトリ由来のヒューリスティクスが、文書ベースでは見逃す312,453件のクレジットコミットを検出した。",
+        "discussion": "設定アーティファクトの存在はツールの実際の使用を示さず、クレジットも貢献度や無クレジットの利用を測れない。調査対象はデフォルトブランチ、アクティブでライセンスのある10言語のプロジェクトに限られ、検出ラベルもClaude Code由来のヒューリスティクスと同一モデルで評価しているため独立ではない。今後は各パスヒューリスティクスの精度評価や、ファイルが現在のパスに最初に現れた日付の特定を計画している。",
+        "next": [
+          {
+            "title": "Agentic much? Adoption of coding agents on GitHub",
+            "reason": "GitHub上でのコーディングエージェントの普及を設定ファイルなどから測定した代表的先行研究で、本データセットの動機と比較対象を理解できる。"
+          },
+          {
+            "title": "A dataset of agentic AI coding tool configurations",
+            "reason": "AgentTorrentの前身であるAgentConfigsデータセットで、収集方法の出発点と拡張点を把握できる。"
+          },
+          {
+            "title": "Spec-driven development as prescribed and as practiced",
+            "reason": "本データセットが収集する計画文書（仕様・計画・タスク）に関連するSpecMineデータセットの研究で、仕様駆動開発の実態を理解できる。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "LLMエージェントがデータベースのデバッグで詰まる理由：推論よりアクセス",
+      "original": "Where LLM Agents Get Stuck Debugging Databases: Access More Than Reasoning",
+      "url": "https://arxiv.org/abs/2611.17304",
+      "source": "arXiv",
+      "date": "2026-11-12",
+      "authors": [
+        "Gustavo Pinto"
+      ],
+      "summary": "本番のメッセージ配送エンジンで、Claude Codeが8件のデータベース障害を診断した現場観察です。実行時の並行性に根ざした原因の障害では、いずれも原因を断定して修正を出し、後で撤回しており、誤りのたびにデプロイと観察のサイクルを要しました。",
+      "why": "エージェントの限界が推論よりも実行時データへのアクセスにあるという示唆が、運用設計に役立ちます。"
+    },
+    {
+      "title": "GHA-SmellFix：エージェント型LLMでGitHub Actionsワークフローのスメルを検出・修正",
+      "original": "GHA-SmellFix: Taking Action with Agentic LLMs for Detecting and Refactoring GitHub Actions Workflow Smells",
+      "url": "https://arxiv.org/abs/2611.14963",
+      "source": "arXiv",
+      "date": "2026-11-11",
+      "authors": [
+        "Anderson Uchôa",
+        "Jhefferson Souza",
+        "Emanuel Ávila",
+        "Gabriel Silva"
+      ],
+      "summary": "GitHub Actionsのワークフローに含まれる、セキュリティや信頼性などに影響する設定上のスメルを、エージェント型LLMパイプラインで検出し修正する手法です。既存のルールベース手法が指摘のみで修正を提示しない点を課題としています。",
+      "why": "CI/CD設定の保守を自動化する取り組みとして、DevOps実務に直結します。"
+    },
+    {
+      "title": "KVM内のコーディングエージェント：限られた資源での実用的な封じ込めとユーザー制御",
+      "original": "Coding Agents in KVM: Practical Containment and User Control with Limited Resources",
+      "url": "https://arxiv.org/abs/2611.12823",
+      "source": "arXiv",
+      "date": "2026-11-09",
+      "authors": [
+        "Yutaka Nagashima"
+      ],
+      "summary": "コーディングエージェントに広い権限を与えるとデータやインフラが危険にさらされるため、KVMによる封じ込めの実用的な構成を検討しています。特定のクラウド事業者に依存しない形で、自律性、封じ込め、ユーザー制御のトレードオフを分析しています。",
+      "why": "エージェントの隔離実行を自前で構築する際の設計判断に参考になります。"
+    }
+  ]
+}
