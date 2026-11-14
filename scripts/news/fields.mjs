@@ -4,7 +4,7 @@
 
 const arxiv = query =>
   `https://export.arxiv.org/api/query?search_query=${encodeURIComponent(query)}` +
-  '&sortBy=submittedDate&sortOrder=descending&max_results=40'
+  '&sortBy=submittedDate&sortOrder=descending&max_results=100'
 
 export const FIELDS = [
   {

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 直近24時間でスターが急増している OSS を Trendshift から収集し、
+// 直近 1 週間でスターが急増している OSS を Trendshift から収集し（毎週日曜に実行）、
 // Claude で日本語の技術要約を作成して docs/trending/YYYY-MM-DD.md に出力する。
 //
 // 使い方: node scripts/trending/collect.mjs
@@ -19,12 +19,12 @@ import {
 
 const CATEGORY = 'trending'
 const LIMIT = Number(process.env.TRENDING_LIMIT || 15)
-const SKIP_RECENT_DAYS = 7
+const SKIP_RECENT_DAYS = 28 // 直近 4 週に紹介済みのものは再要約しない
 
-// ---------- 収集: Trendshift の日次ランキング ----------
+// ---------- 収集: Trendshift の週間ランキング（毎週日曜に実行） ----------
 // ページに埋め込まれたデータ（Next.js の RSC ペイロード）から各リポジトリの情報を取り出す。
 async function fromTrendshift() {
-  const html = await fetchText('https://trendshift.io/')
+  const html = await fetchText('https://trendshift.io/weekly')
   const payload = html.replace(/\\"/g, '"').replace(/\\\\/g, '\\')
   const items = []
   const seen = new Set()
@@ -97,7 +97,7 @@ function repoPrompt(r) {
 URL: ${r.url}
 説明: ${r.description}
 主要言語: ${r.language || '不明'}
-スター数: ${r.stars ?? '不明'}（直近24時間の増加: ${r.starsGained ?? '不明'}）
+スター数: ${r.stars ?? '不明'}（直近 1 週間の増加: ${r.starsGained ?? '不明'}）
 トピック: ${(r.topics || []).join(', ') || 'なし'}
 ライセンス: ${r.license || '不明'}
 </repository>
@@ -125,7 +125,7 @@ async function summarizeOverview(repos) {
     .map(r => `- ${r.fullName}: ${r.summary.match(/\*\*一言で:\*\*\s*(.+)/)?.[1] ?? r.description}`)
     .join('\n')
   return ask(
-    `今日注目を集めた OSS の一覧です。\n\n${list}\n\n` +
+    `今週注目を集めた OSS の一覧です。\n\n${list}\n\n` +
       '全体の傾向（どんな分野・技術が注目されているか）を日本語で 3〜5 文にまとめてください。' +
       '見出しや箇条書きは使わず、本文の段落だけを出力してください。',
     SYSTEM,
@@ -138,12 +138,12 @@ const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, 
 
 const ONE_LINER = /^\*\*一言で:\*\*\s*(.+)$/m
 
-// スマホで読みやすいよう、冒頭に「今日の傾向」と一言付きの一覧を置き、各リポジトリは
+// スマホで読みやすいよう、冒頭に「今週の傾向」と一言付きの一覧を置き、各リポジトリは
 // 「見出し → ★・言語・ライセンス → リンク → 一言 → 詳細」の順にそろえる。
 function render({ date = DATE, model = MODEL, repos, carried = [], overview = '' }) {
-  const title = `${date} のトレンド OSS`
+  const title = `週刊トレンド OSS（${date}）`
   const top = repos.slice(0, 3).map(r => r.fullName.split('/')[1]).join('、')
-  const description = `直近24時間でスターが急増した OSS ${repos.length} 件を日本語で要約。注目: ${top} ほか`
+  const description = `直近 1 週間でスターが急増した OSS ${repos.length} 件を日本語で要約。注目: ${top} ほか`
   const gained = r => (r.starsGained ? `+${fmt(r.starsGained)}` : '')
   const lines = [
     '---',
@@ -158,10 +158,10 @@ function render({ date = DATE, model = MODEL, repos, carried = [], overview = ''
     `# ${title}`,
     '',
   ]
-  if (overview) lines.push('::: info 今日の傾向', sanitize(overview), ':::', '')
+  if (overview) lines.push('::: info 今週の傾向', sanitize(overview), ':::', '')
 
   // 一覧（タップで各リポジトリへ移動）
-  lines.push(`**🔥 今日の ${repos.length} 件**`, '')
+  lines.push(`**🔥 今週の ${repos.length} 件**`, '')
   repos.forEach((r, i) => {
     const one = r.summary.match(ONE_LINER)?.[1]
     const star = gained(r) ? `（★${gained(r)}）` : ''
@@ -172,7 +172,7 @@ function render({ date = DATE, model = MODEL, repos, carried = [], overview = ''
   repos.forEach((r, i) => {
     lines.push(`## ${i + 1}. ${r.fullName} {#${slug(r.fullName)}}`, '')
     const meta = [
-      `★ ${fmt(r.stars)}${gained(r) ? `（24h ${gained(r)}）` : ''}`,
+      `★ ${fmt(r.stars)}${gained(r) ? `（今週 ${gained(r)}）` : ''}`,
       r.language ? sanitize(r.language) : null,
       r.license || null,
       `[GitHub ↗](${r.url})`,
@@ -195,7 +195,7 @@ function render({ date = DATE, model = MODEL, repos, carried = [], overview = ''
   }
   lines.push(
     '::: details このページについて',
-    `[Trendshift](https://trendshift.io/) の日次ランキングから収集し、Claude（\`${model}\`）が README をもとに要約しています。`,
+    `[Trendshift](https://trendshift.io/) の週間ランキングから収集し、Claude（\`${model}\`）が README をもとに要約しています。`,
     ':::',
     '',
   )

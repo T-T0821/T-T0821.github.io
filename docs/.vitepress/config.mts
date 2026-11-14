@@ -6,7 +6,7 @@ import { CATEGORIES as daily, isDailySlug, shortDate, type Category } from './ca
 
 const docsDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 
-// 日次ダイジェストのサイドバーに並べる日数。全件は各カテゴリの一覧ページで見られる
+// 週刊ダイジェストのサイドバーに並べる号数。全件は各カテゴリの一覧ページで見られる
 const DAILY_SIDEBAR_LIMIT = 7
 
 interface Page { slug: string; title: string }
@@ -29,10 +29,10 @@ function listPages(cat: string): Page[] {
 
 const catText = (c: Category) => `${c.icon} ${c.label}`
 
-// 日次ダイジェスト用サイドバー。いま見ているカテゴリだけ開き、他は折りたたむ
+// 週刊ダイジェスト用サイドバー。いま見ているカテゴリだけ開き、他は折りたたむ
 function dailySidebar(current: string): DefaultTheme.SidebarItem[] {
   return [{
-    text: '毎日のダイジェスト',
+    text: '週刊ダイジェスト',
     items: daily.map(c => ({
       text: catText(c),
       collapsed: c.key !== current,
@@ -58,7 +58,7 @@ export default defineConfig({
   base: '/',
   lang: 'ja-JP',
   title: 'AI Tech Blog',
-  description: '注目の OSS と各分野のニュース・論文を AI が毎朝日本語でまとめる技術ダイジェスト',
+  description: '注目の OSS と各分野のニュース・論文を AI が毎週日本語でまとめる技術ダイジェスト',
   // 自動生成記事には README 由来の localhost や相対リンクが含まれることがあり、
   // それでデプロイが止まらないようにリンク切れチェックを無効化する
   ignoreDeadLinks: true,
