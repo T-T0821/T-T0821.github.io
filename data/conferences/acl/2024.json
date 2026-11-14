@@ -142,6 +142,116 @@
           }
         ]
       }
+    },
+    {
+      "title": "Deciphering Oracle Bone Language with Diffusion Models",
+      "award": "Best Paper",
+      "authors": [
+        "Haisu Guan",
+        "Huanxin Yang",
+        "Xinyu Wang",
+        "Shengwei Han",
+        "Yongge Liu",
+        "Lianwen Jin",
+        "Xiang Bai",
+        "Yuliang Liu"
+      ],
+      "url": "https://arxiv.org/abs/2406.00684",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "甲骨文字（OBS）の未解読文字に対し、画像生成（条件付き拡散モデル）で対応する現代漢字の画像を生成し、解読の手がかりを与える手法 OBSD を提案した研究。甲骨文には標準的な符号化や完全なコーパスがなく、BERT や GPT のような大規模テキスト前提の NLP 手法が使いにくいという問題に対処する。",
+        "novelty": "解読を画像生成タスクとして定式化し、既存の甲骨研究が主だった解読済み文字の認識・理解ではなく、未解読文字の解読支援に取り組んだ点が新しい。単純な条件付き拡散では意味のない筆画断片しか出ないが、局所的な部首構造を学習させる Localized Structural Sampling（LSS）と、フォント変換で学んだ構造知識を使うゼロショット補正を組み合わせて解決した。事例ベース推論や Cascade GAN など、既解読文字や完全な字形進化経路に依存する先行手法の制約も避けている。",
+        "method": "初期解読では、甲骨文画像を条件、現代漢字画像を目標とする条件付き拡散モデル（U-Net）を、64×64 のパッチ単位で学習する。推論時はスライディングウィンドウで重なるパッチを抽出し、各タイムステップで重複部分を平均化して継ぎ目のアーティファクトを防ぐ（LSS）。その後、FontDiffuser に基づく補正モジュール（MCA・RSI ブロック、クロスアテンションと DCN による変形オフセット）を、20種の現代フォント間の one-to-one 変換で学習し、初期結果の構造の崩れをゼロショットで補正する。",
+        "validation": "HUST-OBS と EVOBC（1,590字種・71,698画像）を用い、学習:テスト=9:1で、テストの字種は学習に含まれないよう分離した。評価には自作 OBS-OCR（ResNet-101、88,899字種で認識精度99.87%）と PaddleOCR を使用した。単回の Top-1 は OBS-OCR で 41.0%、PaddleOCR で 30.0% と、Pix2Pix・CycleGAN・DRIT++・Palette の 0% や、BBDM（19.5%、OBS-OCR）、CDE（31.0%、OBS-OCR）を上回った。10回試行では OBS-OCR で 80.0%、PaddleOCR で 58.5% に達した。アブレーションでは素の拡散 0.5% が LSS で 37.5%、補正でさらに 41.0% に向上した（OBS-OCR Top-1）。",
+        "discussion": "評価は解読済み文字を OCR で照合する疑似的なもので、真に未解読の文字に対する出力の妥当性には専門家による検証が必要であり、著者らも専門家との協力を今後の課題としている。方法は漢字やマヤ文字のような表意・表語文字を想定しており、他の文字体系への適用可能性は今後の検討事項とされている。",
+        "next": [
+          {
+            "title": "FontDiffuser: One-shot font generation via denoising diffusion with multi-scale content aggregation and style contrastive learning",
+            "reason": "OBSD のゼロショット補正モジュールの基盤となっているフォント変換フレームワークを理解できる。"
+          },
+          {
+            "title": "An open dataset for oracle bone script recognition and decipherment (HUST-OBS)",
+            "reason": "本研究の学習・評価に使われた甲骨文データセットの内容と構成を確認できる。"
+          },
+          {
+            "title": "Sundial-GAN: A cascade generative adversarial networks framework for deciphering oracle bone inscriptions",
+            "reason": "字形進化の経路を使った GAN による甲骨文解読という代表的な先行手法で、本手法との違いを把握できる。"
+          }
+        ]
+      },
+      "titleJa": "拡散モデルによる甲骨文の解読",
+      "why": "未解読の甲骨文字に対し、条件付き拡散モデルで対応する現代漢字の画像を生成し、解読の手がかりを与える OBSD を提案した研究です。解読を画像生成タスクとして定式化し、局所的な部首構造を学ぶ Localized Structural Sampling とゼロショット補正を組み合わせることで、素の拡散モデルの Top-1 0.5% を 41.0%（OBS-OCR）まで引き上げ、10回試行では 80.0% に達しました。標準的な符号化も完全なコーパスもない甲骨文という、大規模テキスト前提の NLP が使いにくい対象で、解読済み文字の認識ではなく未解読文字の解読支援に取り組んだ点が注目され、ACL 2024 の Best Paper に選ばれています。"
+    },
+    {
+      "title": "Causal Estimation of Memorisation Profiles",
+      "award": "Best Paper",
+      "authors": [
+        "Pietro Lesci",
+        "Clara Meister",
+        "Thomas Hofmann",
+        "Andreas Vlachos",
+        "Tiago Pimentel"
+      ],
+      "url": "https://arxiv.org/abs/2406.04327",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "言語モデルの「記憶(memorisation)」を、ある事例で学習したことがその事例の予測能力に与える因果効果として定式化し、反事実を再学習なしに推定する手法を提案した研究。学習全体を通した記憶の推移を表す「記憶プロファイル」を、学習データと検証データの小さなサブセットの挙動観測だけで得られるようにした。Pythiaモデル群に適用し、記憶の性質を分析している。",
+        "novelty": "従来は、データ部分集合を変えて複数回再学習する方法(アーキテクチャ単位の記憶しか測れず高コスト)や、反事実を無視できると仮定する方法(抽出可能性の記憶など)が主流だった。本研究はこれらを潜在的結果の枠組みで統一的に記述し、特定のモデルインスタンスについて、学習の各ステップごとの記憶を効率的に推定できる点が新しい。計量経済学の差分の差分(DiD)デザインを導入し、i.i.d.仮定より弱い平行トレンド仮定で、差分推定量より低分散な推定を可能にした。",
+        "method": "反事実的記憶を、バッチgで学習した場合と学習しなかった場合のチェックポイントcでの性能(対数尤度)の差として定義し、その期待値τ_{g,c}を行列(記憶プロファイル)として表す。反事実項は直接観測できないため、検証セットの性能を用いて推定する。差分推定量は学習バッチと検証セットの平均性能の差で求める。DiD推定量は、学習バッチのg−1からcまでの性能変化から、検証セットの同期間の性能変化を引くことで求め、平行トレンドと無予期の2仮定の下で不偏となる。実際には複数チェックポイントでの性能をパネルとして構築して計算する。",
+        "validation": "Pythiaモデル群(70Mから12B、重複排除済みPile、約143kステップ、バッチサイズ1,024、第1エポックのステップ約95kまで)に手法を適用し、記憶プロファイルを分析した。その結果、記憶は大きいモデルほど強く持続的であること、データ順序と学習率に左右されること、モデルサイズを超えて傾向が安定しており小さなモデルから大きなモデルの記憶を予測できることを示した。提供された本文には実験の詳細な数値や指標の結果は含まれていない。",
+        "discussion": "DiDの妥当性は平行トレンドと無予期の仮定に依存し、また推定はインスタンス単位ではなくバッチ(同一ステップで学習した事例群)単位の平均効果に限られる。本文の範囲では、実験はPythiaと主に対数尤度の性能指標に基づいており、他のモデルや指標への一般化は追加の検証が必要である。",
+        "next": [
+          {
+            "title": "Difference-in-Differences with multiple time periods",
+            "reason": "本手法の推定量の基盤となる、複数時点でのDiDと異質な処置効果の識別を扱った論文であるため。"
+          },
+          {
+            "title": "Pythia: A suite for analyzing large language models across training and scaling",
+            "reason": "実験で使われたモデル群とチェックポイント・データ順序の詳細を理解するために必要であるため。"
+          },
+          {
+            "title": "Quantifying memorization across neural language models",
+            "reason": "比較対象である抽出可能性に基づく記憶の定義と、その暗黙の仮定を確認するため。"
+          }
+        ]
+      },
+      "titleJa": "記憶プロファイルの因果推定",
+      "why": "言語モデルの記憶を、ある事例で学習したことがその事例の予測能力に与える因果効果として定式化し、再学習なしに反事実を推定する手法を提案した研究である。計量経済学の差分の差分(DiD)デザインを取り入れ、学習の各ステップにおける記憶の推移を、特定のモデルインスタンスについて効率的に得られる点が注目される。Pythiaモデル群への適用では、記憶が大きいモデルほど強く持続的であること、データ順序や学習率に左右されること、小さなモデルから大きなモデルの記憶を予測できることが示されており、ACL 2024のBest Paperに選ばれている。"
+    },
+    {
+      "title": "Video-ChatGPT: Towards Detailed Video Understanding via Large Vision and Language Models",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Muhammad Maaz",
+        "Hanoona Rasheed",
+        "Salman Khan",
+        "Fahad Shahbaz Khan"
+      ],
+      "url": "https://arxiv.org/abs/2306.05424",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "動画について詳細な会話ができる動画対話モデル Video-ChatGPT を提案した研究。動画向けに適応した視覚エンコーダと LLM を統合し、動画の内容を理解して対話を生成できる。あわせて10万件の動画-指示ペアのデータセットと、動画対話モデル向けの定量評価フレームワークを構築した。",
+        "novelty": "画像ベースの対話モデルは多かったが動画対話は未開拓であり、本研究は人手支援と半自動の注釈パイプラインでラベルノイズに頑健かつスケーラブルな動画指示データを作る点が新しい。先行の VideoChat と異なり、高品質な指示データ生成の枠組みと、動画対話を定量評価する最初のフレームワークを提案したと主張している。アーキテクチャは事前学習済み CLIP を用いた単純でスケーラブルな設計である。",
+        "method": "LLaVA（CLIP ViT-L/14 と Vicuna-v1.1 7B）を出発点とし、T フレームを独立に CLIP で符号化したのち、空間方向の平均プーリングで時間特徴（T×D）、時間方向の平均プーリングで空間特徴（N×D）を得て連結する。これを学習可能な線形層で LLM の入力空間に射影し、テキストクエリと連結して入力する。学習では動画エンコーダと LLM を凍結し線形層のみを更新する。データは、ActivityNet-200 のキャプションを人手で詳細化する方法と、BLIP-2・GRiT・Tag2Text を用いて Tag2Text のタグと合わない記述を除去してノイズを抑えつつ、GPT-3.5 で動画レベルのキャプションと質問応答を生成する半自動方法で作る。",
+        "validation": "ActivityNet-200 に基づくテストセットで、GPT-3.5 を使った1〜5点評価（正確性、詳細性、文脈理解、時間理解、一貫性）を行い、Video Chat、LLaMA Adapter、Video-LLaMA と比較した。Video-ChatGPT は正確性 2.40、詳細性 2.52、文脈理解 2.62、一貫性 2.37 などで最高スコアを示し、時間理解は 1.98 で LLaMA Adapter と同値で最高だった。ゼロショット動画QAでは MSVD-QA 64.9%、MSRVTT-QA 49.3%、TGIF-QA 51.4%、ActivityNet-QA 35.2% を達成し、比較モデルを上回ったと報告している。アブレーションでは人手注釈のみ・半自動のみより両者の併用が全体として良く（平均 2.38）、評価者を Vicuna-1.5 (13B) に替えても同様の傾向を確認した。",
+        "discussion": "約2分を超える長い動画での微妙な時間的関係の理解や、小さな物体の細部の認識が苦手であるとされている。また、時間理解のスコアは比較モデルと同程度にとどまり、評価が GPT-3.5 等の LLM に依存する点や、データ作成過程に残りうるバイアスにも注意が必要である。",
+        "next": [
+          {
+            "title": "Visual Instruction Tuning (LLaVA)",
+            "reason": "Video-ChatGPT の基盤モデルであり、視覚指示チューニングの考え方とアーキテクチャを理解するために必要である。"
+          },
+          {
+            "title": "VideoChat: Chat-centric Video Understanding",
+            "reason": "同時期の最も近い動画対話モデルであり、本論文の主要な比較対象として設計やデータ構築の違いを把握できる。"
+          },
+          {
+            "title": "Video-LLaMA: An Instruction-tuned Audio-Visual Language Model for Video Understanding",
+            "reason": "比較対象の一つである動画向け LLM で、音声も含めた別アプローチとの違いを確認できる。"
+          }
+        ]
+      },
+      "titleJa": "Video-ChatGPT: 大規模視覚・言語モデルによる詳細な動画理解に向けて",
+      "why": "動画について詳細な会話ができる動画対話モデル Video-ChatGPT を提案し、動画向けに適応した視覚エンコーダと LLM を統合しました。あわせて10万件の動画-指示ペアのデータセットと、動画対話モデルを定量評価する最初のフレームワークを構築した点が特徴です。ActivityNet-200 に基づく評価やゼロショット動画QA（MSVD-QA 64.9% など）で比較モデルを上回ったと報告されており、同年の被引用数1位（Paper Digest 集計）という点でも注目されます。"
     }
   ],
   "sources": [
@@ -156,6 +266,10 @@
     {
       "title": "arXiv（受賞論文の著者情報）",
       "url": "https://arxiv.org/"
+    },
+    {
+      "title": "Most Influential ACL Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-acl-papers-2026-03-version/"
     }
   ],
   "unreachable": [

@@ -119,6 +119,115 @@
           }
         ]
       }
+    },
+    {
+      "title": "Nested Fusion: A Method for Learning High Resolution Latent Structure of Multi-Scale Measurement Data on Mars",
+      "award": "Runner-up（ADS トラック）",
+      "authors": [
+        "Austin P. Wright",
+        "Scott Davidoff",
+        "Duen Horng Chau"
+      ],
+      "url": "https://arxiv.org/abs/2409.05874",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "火星探査車Perseveranceの異なる解像度の計測（PIXLのXRF定量値とMCCの多波長画像ピクセル）を統合し、最高解像度で潜在分布を学習する手法Nested Fusionを提案した研究。入れ子状に重なる多スケール計測データセットの問題定式化も与え、NASA JPLのPIXLチームで探索的データ解析に実運用している。",
+        "novelty": "従来の次元削減・潜在分析は同一形状の単一データセットを前提としていたが、本研究は任意段数の入れ子計測データ（nested measurement dataset）を形式化し、最高解像度スケールで潜在変数を学習する点が新しい。低解像度の計測は高解像度の潜在集合から集約的に生成されると仮定することで、Joint型（低解像度でしか潜在を得られない）やConcatenative型（低解像度計測の空間的文脈を失う）の欠点を避けている。",
+        "method": "VAEベースで、各スケールのデータを線形写像で共通トークン次元に変換し、入れ子構造に沿って1本の系列にして系列エンコーダに入力し、最高解像度（MCCピクセル）に対応する出力位置から潜在 z をサンプルする。デコーダは最高解像度スケールにはMLP、XRF定量値のような低解像度スケールには、対応する潜在集合 β を入力とする位置埋め込みなしのTransformer（順序不変）を使い、潜在の分布全体が集約情報を符号化するようにする。学習はPyroによる確率的変分推論で行い、潜在事前分布は標準正規分布とした。nesting関数は、XRFスキャン点から一定距離内のMCCピクセル（約100個）を選ぶことで構成した。",
+        "validation": "103,005個のXRFスキャン点と1,983,506個のMCCピクセルからなる実データで、Joint/ConcatenativeのPCA・UMAP・VAEと、潜在1〜3次元で比較した。再構成のR²では、XRF定量値についてNested Fusionが全次元で最高（例: 2次元で0.98、3次元で0.99）で、MCC画像層はConcatenative VAE・UMAPと同程度だった。Dourbes標的でのオリビンとパイロキシンの潜在分布間のWasserstein距離は、Nested Fusionが1.416、UMAPが1.057で、本文は約50%の改善としている。また2D潜在ヒートマップでは、既知の知見に合う複数の識別可能な領域が得られた。約半年・約12人の科学者との参加型デザインで運用され、実運用の効果が報告されている。",
+        "discussion": "重なり合うピクセルは物理空間に戻す際に単純平均しており、より洗練された分解（ディスアグリゲーション）手法は今後の課題とされる。最高解像度を真の潜在変数の代理とみなす近似に依存するほか、定性評価は特定の標的（Dourbes）と既存解析に基づく鉱物領域の比較が中心である。また、提示されたnesting関数の定義（本文中で75μmと150μmの記述が混在）の整合性には注意が必要。",
+        "next": [
+          {
+            "title": "Lessons from the Development of an Anomaly Detection Interface on the Mars Perseverance Rover using the ISHMAP Framework",
+            "reason": "本研究の動機となったPIXL科学者との協働による探索的解析ワークフローと参加型デザインの背景が分かる。"
+          },
+          {
+            "title": "Auto-Encoding Variational Bayes",
+            "reason": "Nested Fusionの基盤であるVAEと変分推論の定式化を押さえるため。"
+          },
+          {
+            "title": "UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction",
+            "reason": "主要な比較対象である最先端の次元削減手法の仕組みを理解するため。"
+          }
+        ]
+      },
+      "titleJa": "Nested Fusion：火星における多スケール計測データの高解像度な潜在構造を学習する手法",
+      "why": "火星探査車Perseveranceの異なる解像度の計測（PIXLのXRF定量値とMCCの多波長画像ピクセル）を統合し、最高解像度で潜在分布を学習するNested Fusionを提案した研究です。入れ子状に重なる任意段数の計測データを形式化し、低解像度の計測は高解像度の潜在集合から集約的に生成されると仮定することで、従来のJoint型やConcatenative型の欠点を避けています。103,005個のXRFスキャン点と1,983,506個のMCCピクセルの実データでXRF定量値の再構成R²が全次元で最高となり、オリビンとパイロキシンの潜在分布間のWasserstein距離も改善（本文は約50%）しており、NASA JPLのPIXLチームで約12人の科学者との参加型デザインを経て実運用されている点が注目されます。"
+    },
+    {
+      "title": "DeepWalk: Online Learning of Social Representations",
+      "award": "Test of Time（研究）",
+      "authors": [
+        "Bryan Perozzi",
+        "Rami Al-Rfou",
+        "Steven Skiena"
+      ],
+      "url": "https://arxiv.org/abs/1403.6652",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ネットワーク（グラフ）の頂点を低次元の連続ベクトル空間に埋め込む表現学習手法DeepWalkを提案した。短い切り詰めランダムウォークを「文」、頂点を「単語」とみなし、言語モデルの手法でコミュニティ構造や近傍類似性を符号化した潜在表現を得る。ラベルに依存しない表現なので、複数の分類タスクで共有でき、単純な線形分類器でも利用できる。",
+        "novelty": "ディープラーニング（教師なし特徴学習）をネットワーク解析に初めて導入した点が新しい。頂点の出現頻度がランダムウォーク上でもべき則に従い自然言語の単語頻度に似ているという観察から、言語モデルをグラフに転用した。SpectralClusteringやModularityなどグローバル情報を要する手法と違い、局所情報のみで動作するオンライン型で、並列化も容易である。",
+        "method": "各頂点からγ本の長さtのランダムウォークを生成し（頂点の順序は毎パスでシャッフル）、SkipGramで、ある頂点から窓幅w内の前後の文脈頂点を予測するよう表現Φ（|V|×d行列）を更新する。出力の確率計算にはHierarchical Softmaxを用い、頂点を二分木の葉に置いて計算量をO(|V|)からO(log|V|)に削減し、Huffman符号化で頻出頂点の経路を短くする。最適化は確率的勾配降下法で、更新がまばらなためロックなしの非同期SGDで並列化できる。さらに、グラフ全体を知らなくても学習できるストリーミング版や、非ランダムウォーク版も変種として述べている。",
+        "validation": "BlogCatalog、Flickr、YouTubeの3つのソーシャルネットワークでマルチラベル分類を評価し、SpectralClustering、Modularity、EdgeCluster、wvRN、Majorityと比較した。指標はMicro-F1とMacro-F1で、DeepWalkはγ=80、w=10、d=128を用い、1対他のロジスティック回帰で分類した。ラベルが少ない条件で特に強く、Flickrでは全ベースラインに対しMicro-F1で3%以上上回り、ラベル3%の結果が他手法のラベル10%を上回った（60%少ない訓練データで勝る）。YouTubeではSpectralClusteringとModularityが大規模で動作せず、EdgeClusterに対し1%ラベルでMicro-F1が14%、Macro-F1が10%向上した。BlogCatalogではSpectralClusteringがラベル多めの領域では上回る。",
+        "discussion": "著者は、手法の理論的な正当化の強化が今後の課題だとし、言語モデルとグラフモデリングの双方向の知見の活用も展望している。パラメータ感度の分析では、最適な次元数は利用できる訓練データ量に依存し、γは小さい値で効果の大半が得られることが示された。BlogCatalogのようにラベルが多い設定ではSpectralClusteringに劣る場合があり、評価は3つのソーシャルネットワークの分類に限られる。",
+        "next": [
+          {
+            "title": "Efficient Estimation of Word Representations in Vector Space",
+            "reason": "DeepWalkが基盤とするSkipGramの原典で、手法の言語モデル側の理解に必須である。"
+          },
+          {
+            "title": "Relational learning via latent social dimensions",
+            "reason": "Modularityベースの潜在社会次元を提案した主要ベースラインで、実験設定とデータセットの出典でもある。"
+          },
+          {
+            "title": "Hogwild: A lock-free approach to parallelizing stochastic gradient descent",
+            "reason": "DeepWalkの非同期・ロックなし並列化の収束性の根拠となる論文である。"
+          }
+        ]
+      },
+      "titleJa": "DeepWalk: ソーシャル表現のオンライン学習",
+      "why": "ネットワークの頂点を、短い切り詰めランダムウォークを「文」、頂点を「単語」とみなして言語モデルの手法で低次元ベクトルに埋め込む手法DeepWalkを提案し、教師なし特徴学習をネットワーク解析に初めて導入した研究である。局所情報のみで動くオンライン型で並列化しやすく、ラベルに依存しない表現は線形分類器でも複数タスクに使える。BlogCatalog、Flickr、YouTubeの評価ではラベルが少ない条件で特に強く、Flickrではラベル3%で他手法のラベル10%を上回り、KDD 2024のTest of Time賞（研究）を受賞した。"
+    },
+    {
+      "title": "FederatedScope-LLM: A Comprehensive Package for Fine-tuning Large Language Models in Federated Learning",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Weirui Kuang",
+        "Bingchen Qian",
+        "Zitao Li",
+        "Daoyuan Chen",
+        "Dawei Gao",
+        "Xuchen Pan",
+        "Yuexiang Xie",
+        "Yaliang Li",
+        "Bolin Ding",
+        "Jingren Zhou"
+      ],
+      "url": "https://arxiv.org/abs/2309.00363",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "連合学習（FL）の設定で大規模言語模型（LLM）をファインチューニングするためのオープンソースパッケージ FS-LLM を提案した研究。データ準備・連合ファインチューニング実行・性能評価までを一貫して行えるパイプラインと、複数のPEFTアルゴリズム実装を提供する。通信・計算コストの低減や、完全なモデルにアクセスできない場合にも対応する。",
+        "novelty": "既存のFLフレームワークには、LLMの連合ファインチューニングに対する網羅的な実装や、性能・通信・計算コストを比較できる標準ベンチマークがなかった。FS-LLM はFederatedScope上に、ベンチマーク（LLM-Benchmarks）、アルゴリズム群（LLM-AlgZoo）、学習器（LLM-Trainer）の3モジュールを加え、これらを統合した点が新しい。クローズドソースLLMを想定したフルモデル非公開の設定や、pFL・FedHPOとの連携にも対応する。",
+        "method": "LLM-Benchmarksでは Fed-CodeAlpaca、Fed-Dolly、Fed-GSM8K-3 の3つの連合ファインチューニング用データセットを用意し、それぞれ HumanEval、HELM、GSM8K-test の評価タスクと対応づけ、Docker化した。LLM-AlgZooでは LoRA・P-tuning・prompt tuning を連合学習に組み込み、アダプタのみを通信する。フルモデル非公開の場合は offsite-tuning を連合版にした FedOT を実装し、圧縮したエミュレータを配布してアダプタだけを学習する。LLM-Trainerはフック型の学習機構で、混合精度、勾配累積、DeepSpeed、ラウンドロビン切替、通信の量子化・圧縮などの演算子を提供し、pFLやFedHPOとの連携も可能にしている。",
+        "validation": "LLaMA-7B に LoRA・P-tuning・prompt tuning を適用し、global・fed・local の3シナリオで3つのデータセットを評価した。その結果、連合学習は local を大きく上回り global に近い性能を示し、中でも LoRA が最も高い性能を示した（例: Fed-Dolly で fed 46.57）。効率面では、GPU使用量はアルゴリズム間でほぼ同等（約13.4GB）だが、メッセージサイズは LoRA 21.40MB、P-tuning 256.48MB、prompt tuning 0.17MB と大きく異なった。また OPT-2.7B では LLaMA-7B より大幅に低い性能にとどまった。FedOT は LocalOT より良好で、層の削除率20%では競争力のある性能だったが、50%では性能が大きく低下した。",
+        "discussion": "GPUの種類によって計算時間に約2倍の差が出ることから、クライアント間の計算資源の異質性による待ち時間の活用が課題として挙げられている。FedOTは性能を保つためにアダプタが大きくなり通信効率を犠牲にしており、圧縮率の高さと性能の間にはトレードオフがある。なお、prefix-tuning は実装上の未解決の問題のため実験から除外されている。pFLやFedHPOとの連携など、学際的な研究方向も今後の課題として示されている。",
+        "next": [
+          {
+            "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+            "reason": "本論文で最も良い性能を示した PEFT 手法であり、その仕組みを理解するために有用。"
+          },
+          {
+            "title": "Offsite-Tuning: Transfer Learning without Full Model",
+            "reason": "フルモデル非公開の連合ファインチューニング（FedOT）の基になった手法であり、エミュレータ設計の理解に役立つ。"
+          },
+          {
+            "title": "FederatedScope: A Comprehensive and Flexible Federated Learning Platform via Message Passing",
+            "reason": "FS-LLM の土台となるプラットフォームで、イベント駆動アーキテクチャやフック型トレーナの設計を理解できる。"
+          }
+        ]
+      },
+      "titleJa": "FederatedScope-LLM: 連合学習で大規模言語モデルをファインチューニングするための包括的パッケージ",
+      "why": "連合学習の設定で大規模言語モデルをファインチューニングするため、データ準備から連合ファインチューニングの実行、性能評価までを一貫して行えるオープンソースパッケージ FS-LLM を提案した研究です。ベンチマーク、複数のPEFTアルゴリズム、学習器の3モジュールを FederatedScope に加えて統合し、フルモデルが非公開の設定にも対応する点が新しく、LLaMA-7B での実験では連合学習が local を大きく上回り、LoRA が最も高い性能を示しました。KDD 2024 で被引用数上位（Paper Digest の集計で同年1位）に選ばれています。"
     }
   ],
   "sources": [
@@ -133,6 +242,10 @@
     {
       "title": "arXiv（受賞論文の著者情報）",
       "url": "https://arxiv.org/"
+    },
+    {
+      "title": "Most Influential KDD Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-kdd-papers-2026-03-version"
     }
   ],
   "unreachable": [

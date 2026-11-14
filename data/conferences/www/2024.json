@@ -61,6 +61,123 @@
           }
         ]
       }
+    },
+    {
+      "title": "Representation Learning with Large Language Models for Recommendation",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Xubin Ren",
+        "Wei Wei",
+        "Lianghao Xia",
+        "Lixin Su",
+        "Suqi Cheng",
+        "Junfeng Wang",
+        "Dawei Yin",
+        "Chao Huang"
+      ],
+      "url": "https://arxiv.org/abs/2310.15950",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ID ベースのグラフ協調フィルタリング推薦器が、ユーザ/アイテムのテキスト情報を使えず、暗黙フィードバックのノイズやバイアスに弱いという問題に取り組んだ研究。LLM の意味空間と協調関係表現を揃えることで既存推薦器の表現を強化する、モデル非依存フレームワーク RLMRec を提案した。",
+        "novelty": "P5・InstructRec・TALLRec のように LLM を推論器として直接使う手法は、計算コスト・幻覚・プロンプト長の制約で実用性に課題があった。RLMRec は LLM を表現学習の補助に回すことで、既存推薦器の精度と効率を保ちつつ LLM の知識を取り込む。さらに、テキスト信号の導入が相互情報量最大化と等価になるという理論的根拠を示した点も特徴である。",
+        "method": "まず LLM（gpt-3.5-turbo）に推論過程を含めさせて、アイテム→ユーザの順にプロファイルを生成し、text-embedding-ada-002 で意味表現 s に変換する。次に、協調側表現 e と s の相互情報量最大化を、密度比 f(s,e) のモデリングとして実現する。具体的には、対照学習による RLMRec-Con と、マスク再構成による生成的な RLMRec-Gen の 2 種類がある。元の推薦損失に L_info を加えるだけなので、任意の表現ベース推薦器に適用できる。",
+        "validation": "Amazon-book・Yelp・Steam の 3 データセットで、GCCF・LightGCN・SGL・SimGCL・DCCF・AutoCF の 6 バックボーンに適用し、Recall@N と NDCG@N を評価した（all-rank プロトコル、5 回の乱数初期化の平均）。多くの設定で統計的に有意な改善が見られ、例えば LightGCN では Amazon-book の R@5 が 6.67%、Steam の R@10 が 6.46% 向上した。LLM 強化手法 KAR との比較では、LightGCN・SGL とも RLMRec が上回った。KAR は SGL で Amazon-book の R@20 が −2.5% と悪化する場合があった。また、ChatGPT による再ランキングが LightGCN の元の結果より悪かったことも予備実験で示している。",
+        "discussion": "改善幅はバックボーンやデータセットによって異なり、SimGCL や AutoCF の一部指標では改善が小さい、または NDCG@5 のように微減する場合もある。Con と Gen のどちらが優れるかはバックボーン依存で、Gen が AutoCF に有効な理由は『マスクが正則化として働く』という推測にとどまる。プロファイル生成に ChatGPT を用いるため、その品質やコストへの依存があるが、本文（中略部分を含む）からはこれ以上の議論は確認できない。",
+        "next": [
+          {
+            "title": "Towards Open-World Recommendation with Knowledge Augmentation from Large Language Models (KAR)",
+            "reason": "本論文が直接比較している LLM 強化手法で、テキスト知識の取り込み方の違いを理解できる。"
+          },
+          {
+            "title": "Representation learning with contrastive predictive coding",
+            "reason": "本論文の相互情報量下界と密度比モデリングの理論的基盤となる InfoNCE の原論文である。"
+          },
+          {
+            "title": "SSLRec: A Self-Supervised Learning Framework for Recommendation",
+            "reason": "実験で使われたバックボーン実装の基盤フレームワークで、再現や拡張の際に役立つ。"
+          }
+        ]
+      },
+      "titleJa": "推薦のための大規模言語モデルによる表現学習",
+      "why": "ID ベースのグラフ協調フィルタリング推薦器がテキスト情報を使えず、暗黙フィードバックのノイズやバイアスに弱い問題に対し、LLM の意味空間と協調関係表現を揃えて既存推薦器の表現を強化するモデル非依存フレームワーク RLMRec を提案した研究です。LLM を推論器として直接使わず表現学習の補助に回すことで、計算コストや幻覚などの課題を避けつつ精度と効率を保ち、テキスト信号の導入が相互情報量最大化と等価であるという理論的根拠も示しています。Amazon-book・Yelp・Steam の 3 データセットと 6 種のバックボーンで多くの設定において有意な改善を示し、LLM 強化手法 KAR も上回っており、WWW 2024 で被引用数が同年 1 位（Paper Digest 集計）となっています。"
+    },
+    {
+      "title": "ReLLa: Retrieval-enhanced Large Language Models for Lifelong Sequential Behavior Comprehension in Recommendation",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Jianghao Lin",
+        "Rong Shan",
+        "Chenxu Zhu",
+        "Kounianhua Du",
+        "Bo Chen",
+        "Shigang Quan",
+        "Ruiming Tang",
+        "Yong Yu",
+        "Weinan Zhang"
+      ],
+      "url": "https://arxiv.org/abs/2308.11131",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "LLMをレコメンデーション（CTR予測）にそのまま適用する際、長いユーザー行動系列をテキストで与えると有用情報を抽出できなくなる「生涯的逐次行動の非理解問題」を特定・定式化した研究。この問題を緩和するため、ゼロショット・少数ショット両方に対応する検索拡張LLMフレームワークReLLaを提案している。",
+        "novelty": "コンテキスト長の上限に遠く達していなくても、LLMが長い行動系列を理解できず性能が低下する現象を初めて指摘・定式化した点が新しい。さらに、直近K件ではなくターゲットアイテムに意味的に関連するK件を使う検索（SUBR）を、推論時のデータ品質向上と学習時のデータ拡張の両方に用いる点が特徴である。",
+        "method": "SUBRでは、各アイテムの説明文をLLMに入力して最終層の隠れ状態を平均プーリングし、PCAで512次元に圧縮した意味ベクトルを得る。そのコサイン類似度でターゲットアイテムに関連する上位K件の行動を選び、直近K件と置き換える。少数ショット向けのReiTでは、元の学習サンプルとSUBRで作った検索拡張版を混合して2N件の学習データを作り、Vicuna-13BをLoRAで通常の因果言語モデリング損失により指示チューニングする。評価時はYes/Noトークンのスコアに対する2次元softmaxでCTRを算出する。",
+        "validation": "BookCrossing、MovieLens-1M、MovieLens-25Mの3データセットで、AUC・Log Loss・ACCにより評価した。ゼロショットのReLLaはBookCrossingとMovieLens-1MでVicuna-13Bを上回った（例：BookCrossingのAUC 0.7253対0.7176）が、MovieLens-25MではAUCが低下した（0.7324対0.7503）。学習データ10%未満の少数ショットReLLaは、全データで学習したSIMなどの従来CTRモデルを3データセットで上回った（例：MovieLens-25MのAUC 0.8477対SIMの0.8344）。また、Vicuna-13Bは系列長K=15〜30付近で性能が頭打ちになるのに対し、ReLLaではKを増やしても性能が改善し続けた。アブレーションでは、混合学習が単純な検索のみの学習などを上回り、パターン拡張が学習データ量の倍増より寄与が大きいことが示された。",
+        "discussion": "ゼロショットでは検索を加えてもMovieLens-25MでAUCが低下しており、LLMのゼロショット推薦が不安定であることを論文自身が認めている。また、LLMの推論コストやモデルサイズの負担があり（付録で分析されているが本文では詳細未確認）、非理解問題の原因分析も付録に回されているため、原因の解明が今後の課題として残る。",
+        "next": [
+          {
+            "title": "TALLRec: An Effective and Efficient Tuning Framework to Align Large Language Model with Recommendation",
+            "reason": "LLMの単純な指示チューニングによる推薦の代表的手法であり、ReLLaのw/o Retrievalに相当する比較対象として理解に役立つ。"
+          },
+          {
+            "title": "Search-based User Interest Modeling with Lifelong Sequential Behavior Data for Click-Through Rate Prediction (SIM)",
+            "reason": "ユーザー行動検索を用いる最強の従来ベースラインであり、SUBRの着想元となる考え方を学べる。"
+          },
+          {
+            "title": "How Can Recommender Systems Benefit from Large Language Models: A Survey",
+            "reason": "LLMを推薦に活用する研究全体の分類を俯瞰でき、ReLLaの位置づけを把握できる。"
+          }
+        ]
+      },
+      "titleJa": "ReLLa: レコメンデーションにおける生涯的逐次行動の理解のための検索拡張大規模言語モデル",
+      "why": "LLMをCTR予測に適用する際、長いユーザー行動系列をテキストで与えるとコンテキスト長の上限に達していなくても有用情報を抽出できなくなる「生涯的逐次行動の非理解問題」を初めて指摘・定式化し、ターゲットアイテムに意味的に関連する行動を検索して使う検索拡張フレームワークReLLaを提案した点が注目されます。学習データ10%未満の少数ショットReLLaが、全データで学習したSIMなどの従来CTRモデルを3データセットで上回り、系列長Kを増やしても性能が改善し続けることが示されました。被引用数はPaper Digestの集計で同年2位と高く、関心の高さがうかがえます。"
+    },
+    {
+      "title": "UniTime: A Language-Empowered Unified Model for Cross-Domain Time Series Forecasting",
+      "selection": "被引用数上位（Paper Digest の集計で同年3位）",
+      "authors": [
+        "Xu Liu",
+        "Junfeng Hu",
+        "Yuan Li",
+        "Shizhe Diao",
+        "Yuxuan Liang",
+        "Bryan Hooi",
+        "Roger Zimmermann"
+      ],
+      "url": "https://arxiv.org/abs/2310.09751",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "エネルギー・気象・為替・疾病など異なるドメインの多変量時系列を、1つのモデルで同時に学習して予測する「クロスドメイン統一モデル」UniTimeを提案した研究。ドメインごとに専用モデルを学習する従来の枠組みに代わり、ドメイン間で共通する時系列の性質を活用し、未見ドメインへのゼロショット転移も目指している。",
+        "novelty": "クロスドメイン時系列学習の課題として、変数数などの特性の違い、ドメイン混同、ドメイン間の収束速度の不均衡の3点を明確化し、それぞれに対処した点が新しい。人手で作成した自然言語のドメイン指示文を言語モデルに与えて識別情報とする点が特徴で、GPT4TSのように時系列単一モダリティに依存する手法とは異なる。著者らは、時系列ドメイン横断の統一モデルを探る初の試みだと主張している。",
+        "method": "チャネル独立の設定を採り、時系列をパッチ化してトークン化する。その際にマスク処理と、マスク情報を取り込むゲート融合を行い、収束の速いドメインでの過学習や自明解の学習を抑える。ドメイン指示文の埋め込みを時系列トークンの前に連結し、事前学習済みGPT2（6層、全パラメータ更新）をベースとしたLanguage-TS Transformerに入力する。出力は学習可能なパディングトークンで最大長Rに揃え、軽量Transformerと線形層で常に最大720ステップを予測し、必要な長さだけ切り出す。損失は予測のMSEに過去の再構成損失を加えたもので、バッチ内は単一ドメインとし、データの少ないドメインにはオーバーサンプリングを行う。",
+        "validation": "ETT（4種）、Electricity、Weather、Exchange、Illnessの8データセットで、Informer、Autoformer、FEDformer、NSformer、DLinear、TimesNet、PatchTST、GPT4TSと比較した。同じくデータセット横断で学習したベースラインに対しては80項目中79項目で最良となり、データセットごとに個別学習した手法に対しても80項目中37項目で最良を更新した。アブローション（指示文、マスク、LightTrans、再構成損失）では、特に指示文を外したときの性能低下が大きく、T-SNEでは指示文の有無でドメイン表現の分離度が変わることを示した。ETTh1/ETTm1/ETTm2で学習してETTh2・Electricity・Weatherへゼロショット転移した実験でも、GPT4TSやPatchTSTを上回った。",
+        "discussion": "ゼロショット転移では未見ドメインに対して学習時の指示文から適切なものを選ぶ手順が必要で、ドメイン指示文を人手で作成する点にも依存がある。Electricityでの転移結果は専用モデルより大きく劣るなど、ドメイン間の関連が薄い場合の汎化には課題が残る。本文中の検証は8データセットに限られ、より大規模・多様なデータでの統一モデルへの拡張は今後の課題と考えられる（この点は本文の記述から推察した内容を含む）。",
+        "next": [
+          {
+            "title": "One Fits All: Power General Time Series Analysis by Pretrained LM",
+            "reason": "事前学習済み言語モデルで時系列を処理する直接の先行研究GPT4TSであり、UniTimeとの違いを理解するために必要。"
+          },
+          {
+            "title": "A time series is worth 64 words: Long-term forecasting with transformers",
+            "reason": "UniTimeが採用するチャネル独立とパッチ化の元になったPatchTSTで、基盤設計を把握できる。"
+          },
+          {
+            "title": "TimesNet: Temporal 2d-variation modeling for general time series analysis",
+            "reason": "実験設定やベースライン結果の出典で、汎用的な時系列解析フレームワークとの比較の基準になる。"
+          }
+        ]
+      },
+      "titleJa": "UniTime: 言語で強化されたクロスドメイン時系列予測のための統一モデル",
+      "why": "エネルギー・気象・為替・疾病など異なるドメインの多変量時系列を、人手で作成した自然言語のドメイン指示文を言語モデルに与えることで識別し、1つのモデルで同時に学習・予測する枠組みを提案した研究です。変数数などの特性の違い、ドメイン混同、収束速度の不均衡という3つの課題を明確化して対処し、著者らは時系列ドメイン横断の統一モデルを探る初の試みだと主張しています。8データセットでデータセット横断学習のベースラインに80項目中79項目で勝り、個別学習の手法に対しても37項目で最良を更新し、未見ドメインへのゼロショット転移でもGPT4TSやPatchTSTを上回った点が注目され、WWW 2024で被引用数が同年3位（Paper Digest集計）となっています。"
     }
   ],
   "sources": [
@@ -79,6 +196,10 @@
     {
       "title": "arXiv（受賞論文の著者情報）",
       "url": "https://arxiv.org/"
+    },
+    {
+      "title": "Most Influential WWW Papers 2025-09（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2025/09/most-influential-www-papers-2025-09-version/"
     }
   ],
   "unreachable": [

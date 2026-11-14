@@ -126,6 +126,122 @@
           }
         ]
       }
+    },
+    {
+      "title": "Towards Robust Speech Representation Learning for Thousands of Languages",
+      "award": "Best Paper",
+      "authors": [
+        "William Chen",
+        "Wangyou Zhang",
+        "Yifan Peng",
+        "Xinjian Li",
+        "Jinchuan Tian",
+        "Jiatong Shi",
+        "Xuankai Chang",
+        "Soumi Maiti",
+        "Karen Livescu",
+        "Shinji Watanabe"
+      ],
+      "url": "https://arxiv.org/abs/2407.00837",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "4,057言語・100万時間超の音声で事前学習した多言語自己教師あり学習(SSL)音声エンコーダ XEUS を提案した研究。既存の公開コーパス約100万時間に、新規収集した7,413時間・4,057言語の未ラベル音声コーパスを加えて学習している。モデル・コード・データ・中間チェックポイントも公開する。",
+        "novelty": "従来の多言語SSLは50〜150言語程度が中心で、1,000言語超のMMSもデータ・学習コードが非公開だった。XEUSは言語カバレッジをMMSの約4倍に拡大し、データ・重み・コード・ログ・200以上の中間チェックポイントまで公開している。また、WavLM式のノイズ付加に加えて、残響を付与した音声からクリーンな疑似ラベルを予測する新しい脱残響(dereverberation)の自己教師タスクを導入した。",
+        "method": "HuBERT型のマスク予測を基本とし、WavLabLMの表現をk-means(k=2,048)でクラスタリングして疑似ラベルを作る。入力にはDNS Challengeのノイズまたは他発話を確率0.2で付加し、さらにRIRとの畳み込みで残響を確率0.3で付加する。このとき、ピーク位置から求めたシフト量で残響音声を元の発話に再整列し、エネルギーを揃える工程がラベルとのずれを防ぐ上で重要とされる。アーキテクチャはTransformerをE-Branchformer(19層、577Mパラメータ)に置き換え、損失もクロスエントロピーに変更した。64基のA100で約670Kステップ学習している。",
+        "validation": "ML-SUPERBでSUPERBsスコア956(10分・1時間設定とも)で最高となり、MMS 1BやXLS-R、w2v-BERT 2.0 v2を上回った。FLEURSではCER 8.9で、w2v-BERT 2.0 v2(8.7)に近く、MMS 1B(9.2)やXLS-R 1B(9.6)より良好だった。事前学習データが10時間未満の低資源言語3言語を対象にした音声翻訳ではchrF 22.1で、MMS 1B(15.5)より相対約35%向上した。英語SUPERBでは4タスク(KS, SD, ER, ASR)でWavLM Largeを上回り、音声再合成(VCTK)でもWER 10.0など全指標でWavLM LargeとW2v-BERT 2.0 v2を上回った。",
+        "discussion": "4,000言語超のうち多くは音声が1時間未満で、低資源言語での性能は高資源言語より低いと見込まれ、評価も一部の言語に限られる。また評価はSUPERBなど軽量なベンチマーク中心でハイパーパラメータ調整も限定的であり、SOTA設定の大規模ファインチューニングは行っていない。今後は下流利用のより大規模な展開が課題として挙げられている。",
+        "next": [
+          {
+            "title": "Scaling Speech Technology to 1,000+ Languages",
+            "reason": "XEUSが直接の比較対象とし、言語カバレッジ拡大の先行例であるMMSの手法とデータを理解するため。"
+          },
+          {
+            "title": "WavLM: Large-scale self-supervised pre-training for full stack speech processing",
+            "reason": "XEUSの脱残響タスクの基礎となるデノイジング付きマスク予測の原典であるため。"
+          },
+          {
+            "title": "ML-SUPERB: Multilingual Speech Universal PERformance Benchmark",
+            "reason": "XEUSの主要評価ベンチマークであり、多言語SSLの評価設計を把握できるため。"
+          }
+        ]
+      },
+      "titleJa": "数千言語に対応する頑健な音声表現学習に向けて",
+      "why": "4,057言語・100万時間超の音声で事前学習した多言語自己教師あり音声エンコーダ XEUS を提案した研究です。言語カバレッジをMMSの約4倍に広げ、残響音声からクリーンな疑似ラベルを予測する脱残響タスクを新たに導入し、データ・重み・コード・200以上の中間チェックポイントまで公開しています。ML-SUPERBで最高スコアを記録し、低資源言語の音声翻訳でもMMS 1Bに対し相対約35%の向上を示した点が注目されます。"
+    },
+    {
+      "title": "Pretraining Data Detection for Large Language Models: A Divergence-based Calibration Method",
+      "award": "Best Paper",
+      "authors": [
+        "Weichao Zhang",
+        "Ruqing Zhang",
+        "Jiafeng Guo",
+        "Maarten de Rijke",
+        "Yixing Fan",
+        "Xueqi Cheng"
+      ],
+      "url": "https://arxiv.org/abs/2409.14781",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ブラックボックスなLLMに対し、与えられたテキストが事前学習データに含まれていたかを判定する「事前学習データ検出」の新手法DC-PDDを提案した研究。あわせて、中国語テキスト向けの検出ベンチマークPatentMIA（Google Patents由来、10,000件）も構築した。",
+        "novelty": "従来のMin-K% Probは、LLMが高確率を予測しやすい一般的な単語を多く含む非学習テキストを学習データと誤判定しやすい問題があった。DC-PDDはdivergence-from-randomnessの考え方でトークン確率を補正し、Small Refのような追加の参照モデルや、Min-K%++のような語彙全体の確率分布へのアクセスを必要としない。また、既存ベンチマークが英語のみだったのに対し、中国語のベンチマークを初めて整備した。",
+        "method": "対象LLMが出力するトークン確率分布と、公開コーパス（英語はC4、中国語はChineseWebTextの約15GB）から推定したトークン頻度分布（ラプラス平滑化あり）との間で、α_i = -p(x_i;M)·log p(x_i;D') というクロスエントロピーをトークンごとに計算する。各α_iには上限aを設けて少数トークンへの支配を防ぎ、同一トークンの2回目以降の出現は繰り返しで確率が上がるため除外して、初出トークンのみの平均をスコアβとする。βが閾値τ以上なら学習データに含まれていたと判定する。",
+        "validation": "WikiMIA（OPT、Pythia、Llama、GPT-NeoX）、BookMIA（GPT-3）、PatentMIA（Baichuan-13B、Qwen1.5-14B）で、AUCとTPR@5%FPRを用いてPPL、Zlib、Min-K% Prob、Min-K%++ Probなどと比較した。BookMIAではAUCで最良の既存手法を5.4%、TPR@5%FPRで9.6%上回り、PatentMIAではMin-K% Probに対しAUCで5.4%、TPR@5%FPRで13.2%上回った。アブレーションでは上限制限（LUP）と初出トークン選択（SFO）の寄与を確認し、モデルサイズや文長が大きいほど性能が向上すること、参照コーパスの選択には比較的鈍感であることも示した。",
+        "discussion": "WikiMIAの一部モデル（Llama-13Bなど）ではMin-K%++ Probの方が高いAUCで、DC-PDDが常に最良とは限らない。限界として、参照コーパスの頻度分布が実際の事前学習コーパスとどの程度近いかが不明であること、ハイパーパラメータaの最適値がモデルやデータで異なり設定指針が未確立であること、トークン確率にアクセスできないモデルには適用できないこと、実験が20B以下のモデルとGPT-3に限られることが挙げられている。今後は、コーパス単位の検出や、トークン確率以外のより信頼できる検出シグナルの探索が課題とされる。",
+        "next": [
+          {
+            "title": "Detecting Pretraining Data from Large Language Models",
+            "reason": "ベースラインのMin-K% ProbとWikiMIA/BookMIAを提案した本研究の直接の前提となる論文である。"
+          },
+          {
+            "title": "Min-K%++: Improved Baseline for Detecting Pre-training Data from Large Language Models",
+            "reason": "語彙全体の確率分布で正規化する別系統の補正手法であり、DC-PDDと比較して読む価値がある。"
+          },
+          {
+            "title": "Probabilistic models of information retrieval based on measuring the divergence from randomness",
+            "reason": "DC-PDDの着想元であるdivergence-from-randomnessの理論的背景を理解できる。"
+          }
+        ]
+      },
+      "titleJa": "大規模言語モデルの事前学習データ検出：divergence に基づく補正手法",
+      "why": "ブラックボックスなLLMに対し、テキストが事前学習データに含まれていたかを判定する新手法DC-PDDを提案した研究です。divergence-from-randomnessの考え方でトークン確率を補正することで、Min-K% Probが苦手とする一般的な単語の多い非学習テキストの誤判定に対処し、Small Refのような追加の参照モデルやMin-K%++のような語彙全体の確率分布も必要としません。また初の中国語ベンチマークPatentMIAを整備し、BookMIAではAUCで最良の既存手法を5.4%、PatentMIAではMin-K% Probに対しTPR@5%FPRで13.2%上回った点が注目され、EMNLP 2024でBest Paperを受賞しました。"
+    },
+    {
+      "title": "Video-LLaVA: Learning United Visual Representation by Alignment Before Projection",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Bin Lin",
+        "Yang Ye",
+        "Bin Zhu",
+        "Jiaxi Cui",
+        "Munan Ning",
+        "Peng Jin",
+        "Li Yuan"
+      ],
+      "url": "https://arxiv.org/abs/2311.10122",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "画像と動画を言語特徴空間に事前に揃えた統一的な視覚表現として扱い、1つの大規模言語モデルで画像・動画の両方を理解できるLVLMベースライン「Video-LLaVA」を提案した研究。画像と動画の混合データで共同学習し、両者が互いの性能を高め合うことを示している。",
+        "novelty": "従来のLVLMは画像と動画を別々の特徴空間に符号化して射影層に渡すため、射影前の不整合（misalignment before projection）により LLM が相互作用を学びにくかった。本研究は「射影前アラインメント」を掲げ、LanguageBind エンコーダで画像・動画を言語空間に事前整列させたうえで共有の射影層を使う点が新しい。事前整列と画像・動画の共同学習を両立させた点が、VideoChat や Video-LLaMA、ImageBind-LLM との違いである。",
+        "method": "画像・動画エンコーダには、OpenCLIP 初期化の LanguageBind（動画は VIDAL-10M の300万動画テキスト対で言語空間に整列）を用い、共有の2層MLP（GeLU）射影層を介して Vicuna-7B v1.5 に入力する。学習は2段階で、第1段階は LAION-CC-SBU の558K画像テキスト対と WebVid 由来の702K動画テキスト対による理解学習（射影層のみ学習）、第2段階は LLaVA 1.5 の665K画像指示データと Video-ChatGPT の100K動画指示データによる指示チューニング（LLMも学習）である。バッチ内に画像と動画を混在させ、動画は一様に8フレームをサンプリングする。",
+        "validation": "動画QA（MSVD/MSRVTT/TGIF/ActivityNet）のゼロショット評価で Video-ChatGPT を MSRVTT で5.8%、MSVD で9.9%、TGIF で18.6%、ActivityNet で10.1%上回った。画像では5つのQAベンチマークと4つのツールキットで評価し、InstructBLIP-7B を5つのQAベンチマーク全てで上回り、MMBench で IDEFICS-80B を6.4%上回った。アブレーションでは、MAE や CLIP との比較で統一表現の優位性を、動画のみ学習版との比較で共同学習による動画性能の向上（MSVD で+5.9など）を示し、LLaVA-1.5†比では9ベンチマーク中8つで改善した。",
+        "discussion": "一様8フレームのサンプリングでは長い動画の詳細が失われ、ActivityNet-QA では Chat-UniVi に及ばない。学習にも8基のA100-80Gで3〜4日と計算コストがかかる。今後は長い動画向けにトークンを圧縮できる効率的な共有射影、深度・赤外線など他モダリティへの拡張、時間関係を扱うタイムスタンプ埋め込みの導入が挙げられている。",
+        "next": [
+          {
+            "title": "LanguageBind: Extending Video-Language Pretraining to N-modality by Language-based Semantic Alignment",
+            "reason": "Video-LLaVA の統一視覚表現の土台となるエンコーダであり、射影前アラインメントの仕組みを理解できる。"
+          },
+          {
+            "title": "Video-ChatGPT: Towards Detailed Video Understanding via Large Vision and Language Models",
+            "reason": "主要な比較対象であり、動画指示データと評価パイプラインの出典である。"
+          },
+          {
+            "title": "Improved Baselines with Visual Instruction Tuning",
+            "reason": "Video-LLaVA の画像側の学習設定と指示データ（LLaVA-1.5）の元になっており、公平比較の基準でもある。"
+          }
+        ]
+      },
+      "titleJa": "Video-LLaVA: 射影前アラインメントによる統一的な視覚表現の学習",
+      "why": "画像と動画を言語特徴空間に事前に揃えた統一的な視覚表現として扱い、1つの大規模言語モデルで両方を理解できるLVLMベースライン Video-LLaVA を提案した研究です。画像と動画の混合データで共同学習すると両者の性能が互いに高まることを示し、動画QAではゼロショットで Video-ChatGPT を MSRVTT・MSVD・TGIF・ActivityNet のすべてで上回り、画像でも InstructBLIP-7B を5つのQAベンチマーク全てで上回りました。EMNLP 2024 の論文のうち Paper Digest の集計で被引用数が同年1位であることも、注目度の高さを示しています。"
     }
   ],
   "sources": [
@@ -144,6 +260,10 @@
     {
       "title": "arXiv（受賞論文の著者情報）",
       "url": "https://arxiv.org/"
+    },
+    {
+      "title": "Most Influential EMNLP Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-emnlp-papers-2026-03-version/"
     }
   ],
   "unreachable": []
