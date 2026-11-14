@@ -8,6 +8,7 @@
 // 任意の環境変数:
 //   CLAUDE_MODEL   既定 claude-sonnet-5-5
 //   DIGEST_DATE    出力日付 YYYY-MM-DD（既定は JST の今日）
+//   OCHIAI_PER_FIELD  分野ごとに落合フォーマットで詳しくまとめる論文数（既定 2、0 で無効）
 
 import fs from 'node:fs'
 import path from 'node:path'
@@ -15,6 +16,7 @@ import {
   ROOT, MODEL, DATE, log, safe, fetchText, fetchJson, parseFeed, toPlain, ask, extractJson,
   sanitize, yamlStr, readRecentData, writeOutputs,
 } from '../lib/common.mjs'
+import { summarizeOchiai, renderOchiai } from '../lib/ochiai.mjs'
 import { FIELDS } from './fields.mjs'
 
 const NEWS_WINDOW_HOURS = 48 // これより古いニュースは対象外
@@ -22,6 +24,9 @@ const PAPER_WINDOW_DAYS = 5 // arXiv は週末や公開遅延があるため少�
 const DEDUPE_DAYS = 14 // この期間に紹介した URL は再掲しない
 const MAX_NEWS_CANDIDATES = 60
 const MAX_PAPER_CANDIDATES = 40
+// 重要度の高い順に並んだ論文のうち、先頭から何件を落合フォーマットでまとめるか。
+// 1 件ごとに本文を読ませるため、Max プランの使用量を見ながら調整する
+const OCHIAI_PER_FIELD = Number(process.env.OCHIAI_PER_FIELD ?? 2)
 
 const now = Date.now()
 const within = (date, ms) => date && !Number.isNaN(date.getTime()) && now - date.getTime() <= ms
@@ -148,6 +153,7 @@ function toItem(x, noteKey) {
     authors: x.item.authors || [],
     summary: x.summary,
     [noteKey]: x[noteKey] || '',
+    ...(x.ochiai ? { ochiai: x.ochiai } : {}),
   }
 }
 
@@ -179,11 +185,12 @@ function render(field, data) {
   const toc = (label, list, prefix) => {
     if (!list.length) return
     lines.push(`**${label}（${list.length} 件）**`, '')
-    list.forEach((x, i) => lines.push(`${i + 1}. [${sanitize(x.title)}](#${prefix}-${i + 1})`))
+    list.forEach((x, i) => lines.push(`${i + 1}. [${sanitize(x.title)}](#${prefix}-${i + 1})${x.ochiai ? ' 📝' : ''}`))
     lines.push('')
   }
   toc('📰 ニュース', news, 'news')
   toc('📄 論文', papers, 'paper')
+  if (papers.some(p => p.ochiai)) lines.push('<small>📝 は落合フォーマットで詳しくまとめた論文です。</small>', '')
 
   if (news.length) {
     lines.push('## 📰 ニュース', '')
@@ -203,6 +210,7 @@ function render(field, data) {
       if (p.original && p.original !== p.title) lines.push(`<small>原題: ${sanitize(p.original)}</small>`, '')
       lines.push(sanitize(p.summary), '')
       if (p.why) lines.push('::: tip 🔍 注目ポイント', sanitize(p.why), ':::', '')
+      lines.push(...renderOchiai(p.ochiai))
     })
   }
   lines.push(
@@ -226,6 +234,21 @@ async function runField(field) {
 
   const result = await summarize(field, news, papers)
   if (!result.news.length && !result.papers.length) return log(`${field.label}: 選ばれた項目がないためスキップ`)
+
+  // 特に注目度の高い論文は本文を読んで落合フォーマットでまとめる
+  for (const p of result.papers.slice(0, OCHIAI_PER_FIELD)) {
+    try {
+      p.ochiai = await summarizeOchiai({
+        title: p.item.title,
+        url: p.item.url,
+        authors: p.item.authors,
+        abstract: p.item.summary,
+      })
+      log(`${field.label}: 落合フォーマット作成: ${p.item.title}（${p.ochiai.basis === 'fulltext' ? '本文' : 'アブストラクト'}）`)
+    } catch (e) {
+      log(`${field.label}: 落合フォーマット失敗: ${p.item.title}: ${e.message}`)
+    }
+  }
 
   const data = {
     date: DATE,
