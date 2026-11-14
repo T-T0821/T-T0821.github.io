@@ -3,8 +3,11 @@
 // Claude で日本語の技術要約を作成して VitePress 用 Markdown を出力する。
 //
 // 使い方: node scripts/trending/collect.mjs
-// 必要な環境変数:
-//   ANTHROPIC_API_KEY  Claude API キー（必須）
+// 必要な環境変数（どちらか一方）:
+//   CLAUDE_CODE_OAUTH_TOKEN  Claude Pro/Max プランのトークン（`claude setup-token` で発行）。
+//                            Claude Code CLI 経由で要約し、プランの使用枠を消費する
+//   ANTHROPIC_API_KEY        Claude API キー。設定されていればこちらを優先し、従量課金で要約する
+// その他:
 //   GITHUB_TOKEN       GitHub API 用トークン（Actions では自動付与）
 // 任意の環境変数:
 //   CLAUDE_MODEL       既定 claude-sonnet-5-5
@@ -15,6 +18,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import os from 'node:os'
+import { spawn } from 'node:child_process'
 import Anthropic from '@anthropic-ai/sdk'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
@@ -204,7 +209,8 @@ async function enrich(repo) {
 }
 
 // ---------- Claude による要約 ----------
-const client = new Anthropic()
+const USE_API = Boolean(process.env.ANTHROPIC_API_KEY)
+const client = USE_API ? new Anthropic() : null
 
 const SYSTEM = `あなたは日本のソフトウェアエンジニア向けに OSS の技術解説を書くテクニカルライターです。
 与えられたリポジトリ情報と README だけを根拠に、正確で簡潔な日本語の解説を書きます。
@@ -244,6 +250,45 @@ ${r.readme || '(README を取得できませんでした)'}
 }
 
 async function ask(prompt, maxTokens) {
+  return USE_API ? askApi(prompt, maxTokens) : askClaudeCode(prompt)
+}
+
+// Claude Code CLI（Pro/Max プランの OAuth トークン）で 1 回だけ応答させる。ツールはすべて無効化する。
+function askClaudeCode(prompt) {
+  return new Promise((resolve, reject) => {
+    const args = [
+      '-p',
+      '--model', MODEL,
+      '--output-format', 'text',
+      '--tools', '',
+      '--system-prompt', SYSTEM,
+      '--no-session-persistence',
+    ]
+    const child = spawn(process.env.CLAUDE_BIN || 'claude', args, {
+      cwd: os.tmpdir(), // リポジトリの設定ファイル等を読み込ませない
+      env: process.env,
+      stdio: ['pipe', 'pipe', 'pipe'],
+    })
+    let out = ''
+    let err = ''
+    const timer = setTimeout(() => child.kill('SIGTERM'), 5 * 60 * 1000)
+    child.stdout.on('data', d => (out += d))
+    child.stderr.on('data', d => (err += d))
+    child.on('error', e => {
+      clearTimeout(timer)
+      reject(e)
+    })
+    child.on('close', code => {
+      clearTimeout(timer)
+      const text = out.trim()
+      if (code !== 0 || !text) reject(new Error(`claude CLI 失敗 (exit ${code}): ${err.trim().slice(0, 500)}`))
+      else resolve(text)
+    })
+    child.stdin.end(prompt)
+  })
+}
+
+async function askApi(prompt, maxTokens) {
   const params = {
     model: MODEL,
     max_tokens: maxTokens,
@@ -359,7 +404,10 @@ function slug(fullName) {
 
 // ---------- メイン ----------
 async function main() {
-  if (!process.env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY が設定されていません')
+  if (!process.env.ANTHROPIC_API_KEY && !process.env.CLAUDE_CODE_OAUTH_TOKEN) {
+    throw new Error('CLAUDE_CODE_OAUTH_TOKEN または ANTHROPIC_API_KEY を設定してください')
+  }
+  log(`要約バックエンド: ${USE_API ? 'Claude API' : 'Claude Code CLI (サブスクリプション)'} / モデル: ${MODEL}`)
 
   const [trending, trendshift, search] = await Promise.all([
     safe('GitHub Trending', fromGithubTrending),
