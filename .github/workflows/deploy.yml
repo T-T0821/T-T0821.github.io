@@ -11,6 +11,15 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+  # Pages の公開元が「Deploy from a branch」のままだと、push のたびに GitHub 標準の
+  # Jekyll デプロイ（pages build and deployment）も動き、こちらより後に終わると
+  # リポジトリをそのまま公開してサイト全体が 404 になる。
+  # その完了後にもう一度 VitePress 版をデプロイして上書きする。
+  # 公開元を「GitHub Actions」に変えればこのトリガーは発火しなくなる。
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
+
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
