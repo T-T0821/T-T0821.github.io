@@ -47,9 +47,36 @@ function dailySidebar(current: string): DefaultTheme.SidebarItem[] {
   }]
 }
 
+// 主要AI国際会議のサイドバー。分野 → 会議 → 年の3段で、会議ごとに折りたたむ
+function conferenceSidebar(): DefaultTheme.SidebarItem[] {
+  const metaFile = path.resolve(docsDir, '../data/conferences/meta.json')
+  if (!fs.existsSync(metaFile)) return []
+  const meta = JSON.parse(fs.readFileSync(metaFile, 'utf-8'))
+  const years = (conf: string) => {
+    const dir = path.join(docsDir, 'conferences', conf)
+    if (!fs.existsSync(dir)) return []
+    return fs.readdirSync(dir).map(f => f.match(/^(\d{4})\.md$/)?.[1]).filter(Boolean).sort().reverse() as string[]
+  }
+  return [
+    { text: '🎓 主要AI国際会議', link: '/conferences/' },
+    ...meta.fields.map((f: any) => ({
+      text: `${f.icon} ${f.label}`,
+      items: f.conferences.map((conf: string) => ({
+        text: meta.conferences[conf].name,
+        collapsed: true,
+        items: [
+          { text: '📈 年ごとの流れ', link: `/conferences/${conf}/` },
+          ...years(conf).map(y => ({ text: `${y}年`, link: `/conferences/${conf}/${y}` })),
+        ],
+      })),
+    })),
+  ]
+}
+
 function buildSidebar(): DefaultTheme.SidebarMulti {
   const sidebar: DefaultTheme.SidebarMulti = {}
   for (const c of daily) sidebar[`/${c.key}/`] = dailySidebar(c.key)
+  sidebar['/conferences/'] = conferenceSidebar()
   return sidebar
 }
 
@@ -68,6 +95,7 @@ export default defineConfig({
     nav: [
       { text: 'ホーム', link: '/' },
       ...daily.map(c => ({ text: catText(c), link: `/${c.key}/`, activeMatch: `^/${c.key}/` })),
+      { text: '🎓 国際会議', link: '/conferences/', activeMatch: '^/conferences/' },
     ],
 
     sidebar: buildSidebar(),

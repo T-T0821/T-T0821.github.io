@@ -17,6 +17,21 @@
         </div>
       </div>
     </section>
+
+    <section>
+      <h2 class="home-heading">🎓 主要AI国際会議</h2>
+      <p class="home-lead">NeurIPS・CVPR・ACL など主要な国際会議の2020年以降の各回を、概要・受賞論文・技術動向への示唆とあわせてまとめています。新しい回が開催されると追加します。</p>
+      <div class="digest-grid">
+        <div v-for="f in confFields" :key="f.key" class="digest-card">
+          <a :href="withBase(`/conferences/#${f.key}`)" class="digest-main">
+            <span class="digest-label">{{ f.icon }} {{ f.label }}</span>
+            <span class="digest-date">{{ f.names }}</span>
+            <span class="digest-desc">{{ f.position }}</span>
+          </a>
+        </div>
+      </div>
+      <p class="home-more"><a :href="withBase('/conferences/')">国際会議のまとめを見る →</a></p>
+    </section>
   </div>
 </template>
 
@@ -25,6 +40,12 @@ import { computed } from 'vue'
 import { withBase } from 'vitepress'
 import { data as articles } from '../../articles.data'
 import { CATEGORIES, shortDate } from '../categories'
+import confMeta from '../../../data/conferences/meta.json'
+
+const confFields = confMeta.fields.map(f => ({
+  ...f,
+  names: f.conferences.map(c => (confMeta.conferences as Record<string, { name: string }>)[c].name).join(' / '),
+}))
 
 const digests = computed(() =>
   CATEGORIES.map(cat => ({

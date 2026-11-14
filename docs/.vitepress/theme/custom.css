@@ -249,3 +249,40 @@
 .digest-page .vp-doc .custom-block p {
     line-height: 1.7;
 }
+
+/* トップページの「もっと見る」リンク */
+.vp-doc .home-more {
+    margin: 0.75rem 0 0;
+    font-size: 0.9rem;
+}
+
+/* ───────── 国際会議のページ（pageClass: conf-page） ───────── */
+
+/* 一覧の各行（会議名・年の行）は詰めて、補足の小さい文字を控えめに */
+.conf-page .vp-doc ul li {
+    margin: 0.6rem 0;
+    line-height: 1.6;
+}
+
+.conf-page .vp-doc li small {
+    color: var(--vp-c-text-2);
+    font-size: 0.82rem;
+}
+
+/* 「主なテーマ」「示唆」の箇条書きは囲みの中でも読みやすく */
+.conf-page .vp-doc .custom-block ul {
+    margin: 0.25rem 0;
+    padding-left: 1.2em;
+}
+
+.conf-page .vp-doc .custom-block li {
+    margin: 0.35rem 0;
+}
+
+/* 落合フォーマットの各問いの見出し */
+.conf-page .vp-doc .custom-block.info p > strong:only-child {
+    display: block;
+    margin-top: 0.6rem;
+    font-weight: 700;
+    color: var(--vp-c-text-1);
+}
