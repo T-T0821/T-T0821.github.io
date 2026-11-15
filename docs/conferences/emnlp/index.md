@@ -1,6 +1,7 @@
 ---
 title: "EMNLP の年ごとの流れ"
 description: "Conference on Empirical Methods in Natural Language Processing（EMNLP）の2020年以降の各回のまとめと技術動向"
+article: false
 pageClass: digest-page conf-page
 prev: false
 next: false

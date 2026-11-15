@@ -3,6 +3,7 @@ prev: false
 next: false
 title: "生成AI"
 description: "生成AIの最新ニュースと注目論文の週刊まとめ"
+article: false
 ---
 
 # 🧠 生成AI

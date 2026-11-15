@@ -1,6 +1,7 @@
 ---
 title: "IJCAI の年ごとの流れ"
 description: "International Joint Conference on Artificial Intelligence（IJCAI）の2020年以降の各回のまとめと技術動向"
+article: false
 pageClass: digest-page conf-page
 prev: false
 next: false

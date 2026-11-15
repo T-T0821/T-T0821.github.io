@@ -1,6 +1,7 @@
 ---
 title: "KDD の年ごとの流れ"
 description: "ACM SIGKDD Conference on Knowledge Discovery and Data Mining（KDD）の2020年以降の各回のまとめと技術動向"
+article: false
 pageClass: digest-page conf-page
 prev: false
 next: false

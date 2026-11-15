@@ -3,6 +3,7 @@ prev: false
 next: false
 title: "開発手法・エンジニアリング"
 description: "開発手法・エンジニアリングの最新動向と関連論文の週刊まとめ"
+article: false
 ---
 
 # 🛠️ 開発手法・エンジニアリング
