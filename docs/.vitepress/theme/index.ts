@@ -1,8 +1,9 @@
-import DefaultTheme from 'vitepress/theme'
+import BlogTheme from '@sugarat/theme'
 import { inBrowser, useRoute, type EnhanceAppContext } from 'vitepress'
-import { watch } from 'vue'
+import { h, watch } from 'vue'
+import { ElConfigProvider } from 'element-plus'
+import ja from 'element-plus/es/locale/lang/ja'
 import ArticleList from './ArticleList.vue'
-import HomeDashboard from './HomeDashboard.vue'
 import './custom.css'
 
 const RELOAD_KEY = 'vp-stale-reload'
@@ -26,10 +27,12 @@ async function reloadIfPageExists(path: string) {
 }
 
 export default {
-  extends: DefaultTheme,
+  // @sugarat/theme（VitePress 標準テーマを拡張したブログ向けテーマ）を土台にする
+  extends: BlogTheme,
+  // テーマ内のページ送り（Element Plus）の文言を日本語にする
+  Layout: () => h(ElConfigProvider, { locale: ja }, () => h(BlogTheme.Layout!)),
   enhanceApp({ app }: EnhanceAppContext) {
     app.component('ArticleList', ArticleList)
-    app.component('HomeDashboard', HomeDashboard)
   },
   setup() {
     if (!inBrowser) return
