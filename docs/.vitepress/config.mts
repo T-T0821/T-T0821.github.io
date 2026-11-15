@@ -1,6 +1,7 @@
 import { defineConfig, type DefaultTheme } from 'vitepress'
 import { defineTeekConfig } from 'vitepress-theme-teek/config'
 import { RssPlugin } from 'vitepress-plugin-rss'
+import { teekJaPatch } from './teek-ja-patch'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -246,7 +247,8 @@ const rss = RssPlugin({
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   extends: teekConfig,
-  vite: { plugins: [rss] },
+  // teekJaPatch: Teek のソースに直接書かれた中国語を日本語にする
+  vite: { plugins: [teekJaPatch(), rss] },
   head: [['link', { rel: 'icon', href: '/logo.svg', type: 'image/svg+xml' }]],
   base: '/',
   lang: 'ja-JP',
@@ -298,6 +300,14 @@ export default defineConfig({
 
     docFooter: { prev: '前のページ', next: '次のページ' },
     returnToTopLabel: 'ページの先頭へ',
+    // 見つからないページ（404）の表示
+    notFound: {
+      title: 'ページが見つかりません',
+      quote: 'URL が変わったか、ページが削除された可能性があります。',
+      linkLabel: 'ホームへ戻る',
+      linkText: 'ホームへ戻る',
+      code: '404',
+    },
     sidebarMenuLabel: 'メニュー',
     darkModeSwitchLabel: 'ダークモード',
     lightModeSwitchTitle: 'ライトモードに切り替え',

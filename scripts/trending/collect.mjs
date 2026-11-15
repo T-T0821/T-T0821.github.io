@@ -84,11 +84,15 @@ async function enrich(repo) {
   return repo
 }
 
+// 漢字を含むのにかなを含まない文は中国語とみなす（日本語の説明には必ずかなが入る）
+const isChinese = s => /[\u4e00-\u9fff]/.test(s) && !/[\u3040-\u30ff]/.test(s)
+
 // ---------- 要約 ----------
 const SYSTEM = `あなたは日本のソフトウェアエンジニア向けに OSS の技術解説を書くテクニカルライターです。
 与えられたリポジトリ情報と README だけを根拠に、正確で簡潔な日本語の解説を書きます。
 README に書かれていないことは推測で断定せず、不明な点は書かないでください。
-誇張した宣伝文句は避け、エンジニアが「自分の仕事に使えるか」を判断できる情報を優先します。`
+誇張した宣伝文句は避け、エンジニアが「自分の仕事に使えるか」を判断できる情報を優先します。
+原文が中国語の場合も、中国語の語句（例: 档位・上游・渠道・行情・免費）をそのまま使わず自然な日本語に訳してください。製品名・機能名などの固有名詞は原語のままで構いません。`
 
 function repoPrompt(r) {
   return `次の GitHub リポジトリを解説してください。
@@ -183,7 +187,8 @@ function render({ date = DATE, model = MODEL, repos, carried = [], overview = ''
     lines.push(meta.join(' ・ '), '')
     const one = r.summary.match(ONE_LINER)?.[1]
     if (one) lines.push('::: tip 一言で', sanitize(one), ':::', '')
-    if (r.description) lines.push(`> ${sanitize(r.description)}`, '')
+    // 原文の説明は英語・日本語のときだけ引用する。中国語の説明は「一言で」の日本語訳で足りるので載せない
+    if (r.description && !isChinese(r.description)) lines.push(`> ${sanitize(r.description)}`, '')
     lines.push('::: v-pre', '', sanitize(r.summary.replace(ONE_LINER, '').trim()), '', ':::', '')
   })
 

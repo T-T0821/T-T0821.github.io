@@ -44,6 +44,19 @@ function fixArchiveMonthOrder(posts: any) {
   }
 }
 
+// 記事ページの「読了目安」は集計プラグインが "20.2m"・"1h20m"・"1d2h" の形で出すので、日本語にする
+function jaReadingTime(v: string): string {
+  const m = /^(?:(\d+)d)?(?:(\d+)h)?(?:([\d.]+)m)?$/.exec(String(v ?? ''))
+  if (!m || !m[0]) return v
+  const [, d, h, min] = m
+  const parts = [d && `${d}日`, h && `${h}時間`, min && `${Math.max(1, Math.round(Number(min)))}分`].filter(Boolean)
+  return parts.length ? `約${parts.join('')}` : v
+}
+
+function fixReadingTime(info: any) {
+  for (const item of info?.eachFileWords ?? []) item.readingTime = jaReadingTime(item.readingTime)
+}
+
 export default {
   extends: Teek,
   // Teek の表示文言を日本語にし、Teek の差し込み口に自作の部品を置く
@@ -57,6 +70,7 @@ export default {
   }),
   enhanceApp({ app, siteData }: EnhanceAppContext) {
     fixArchiveMonthOrder(siteData.value.themeConfig.posts)
+    fixReadingTime(siteData.value.themeConfig.docAnalysisInfo)
     app.component('ArticleList', ArticleList)
   },
   setup() {
