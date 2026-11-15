@@ -286,3 +286,12 @@
     font-weight: 700;
     color: var(--vp-c-text-1);
 }
+
+/* ───────── @sugarat/theme のお知らせボタン ───────── */
+/* スマホでは記事ページの「このページの内容」と重ならないよう、右下に置く */
+@media (max-width: 767px) {
+    .theme-blog-popover-close {
+        top: auto !important;
+        bottom: 96px !important;
+    }
+}
