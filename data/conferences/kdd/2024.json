@@ -206,7 +206,7 @@
       "url": "https://arxiv.org/abs/2309.00363",
       "ochiai": {
         "basis": "fulltext",
-        "what": "連合学習（FL）の設定で大規模言語模型（LLM）をファインチューニングするためのオープンソースパッケージ FS-LLM を提案した研究。データ準備・連合ファインチューニング実行・性能評価までを一貫して行えるパイプラインと、複数のPEFTアルゴリズム実装を提供する。通信・計算コストの低減や、完全なモデルにアクセスできない場合にも対応する。",
+        "what": "連合学習（FL）の設定で大規模言語モデル（LLM）をファインチューニングするためのオープンソースパッケージ FS-LLM を提案した研究。データ準備・連合ファインチューニング実行・性能評価までを一貫して行えるパイプラインと、複数のPEFTアルゴリズム実装を提供する。通信・計算コストの低減や、完全なモデルにアクセスできない場合にも対応する。",
         "novelty": "既存のFLフレームワークには、LLMの連合ファインチューニングに対する網羅的な実装や、性能・通信・計算コストを比較できる標準ベンチマークがなかった。FS-LLM はFederatedScope上に、ベンチマーク（LLM-Benchmarks）、アルゴリズム群（LLM-AlgZoo）、学習器（LLM-Trainer）の3モジュールを加え、これらを統合した点が新しい。クローズドソースLLMを想定したフルモデル非公開の設定や、pFL・FedHPOとの連携にも対応する。",
         "method": "LLM-Benchmarksでは Fed-CodeAlpaca、Fed-Dolly、Fed-GSM8K-3 の3つの連合ファインチューニング用データセットを用意し、それぞれ HumanEval、HELM、GSM8K-test の評価タスクと対応づけ、Docker化した。LLM-AlgZooでは LoRA・P-tuning・prompt tuning を連合学習に組み込み、アダプタのみを通信する。フルモデル非公開の場合は offsite-tuning を連合版にした FedOT を実装し、圧縮したエミュレータを配布してアダプタだけを学習する。LLM-Trainerはフック型の学習機構で、混合精度、勾配累積、DeepSpeed、ラウンドロビン切替、通信の量子化・圧縮などの演算子を提供し、pFLやFedHPOとの連携も可能にしている。",
         "validation": "LLaMA-7B に LoRA・P-tuning・prompt tuning を適用し、global・fed・local の3シナリオで3つのデータセットを評価した。その結果、連合学習は local を大きく上回り global に近い性能を示し、中でも LoRA が最も高い性能を示した（例: Fed-Dolly で fed 46.57）。効率面では、GPU使用量はアルゴリズム間でほぼ同等（約13.4GB）だが、メッセージサイズは LoRA 21.40MB、P-tuning 256.48MB、prompt tuning 0.17MB と大きく異なった。また OPT-2.7B では LLaMA-7B より大幅に低い性能にとどまった。FedOT は LocalOT より良好で、層の削除率20%では競争力のある性能だったが、50%では性能が大きく低下した。",
