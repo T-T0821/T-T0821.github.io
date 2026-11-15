@@ -11,6 +11,7 @@
 //   DIGEST_DATE       出力日付 YYYY-MM-DD（既定は JST の今日）
 
 import fs from 'node:fs'
+import { digestTaxonomy, taxonomyLines } from '../lib/taxonomy.mjs'
 import path from 'node:path'
 import {
   ROOT, MODEL, DATE, log, fetchText, fetchJson, decodeEntities, ask, sanitize, yamlStr,
@@ -150,6 +151,7 @@ function render({ date = DATE, model = MODEL, repos, carried = [], overview = ''
     `title: ${yamlStr(title)}`,
     `date: ${date}`,
     `category: "${CATEGORY}"`,
+    ...taxonomyLines(digestTaxonomy(CATEGORY, { repos })),
     `description: ${yamlStr(description)}`,
     'lang: "日本語"',
     'pageClass: digest-page',

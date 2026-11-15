@@ -1,8 +1,12 @@
-import DefaultTheme from 'vitepress/theme'
+import Teek from 'vitepress-theme-teek'
+import 'vitepress-theme-teek/index.css'
 import { inBrowser, useRoute, type EnhanceAppContext } from 'vitepress'
-import { watch } from 'vue'
+import { h, watch } from 'vue'
 import ArticleList from './ArticleList.vue'
 import HomeDashboard from './HomeDashboard.vue'
+import RelatedPosts from './RelatedPosts.vue'
+import NoticeContent from './NoticeContent.vue'
+import teekJa from './teek-ja'
 import './custom.css'
 
 const RELOAD_KEY = 'vp-stale-reload'
@@ -25,11 +29,35 @@ async function reloadIfPageExists(path: string) {
   }
 }
 
+// Teek 1.6.3 のアーカイブは月をオブジェクトのキー（"09"、"10" など）でまとめるため、
+// JavaScript の仕様で "10"〜"12" が先頭に来て「10月 → 11月 → 9月」の順になってしまう。
+// 数字だけのキーにならないよう見えない文字（U+2060）を前に付け、新しい月から並べ直す
+function fixArchiveMonthOrder(posts: any) {
+  for (const p of [posts, ...Object.values(posts?.locales ?? {})] as any[]) {
+    const byYear = p?.groupPostsByYearMonth
+    if (!byYear) continue
+    for (const year of Object.keys(byYear)) {
+      const sorted = Object.entries(byYear[year] as Record<string, unknown>)
+        .sort(([a], [b]) => Number(b.replace(/\D/g, '')) - Number(a.replace(/\D/g, '')))
+      byYear[year] = Object.fromEntries(sorted.map(([m, list]) => [`\u2060${Number(m.replace(/\D/g, ''))}`, list]))
+    }
+  }
+}
+
 export default {
-  extends: DefaultTheme,
-  enhanceApp({ app }: EnhanceAppContext) {
+  extends: Teek,
+  // Teek の表示文言を日本語にし、Teek の差し込み口に自作の部品を置く
+  Layout: () => h(Teek.Layout, { locale: teekJa }, {
+    // トップ: 記事一覧の上に「今週の注目」（各分野の最新号）と国際会議の案内
+    'teek-home-post-before': () => h(HomeDashboard),
+    // 記事ページ: 末尾の「最近の更新」の前に同じカテゴリの記事
+    'teek-doc-update-before': () => h(RelatedPosts),
+    // 右上のお知らせの中身
+    'teek-notice-content': () => h(NoticeContent),
+  }),
+  enhanceApp({ app, siteData }: EnhanceAppContext) {
+    fixArchiveMonthOrder(siteData.value.themeConfig.posts)
     app.component('ArticleList', ArticleList)
-    app.component('HomeDashboard', HomeDashboard)
   },
   setup() {
     if (!inBrowser) return

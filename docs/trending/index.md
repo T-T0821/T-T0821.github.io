@@ -3,6 +3,7 @@ prev: false
 next: false
 title: "Trending OSS"
 description: "毎週日曜に自動収集している、直近 1 週間で注目を集めた OSS の日本語まとめ"
+article: false
 ---
 
 # 🔥 Trending OSS

@@ -11,6 +11,7 @@
 //   OCHIAI_PER_FIELD  分野ごとに落合フォーマットで詳しくまとめる論文数（既定 5、0 で無効）
 
 import fs from 'node:fs'
+import { digestTaxonomy, taxonomyLines } from '../lib/taxonomy.mjs'
 import path from 'node:path'
 import {
   ROOT, MODEL, DATE, log, safe, fetchText, fetchJson, parseFeed, toPlain, ask, extractJson,
@@ -183,6 +184,7 @@ function render(field, data) {
     `title: ${yamlStr(title)}`,
     `date: ${data.date}`,
     `category: "${field.category}"`,
+    ...taxonomyLines(digestTaxonomy(field.category, data)),
     `description: ${yamlStr(description)}`,
     'lang: "日本語"',
     'pageClass: digest-page',

@@ -5,6 +5,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { ROOT, sanitize, yamlStr, log } from '../lib/common.mjs'
 import { renderOchiai } from '../lib/ochiai.mjs'
+import { conferenceTaxonomy, taxonomyLines } from '../lib/taxonomy.mjs'
 
 // 各回のページに表示する注目論文の選び方（README の手順と合わせる）
 export const SELECTION_NOTE = '注目論文の選び方: その回の受賞論文（最優秀・優秀・次点・Test of Time など）を賞の格の順に最大4本選び、Paper Digest の被引用数ランキングで上位の論文を加えて合計5本前後にしています。受賞していない論文には 📈 を付けています。arXiv にない論文は落合フォーマットを省略しています。'
@@ -74,6 +75,9 @@ function renderEdition(meta, conf, e) {
     '---',
     `title: ${yamlStr(title)}`,
     `description: ${yamlStr(e.headline || e.summary?.slice(0, 120) || '')}`,
+    // 記事一覧やアーカイブで開催時期の順に並ぶよう、会期の初日を記事の日付にする
+    ...(sched.start ? [`date: ${sched.start}`] : []),
+    ...taxonomyLines(conferenceTaxonomy(c.name, field.label)),
     'pageClass: digest-page conf-page',
     'prev: false',
     'next: false',
@@ -172,6 +176,8 @@ function renderConference(meta, overviews, conf, editions) {
     '---',
     `title: ${yamlStr(`${c.name} の年ごとの流れ`)}`,
     `description: ${yamlStr(`${c.fullName}（${c.name}）の${meta.since}年以降の各回のまとめと技術動向`)}`,
+    // 一覧ページなので、トップの記事一覧やアーカイブには載せない
+    'article: false',
     'pageClass: digest-page conf-page',
     'prev: false',
     'next: false',
@@ -228,6 +234,7 @@ function renderTop(meta, overviews, all) {
     '---',
     'title: "主要AI国際会議"',
     `description: "NeurIPS・ICML・ICLR・AAAI・IJCAI・CVPR・ICCV・ECCV・ACL・EMNLP・KDD・WWW の${meta.since}年以降の各回のまとめと技術動向"`,
+    'article: false',
     'pageClass: digest-page conf-page',
     'prev: false',
     'next: false',

@@ -1,8 +1,8 @@
 <template>
-  <div class="home-dashboard">
+  <div v-if="!frontmatter.categoriesPage && !frontmatter.tagsPage" class="home-dashboard">
     <section>
       <h2 class="home-heading">
-        📅 最新のダイジェスト
+        📅 今週の注目
         <span v-if="latestDate" class="home-heading-sub">{{ shortDate(latestDate) }} 更新</span>
       </h2>
       <p class="home-lead">毎週日曜の朝 9:00（JST）ごろ、1 週間分の各分野のニュース・論文と注目 OSS を日本語で要約して追加しています。</p>
@@ -21,26 +21,31 @@
     <section>
       <h2 class="home-heading">🎓 主要AI国際会議</h2>
       <p class="home-lead">NeurIPS・CVPR・ACL など主要な国際会議の2020年以降の各回を、概要・受賞論文・技術動向への示唆とあわせてまとめています。新しい回が開催されると追加します。</p>
-      <div class="digest-grid">
-        <div v-for="f in confFields" :key="f.key" class="digest-card">
-          <a :href="withBase(`/conferences/#${f.key}`)" class="digest-main">
-            <span class="digest-label">{{ f.icon }} {{ f.label }}</span>
-            <span class="digest-date">{{ f.names }}</span>
-            <span class="digest-desc">{{ f.position }}</span>
-          </a>
-        </div>
+      <!-- 分野ごとの入口。トップが長くならないよう、カードではなく横並びのボタンにする -->
+      <div class="conf-chips">
+        <a v-for="f in confFields" :key="f.key" :href="withBase(`/conferences/#${f.key}`)" class="conf-chip">
+          <span class="conf-chip-label">{{ f.icon }} {{ f.label }}</span>
+          <span class="conf-chip-names">{{ f.names }}</span>
+        </a>
       </div>
       <p class="home-more"><a :href="withBase('/conferences/')">国際会議のまとめを見る →</a></p>
     </section>
+
+    <h2 class="home-heading home-heading-posts">
+      🆕 新着記事
+      <a :href="withBase('/archives')" class="home-heading-sub">アーカイブ →</a>
+    </h2>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { withBase } from 'vitepress'
+import { useData, withBase } from 'vitepress'
 import { data as articles } from '../../articles.data'
 import { CATEGORIES, shortDate } from '../categories'
 import confMeta from '../../../data/conferences/meta.json'
+
+const { frontmatter } = useData()
 
 const confFields = confMeta.fields.map(f => ({
   ...f,

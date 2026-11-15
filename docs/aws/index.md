@@ -3,6 +3,7 @@ prev: false
 next: false
 title: "AWS"
 description: "AWS の最新ニュースと関連論文の週刊まとめ"
+article: false
 ---
 
 # ☁️ AWS

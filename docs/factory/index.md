@@ -3,6 +3,7 @@ prev: false
 next: false
 title: "PLC・装置設計"
 description: "PLC・FA・装置設計の最新ニュースと関連論文の週刊まとめ"
+article: false
 ---
 
 # 🏭 PLC・装置設計

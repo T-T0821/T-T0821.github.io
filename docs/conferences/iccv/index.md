@@ -1,6 +1,7 @@
 ---
 title: "ICCV の年ごとの流れ"
 description: "IEEE/CVF International Conference on Computer Vision（ICCV）の2020年以降の各回のまとめと技術動向"
+article: false
 pageClass: digest-page conf-page
 prev: false
 next: false

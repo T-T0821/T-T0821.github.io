@@ -1,7 +1,10 @@
 {
+  "type": "module",
   "devDependencies": {
     "@types/node": "^25.3.5",
-    "vitepress": "^2.0.0-alpha.16"
+    "vitepress": "^1.6.4",
+    "vitepress-plugin-rss": "^0.4.6",
+    "vitepress-theme-teek": "^1.6.3"
   },
   "scripts": {
     "docs:dev": "vitepress dev docs --host 0.0.0.0",
