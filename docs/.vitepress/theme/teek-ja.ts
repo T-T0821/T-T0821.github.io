@@ -1,24 +1,289 @@
+// Teek の表示文言の日本語版。Teek には中国語と英語しか用意がないため、
+// 中国語版（vitepress-theme-teek/es/locale/lang/zh-cn）と同じ項目をすべて日本語にしている。
+// Teek を更新して項目が増えたときは、足りない項目だけ英語で表示される（下の merge を参照）。
 import { en } from 'vitepress-theme-teek'
 
-// Teek には日本語の表示文言がないため、英語版をもとに画面に出る部分だけ日本語にする
-const ja: any = JSON.parse(JSON.stringify(en))
-ja.lang = 'ja-JP'
-Object.assign(ja.tk.rightBottomButton, { backTopTitle: 'ページの先頭へ', toComment: 'コメントへ' })
-Object.assign(ja.tk.articleAnalyze, { label: '記事の情報', wordCount: '文字数', readingTime: '読了目安', pageView: '閲覧数' })
-Object.assign(ja.tk.image, { error: '読み込めませんでした' })
-ja.tk.themeEnhance.title = '表示の調整'
-Object.assign(ja.tk.themeEnhance.themeColor, {
-  title: 'テーマカラー',
-  speedLabel: '全体に反映',
-  label: 'テーマカラー',
-  tip: 'テーマカラー',
-  primaryLabel: '基本',
-  successLabel: '緑',
-  warningLabel: '橙',
-  dangerLabel: '赤',
-  helpDesc: 'サイトのアクセントカラーを選べます。「全体に反映」をオンにすると、サイドバーの背景や文字色にも色を広げます。',
-  helpTipTitle: 'テーマカラー',
-  helpTipContent: '色を選ぶとアクセントカラーが切り替わります。',
-})
+const ja = {
+  lang: 'ja-JP',
+  tk: {
+    archives: {
+      label: 'アーカイブ',
+      title: 'アーカイブ',
+      totalCount: '全 {count} 件の記事',
+      year: '年',
+      month: '月',
+      count: '件',
+      notFound: '日付なし',
+    },
+    articleAnalyze: {
+      label: '記事の情報',
+      wordCount: '文字数',
+      readingTime: '読了目安',
+      pageView: '閲覧数',
+    },
+    articleAppreciation: {
+      label: '記事の支援',
+      contentLabel: '支援の方法',
+    },
+    articleBreadcrumb: {
+      label: '記事の階層',
+      home: 'ホーム',
+    },
+    breadcrumb: {
+      label: '階層',
+    },
+    articleInfo: {
+      label: '記事の情報',
+      author: '作成',
+      createTime: '公開日',
+      updateTime: '更新日',
+      category: 'カテゴリ',
+      tag: 'タグ',
+    },
+    articleOverview: {
+      label: '記事の一覧表',
+      overview: ' 一覧表',
+      category: ' 目次',
+      name: '記事の目次',
+      title: '記事のタイトル',
+      date: '公開日',
+      wordCount: '文字数',
+      readingTime: '読了目安',
+    },
+    articleShare: {
+      label: '記事の共有',
+      text: 'このページのリンクをコピー',
+      copiedText: 'リンクをコピーしました',
+    },
+    articleTitle: {
+      label: '記事のタイトル',
+    },
+    articleUpdate: {
+      label: '最近の更新',
+      moreLabel: 'もっと見る >',
+    },
+    catalogue: {
+      label: '目次ページ',
+      title: '目次',
+    },
+    demoCode: {
+      playground: 'Playground で編集',
+      github: 'GitHub で編集',
+      copy: 'コードをコピー',
+      collapseSource: 'ソースコードを見る',
+      expandSource: 'ソースコードを隠す',
+      notSupport: 'このブラウザはコピーに対応していません',
+      copySuccess: 'コピーしました',
+      copyFail: 'コピーできませんでした',
+    },
+    footerInfo: {
+      label: 'フッター',
+      socialLabel: 'SNS',
+      infoLabel: 'フッターの内容',
+    },
+    home: {
+      label: 'ホーム',
+      postLabel: '記事一覧',
+      cardLabel: 'サイドのカード',
+    },
+    homeBanner: {
+      label: 'トップのバナー',
+      wavesLabel: 'バナーの波',
+      bgImgLabel: 'バナーの背景画像',
+      maskLabel: 'バナーの重ね色',
+      bgPureLabel: 'バナーの背景色',
+      contentLabel: 'バナーの内容',
+      titleLabel: 'バナーのタイトル',
+      descLabel: 'バナーの説明',
+      descSwitchLabel: '説明の切り替え表示',
+      descTypedLabel: '説明のタイピング表示',
+      featureLabel: 'バナーの案内',
+    },
+    homePost: {
+      label: '記事一覧',
+      emptyLabel: 'まだ記事がありません',
+      pageLabel: 'ページ切り替え',
+      moreLabel: '続きを読む >',
+      pin: '固定：{sticky}',
+      pinLabel: '固定表示',
+      excerptLabel: '記事の概要',
+      infoLabel: '記事の情報',
+      coverImgLabel: '記事のカバー画像',
+    },
+    pageCard: {
+      label: 'トップのカード',
+      prev: '前へ',
+      next: '次へ',
+    },
+    categoryCard: {
+      pageTitle: '{icon}すべてのカテゴリ',
+      homeTitle: '{icon}カテゴリ',
+      label: 'カテゴリのカード',
+      emptyLabel: 'カテゴリはまだありません',
+      listLabel: 'カテゴリ一覧',
+      moreLabel: 'もっと見る ...',
+    },
+    docAnalysisCard: {
+      title: '{icon}サイトの情報',
+      totalPosts: '記事の数',
+      weekAddNum: '直近1週間の追加',
+      monthAddNum: '直近1か月の追加',
+      runtime: '公開からの日数',
+      totalWordCount: '全記事の文字数',
+      lastActiveTime: '最終更新',
+      viewCount: '閲覧数',
+      visitCount: '訪問者数',
+      fileUnit: '件',
+      runtimeLess: '1日未満',
+      runtimeUnit: '日',
+      wordCountUnit: '字',
+      viewCountUnit: '回',
+      visitCountUnit: '人',
+      label: 'サイトの情報のカード',
+    },
+    friendLinkCard: {
+      title: '{icon}情報源',
+      emptyLabel: '情報源はまだありません',
+      label: '情報源のカード',
+      listLabel: '情報源の一覧',
+    },
+    myCard: {
+      label: 'サイト紹介のカード',
+      avatarAlt: 'サイトのアイコン',
+      avatarTitle: 'AI Tech Blog',
+      socialLabel: 'リンク',
+      bloggerLabel: 'サイトの紹介',
+    },
+    tagCard: {
+      pageTitle: '{icon}すべてのタグ',
+      homeTitle: '{icon}よく使われるタグ',
+      label: 'タグのカード',
+      emptyLabel: 'タグはまだありません',
+      listLabel: 'タグ一覧',
+      moreLabel: 'もっと見る ...',
+    },
+    topArticleCard: {
+      title: '{icon}注目の記事',
+      label: '注目の記事のカード',
+      emptyLabel: '注目の記事はまだありません',
+      listLabel: '注目の記事の一覧',
+    },
+    image: {
+      error: '読み込めませんでした',
+    },
+    notice: {
+      label: 'お知らせ',
+      title: 'お知らせ',
+      openLabel: 'お知らせを開く',
+      closeLabel: 'お知らせを閉じる',
+      headLabel: 'お知らせの見出し',
+      contentLabel: 'お知らせの内容',
+    },
+    pagination: {
+      goto: '移動',
+      pagesize: '件/ページ',
+      total: '全 {total} 件',
+      pageClassifier: 'ページ',
+      page: 'ページ',
+      prev: '前のページ',
+      next: '次のページ',
+      currentPage: '{pager} ページ目',
+      prevPages: '{pager} ページ前へ',
+      nextPages: '{pager} ページ先へ',
+    },
+    rightBottomButton: {
+      backTopTitle: 'ページの先頭へ',
+      toComment: 'コメントへ',
+    },
+    themeEnhance: {
+      title: '表示の調整',
+      layoutSwitch: {
+        title: 'レイアウト',
+        helpDesc: '読みやすさや画面の広さに合わせて、ページのレイアウトを切り替えます。',
+        fullWidthTipTitle: '全幅',
+        fullWidthHelpTipContent: 'サイドバーと本文を画面いっぱいの幅で表示します。',
+        sidebarWidthAdjustableOnlyTipTitle: '全幅（サイドバーの幅を調整できる）',
+        sidebarWidthAdjustableOnlyHelpTipContent: '本文の幅はそのままで、サイドバーの幅を画面の最大幅まで調整できます。',
+        bothWidthAdjustableTipTitle: '全幅（サイドバーと本文の幅を調整できる）',
+        bothWidthAdjustableHelpTipContent: 'サイドバーと本文の幅をどちらも画面の最大幅まで調整できます。',
+        originalWidthTipTitle: '標準の幅',
+        originalWidthHelpTipContent: 'VitePress 標準のレイアウト幅で表示します。',
+      },
+      docLayoutMaxWidth: {
+        title: '本文の最大幅',
+        helpDesc: '読みやすさや画面の広さに合わせて、本文の幅を調整します。',
+        helpTipTitle: '本文の最大幅を調整',
+        helpTipContent: 'スライダーで本文の最大幅を選べます。',
+      },
+      pageLayoutMaxWidth: {
+        title: 'ページの最大幅',
+        helpDesc: '読みやすさや画面の広さに合わせて、ページ全体の幅を調整します。',
+        helpTipTitle: 'ページの最大幅を調整',
+        helpTipContent: 'スライダーでページの最大幅を選べます。',
+      },
+      themeColor: {
+        title: 'テーマカラー',
+        speedLabel: '全体に反映',
+        label: 'テーマカラー',
+        tip: 'テーマカラー',
+        primaryLabel: '基本',
+        successLabel: '緑',
+        warningLabel: '橙',
+        dangerLabel: '赤',
+        helpDesc: 'サイトのアクセントカラーを選べます。「全体に反映」をオンにすると、サイドバーの背景や文字色にも色を広げます。',
+        helpTipTitle: 'テーマカラー',
+        helpTipContent: '色を選ぶとアクセントカラーが切り替わります。「全体に反映」でほかの部分にも色を広げます。',
+        customizeHelpTipTitle: 'テーマカラーを追加',
+        customizeHelpTipContent: '設定で独自のテーマカラーを追加できます。',
+      },
+      spotlight: {
+        title: 'スポットライト',
+        helpDesc: '本文のうち、ポインターを合わせている行や要素を強調して、読んでいる場所を分かりやすくします。',
+        onTipTitle: 'オン',
+        onHelpTipContent: 'スポットライトをオンにします。',
+        offTipTitle: 'オフ',
+        offHelpTipContent: 'スポットライトをオフにします。',
+      },
+      spotlightStyles: {
+        title: 'スポットライトの形',
+        helpDesc: 'スポットライトの見た目を選びます。',
+        asideTipTitle: '横に線',
+        asideHelpTipContent: 'ポインターを合わせている要素の横に線を表示します。',
+        underTipTitle: '背景',
+        underHelpTipContent: 'ポインターを合わせている要素の下に背景色を付けます。',
+      },
+    },
+    login: {
+      label: 'ログイン',
+      reset: 'リセット',
+      login: 'ログイン',
+      loginSuccess: 'ログインしました',
+      loginError: 'ユーザー名またはパスワードが違います',
+      loginInfoNonNull: 'ユーザー名とパスワードを入力してください',
+      usernamePlaceholder: 'ユーザー名',
+      passwordPlaceholder: 'パスワード',
+      verifyCodePlaceholder: '確認コード',
+      verifyCodeNonNull: '確認コードを入力してください',
+      verifyCodeError: '確認コードが違います',
+    },
+    riskLink: {
+      label: '外部リンクの確認',
+      title: '{name} から外部のサイトへ移動します',
+      linkIllegal: 'リンクを確認しています ...',
+      confirmButtonText: '移動する',
+    },
+    sidebarTrigger: {
+      label: 'サイドバーの開閉',
+    },
+  },
+}
 
-export default ja
+// Teek の更新で項目が増えたときに備え、英語版をもとに日本語で上書きする
+function merge(base: any, over: any): any {
+  if (typeof over !== 'object' || over === null) return over ?? base
+  const out: any = { ...base }
+  for (const k of Object.keys(over)) out[k] = merge(base?.[k], over[k])
+  return out
+}
+
+export default merge(en, ja)

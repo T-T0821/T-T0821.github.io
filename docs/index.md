@@ -1,18 +1,6 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
+# トップページ。Teek の記事一覧・カード（カテゴリ・タグ・サイトの情報など）を表示し、
+# 記事一覧の上に「今週の注目」（theme/HomeDashboard.vue）を差し込んでいる
 layout: home
-
-hero:
-  name: "AI Tech Blog"
-  text: "毎週届く技術ダイジェスト"
-  tagline: 注目の OSS と、生成AI・AWS・PLC/装置設計・開発手法のニュースや論文を、AI が日本語でまとめています。
-  actions:
-    - theme: brand
-      text: 今週のトレンド OSS
-      link: /trending/
-    - theme: alt
-      text: 生成AIの動向
-      link: /genai/
+title: ホーム
 ---
-
-<HomeDashboard />

@@ -50,11 +50,32 @@
 }
 
 /* ───────── トップページ ───────── */
-.home-dashboard section {
-    margin-bottom: 3rem;
+/* Teek の記事一覧の上（teek-home-post-before）に置く。記事カードと同じ幅・見た目にそろえる */
+.home-dashboard {
+    margin-bottom: 1rem;
 }
 
-.vp-doc .home-heading {
+.home-dashboard section {
+    margin-bottom: 2.5rem;
+}
+
+.home-dashboard a {
+    color: var(--vp-c-brand-1);
+    text-decoration: none;
+}
+
+.home-dashboard .home-heading {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--vp-c-text-1);
+}
+
+.home-dashboard .home-heading-posts {
+    margin-top: 0.5rem;
+}
+
+.home-dashboard .home-heading {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
@@ -70,7 +91,7 @@
     color: var(--vp-c-text-2);
 }
 
-.vp-doc .home-lead {
+.home-dashboard .home-lead {
     margin: 0 0 1rem;
     font-size: 0.9rem;
     color: var(--vp-c-text-2);
@@ -87,12 +108,15 @@
     flex-direction: column;
     border: 1px solid var(--vp-c-divider);
     border-radius: 12px;
-    background: var(--vp-c-bg-soft);
+    background: var(--vp-c-bg);
+    box-shadow: 0 1px 8px -3px rgba(0, 0, 0, 0.12);
     overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
 }
 
 .digest-card:hover {
     border-color: var(--vp-c-brand-1);
+    transform: translateY(-2px);
 }
 
 .digest-main {
@@ -127,7 +151,7 @@
     overflow: hidden;
 }
 
-.vp-doc .digest-archive {
+.home-dashboard .digest-archive {
     padding: 0.5rem 1.1rem 0.7rem;
     font-size: 0.82rem;
     text-decoration: none;
@@ -250,8 +274,40 @@
     line-height: 1.7;
 }
 
+/* トップページの国際会議の分野ボタン */
+.conf-chips {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.5rem;
+}
+
+.home-dashboard a.conf-chip {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 10px;
+    background: var(--vp-c-bg);
+    color: var(--vp-c-text-1);
+}
+
+.home-dashboard a.conf-chip:hover {
+    border-color: var(--vp-c-brand-1);
+}
+
+.conf-chip-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.conf-chip-names {
+    font-size: 0.74rem;
+    color: var(--vp-c-text-2);
+}
+
 /* トップページの「もっと見る」リンク */
-.vp-doc .home-more {
+.home-dashboard .home-more {
     margin: 0.75rem 0 0;
     font-size: 0.9rem;
 }

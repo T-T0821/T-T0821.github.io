@@ -3,6 +3,7 @@
   "devDependencies": {
     "@types/node": "^25.3.5",
     "vitepress": "^1.6.4",
+    "vitepress-plugin-rss": "^0.4.6",
     "vitepress-theme-teek": "^1.6.3"
   },
   "scripts": {
