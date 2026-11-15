@@ -101,6 +101,148 @@
           }
         ]
       }
+    },
+    {
+      "title": "Deep Reinforcement Learning at the Edge of the Statistical Precipice",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Rishabh Agarwal",
+        "Max Schwarzer",
+        "Pablo Samuel Castro",
+        "Aaron Courville",
+        "Marc G. Bellemare"
+      ],
+      "url": "https://arxiv.org/abs/2108.13264",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "深層強化学習(RL)のベンチマーク評価で、少数の学習ランしかないにもかかわらず平均値・中央値の点推定だけで比較されている問題を指摘し、不確実性を考慮した評価手法を提案した研究。Atari 100kのケーススタディで点推定に基づく結論が信頼できないことを示し、ALE、Procgen、DeepMind Control Suiteの既存比較も再検討した。あわせてOSSライブラリrliableを公開している。",
+        "novelty": "従来は点推定(平均・中央値)や単一タスクでのブートストラップが主流だったが、本論文はタスク横断で集約する層化ブートストラップ信頼区間を3〜10ラン程度の少数ランに適用できる形で提示した。また、バイアスの小さい実行スコア分布による性能プロファイル、外れ値に頑健かつ統計効率の高い四分位平均(IQM)、最適性ギャップ、改善確率という指標を組み合わせた評価体系を提案した点が新しい。有意性検定は二値的で誤解されやすいとして避け、信頼区間と効果量の提示を推奨している。",
+        "method": "各タスクのランを独立に復元抽出する層化ブートストラップでN×M個のスコアから集約指標の信頼区間(パーセンタイル法)を求める。性能プロファイルは全ランのスコアの経験的裾分布関数(1/MN刻み)で、外れ値ランの影響が最大1/MNに抑えられ、タスク平均の分布より不偏かつ分散が小さい。IQMは全ランの上下25%を除いた中間50%の平均で、平均と中央値の中間に位置する。最適性ギャップは目標スコア1.0に届かない量、改善確率は一方のアルゴリズムが他方を任意のタスクで上回る確率である。",
+        "validation": "Atari 100kで5つのアルゴリズム(DER, OTR, DrQ(ε), CURL, SPR)を各100ランで評価し、3〜100ランに再サンプルして分析した。報告された中央値は大きくばらつき、DERが実はOTRより良い可能性が示された。中央値の差がきちんと検出できるのは、25%の改善でも約25ラン、10%の改善では100ランを要し、IQMはより少ないランで済む。ほかにALE 200M、DM Control、Procgenで、信頼区間の大幅な重なりや、主張された改善が50〜70%の確率でしか成立しない例(UCB-DrAC対PLRは40〜50%)を示した。また、CURLやSUNRISEの改善の多くは最大値を報告する非標準の評価プロトコルで説明できるとした。",
+        "discussion": "最良の集約指標はスコア分布に依存し未解決で、指標によりアルゴリズムの順位が変わることがあるため、性能プロファイルなど全体像の併用が必要である。3ランではブートストラップ信頼区間が真の区間を過小評価する傾向があり、より高い名目被覆率が必要になりうる。厳密な評価は主張を控えめにするため、研究者への誘因が課題で、学会の要求やチェックリストが後押しになると論じている。また、統計手法自体が新たな濫用を生みうる点にも注意を促している。",
+        "next": [
+          {
+            "title": "Deep Reinforcement Learning that Matters",
+            "reason": "深層RLの再現性と評価のばらつきを扱った代表的先行研究で、本論文の問題意識の背景を理解できる。"
+          },
+          {
+            "title": "Benchmarking optimization software with performance profiles",
+            "reason": "本論文が採用した性能プロファイルの原典であり、その性質と解釈を確認できる。"
+          },
+          {
+            "title": "Measuring the Reliability of Reinforcement Learning Algorithms",
+            "reason": "RLアルゴリズムの信頼性を測る指標を提案した関連研究で、本論文の集約指標と補完的に読める。"
+          }
+        ]
+      },
+      "titleJa": "統計的な崖っぷちにある深層強化学習",
+      "why": "深層強化学習のベンチマークが少数の学習ランによる平均・中央値の点推定だけで比較されている問題を指摘し、層化ブートストラップ信頼区間、四分位平均(IQM)、性能プロファイル、最適性ギャップ、改善確率を組み合わせた評価手法を提案した研究です。Atari 100kでは各100ランの分析から点推定に基づく結論が信頼できないことを示し、ALE、Procgen、DeepMind Control Suiteの既存比較も再検討して、主張された改善が50〜70%の確率でしか成立しない例などを明らかにしました。OSSライブラリrliableも公開されており、評価の信頼性を高める実践的な道具として注目されます。"
+    },
+    {
+      "title": "MAUVE: Measuring the Gap Between Neural Text and Human Text using Divergence Frontiers",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Krishna Pillutla",
+        "Swabha Swayamdipta",
+        "Rowan Zellers",
+        "John Thickstun",
+        "Sean Welleck",
+        "Yejin Choi",
+        "Zaid Harchaoui"
+      ],
+      "url": "https://arxiv.org/abs/2102.01454",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "オープンエンド型テキスト生成において、モデルが作る分布 Q と人間のテキスト分布 P の間のギャップを測る自動比較指標 MAUVE を提案した研究。Type I エラー（人間らしくない文に高確率を与える）と Type II エラー（人間らしい文を生成できない）の両方を1つのスカラー値にまとめる。",
+        "novelty": "従来の生成困難度（generation perplexity）や言語モデル系指標は divergence curve 上の単一の点にしか対応せず、Type I/II のトレードオフを捉えられなかった。MAUVE は画像生成分野の information divergence frontiers をテキストに適用し、曲線全体の面積で要約する。また、サポートが一致しない場合でも KL が発散しないよう混合分布を使い、貪欲法など token 分布を持たないデコードにも適用できる。",
+        "method": "混合分布 R_λ = λP + (1−λ)Q を用い、(exp(−c·KL(Q|R_λ)), exp(−c·KL(P|R_λ))) を λ∈(0,1) で動かして divergence curve を作り、その曲線下面積を MAUVE とする（値は (0,1]、Q=P のとき 1）。人間テキストと生成テキストを外部言語モデル（GPT-2 large など）で埋め込み、k-means（既定 k=500）で同時に量子化してヒストグラム化し、k 要素の離散分布同士の KL でモンテカルロ推定する。スケーリング定数は c=5 を推奨している。",
+        "validation": "ウェブテキスト（GPT-2）、ニュース（Grover）、物語（WritingPrompts, GPT-2 medium）の3タスクで評価した。MAUVE は生成長が増えると品質が下がる傾向、greedy(.016) < ancestral(.882) < nucleus(.940) の順序、モデルサイズに応じた上昇（0.878→0.940）を捉え、敵対的サンプリングにも騙されなかった。人間評価（Bradley-Terry スコア）との Spearman 相関は human-like 0.952、interesting 0.810、sensible 0.857 で、識別器精度との相関もニュース 0.956、物語 0.893 と比較手法より高く、RoBERTa 埋め込みや量子化手法を変えても順位はほぼ不変（相関 0.99 以上）だった。",
+        "discussion": "埋め込みモデルの帰納バイアスの影響は十分に調べられておらず（RoBERTa は小型モデルへの評価が厳しく greedy に甘い）、今後の課題とされている。数値の絶対値は量子化手法や c に依存し、順位の比較にのみ頑健である。翻訳や要約のような参照ありのクローズドエンド課題への拡張は今後の方向性であり、人間を模倣するシステムを高く評価するリスクにも言及されている。",
+        "next": [
+          {
+            "title": "Precision-Recall Curves Using Information Divergence Frontiers",
+            "reason": "MAUVE の理論的基盤である information divergence frontiers の枠組みを提案した論文である。"
+          },
+          {
+            "title": "The Curious Case of Neural Text Degeneration",
+            "reason": "nucleus sampling と、本論文が検証対象とするデコード手法の品質差・退化の議論を提案した元論文である。"
+          },
+          {
+            "title": "Divergence Frontiers for Generative Models: Sample Complexity, Quantization Effects, and Frontier Integrals",
+            "reason": "MAUVE の推定誤差と量子化の影響を理論的に解析した補完的な論文である。"
+          }
+        ]
+      },
+      "titleJa": "MAUVE: ダイバージェンス・フロンティアを用いてニューラルテキストと人間のテキストのギャップを測る",
+      "why": "オープンエンド型テキスト生成で、モデル分布と人間のテキスト分布のギャップを、Type I・Type II の両エラーを含む divergence frontier 全体の面積として1つの値にまとめる指標 MAUVE を提案した研究です。従来の指標は divergence curve 上の単一の点にしか対応しませんでしたが、MAUVE は貪欲法のような token 分布を持たないデコードにも適用できます。3つのタスクで生成長・デコード手法・モデルサイズによる品質差を捉え、人間評価との Spearman 相関も比較手法より高かったことから、NeurIPS 2021 の Outstanding Paper に選ばれました。"
+    },
+    {
+      "title": "Moser Flow: Divergence-based Generative Modeling on Manifolds",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Noam Rozen",
+        "Aditya Grover",
+        "Maximilian Nickel",
+        "Yaron Lipman"
+      ],
+      "url": "https://arxiv.org/abs/2108.08052",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "球面・トーラス・陰関数曲面（Stanford Bunnyなど）といったリーマン多様体上の複雑な確率密度を学習する生成モデル Moser Flow (MF) を提案した研究。モデル密度を「事前分布の密度 − ニューラルネットのベクトル場の発散」として明示的に表現し、連続正規化フロー(CNF)を導く。一般の曲面上でフローモデルによるサンプリングを初めて実現したと主張している。",
+        "novelty": "従来のCNF（FFJORD、Riemannian CNF）は学習時にODEソルバーの呼び出しと逆伝播が必要だったが、MFは密度を発散で直接パラメタライズするため学習時にODEを解く必要がない。Moser (1965) やDacorogna & Moser (1990) の微分幾何の古典的結果を生成モデルに応用し、発散が局所的・線形な演算子であることを利用して一般の曲面に適用可能にした。また、適切な仮定の下で普遍的密度近似器であることを理論的に示している。",
+        "method": "モデル密度を μ̄ = ν − div(u) と定義し、u をMLPで表現する（Moserの定理により、v_t = u / ((1−t)ν + tμ̄) のODEの解が μ̄ を生成するCNFとなる）。Lemma 1により μ̄ の積分は常に1になるが正値性は保証されないため、μ̄ ≥ ε の制約を課し、損失を −E_μ log μ̄₊ + λ∫μ̄₋ dV（負の対数尤度＋負の部分へのペナルティ）とする。λ ≥ 1 かつ ε が十分小さければ、この損失の唯一の最小解は目標密度 μ となる。ユークリッド部分多様体では、最近接点射影 π と接空間への射影行列 P を用いて u(x)=P_{π(x)} v_θ(π(x)) と定義し、法線方向に局所的に一定であるためリーマン発散をユークリッド発散で計算できる（Lemma 2）。積分項は一様サンプルによるモンテカルロ近似で評価する。ODEソルバーは生成時のみ使用する。",
+        "validation": "平坦トーラス上の2Dトイデータ、800x600画像由来の高周波密度でのFFJORDとの比較、地球科学4データセット（火山・地震・洪水・火災）、Stanford Bunny上の調和関数由来の密度（周波数 k=10, 50, 500）で評価した。画像密度ではMFは高周波の詳細をFFJORDより良く捉え、NLLの低下も速く、1反復あたりの時間はFFJORDより約1〜2桁短く学習中も増加しない。地球科学データではRiemannian CNFなどよりNLLが大幅に小さく（例：Volcanoで−2.02、Fireで−1.03、Earthquakeで−0.09）、論文は既存のRiemannian CNFに対し平均49%の改善と述べている。ただしFloodではNLL 0.62でRiemannian CNFの0.90より良いが、改善幅は他より小さい。",
+        "discussion": "高次元への拡張が主な限界で、(1)確率が次元とともに指数的に減少するためμ̄を対数スケールで扱う必要があること、(2)∫μ̄₋ dV のモンテカルロ推定の分散が高次元で増大すること、(3)発散を厳密に計算するコストが高く近似が必要になること、の3点が課題として挙げられている。また、他の生成モデル同様、偽データ生成やデータセットのバイアス増幅に悪用され得る点にも言及している。",
+        "next": [
+          {
+            "title": "Riemannian Continuous Normalizing Flows",
+            "reason": "MFが主な比較対象とし、球面データのNLLで上回った多様体上CNFのベースライン手法であるため。"
+          },
+          {
+            "title": "FFJORD: Free-form Continuous Dynamics for Scalable Reversible Generative Models",
+            "reason": "ユークリッド空間のCNFの代表例で、MFが学習コストと高周波の再現性で比較している手法であるため。"
+          },
+          {
+            "title": "Normalizing Flows on Tori and Spheres",
+            "reason": "球面やトーラス上の離散的なリーマンフローの先行研究で、MFの位置づけを理解するのに役立つため。"
+          }
+        ]
+      },
+      "titleJa": "Moser Flow：多様体上の発散に基づく生成モデリング",
+      "why": "球面・トーラス・Stanford Bunnyなどの陰関数曲面といったリーマン多様体上の密度を、事前分布の密度からニューラルネットのベクトル場の発散を引く形で明示的に表すMoser Flowを提案し、一般の曲面上でフローモデルによるサンプリングを初めて実現したと主張している。従来の連続正規化フローと違い学習時にODEを解く必要がなく、画像由来の高周波密度ではFFJORDより1反復あたりの時間が約1〜2桁短く、地球科学データではRiemannian CNFに対し平均49%のNLL改善を報告している。さらに、適切な仮定の下で普遍的密度近似器であることも理論的に示しており、NeurIPS 2021のOutstanding Paperに選ばれた。"
+    },
+    {
+      "title": "Diffusion Models Beat GANs on Image Synthesis",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Prafulla Dhariwal",
+        "Alex Nichol"
+      ],
+      "url": "https://arxiv.org/abs/2105.05233",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "拡散モデルを改良し、ImageNetやLSUNなどの画像生成でGAN（BigGAN-deepやStyleGAN系）より高いサンプル品質を達成した研究。無条件生成ではアーキテクチャの改良、クラス条件付き生成では分類器ガイダンスによって実現している。",
+        "novelty": "拡散モデルがGANに劣る原因を、(1) GAN側で洗練されたアーキテクチャ探索の差、(2) 多様性と忠実度のトレードオフ手段の欠如、の2点と仮定し、それぞれに対処した。特に分類器の勾配のスケール1つで多様性と忠実度を調整できるガイダンスを提示し、GANのtruncation trickに相当する手段を拡散モデルに与えた。",
+        "method": "UNetに対し、深さ vs 幅、アテンションヘッド数（ヘッドあたり64チャネル）、32/16/8解像度でのマルチ解像度アテンション、BigGANの残差ブロックによる up/downsampling、AdaGN（GroupNorm後にタイムステップとクラス埋め込みを注入）を組み合わせたアブレーションを行い、ADMとした。分類器ガイダンスでは、ノイズ画像 x_t 上で学習した分類器 p(y|x_t) の勾配 ∇log p(y|x_t) を、サンプリング時にガウス遷移の平均へ Σ・s・g として加える（sは勾配スケール）。DDIMでは、ノイズ予測を ε_θ − √(1−ᾱ_t)∇log p(y|x_t) に置き換えて対応する。さらに、ガイダンスを低解像度モデルにのみ適用し、アップサンプリング拡散モデルと組み合わせる。",
+        "validation": "LSUN（Bedroom/Horse/Cat）とImageNet（64〜512）で、FID・sFID・Precision・Recallを、公開サンプルやモデルから同一コードで再計算して比較した。ADM-GはImageNetでFID 2.97（128×128）、4.59（256×256）、7.72（512×512）を達成し、アップサンプリングとの併用で256×256は3.94、512×512は3.85まで改善した。25ステップのDDIMでもBigGAN-deepと同程度のFIDで、Recallは高く、分布のカバレッジも良好だった。",
+        "discussion": "拡散モデルは複数回の順伝播が必要なため、サンプリングはGANより遅い。分類器ガイダンスはラベル付きデータに限られ、ラベルなしデータでの多様性と忠実度のトレードオフ手段は未提供である。今後は、クラスタリングによる擬似ラベルやCLIPなどを用いた条件付け、蒸留による高速化が挙げられている。",
+        "next": [
+          {
+            "title": "Improved Denoising Diffusion Probabilistic Models",
+            "reason": "本論文が採用する分散の学習とハイブリッド目的関数、およびアップサンプリングスタックの元となる研究である。"
+          },
+          {
+            "title": "Denoising Diffusion Implicit Models",
+            "reason": "25ステップなど少ステップサンプリングの基盤となるDDIMの定式化が分かる。"
+          },
+          {
+            "title": "Score-Based Generative Modeling through Stochastic Differential Equations",
+            "reason": "スコアベース条件付けの考え方と、SDEによる拡散モデルの統一的理解を得られる。"
+          }
+        ]
+      },
+      "titleJa": "拡散モデルは画像合成でGANに勝つ",
+      "why": "拡散モデルのアーキテクチャを改良し、さらに分類器ガイダンスを導入することで、ImageNetやLSUNの画像生成でBigGAN-deepやStyleGAN系のGANを上回るサンプル品質を達成した研究です。分類器の勾配のスケール1つで多様性と忠実度を調整でき、GANのtruncation trickに相当する手段を拡散モデルに与えた点が新しく、ADM-GはImageNet 128×128でFID 2.97を記録しました。25ステップのDDIMでもBigGAN-deepと同程度のFIDかつ高いRecallを示し、被引用数では同年1位（Paper Digest集計）と高く注目されています。"
     }
   ],
   "sources": [
@@ -119,6 +261,10 @@
     {
       "title": "Conference on Neural Information Processing Systems（Wikipedia）",
       "url": "https://en.wikipedia.org/wiki/Conference_on_Neural_Information_Processing_Systems"
+    },
+    {
+      "title": "Most Influential NIPS Papers 2025-09（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2025/09/most-influential-nips-papers-2025-09/"
     }
   ],
   "unreachable": [

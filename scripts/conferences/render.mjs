@@ -6,6 +6,9 @@ import path from 'node:path'
 import { ROOT, sanitize, yamlStr, log } from '../lib/common.mjs'
 import { renderOchiai } from '../lib/ochiai.mjs'
 
+// 各回のページに表示する注目論文の選び方（README の手順と合わせる）
+export const SELECTION_NOTE = '注目論文の選び方: その回の受賞論文（最優秀・優秀・次点・Test of Time など）を賞の格の順に最大4本選び、Paper Digest の被引用数ランキングで上位の論文を加えて合計5本前後にしています。受賞していない論文には 📈 を付けています。arXiv にない論文は落合フォーマットを省略しています。'
+
 const DATA = path.join(ROOT, 'data', 'conferences')
 const DOCS = path.join(ROOT, 'docs', 'conferences')
 
@@ -115,10 +118,11 @@ function renderEdition(meta, conf, e) {
 
   if (featured.length) {
     L.push('## 📝 注目論文', '')
+    L.push(`<small>${SELECTION_NOTE}</small>`, '')
     featured.forEach((p, i) => {
       L.push(`### ${i + 1}. ${s(p.titleJa || p.title)} {#paper-${i + 1}}`, '')
       const authors = p.authors?.length ? s(p.authors.slice(0, 4).join(', ')) + (p.authors.length > 4 ? ' ほか' : '') : ''
-      L.push([p.award ? `🏆 ${s(p.award)}` : '', authors, p.url ? `[論文を読む ↗](${p.url})` : ''].filter(Boolean).join(' ・ '), '')
+      L.push([p.award ? `🏆 ${s(p.award)}` : p.selection ? `📈 ${s(p.selection)}` : '', authors, p.url ? `[論文を読む ↗](${p.url})` : ''].filter(Boolean).join(' ・ '), '')
       if (p.titleJa && p.titleJa !== p.title) L.push(`<small>原題: ${s(p.title)}</small>`, '')
       if (p.why) L.push(s(p.why), '')
       if (p.ochiai) L.push(...renderOchiai(p.ochiai), '')

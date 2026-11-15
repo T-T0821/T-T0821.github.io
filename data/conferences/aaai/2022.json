@@ -61,6 +61,114 @@
           }
         ]
       }
+    },
+    {
+      "title": "UCTransNet: Rethinking the Skip Connections in U-Net from a Channel-wise Perspective with Transformer",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Haonan Wang",
+        "Peng Cao",
+        "Jiaqi Wang",
+        "Osmar R. Zaiane"
+      ],
+      "url": "https://arxiv.org/abs/2109.04335",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "U-Netの単純なスキップ接続が、エンコーダとデコーダの特徴間の意味的ギャップのために必ずしも有効でないことを分析し、スキップ接続をチャネル方向のTransformerで置き換えるUCTransNetを提案した研究。医用画像セグメンテーションの精度向上を目指している。",
+        "novelty": "従来のTransformer系手法（TransUNetやSwin-Unetなど）が主にエンコーダや畳み込みの置き換えに注目していたのに対し、U-Net本来の課題であるスキップ接続そのものに着目した点が新しい。スキップ接続ごとに寄与が異なり、スキップなしのU-Netが元のU-Netより良い場合もあることを複数データセットで示し、それを踏まえて空間軸ではなくチャネル軸でマルチスケール特徴を融合するCTrans（CCTとCCA）を設計した。",
+        "method": "CTransは2つのモジュールからなる。CCTは4段のエンコーダ特徴をトークン化し、各スケールのトークンをクエリ、全スケールを連結したものをキー・バリューとして、パッチ軸ではなくチャネル軸でマルチヘッドクロスアテンションを行う（類似度行列にはインスタンス正規化とsoftmaxを使用）。CCAは、CCTの出力とデコーダ特徴をそれぞれ全域平均プーリングして線形層で結合し、シグモイドでチャネル重みを作ってCCT出力を再較正してからデコーダ特徴と連結する。実装ではCCTは4層・4ヘッドで、事前学習済み重みは使わない。",
+        "validation": "GlaS、MoNuSeg、Synapse多臓器セグメンテーションで、U-Net、UNet++、Attention U-Net、MultiResUNet、TransUNet、MedT、Swin-Unetと比較した。GlaSとMoNuSegは3回の5分割交差検証で評価し、UCTransNetはDiceがGlaSで90.18%、MoNuSegで79.08%と比較手法を上回った（パラメータ数65.6M、63.2 GFLOPs）。Synapseでは Dice 78.23%、HD 26.75でTransUNetを上回ったが、Swin-Unet（Dice 79.13、HD 21.55）には及ばなかった。アブレーションではCCTとCCAの併用が最良で、本文によればCCT単独でも大きく改善した。",
+        "discussion": "Synapseでは Swin-Unet が Dice・HD ともに上回っており、すべての指標で最良とは言えない。CCAを外した版が Dice 78.99 と完全版（78.23）より高いなど、データセットによる差もある。クエリ数の実験で一部のスキップ構成（Q234）が全接続よりわずかに良いなど、最適な接続構成がデータ依存である点は今後の課題として残る。",
+        "next": [
+          {
+            "title": "UNet++: A Nested U-Net Architecture for Medical Image Segmentation",
+            "reason": "密なネスト型スキップ経路で意味的ギャップを埋める代表的手法で、本論文の主要な比較対象かつ動機づけとなっているため。"
+          },
+          {
+            "title": "TransUNet: Transformers Make Strong Encoders for Medical Image Segmentation",
+            "reason": "TransformerをU-Netのエンコーダに組み込む最初の手法で、本論文が対比しているアプローチを理解できるため。"
+          },
+          {
+            "title": "Swin-Unet: Unet-like Pure Transformer for Medical Image Segmentation",
+            "reason": "純粋なTransformerによるU字型構造で、Synapseで本手法を上回る強力なベースラインであるため。"
+          }
+        ]
+      },
+      "titleJa": "UCTransNet：Transformerを用いたチャネル方向の観点からU-Netのスキップ接続を再考する",
+      "why": "U-Netの単純なスキップ接続は、エンコーダとデコーダの特徴の意味的ギャップのために必ずしも有効でないと分析し、スキップ接続をチャネル方向のTransformer（CTrans）で置き換えるUCTransNetを提案した研究です。TransUNetやSwin-UnetがエンコーダやConvolutionの置き換えに注目していたのに対し、スキップ接続そのものに着目した点が新しく、GlaSとMoNuSegでは比較手法を上回るDiceを示しました。AAAI 2022で被引用数が同年1位（Paper Digest集計）という点でも注目されます。"
+    },
+    {
+      "title": "TS2Vec: Towards Universal Representation of Time Series",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Zhihan Yue",
+        "Yujing Wang",
+        "Juanyong Duan",
+        "Tianmeng Yang",
+        "Congrui Huang",
+        "Yunhai Tong",
+        "Bixiong Xu"
+      ],
+      "url": "https://arxiv.org/abs/2106.10466",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "任意の意味レベル（タイムスタンプ単位からインスタンス単位まで）で時系列の表現を学習する汎用フレームワークTS2Vecを提案した研究。各タイムスタンプの文脈的表現を獲得し、任意の部分系列の表現は対応タイムスタンプのmax poolingで得られる。分類・予測・異常検知の3タスクに同一の表現を使えることを示した。",
+        "novelty": "従来のT-Loss、TNC、TS-TCCは特定の粒度でしか対比学習をせず、変換不変性やクロッピング不変性といった強い帰納バイアスに依存していた。TS2Vecは、2つの拡張コンテキストにおける同一タイムスタンプの表現を正例とする「文脈的一貫性」と、インスタンス間・時間方向の階層的対比を組み合わせ、これらの仮定に頼らず多スケールの情報を捉える。著者らは、あらゆる時系列タスクに使える柔軟で汎用的な表現手法としては初の試みと主張している。",
+        "method": "エンコーダは入力射影層、タイムスタンプマスキング（潜在ベクトルをp=0.5のベルヌーイで時間軸方向にマスク）、10層の残差ブロックからなる膨張畳み込みCNN（l番目のブロックの膨張率は2^l）で構成される。2つの重なる部分系列をランダムクロップして2つのコンテキストビューを作り、重なり区間の同一タイムスタンプを正例、同一系列の別タイムスタンプ（時間的対比）と同一バッチ内の他系列（インスタンス対比）を負例とする。時間軸方向にkernel size 2のmax poolingを繰り返し、系列長が1になるまで各スケールで損失を計算して平均する（階層的対比）。異常検知では、最終点をマスクした場合としない場合の表現のL1距離を異常スコアとする。",
+        "validation": "分類では125のUCRデータセットと29のUEAデータセットでSVM評価を行い、平均精度はUCRで0.830（最良の比較手法T-Lossから+2.4%）、UEAで0.712（+3.0%）で、学習時間も比較手法中で最短だった。予測ではETT 3種とElectricityで、表現の上に線形回帰を学習するだけで平均MSEが単変量で32.6%、多変量で28.2%低下し、Informerより学習・推論が高速だった。異常検知ではYahooとKPIで、通常設定のF1がYahooで18.2%、KPIで5.5%、コールドスタート設定でそれぞれ19.7%、1.0%改善した。アブレーションでは各構成要素の有効性が確認され、50%欠損でも精度低下は小さかった。",
+        "discussion": "本文の結論では、他ドメインへの適用が今後の課題として挙げられている。本文から読み取れる範囲では、評価は主にベンチマークデータセット上で、異常検知は単変量が中心であり、異常検知のβなどのハイパーパラメータは経験的に設定されている。",
+        "next": [
+          {
+            "title": "Unsupervised Scalable Representation Learning for Multivariate Time Series",
+            "reason": "TS2Vecが主な比較対象かつ評価プロトコルの出発点とするT-Lossの手法（部分系列一貫性と三つ組損失）を理解するため。"
+          },
+          {
+            "title": "Unsupervised Representation Learning for Time Series with Temporal Neighborhood Coding",
+            "reason": "時間的一貫性に基づく正例選択を提案したTNCであり、TS2Vecの文脈的一貫性との違いを把握できるため。"
+          },
+          {
+            "title": "Time-Series Representation Learning via Temporal and Contextual Contrasting",
+            "reason": "変換一貫性とデータ拡張に基づくTS-TCCであり、TS2Vecが批判する帰納バイアスの具体例として比較できるため。"
+          }
+        ]
+      },
+      "titleJa": "TS2Vec: 時系列の汎用表現に向けて",
+      "why": "任意の意味レベル（タイムスタンプ単位からインスタンス単位まで）で時系列表現を学習する汎用フレームワークTS2Vecを提案した研究です。同一タイムスタンプの表現を2つの拡張コンテキスト間で正例とする文脈的一貫性と階層的対比により、従来手法が頼っていた変換不変性やクロッピング不変性といった強い帰納バイアスなしで多スケールの情報を捉えます。同一の表現で分類・予測・異常検知に対応でき、125のUCRデータセットと29のUEAデータセットでの分類精度が最良の比較手法を上回り、予測や異常検知でも大きな改善を示したため、AAAI 2022で被引用数上位（Paper Digest集計で同年2位）となっています。"
+    },
+    {
+      "title": "SplitFed: When Federated Learning Meets Split Learning",
+      "selection": "被引用数上位（Paper Digest の集計で同年3位）",
+      "authors": [
+        "Chandra Thapa",
+        "M. A. P. Chamikara",
+        "Seyit Camtepe",
+        "Lichao Sun"
+      ],
+      "url": "https://arxiv.org/abs/2004.12088",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "連合学習（FL）と分割学習（SL）を統合した分散協調機械学習手法 SplitFed Learning（SFL）を提案した研究。モデルをクライアント側とサーバ側に分割しつつ、全クライアントを並列に学習させることで、SLのモデルプライバシーと資源制約環境への適合性、FLの並列学習による高速性を両立する。さらに差分プライバシーとPixelDPをアーキテクチャに組み込み、データプライバシーとモデルのロバスト性を高めている。",
+        "novelty": "SLのリレー式（逐次）学習によるクライアントの待機・学習時間増大という欠点と、FLのクライアント側計算負荷・モデルプライバシーの弱さという欠点を同時に解消する初のSFLアーキテクチャである。メインサーバとFedサーバを分け、サーバ側をFedAvgで集約するSFLV1と集約せず逐次更新するSFLV2の2変種を示した。また、クライアント側のDP-SGD風の勾配ノイズとPixelDPノイズ層を構成に組み込んだ点も特徴である。",
+        "method": "各クライアントはクライアント側モデルで並列に順伝播し、カット層の出力（smashed data）をメインサーバへ送る。メインサーバはサーバ側モデルで順伝播・逆伝播を行い、smashed dataの勾配を各クライアントへ返す。クライアントはこの勾配で逆伝播し、勾配をℓ2ノルムでクリップしてガウスノイズを加えるDPを適用した上でFedサーバに送り、FedサーバがクライアントサイドモデルをFedAvgで集約して配布する。SFLV1ではサーバ側モデルも各クライアント分を並列処理してFedAvgし、SFLV2ではクライアントの順序をランダムにして逐次更新する。さらにクライアント側モデルにラプラスノイズを加えるPixelDPノイズ層を挿入し、smashed dataの保護と敵対的事例への頑健性向上を狙う。通信量と学習時間は理論的なコスト分析も行っている。",
+        "validation": "HAM10000、MNIST、FMNIST、CIFAR10の4データセットと、LeNet、AlexNet、VGG16、ResNet18の4モデルで、FL・SL・SFLV1・SFLV2を比較した（5クライアント、200グローバルエポック）。精度はSL・SFLともおおむね近く、例えばResNet18/HAM10000では集中学習79.3%、FL 77.5%、SL 79.1%、SFLV1 79%、SFLV2 79.2%で、多くの場合FLがやや高かった。学習時間はクライアントが複数の場合、SFLV1・SFLV2がSLより4〜6倍高速で、FLと同程度かそれ以上の速度だった。AlexNet/MNISTのSFLV1でDPとPixelDPを併用した実験では、ε=0.5のもとε'を0.5、1、2、5、PixelDPなしと変えると、50エポック時のテスト精度は約40%、64%、73%、77%、78%となり、プライバシー予算が小さいほど精度が下がった。",
+        "discussion": "VGG16/CIFAR10ではSL・SFLV1・SFLV2が収束せず、AlexNet/HAM10000ではクライアント数の増加でSLやSFLV2の性能が低下するなど、不安定なケースが残り、原因は未解明である。PixelDPによるロバスト性の詳細な解析と数学的保証、プライバシーと精度のトレードオフの詳細分析、準同型暗号の統合は今後の課題とされている。また実験はCNNと画像データ、IID分割が中心で、DPの保証もIID仮定に依存している。",
+        "next": [
+          {
+            "title": "Distributed learning of deep neural network over multiple agents",
+            "reason": "SFLの土台となる分割学習（SL）の原論文であり、カット層やsmashed dataの仕組みを理解できる。"
+          },
+          {
+            "title": "Communication-efficient learning of deep networks from decentralized data",
+            "reason": "SFLがクライアント側・サーバ側の集約に用いるFedAvgを提案した連合学習の基礎論文である。"
+          },
+          {
+            "title": "Certified robustness to adversarial examples with differential privacy",
+            "reason": "SFLのノイズ層に採用されたPixelDPの原論文で、ロバスト性保証の理論的背景を確認できる。"
+          }
+        ]
+      },
+      "titleJa": "SplitFed: 連合学習が分割学習と出会うとき",
+      "why": "連合学習（FL）と分割学習（SL）を統合した SplitFed Learning（SFL）を提案した研究で、モデルをクライアント側とサーバ側に分割しつつ全クライアントを並列に学習させ、SLのモデルプライバシーと資源制約環境への適合性、FLの並列学習による高速性を両立させた。実験ではSLと同程度の精度を保ちながら、複数クライアントの場合にSLより4〜6倍高速に学習できることが示され、さらに差分プライバシーとPixelDPを組み込んでデータプライバシーとモデルのロバスト性も高めている。被引用数が Paper Digest の集計で同年3位という注目度の高さも、この統合アプローチが評価されていることを示している。"
     }
   ],
   "sources": [
@@ -75,6 +183,10 @@
     {
       "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
       "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    },
+    {
+      "title": "Most Influential AAAI Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-aaai-papers-2026-03-version/"
     }
   ],
   "unreachable": [

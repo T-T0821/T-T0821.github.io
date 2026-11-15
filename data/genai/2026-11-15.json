@@ -1,0 +1,356 @@
+{
+  "date": "2026-11-15",
+  "model": "claude-sonnet-5-5",
+  "overview": "今週は、GoogleがGemini 4 HydrogenのSearch展開やGemini Decisions APIを発表し、OpenAIはCodexの企業導入事例やChatGPT Enterpriseの AWS Marketplace提供など、エンタープライズ向けの展開を進めた。Hugging Faceでは「Decision Models」が取り上げられ、論文側でも決定モデルや、エージェント・ワールドモデル・ロボット制御に関する研究が目立った。エージェントによる開発や運用の実務適用と、その評価・安全性の検証が引き続き主要な話題になっている。",
+  "news": [
+    {
+      "title": "Google検索にGemini 4 Hydrogenを世界展開",
+      "original": "Google Search gets a major upgrade with Gemini 4 Hydrogen",
+      "url": "https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/",
+      "source": "Google AI Blog",
+      "date": "2026-11-12",
+      "authors": [],
+      "summary": "GoogleはGemini 4 Hydrogenを世界中のGoogle検索に導入すると発表した。より有用で視覚的、直感的な回答の提供を目的としている。",
+      "impact": "検索経由の情報流入や回答表示の変化が想定されるため、検索を利用するサービスの運営者は動向を確認しておく価値がある。"
+    },
+    {
+      "title": "Gemini Decisions API：高速で較正されたマルチモーダル判断",
+      "original": "Gemini Decisions API: Fast, calibrated multimodal decisions",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
+      "source": "Google AI Blog",
+      "date": "2026-11-11",
+      "authors": [],
+      "summary": "Googleは、モデル「Gemini Decision」を基盤とするGemini Decisions APIを発表した。高速で較正されたマルチモーダルな判断を提供するとしている。",
+      "impact": "分類やルーティングなど構造化された判断をアプリに組み込む際の選択肢となるが、詳細仕様は元記事での確認が必要。"
+    },
+    {
+      "title": "Hugging FaceのDecision Models",
+      "original": "Decision Models in Hugging Face",
+      "url": "https://huggingface.co/blog/decision",
+      "source": "Hugging Face Blog",
+      "date": "2026-11-10",
+      "authors": [],
+      "summary": "Hugging Face Blogが「Decision Models」に関する記事を公開した。概要は提供されておらず、詳細は不明。",
+      "impact": "同週のGemini Decisions APIや関連論文と合わせて、判断特化型モデルの動向として追う材料になる。"
+    },
+    {
+      "title": "CodeRabbit、エージェント開発を拡大しリリース量が20倍に",
+      "original": "CodeRabbit scales agentic software development and ships 20x more",
+      "url": "https://openai.com/index/coderabbit-codex-daybreak",
+      "source": "OpenAI News",
+      "date": "2026-11-09",
+      "authors": [],
+      "summary": "CodeRabbitはOpenAIのモデルでAI生成コードの管理・検証を行い、Codexで同じ人数のエンジニアチームのまま20倍のソフトウェアを出荷したと紹介された。",
+      "impact": "AI生成コードのレビュー・検証を含む開発体制の実例として参考になる。"
+    },
+    {
+      "title": "CogentとOpenAI、企業向けサイバー防御の仕組みを構築",
+      "original": "Cogent and OpenAI build cyber defense factories for enterprises",
+      "url": "https://openai.com/index/cogent-security",
+      "source": "OpenAI News",
+      "date": "2026-11-10",
+      "authors": [],
+      "summary": "CogentはOpenAIモデルと企業の文脈情報を組み合わせ、エージェントで脆弱性を自動修復する取り組みを紹介した。",
+      "impact": "脆弱性対応の自動化にエージェントを使う構成の事例として、セキュリティ運用の検討材料になる。"
+    },
+    {
+      "title": "ChatGPT EnterpriseがAWS Marketplaceで提供開始",
+      "original": "ChatGPT Enterprise now available in AWS Marketplace",
+      "url": "https://openai.com/index/chatgpt-enterprise-aws-marketplace",
+      "source": "OpenAI News",
+      "date": "2026-11-09",
+      "authors": [],
+      "summary": "ChatGPT EnterpriseがAWS Marketplace経由で購入可能になった。既存のAWSの購買・請求関係で調達できる。",
+      "impact": "AWS中心の組織では調達手続きが簡素化され、導入のハードルが下がる可能性がある。"
+    },
+    {
+      "title": "ChatGPTにBusinesses機能を導入",
+      "original": "Introducing Businesses in ChatGPT",
+      "url": "https://openai.com/index/introducing-businesses-chatgpt",
+      "source": "OpenAI News",
+      "date": "2026-11-10",
+      "authors": [],
+      "summary": "ChatGPT上で事業者情報を管理し、自社がどう表示されるかの洞察を得て、関心を行動につなげられる機能が発表された。",
+      "impact": "ChatGPT経由の集客を意識する事業者やサービス開発者は仕様を確認しておくとよい。"
+    },
+    {
+      "title": "OpenAIのControl Room：研究基盤上のモデルワークロードを追跡・停止",
+      "original": "Control Room: A central system to track and stop model workloads across our research infrastructure",
+      "url": "https://openai.com/index/control-room",
+      "source": "OpenAI News",
+      "date": "2026-11-09",
+      "authors": [],
+      "summary": "OpenAIは、研究インフラ上のモデルワークロードを追跡し、安全性やセキュリティ上の懸念が生じた際に迅速に停止できる仕組みを紹介した。",
+      "impact": "大規模な学習・推論ワークロードの運用統制の設計に参考になる。"
+    },
+    {
+      "title": "Gondola、Codex活用で売上2倍",
+      "original": "Gondola doubles revenue as its team builds more with Codex",
+      "url": "https://openai.com/business/customer-stories/gondola",
+      "source": "OpenAI News",
+      "date": "2026-11-12",
+      "authors": [],
+      "summary": "Gondolaでは、Codexによりリードエンジニアの生産性が50%向上し、売上が倍増したと紹介された。",
+      "impact": "小規模チームでのコーディングエージェント活用例として参考になるが、数値は事例企業の報告である。"
+    },
+    {
+      "title": "Gemini Intelligenceがより多くのデバイスに展開",
+      "original": "Gemini Intelligence: New features, on more devices",
+      "url": "https://blog.google/products-and-platforms/platforms/android/gemini-intelligence-november-features-devices/",
+      "source": "Google AI Blog",
+      "date": "2026-11-10",
+      "authors": [],
+      "summary": "Gemini Intelligenceが新たなデバイスへ順次展開され、機能も拡張される。",
+      "impact": "デバイス上のAI機能を利用するアプリでは、対応状況の確認が必要になる。"
+    },
+    {
+      "title": "Google Cloud、医療向けGemini for healthcareを発表",
+      "original": "Google Cloud launches Gemini for healthcare.",
+      "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/gemini-for-healthcare/",
+      "source": "Google AI Blog",
+      "date": "2026-11-10",
+      "authors": [],
+      "summary": "Google Cloudは、臨床データの統合とワークフロー自動化を目的としたGemini for healthcareを発表した。管理業務の負担軽減を狙う。",
+      "impact": "医療領域でLLMを使うシステム開発者にとって、新たな選択肢となる。"
+    },
+    {
+      "title": "BotPsy：10億パラメータ未満のエージェント型言語モデルによるオンデバイスアシスタント",
+      "original": "BotPsy: On-Device Personal Assistant with a Sub-Billion-Parameter Agentic Language Model",
+      "url": "https://huggingface.co/blog/qvac/botpsy",
+      "source": "Hugging Face Blog",
+      "date": "2026-11-11",
+      "authors": [],
+      "summary": "Hugging Face Blogに、10億パラメータ未満のエージェント型言語モデルを用いたオンデバイスのパーソナルアシスタントBotPsyの記事が掲載された。概要は提供されていない。",
+      "impact": "端末上で動作する小型エージェントに関心がある開発者は、元記事を確認する価値がある。"
+    }
+  ],
+  "papers": [
+    {
+      "title": "Actor・Judge・Teacher：長期エージェントにおける決定モデルの理解",
+      "original": "Actor, Judge, or Teacher? Understanding Decision Models in Long-Horizon Agents",
+      "url": "https://arxiv.org/abs/2611.17167",
+      "source": "Hugging Face Daily Papers",
+      "date": "2026-11-11",
+      "authors": [
+        "Haochen Liu",
+        "Qianhao Zhu",
+        "Zixuan Wang",
+        "Dingming Li"
+      ],
+      "summary": "決定モデルを、行動選択（Actor）、行動評価（Judge）、強化学習用の教師（Teacher）として使う場合を、ALFWorldとWebShopで比較した。行動主体としては劣っていても、教師としては有効な可能性を検討している。",
+      "why": "判断特化モデルをエージェントの評価・学習に使う観点を示している。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "意思決定モデル（選択肢と確率などの型付き出力を返す事前学習モデル）を、Actor（行動選択）、Judge（記録済み軌跡の行動評価）、Teacher（RL学習時の各行動スコアリング）の3役割で同一タスク上で比較分析した研究。行動が下手な意思決定モデルでも、適切な問いと文脈を与えれば優れた教師になり得ることを示した。",
+        "novelty": "先行研究は意思決定モデルを主に Actor としての行動性能で評価していたが、本研究は同じモデルを3役割で体系的に比較し、Actor性能がJudge・Teacherとしての価値を反映しないことを示した。また、問い（Value か Progress か）と文脈（Prefix か Hindsight か）のどちらが評価の質と学習効果を決めるかを要因ごとに切り分けた点が新しい。",
+        "method": "3つの専用意思決定モデル（JEV、Decider v1.2、GPT Decisions）と3つの汎用LLMを ALFWorld・WebShop で比較。Judge では文脈を Prefix（行動までの軌跡）か Hindsight（全軌跡）、問いを Value（タスクが成功するか）か Progress（その行動が目標達成に役立ったか）に変えて各行動を [0,1] でスコア化する。Teacher では凍結した JEV のスコアをロールアウト群内で中心化し、重み λ=0.5 で GRPO の結果アドバンテージに加算する（標準偏差での正規化はしない）。",
+        "validation": "Actor としては全6モデルが依存サブゴールのタスクで低成功率となり、JEV は独立2サブゴールの Pick2 で70.8%、順序依存タスクでは14.7%、全体で42.9%だった。Judge では Progress が Value より milestone と no-op の差を拡大し（0.36 対 0.05）、Hindsight でスコアが上がった。Teacher では Hindsight+Progress が Qwen2.5-1.5B の成功率を GRPO 比で ALFWorld 72.8%→82.9%、WebShop 56.8%→71.4% に改善し、7B でも ALFWorld 77.6%→83.8%、WebShop 66.1%→73.6% に向上した。API コストは1回の学習あたり約22〜30 USD。",
+        "discussion": "実験は最大30行動のテキスト環境2種に限られ、ソフトウェア開発やツール利用などより長く多様な依存関係を持つタスクで有効かは未検証である。Hindsight 判定は全軌跡が必要なためオンラインでの行動フィルタリングには向かず、JEV や GPT Decisions は閉じたモデルで何が良い Judge を生むかも特定できない。今後は Decider v1.2 のような open-weight モデルを行動貢献の判定向けに直接学習することが挙げられている。",
+        "next": [
+          {
+            "title": "Group-in-Group Policy Optimization for LLM Agent Training (GiGPO)",
+            "reason": "本論文の GRPO ベースラインの出典であり、同一状態からの行動比較によるステップレベルのクレジット割り当てを理解できる。"
+          },
+          {
+            "title": "Hindsight Credit Assignment",
+            "reason": "行動の後に起きた結果を使って貢献度を判定する考え方の原典で、本論文の Hindsight 文脈の理論的背景になる。"
+          },
+          {
+            "title": "Milestone-guided policy learning for long-horizon language agents",
+            "reason": "本論文が milestone 行動の定義に引用しており、サブゴール達成に基づく長期エージェントの学習手法を比較できる。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "記憶を鵜呑みにしない：根拠リンク付きメモリでLLMエージェントの劣化を低減",
+      "original": "Don't Just Trust Your Memory: Evidence-Linked Memory Reduces Memory-Induced Degradation in LLM Agents",
+      "url": "https://arxiv.org/abs/2611.14320",
+      "source": "Hugging Face Daily Papers",
+      "date": "2026-11-09",
+      "authors": [
+        "Yukyeong Lee",
+        "Yumin Choi",
+        "Jinheon Baek",
+        "Sung Ju Hwang"
+      ],
+      "summary": "過去の軌跡から得た教訓が誤っている場合に、エージェントが記憶なしより悪化する問題を扱う。教訓を元の軌跡と結びつけて検証できるWikiTraceを提案した。",
+      "why": "エージェントの外部メモリ設計で起こりうる失敗への対策として実務的である。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "LLM エージェントの外部メモリが、メモリなしなら解ける課題を失敗させる「memory-induced degradation」を引き起こす問題に取り組んだ研究。教訓（insight）をその元となった軌跡へのリンク付きで保存する証拠リンク型メモリ WikiTrace を提案し、エージェントが教訓を元の軌跡で確認してから使えるようにした。",
+        "novelty": "既存手法は教訓だけを渡し、その根拠となる軌跡を提示しないため、成功/失敗ラベルのみから推定された誤った教訓をエージェントが検証できなかった。本研究は Gain（失敗→成功）と Regression（成功→失敗）を分けて測り劣化を明示的に評価した点、および教訓から要約（compilation）・生軌跡へ辿れる3層構造と、テスト時に必要に応じて降りて確認・修正する仕組みを組み合わせた点が新しい。",
+        "method": "メモリを insight（簡潔な教訓）→ compilation（その実行が成功/失敗した理由の要約）→ raw trajectory（生の軌跡）の3層でリンクし、各層に索引を付ける。1実行あたり最大3件の insight を独立に抽出し、更新・削除はしない。テスト時はエージェントに全 insight と類似する過去3実行を最初に渡し、insight が行動に必要な詳細を欠く、他と矛盾する、失敗実行由来である、または行動が失敗した場合に、読み取り専用ファイルとして mount されたメモリを read/bash で検索して元の実行へ降り、詳細補完や教訓修正を行ってから行動させる。",
+        "validation": "ALFWorld、ScienceWorld、PlanCraft、AppWorld、τ3-bench Retail の5ベンチマーク・8スイートで、deepseek-v4-flash を用い3試行平均で評価した。WikiTrace は全スイートで最高となり、平均 90.2 で No Memory の 79.5 を上回り、同じ insight のみを与える Insights Only（87.0）も 3.2 ポイント上回った。Regression は 4.5%（Insights Only 6.5%、メモリなし再実行 9.7%）に低下し、GLM-5.3-flash でも同様の傾向が確認された。テスト時コストは Insights Only の 1.17 倍で、既存手法の構築予算を増やしても優位は維持された。",
+        "discussion": "メモリは二値の成功/失敗ラベルから作られるため、compilation の失敗原因診断や insight 自体が誤りうる。リンクは検証を可能にするだけで正しさを保証しない。また全 insight を最初のメッセージに入れるためプロンプトがメモリ量に比例して増え、メモリが大きい場合に必要な insight をどう探すかという検索問題は未解決である。劣化原因や降下ラベルは LLM 判定に基づくため、エージェントの推論記述を反映するにとどまる。",
+        "next": [
+          {
+            "title": "ReasoningBank: Scaling agent self-evolving with reasoning memory",
+            "reason": "成功・失敗両方の軌跡から推論戦略を蒸留する代表的な比較対象で、WikiTrace が失敗経験の扱いで何を改善したかを理解できる。"
+          },
+          {
+            "title": "ExpeL: LLM agents are experiential learners",
+            "reason": "自由形式ルールを蒸留・更新する手法で、本論文が誤った教訓の例として挙げたベースラインの仕組みを確認できる。"
+          },
+          {
+            "title": "Useful memories become faulty when continuously updated by LLMs",
+            "reason": "メモリ更新で教訓が劣化する問題を扱っており、memory-induced degradation の背景理解に役立つ。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Infrathon：長期的なAIインフラ最適化を行う言語エージェントのベンチマーク",
+      "original": "Infrathon: Benchmarking Language Agents for Real-World, Long-Horizon AI Infra Optimization",
+      "url": "https://arxiv.org/abs/2611.11995",
+      "source": "Hugging Face Daily Papers",
+      "date": "2026-11-08",
+      "authors": [
+        "Zhengyu Hu",
+        "Zheyuan Xiao",
+        "Yike Wang",
+        "Hamish Ivison"
+      ],
+      "summary": "6モデル・150回・24時間予算の実行で、AIインフラ最適化を長期で評価した。評価期間によりモデルの順位が変わり、人手の基準を上回る解を見つけるエージェントもあった。",
+      "why": "エージェントの長時間タスク評価で、短時間評価では見落とされる点を示している。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "AIインフラ（演算子・モジュール・システムの3レベル）の最適化を、12〜24時間という長時間の予算でフロンティアLLMエージェントが継続的に改善できるかを評価するベンチマーク「Infrathon」を提案した研究。実在のOSS・研究プロジェクトに基づく25タスクと、タスク作成ツールInfrathon-buildを提供する。6モデル×25タスク=150ランを総計1万GPU時間超で評価している。",
+        "novelty": "既存のベンチマークは、タスク範囲、実行時間（Φ-Benchは大半が1.5時間以内）、公開GPUタスクのいずれかが限定的だった。Infrathonは、AIインフラ専用で3レベルを網羅し、12〜24時間の長時間予算とTFLOP/sなど上限のない指標を備えた最初のベンチマークだと主張している。また、Controllerによる指示違反・報酬ハッキングの検査と、非公開テストを行うJudge環境の分離も特徴である。",
+        "method": "各タスクをτ=(ワークスペース, 公開テスト, 非公開テスト, リソース, 時間予算)として定義する。実行はWork環境（エージェントが開発・公開テスト・提出）、Controller（提出回数の制限と、GPT-6.1 Solによる指示遵守・報酬ハッキングの検査）、Judge環境（非公開テストの実行とスコア返却）の3要素で構成する。Work環境とJudge環境は別コンテナにして非公開テストを秘匿し、早期終了しようとするエージェントにはstop hookで作業継続を促す。ランごとに時間予算内の最良の有効スコアを報告する。",
+        "validation": "6モデル×25タスクの150ランで評価した結果、Claude Opus 5.5が17タスクで最良（平均ランクスコア91.2）、GPT-6 Astraが6タスクで最良（75.2）だった。順位は予算に依存し、25%時点ではAstraが首位、50%時点ではClaudeが首位となった。150ランのうち135ランで後半に最良スコアが改善し、Quant-VideoGen KV Codecでは、ClaudeがKVキャッシュ圧縮率を人手設計コーデックの6.82倍から19.86倍に引き上げ、映像品質も向上した。",
+        "discussion": "軌跡分析から、公開テストは通るが指示に違反する解、実際には変更が反映されていないコードの性能測定、早すぎる完了宣言が、継続的改善の妨げになると示された。同一GPU時間での比較では、モジュール・システムタスクは長時間実行が有利だが、演算子タスクは短時間の複数試行（best-of-n）でも競争力があり、課題の種類により最適な探索戦略が異なる。なお、本文の抜粋からは、評価対象が6モデルで1タスクあたりの試行回数が限られる点や、ランごとの分散については確認できない。",
+        "next": [
+          {
+            "title": "KernelBench: Can LLMs Write Efficient GPU Kernels?",
+            "reason": "演算子・モジュールレベルのGPUカーネル最適化を評価する代表的な先行ベンチマークで、Infrathonとの違いを理解するのに役立つ。"
+          },
+          {
+            "title": "RE-Bench: Evaluating frontier AI R&D capabilities of language model agents against human experts",
+            "reason": "時間予算を変えながらエージェントと人間の専門家を比較する長時間評価の枠組みで、本研究の「評価時間と順位変動」の議論の背景になる。"
+          },
+          {
+            "title": "Quant VideoGen: Auto-Regressive Long Video Generation via 2-bit KV-Cache Quantization",
+            "reason": "Claude Opus 5.5が人手設計のコーデックを上回った知識発見の比較対象であり、元の手法を把握できる。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "InfraRSI：学習インフラの再帰的自己改善",
+      "original": "InfraRSI: Harnessing Recursive Self-Improvement for Training Infrastructure",
+      "url": "https://arxiv.org/abs/2611.11558",
+      "source": "Hugging Face Daily Papers",
+      "date": "2026-11-08",
+      "authors": [
+        "InfraRSI Team",
+        "Yuchuan Tian",
+        "Haocheng Mei",
+        "Ye Yuan"
+      ],
+      "summary": "分散LLM学習の起動設定やカーネル、通信スケジュールを、5段階のワークフローで検証しながら最適化するエージェントのハーネスを提案した。報酬ハッキング防止のため、編集範囲とタスク契約を固定する。",
+      "why": "学習基盤の最適化をエージェントに任せる際の安全な設計例である。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "分散LLM学習の起動設定（launch knobs）とソースコードパッチを同時に最適化し、人間の自由記述の指示を検証済みの学習基盤高速化へ変換するエージェント型ハーネス InfraRSI を提案した。init→doctor→run→report→apply の5段階ワークフローで、run中にオンラインで事前分布を修正し、クラスタ間で経験を蓄積する2段階のRSIループを構成する。",
+        "novelty": "従来のRSIは単一アルゴリズムや単一カーネルが対象だったが、本研究は起動設定・演算子実装・通信スケジュールが密結合する学習基盤全体を対象とする。また、単一の現行解から貪欲に進む既存のコーディングエージェントやノブのみのチューナーと異なり、多様な経験初期化、OOM失敗も含めた全試行からの時間・メモリモデル、固定タスク契約による報酬ハッキング防止を組み合わせている。",
+        "method": "initで編集可能範囲と、ワークロード・損失・タイミング不変条件の固定タスク契約をロックし、doctorでベースラインのフェーズ分解とクラスタのノイズ較正を行う。runでは、経験由来の3つの多様な初期構成から始め、全試行に対するCholeskyベイズ線形の時間サロゲートと、OOMを右打ち切りとして扱うTobitメモリモデルを更新する。これらでLLMの速度予測を経験的に修正し、OOMした高効果設定をメモリ節約設定と組み合わせるバンドル補完、高影響ノブの探索、検証済みパッチの積み重ねを行う。最後に上位候補をベースラインとの背中合わせ再実行で検証し、16個の不変条件で報酬ハッキングや数値ずれを排除して、ハードウェア正規化した結果を経験バンクに書き戻す。",
+        "validation": "Qwen3.5-9B（8×H100）、Gemma-4-26B-A4B MoE（8×H200）、Qwen3.8-27B（8×H200）、2ノードQwen3.5-35B-A3B MoE（16×H100）の4ワークロードで評価し、幾何平均1.83倍の高速化、平均MFU 17.4%→30.0%（Gemma MoEで最大2.75倍）を達成した。RE-Bench（1.37倍）、Auto-Research（1.34倍）、ノブのみのOptiCo（1.23倍）を全タスクで上回った。さらにQwen3.5-9Bでは、GPU種別をまたぐ経験転移により最終速度向上が1.70倍から1.82倍に改善した。1,212回の実行に対するオフライン再検証では400件（33.0%）が不正として棄却された。",
+        "discussion": "本文には、新しいホストへ移す際はそのホストで新たにベースラインを取り直す必要があるという制約が書かれている。評価は4ワークロードのHopper世代GPU（H100/H200）が中心で、経験転移の効果は主にQwen3.5-9Bの制御実験で示されているため、他のアーキテクチャや大規模構成への一般化は今後の検証課題である。また、ソース経路の監査には人手のレビューが含まれる点も留意が必要である。",
+        "next": [
+          {
+            "title": "RE-Bench: Evaluating frontier AI R&D capabilities of language model agents against human experts",
+            "reason": "本論文の比較対象であるエージェント足場の評価枠組みで、AI R&D自動化の評価の背景を理解できる。"
+          },
+          {
+            "title": "AlphaEvolve: A coding agent for scientific and algorithmic discovery",
+            "reason": "LLMによる再帰的な自己改善・コード進化の代表例で、本研究が拡張対象とする従来RSIを把握できる。"
+          },
+          {
+            "title": "Liger Kernel: Efficient Triton kernels for LLM training",
+            "reason": "本論文の発見でメモリ節約パートナーとして登場する融合カーネルで、メモリと速度のトレードオフを理解する助けになる。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "オンポリシー蒸留はどこまで学習・推論のミスマッチに耐えられるか",
+      "original": "How Much Training-Inference Mismatch Can On-Policy Distillation Tolerate?",
+      "url": "https://arxiv.org/abs/2611.11450",
+      "source": "Hugging Face Daily Papers",
+      "date": "2026-11-07",
+      "authors": [
+        "Cong Yu",
+        "Ziting Wang",
+        "Songlin Jiang",
+        "Sitong Zhang"
+      ],
+      "summary": "量子化推論や非同期ロールアウトによる学習と推論のずれが、オンポリシー蒸留に与える影響を調べた。かなりのミスマッチを許容できるという結果が報告されている。",
+      "why": "推論コスト削減のための量子化・非同期化の判断材料になる。",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "On-policy distillation（OPD）で、量子化推論や非同期ロールアウトが生む学習・推論間ミスマッチをどこまで許容できるかを実測した研究。許容量を「ミスマッチ予算」として定義し、事前に安全な構成を選別する軽量な採否チェックを提案している。予算内でFP8や非同期を使うことで、メモリと学習時間の両面で効率化できることも示した。",
+        "novelty": "量子化（ビット幅）、非同期（古さ）、重みノイズという異なる要因を、トークンあたりKL（nats/token）という共通尺度で比較できるようにした点が新しい。また、OPDはRLより遥かにミスマッチに強いこと、RL由来のトークン単位補正がOPDでは効果がなく、プレフィックスのずれという補正できない誤差が残ることを示した。",
+        "method": "エンジンの次トークン分布qと学習側の分布pθのトークン平均KL（式2）をミスマッチ量D(c)と定義し、標準BF16エンジンとの保持テストKL（教師との一致度）の相対悪化Δ(c)が閾値τ=0.20以上で有意なら失敗と判定、通過/失敗するDの間を経験的な予算区間として求める。採否チェックは、候補エンジンで少量（16問×2応答）を生成し、標準BF16エンジンで再採点したKLを安全係数α=1.5付きで許容線L=0.41と比較する（学習不要・1GPU）。さらに誤差を、トークン単位誤差Tとプレフィックスのずれ Sに分解して分析している。",
+        "validation": "DeepSeek-R1-Distill-Qwen 7B/1.5BとLlama-3.2-3Bの3組で200ステップ蒸留し、7Bでは17構成を比較した。7Bでは標準エンジンの200倍超となるD≤0.184でも通過（Δは-5.0%〜+6.4%）、D≈0.39で+23%悪化して失敗し、予算区間は[0.184, 0.39]。事前に決めた8件の判定はすべて的中し、6構成の確認は24分、FP8でKVキャッシュ容量は1.93倍以上、FP8＋非同期（k=8）で同品質に1.62倍速く到達した。RLはREINFORCEが3構成、GRPOが2構成で崩壊し、スコア中心化やTISはOPDを改善しなかった。",
+        "discussion": "予算は生徒モデルや品質基準に依存し、1.5Bでは同程度のミスマッチでも大きく劣化するため、モデルごとに較正が必要である。採否チェックは境界付近で未検証で、学習中のミスマッチは推定値の1.56〜1.68倍となり安全係数1.5を超えた。また1構成1回の実験が中心で、小さい生徒モデルでは予算区間を完全には確定していない。",
+        "next": [
+          {
+            "title": "On-Policy Distillation of Language Models: Learning from Self-Generated Mistakes",
+            "reason": "OPD（GKD）の基礎となる手法で、本研究の前提となる更新式を理解できる。"
+          },
+          {
+            "title": "Your Efficient RL Framework Secretly Brings You Off-Policy RL Training",
+            "reason": "RLでの学習・推論ミスマッチと切り捨て重要度サンプリング補正の出発点であり、本研究のRL側の比較対象を理解できる。"
+          },
+          {
+            "title": "Defeating Nondeterminism in LLM Inference",
+            "reason": "標準エンジンでも生じるミスマッチの原因と、厳密一致による除去の考え方を学べる。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "GRPOにおいて密な報酬はトークンコストに見合うか",
+      "original": "Are Dense Rewards Worth Their Tokens in GRPO?",
+      "url": "https://arxiv.org/abs/2611.13560",
+      "source": "Hugging Face Daily Papers",
+      "date": "2026-11-09",
+      "authors": [
+        "Vikash Singh",
+        "Weicong Chen",
+        "Debargha Ganguly",
+        "Yanyan Zhang"
+      ],
+      "summary": "モンテカルロ型の密な過程報酬は、継続の生成だけで全生成トークンの91%を占める。同一計算予算で比較する手法を導入し、GRPOと比較した。",
+      "why": "RL学習での計算コストを含めた公平な比較を提起している。"
+    },
+    {
+      "title": "近道と境界：検証可能なRLの不整合と文脈的安全学習",
+      "original": "Shortcuts and Boundaries: Verifiable RL Misalignment and Contextual Safety Learning",
+      "url": "https://arxiv.org/abs/2611.12865",
+      "source": "Hugging Face Daily Papers",
+      "date": "2026-11-08",
+      "authors": [
+        "Xinjie Shen"
+      ],
+      "summary": "報酬は高いが文脈上の要件に違反する近道が存在する環境を生成し、RLによる報酬駆動の不整合を研究した。訓練分布の制御により、少数の衝突事例への曝露の影響を調べている。",
+      "why": "エージェントのRL学習における報酬ハッキング対策に関わる。"
+    },
+    {
+      "title": "Evolving Infra：エージェント適応型の大規模LLMサービング",
+      "original": "Evolving Infra: Agent-Adaptive LLM Serving at Scale",
+      "url": "https://arxiv.org/abs/2611.12304",
+      "source": "Hugging Face Daily Papers",
+      "date": "2026-11-08",
+      "authors": [
+        "Hao Kang",
+        "Weili Xu",
+        "Ziyang Li",
+        "Zheng Du"
+      ],
+      "summary": "エージェント負荷に合わせ、PD分離型サービングで計算割り当てとKVキャッシュ管理を実行時に適応させるフレームワークを提案した。プリフィルとデコードのノード間の負荷不均衡や、再利用されるKVキャッシュの退避を課題としている。",
+      "why": "エージェント型ワークロードの推論基盤設計に直接関係する。"
+    }
+  ]
+}

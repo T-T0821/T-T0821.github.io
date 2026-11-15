@@ -54,6 +54,84 @@
           }
         ]
       }
+    },
+    {
+      "title": "MemoRAG: Boosting Long Context Processing with Global Memory-Enhanced Retrieval Augmentation",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Hongjin Qian",
+        "Zheng Liu",
+        "Peitian Zhang",
+        "Kelong Mao",
+        "Defu Lian",
+        "Zhicheng Dou",
+        "Tiejun Huang"
+      ],
+      "url": "https://arxiv.org/abs/2409.05591",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "長い文脈を扱うタスクのために、入力全体から「グローバルメモリ」を作り、そこから生成した回答の下書き（手がかり）で検索を導く RAG フレームワーク MemoRAG を提案した研究。明示的なクエリや整理された知識を前提とする従来 RAG の制約を緩和し、要約などクエリが曖昧なタスクや複雑な QA にも対応することを狙う。",
+        "novelty": "従来 RAG が元のクエリで直接検索するのに対し、全文を把握した軽量メモリモデルが生成した下書き回答を検索クエリとして使う二重システム構成が新しい。さらにメモリを KV 圧縮で実現し、最終回答の質のフィードバックで手がかり生成を強化する RLGF を導入した。HyDE や RQ-RAG のようにモデル内部知識のみに頼らず、また GraphRAG のような静的なグラフ構築にも頼らない点が優れているとされる。",
+        "method": "軽量で長文対応のメモリモデルが、各コンテキストウィンドウ後に k 個のメモリトークンを挿入し（k ≪ l）、専用の Q/K/V 重みで入力を KV 空間に圧縮して圧縮率 β=4〜64 のコンパクトなグローバルメモリを形成する。タスク提示時にメモリが下書き回答（手がかり）を生成し、それを検索クエリとして長文から根拠を取得、重い生成モデルが最終回答を作る。学習は、新規重みのみを更新する事前学習、手がかり生成の SFT、最終回答への貢献度に基づく選好ランキング損失による RLGF の3段階で行う。",
+        "validation": "LongBench、InfiniteBench、および20ドメインで構成される自作の UltraDomain で、Full（長文 LLM）、MInference、SelfExtend、BGE-M3 等の標準 RAG、HyDE、RQ-RAG、GraphRAG と比較した。表1では MemoRAG の平均が 40.2 で、Full の 35.0 を上回り、多くのデータセットで全ベースラインを上回った。UltraDomain でも全データセットで一貫して上回り、圧縮率 β を上げると性能は低下するが β=32 付近で安定し、全 β で標準 RAG を上回った。効率面では標準 RAG より遅いが、高度な RAG や長文 LLM よりは時間・メモリ効率が良く、128K 文脈を 60 GiB 未満の GPU メモリで処理できた。",
+        "discussion": "標準 RAG と比べると、メモリ形成と手がかり生成のため索引・検索のレイテンシが大きい。圧縮率を上げるほど意味情報が失われて性能が下がる点や、SFT データの構築に強力な LLM と人手の確認が必要な点も課題である。また評価に用いた UltraDomain は著者らが独自に作成したものであり、他の設定での汎化は今後の検証が必要である。",
+        "next": [
+          {
+            "title": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization",
+            "reason": "MemoRAG が主要な比較対象とするグラフベース RAG で、クエリ指向要約への別アプローチを理解できる。"
+          },
+          {
+            "title": "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+            "reason": "仮想文書で検索する HyDE であり、MemoRAG の「下書き回答で検索する」発想との違いを比較できる。"
+          },
+          {
+            "title": "MInference 1.0: Accelerating Pre-filling for Long-Context LLMs via Dynamic Sparse Attention",
+            "reason": "MemoRAG の軽量メモリのベースラインであり、長文の prefill 高速化手法として圧縮型メモリとの比較に役立つ。"
+          }
+        ]
+      },
+      "titleJa": "MemoRAG: グローバルメモリ強化型の検索拡張により長文脈処理を高める",
+      "why": "入力全体から軽量なメモリモデルでグローバルメモリを作り、そこから生成した回答の下書きを手がかりに検索を導く RAG フレームワーク MemoRAG を提案した研究です。元のクエリで直接検索する従来 RAG と異なり、要約のようにクエリが曖昧なタスクや複雑な QA にも対応でき、KV 圧縮によるメモリ実現と、最終回答の質で手がかり生成を強化する RLGF も導入しています。LongBench、InfiniteBench、自作の UltraDomain で平均 40.2 と長文 LLM の Full（35.0）を上回り、128K 文脈を 60 GiB 未満の GPU メモリで処理できた点に加え、被引用数が同年1位（Paper Digest 集計）であることも注目の理由です。"
+    },
+    {
+      "title": "Adaptive Activation Steering: A Tuning-Free LLM Truthfulness Improvement Method for Diverse Hallucinations Categories",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Tianlong Wang",
+        "Xianfeng Jiao",
+        "Yinghao Zhu",
+        "Zhongzhi Chen",
+        "Yifan He",
+        "Xu Chu",
+        "Junyi Gao",
+        "Yasha Wang",
+        "Liantao Ma"
+      ],
+      "url": "https://arxiv.org/abs/2406.00034",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "LLMが内部では真実性を「知っている」のに誤った内容を「語ってしまう」ギャップを埋めるため、推論時に活性化を「truthful」方向へシフトするチューニング不要の手法ACT（Adaptive Activation Steering）を提案した研究。多様なハルシネーションカテゴリに対応するため、複数のステアリングベクトルと適応的な介入強度を用いる。",
+        "novelty": "既存手法（ITI、RepE、Mean-Centring等）は単一のステアリングベクトルと固定強度を使うのに対し、ACTは活性化の真実性の度合いに応じて強度を調整し、教師なしクラスタリングで複数のベクトルを生成する。著者らは、ハルシネーションのカテゴリごとにステアリングベクトルが活性化空間で異なるクラスタを形成することを初めて観察したと主張している。TruthXのようなオートエンコーダの学習も不要である。",
+        "method": "各質問について真実回答と非真実回答の最終トークン活性化の平均差を方向表現とし、K-meansでC個のクラスタに分け、クラスタごとに各層・各ヘッドの線形プローブ（ロジスティック回帰）を学習する。検証精度が高い上位Kヘッドを介入対象に選び、推論時にはプローブ出力（真実性との類似度、0〜1）をもとにステアリングベクトル（既定ではプローブのパラメータθ）を (1−類似度) に基づく強度α(1−p+β)でスケールして加算する。わずか40サンプル程度の学習データで済み、推論時の追加計算はO(CHD)の定数オーダーである。",
+        "validation": "TruthfulQA（817問、38カテゴリ）で、True*Info・MC1/MC2などを用いて評価した。フルデータ設定のLLaMA-7BではTrue*Infoがベースライン23.1から42.3へ向上し、最良の比較手法Mean-Centringに対し34%の改善となった。LLaMA・LLaMA2・Alpaca・Vicuna・LLaMA2-Chat・LLaMA3でも改善し、LLaMAでは142%の相対向上である。さらに人手評価、Natural QuestionsとMMLUへの汎化（50.6→52.5、35.0→36.9）、推論時間の増加2%未満、Few-shot Prompting併用での7B〜65Bのスケーラビリティも示している。",
+        "discussion": "マルチターン対話など実運用のチャット場面での有効性は未検証であり、真実性と有用性（文章の滑らかさなど）のトレードオフも今後の課題とされている。また、フルデータ設定ではモデルが大きくなると「I have no comments」のような回答が増えて情報量が下がるため、活性化ステアリング単独では7B超へのスケールが難しく、大規模モデルではFew-shot Promptingとの併用が必要である。",
+        "next": [
+          {
+            "title": "Inference-Time Intervention: Eliciting Truthful Answers from a Language Model",
+            "reason": "ACTが直接の土台・主要ベースラインとしている、単一ベクトル・固定強度の活性化介入手法であり、差分を理解するのに必須である。"
+          },
+          {
+            "title": "Improving activation steering in language models with mean-centring",
+            "reason": "フルデータ設定でACTの最良の比較手法となったステアリングベクトル生成手法である。"
+          },
+          {
+            "title": "TruthfulQA: Measuring how models mimic human falsehoods",
+            "reason": "ACTの評価に使われるベンチマークで、38カテゴリの構成やTrue*Infoなどの指標を把握するために読む価値がある。"
+          }
+        ]
+      },
+      "titleJa": "適応的活性化ステアリング:多様なハルシネーションカテゴリに対応する、チューニング不要のLLM真実性向上手法",
+      "why": "LLMが内部では真実性を「知っている」のに誤った内容を語ってしまうギャップに対し、推論時に活性化を truthful 方向へ動かすチューニング不要のACTを提案した研究です。単一ベクトル・固定強度の既存手法と異なり、教師なしクラスタリングによる複数のステアリングベクトルと、活性化の真実性に応じた適応的な強度を用います。TruthfulQAでLLaMA-7BのTrue*Infoを23.1から42.3へ高め、最良の比較手法Mean-Centringに対し34%改善し、推論時間の増加も2%未満で、WWW 2025で被引用数が同年2位(Paper Digest集計)という点でも注目されます。"
     }
   ],
   "sources": [
@@ -68,6 +146,10 @@
     {
       "title": "arXiv（受賞論文の著者情報）",
       "url": "https://arxiv.org/"
+    },
+    {
+      "title": "Most Influential WWW Papers 2025-09（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2025/09/most-influential-www-papers-2025-09-version/"
     }
   ],
   "unreachable": [

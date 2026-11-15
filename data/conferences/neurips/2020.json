@@ -80,6 +80,110 @@
           }
         ]
       }
+    },
+    {
+      "title": "No-Regret Learning Dynamics for Extensive-Form Correlated Equilibrium",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Andrea Celli",
+        "Alberto Marchesi",
+        "Gabriele Farina",
+        "Nicola Gatti"
+      ],
+      "url": "https://arxiv.org/abs/2004.00603",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "n人一般和の完全記憶拡張形ゲームにおいて、各プレイヤーが独立に（非結合で）更新するno-regretダイナミクスにより、プレイの経験的頻度が拡張形相関均衡（EFCE）へ収束することを初めて示した研究。正規形ゲームでの内部後悔最小化→相関均衡というHart and Mas-Colellの結果を逐次ゲームへ拡張している。",
+        "novelty": "EFCEの計算は多項式時間で可能と知られていたが（Ellipsoid Against Hope系）実用的にはトイ問題に限られ、EFCEが非結合な学習ダイナミクスから生じるかは未解決だった。本論文はそれに肯定的に答え、内部後悔を拡張した「トリガー後悔」を導入した。また既存のEFCE計算アルゴリズムが2人・チャンスなしに限られるのに対し、チャンスを含む多人数ゲームにも適用できる。",
+        "method": "EFCEをトリガーエージェントで定義し、トリガー後悔が小さければ経験的頻度がε-EFCEになることを示した（Theorem 1）。トリガー後悔をlaminar regret decompositionの拡張により各情報集合の局所的な後悔（laminar部分木後悔）に分解し、アルゴリズムICFRで最小化する。ICFRは各情報集合に内部後悔最小化器を1つと、到達不能な系列ごとに外部後悔最小化器を持ち、プランを上から順にサンプルする際、到達可能なら内部、不可能なら外部の最小化器の推薦に従う。各時点で非零の効用を受け取る最小化器は1つだけなので、全体の収束が損なわれない。",
+        "validation": "Kuhn poker、Leduc poker、Goofspiel、Battleship（2×2グリッド、最大3ラウンド）の多人数インスタンスで評価した。外部後悔にはRegret matching、内部後悔にはBlum-Mansour法を使用し、最大10^4反復、50シードで最大偏差δ(μ̄^T)を測定した結果、経験的にほぼO(1/T)の収束率を示した。またNFCCEの計算では、従来手法が情報集合1200個のLeducで0.1-NFCCEに24時間で届かなかったのに対し、ICFRは9千超の情報集合を持つより複雑なLeducで約9時間でε=0.1に到達した。",
+        "discussion": "サポートサイズの大きい均衡（Battleship）は計算が特に難しいことが示唆されている。収束の保証は本会議版では極限での概収束のみで、有限時間の高確率収束境界は改訂版のジャーナル論文（arXiv 2104.01520）で与えられている。その後、楽観的ダイナミクスによる高速化（O(T^{1/4})のトリガー後悔）やバンディットフィードバック下の手法などが提案されている。",
+        "next": [
+          {
+            "title": "Simple uncoupled no-regret learning dynamics for extensive-form correlated equilibrium",
+            "reason": "本論文の改訂版で、phi-regret最小化の枠組みで再構成され有限時間の高確率収束境界も与えられているため。"
+          },
+          {
+            "title": "Efficient deviation types and learning for hindsight rationality in extensive-form games",
+            "reason": "行動的逸脱の概念で拡張形ゲームの相関均衡を分類し、EFCEに至る別のno-regretダイナミクスを与えているため。"
+          },
+          {
+            "title": "Faster no-regret learning dynamics for extensive-form correlated and coarse correlated equilibria",
+            "reason": "楽観的hedgeによりEFCEのトリガー後悔をO(T^{1/4})に改善した後続研究で、収束の高速化を知るのに適しているため。"
+          }
+        ]
+      },
+      "titleJa": "拡張形相関均衡のためのNo-Regret学習ダイナミクス",
+      "why": "n人一般和の完全記憶拡張形ゲームで、各プレイヤーが独立に更新するno-regretダイナミクスによりプレイの経験的頻度が拡張形相関均衡（EFCE）へ収束することを初めて示した研究で、内部後悔を拡張した「トリガー後悔」を導入している。既存のEFCE計算アルゴリズムが2人・チャンスなしに限られるのに対し、チャンスを含む多人数ゲームにも適用でき、Kuhn poker、Leduc poker、Goofspiel、Battleshipの実験ではほぼO(1/T)の収束率を示した。NFCCEの計算でも、従来手法が情報集合1200個のLeducで0.1-NFCCEに24時間で届かなかったのに対し、ICFRは9千超の情報集合を持つより複雑なLeducで約9時間でε=0.1に到達した。"
+    },
+    {
+      "title": "Hogwild!: A Lock-Free Approach to Parallelizing Stochastic Gradient Descent",
+      "award": "Test of Time",
+      "authors": [
+        "Feng Niu",
+        "Benjamin Recht",
+        "Christopher Re",
+        "Stephen J. Wright"
+      ],
+      "url": "https://arxiv.org/abs/1106.5730",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "SGD を並列化する際、従来必須とされたメモリのロックや同期を一切使わずに、複数プロセッサが共有メモリ上の決定変数を好き勝手に更新するロックフリー手法 Hogwild! を提案した研究。最適化問題がスパース（各勾配更新が変数のごく一部しか変更しない）な場合に、ほぼ最適な収束率と線形に近い高速化が得られることを理論・実験で示した。",
+        "novelty": "従来の並列SGD（MapReduce型の平均化、勾配の分散平均、Langfordらのラウンドロビン方式など）はロックや同期・通信のオーバーヘッドが性能を損なっていたが、本手法はロックを完全に排除し、上書きが起きても誤差がほとんど生じないことをスパース性の指標（Ω, Δ, ρ）で理論的に保証した。また副産物として、定数ステップ幅に指数的バックオフを組み合わせることで、曲率の過大推定に弱い 1/k 型ステップ幅や 1/√k の遅い収束率に頼らず、頑健な 1/k 収束率が得られることを示した。",
+        "method": "各プロセッサが辺 e（損失 f_e の項）を一様ランダムに選び、e に含まれる成分だけを読んで勾配 G_e を計算し、ロックなしで x_v ← x_v − γ b_v^T G_e(x) と更新する。成分ごとの加算はアトミック命令で実現できると仮定する。解析では、勾配が最大 τ ステップ古い（stale）ことを許し、強凸・リプシッツ勾配・勾配ノルム上界 M を仮定して、実効曲率 c_r による再帰式を導く。ステップ幅の上限をスパース性パラメータ Ω, Δ, ρ と遅延 τ で与え、τ=0 では直列SGDと同じ収束率になることを示す。さらにエポックごとにステップ幅を定数倍 β（最適値は約0.37）で減らすバックオフ方式で log 項を除去する。実験では、解析の with-replacement 方式ではなく、各エポック冒頭に辺を各プロセッサへ重複なしで割り当てる方式を用いている。",
+        "validation": "スパースSVM（RCV1）、行列補完（Netflix、KDD Cup 2011、合成データ Jumbo）、グラフカット（腹部画像、DBLife のエンティティ解決）で、10コア・20エポックの条件でラウンドロビン（RR）や細粒度ロックのAIGと比較した。RCV1 は ρ=0.44, Δ=1.0 と不利な条件でも Hogwild! は約3倍の高速化を示し、RRは直列より悪化した。腹部画像カットでは10スレッドで4倍超、DBLife では約9倍の高速化を示し（RRは約5倍）、Netflix では RR が直列より62%遅い一方、Jumbo（2e9エントリ）は Hogwild! で約2.5〜3時間で解けた。人工的な遅延実験では、勾配計算が約1ミリ秒以上かかる場合にRRがようやく Hogwild! と同等になる。",
+        "discussion": "理論保証は τ=o(n^{1/4}) 程度のプロセッサ数やスパース性が前提で、解析も実際の実装（重複なし抽出・全成分更新）ではなく with-replacement で1成分のみ更新する方式に対するものであり、実際の挙動は理論より良いとされるが理論的な裏付けは未整備である。頻出変数（バイアス項など）は更新頻度を下げて扱う拡張が示唆され、今後は衝突をそもそも避けるような偏った順序付けの一般化が課題として挙げられている。",
+        "next": [
+          {
+            "title": "Slow Learners are Fast",
+            "reason": "本論文が最も近い先行研究として直接比較しているラウンドロビン方式の遅延勾配SGDを理解するため。"
+          },
+          {
+            "title": "Robust Stochastic Approximation Approach to Stochastic Programming",
+            "reason": "本論文の収束解析の枠組みと、1/k型ステップ幅の曲率過大推定に対する脆さの議論の出典であるため。"
+          },
+          {
+            "title": "Parallelized Stochastic Gradient Descent",
+            "reason": "並列SGDの出力を平均する手法として本論文が実験で比較対象にしており、ロックフリー手法との違いを把握できるため。"
+          }
+        ]
+      },
+      "titleJa": "Hogwild!: 確率的勾配降下法を並列化するロックフリーなアプローチ",
+      "why": "SGD の並列化でこれまで必須とされたメモリのロックや同期を完全に排除し、複数プロセッサが共有メモリ上の変数を自由に更新する Hogwild! を提案した研究です。問題がスパースであれば、上書きが起きても誤差はほとんど生じず、ほぼ最適な収束率と線形に近い高速化が得られることを理論と実験で示しました。スパースSVM、行列補完、グラフカットの実験では、ラウンドロビン方式より高速で、たとえば DBLife では約9倍の高速化を示し、2e9エントリの Jumbo も約2.5〜3時間で解けた点が注目され、NeurIPS 2020 で Test of Time 賞を受賞しました。"
+    },
+    {
+      "title": "Denoising Diffusion Probabilistic Models",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Jonathan Ho",
+        "Ajay Jain",
+        "Pieter Abbeel"
+      ],
+      "url": "https://arxiv.org/abs/2006.11239",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "拡散確率モデル（DDPM）を用いて高品質な画像生成が可能であることを示した研究。データに段階的にガウスノイズを加える順過程を逆転するマルコフ連鎖を学習し、ノイズから画像を生成する。",
+        "novelty": "拡散モデルと、複数ノイズレベルでのデノイジングスコアマッチングおよびアニールド・ランジュバン動力学との間に明示的な等価性を示した。また、ε予測という再パラメータ化と重み付き変分下界（L_simple）により、拡散モデルで初めて高品質なサンプル生成を実証した。さらに進行的な不可逆圧縮や自己回帰的復号との関連も示した。",
+        "method": "順過程の分散β_tを線形スケジュール（1e-4〜0.02、T=1000）で固定し、任意時刻のx_tを閉形式で直接サンプルできる性質を利用して、ランダムな時刻tの項をSGDで最適化する。逆過程の平均はノイズεを予測するネットワークε_θで表現し、損失は||ε−ε_θ(√ᾱ_t x0+√(1−ᾱ_t)ε, t)||²という単純な形（L_simple）に簡略化する。逆過程の分散は学習せず定数とする。ネットワークはグループ正規化と16×16解像度のself-attentionを持つU-Netで、時刻は正弦波位置埋め込みで入力する。",
+        "validation": "CIFAR10の無条件生成でInception score 9.46、FID 3.17を達成し、本文中の比較対象の多くのモデル（条件付きモデルを含む）より良好なサンプル品質を示した。256×256のLSUNではProgressiveGANに近い品質（Bedroom FID 4.90、Church FID 7.89）が得られた。アブレーションでは、ε予測とL_simpleの組み合わせが最良で、分散を学習すると学習が不安定になり品質が低下した。",
+        "discussion": "サンプル品質は高いが対数尤度（NLL ≤3.75 bits/dim）は他の尤度ベースモデルに及ばず、符号長の半分以上が知覚できない細部の記述に使われている。サンプリングにT=1000回のネットワーク評価が必要という点も課題として読み取れる。著者らは他のデータモダンリティや他の生成モデルの構成要素としての利用を今後の課題としている。",
+        "next": [
+          {
+            "title": "Deep unsupervised learning using nonequilibrium thermodynamics",
+            "reason": "拡散確率モデルの原点となる論文であり、本研究が何を改良したのかを理解できる。"
+          },
+          {
+            "title": "Generative modeling by estimating gradients of the data distribution",
+            "reason": "本論文が等価性を示したデノイジングスコアマッチングとアニールド・ランジュバン動力学（NCSN）の基礎となる論文である。"
+          },
+          {
+            "title": "Improved techniques for training score-based generative models",
+            "reason": "スコアベース生成モデルの改良手法（NCSNv2）であり、拡散モデルとの関係を比較しながら理解する助けになる。"
+          }
+        ]
+      },
+      "titleJa": "ノイズ除去拡散確率モデル（Denoising Diffusion Probabilistic Models）",
+      "why": "データに段階的にガウスノイズを加える過程を逆転するマルコフ連鎖を学習し、ノイズから画像を生成する拡散確率モデル（DDPM）で、高品質な画像生成が可能であることを示した研究です。拡散モデルと複数ノイズレベルでのデノイジングスコアマッチングおよびアニールド・ランジュバン動力学との等価性を明らかにし、ε予測と重み付き変分下界（L_simple）によって拡散モデルで初めて高品質なサンプル生成を実証しました。CIFAR10の無条件生成でInception score 9.46、FID 3.17を達成し、本文中の比較対象の多くのモデルより良好な品質を示した点も注目されます。"
     }
   ],
   "sources": [
@@ -94,6 +198,10 @@
     {
       "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
       "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    },
+    {
+      "title": "Most Influential NIPS Papers 2025-09（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2025/09/most-influential-nips-papers-2025-09/"
     }
   ],
   "unreachable": [

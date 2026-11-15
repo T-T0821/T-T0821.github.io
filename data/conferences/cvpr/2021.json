@@ -90,6 +90,156 @@
           }
         ]
       }
+    },
+    {
+      "title": "Task Programming: Learning Data Efficient Behavior Representations",
+      "award": "Best Student Paper",
+      "authors": [
+        "Jennifer J. Sun",
+        "Ann Kennedy",
+        "Eric Zhan",
+        "David J. Anderson",
+        "Yisong Yue",
+        "Pietro Perona"
+      ],
+      "url": "https://arxiv.org/abs/2011.13917",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "動物などの軌跡（キーポイント）データから行動を分類する際、専門家のアノテーション負担を減らすための軌跡埋め込み手法TREBAを提案した研究。専門家が軌跡の属性を計算するプログラムを書く「タスクプログラミング」により、少数のプログラム化タスクで大量のアノテーションを代替できることを示した。",
+        "novelty": "自己教師あり表現学習（軌跡生成）と、専門家が書いたプログラムによる構造化知識の明示的な埋め込みを統合した点が新しい。画像・動画向けの自己教師ありタスクは軌跡データに直接適用しにくいが、専門家定義の属性をデコーダタスクとして使うことでこれを補う。アノテーション時間とプログラム作成の間の専門家労力のトレードオフを定量的に評価した点も特徴。",
+        "method": "軌跡VAE（TVAE：RNNエンコーダ・デコーダ）で軌跡の自己復元（次状態予測）を学習し、これに専門家プログラムに基づくデコーダタスクを加えたマルチタスク自己教師あり学習を行う。プログラムタスクには、生成軌跡で属性が保たれるようにする属性一貫性損失、属性の直接デコード、プログラム出力のクラスを正例とするコントラスティブ損失がある。実験では一貫性損失とコントラスティブ損失の組み合わせを使い、反射・回転・平行移動などの属性保存的データ拡張も併用する。学習済みエンコーダは凍結し、前後10フレームを含むT=21フレームの特徴として浅い全結合分類器に入力する。",
+        "validation": "マウス2データセット（MARS、CRIM13）とハエ1データセット（Fly vs. Fly）で、訓練データ割合を変えながらMAPに基づく分類誤差を、生のキーポイントおよび専門家設計特徴と比較した。MARSでは専門家設計特徴に対し、完全な訓練データでのベースライン性能を約5〜10%のデータで達成し（10〜20倍の効率化）、CRIM13とFlyの特徴ありの設定では50%のデータで同等性能（2倍）であった。ハイパーパラメータ的な検証として、プログラム数を3個（マウス）や7個（ハエ）に増やすと全プログラム使用時と同程度の誤差削減になり、単一プログラムでは性能のばらつきが大きく、悪いものは誤差を増やす場合もあった。",
+        "discussion": "タスクプログラミングとアノテーションのどちらが有効かは、アノテーションのコストと専門家が行動属性を特定できる理解度に依存する。単一プログラムの選択による性能のばらつきが大きく、良いプログラムの選び方が課題である。プログラム作成やアノテーションを支援するツールの整備や、スポーツ分析など他領域への応用が今後の方向として挙げられている。",
+        "next": [
+          {
+            "title": "Learning Calibratable Policies using Programmatic Style-Consistency",
+            "reason": "TREBAの基盤であるTVAEと、プログラムによる属性一貫性損失・微分可能近似の詳細が理解できる。"
+          },
+          {
+            "title": "The Mouse Action Recognition System (MARS): a software pipeline for automated analysis of social behaviors in mice",
+            "reason": "本研究のマウス実験で使われたデータセット、トラッカー、ベースライン特徴の出典であるため。"
+          },
+          {
+            "title": "Data Programming: Creating Large Training Sets, Quickly",
+            "reason": "タスクプログラミングの着想元であり、プログラムによる弱教師あり学習の考え方を把握できる。"
+          }
+        ]
+      },
+      "titleJa": "タスクプログラミング：データ効率の高い行動表現の学習",
+      "why": "動物などの軌跡（キーポイント）データから行動を分類する際の専門家のアノテーション負担を減らすため、専門家が軌跡の属性を計算するプログラムを書く「タスクプログラミング」を用いた軌跡埋め込み手法TREBAを提案した研究です。自己教師あり表現学習と専門家のプログラムによる構造化知識の埋め込みを統合し、MARSでは専門家設計特徴に対して完全な訓練データでのベースライン性能を約5〜10%のデータで達成（10〜20倍の効率化）しました。アノテーション時間とプログラム作成の間の専門家労力のトレードオフを定量的に評価した点も特徴で、CVPR 2021のBest Student Paperに選ばれています。"
+    },
+    {
+      "title": "Exploring Simple Siamese Representation Learning",
+      "award": "Best Paper Honorable Mention",
+      "authors": [
+        "Xinlei Chen",
+        "Kaiming He"
+      ],
+      "url": "https://arxiv.org/abs/2011.10566",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "教師なし視覚表現学習において、負例ペア・大きなバッチ・モーメンタムエンコーダのいずれも使わず、単純なSiameseネットワークだけで有意な表現を学習できることを示した研究。提案手法「SimSiam」は同一画像の2つの拡張ビューの類似度を最大化するだけで、ImageNetや下流タスクで競合する性能を達成する。",
+        "novelty": "SimCLR（負例・大バッチ）、SwAV（オンラインクラスタリング）、BYOL（モーメンタムエンコーダ）がそれぞれ崩壊回避に頼っていた要素をすべて取り除いても崩壊しないことを実証した。崩壊回避の鍵は stop-gradient であると実験で示し、それをEM的な交互最適化として解釈する仮説を提示して、これらの手法の共通基盤がSiamese構造にあることを示唆した。",
+        "method": "共有重みのエンコーダf（バックボーン＋射影MLP）に2つのビューを通し、片側に予測MLP h を適用、もう片側に stop-gradient をかけて負のコサイン類似度を最小化し、対称化した損失で学習する（バッチ512、通常のSGD、LARS不要）。仮説では、θ（エンコーダ）とη（各画像の表現）の2組の変数をk-meansのように交互最適化していると見なし、stop-gradientはθ更新時にηを定数扱いする自然な帰結、予測器hは拡張に関する期待値 E_T[F(T(x))] の近似を補うものと位置づける。",
+        "validation": "ImageNetでResNet-50を事前学習し線形評価を実施した。stop-gradientありで67.7%（100エポック）、なしでは0.1%となり崩壊が確認された。バッチサイズ64〜2048で概ね良好に動作し（256で68.1%、4096では64.0%）、100エポックでは比較手法中最高精度で、SimCLRを全エポック設定で上回った。一方、学習を長くした際の伸びは小さく、800エポックでは71.3%でBYOLの74.3%を下回った。VOC・COCOの物体検出・インスタンスセグメンテーションへの転移でも他手法と同等水準を示した。",
+        "discussion": "著者らも認める通り、仮説は何を最適化しているかを説明するにとどまり、なぜ崩壊が起きないのかは経験的観察のままで未解決である。また長期学習ではBYOLなどモーメンタムエンコーダ系に及ばず、η のサブ問題を他のオプティマイザで解く可能性などが今後の課題として挙げられている。",
+        "next": [
+          {
+            "title": "Bootstrap your own latent: A new approach to self-supervised learning (BYOL)",
+            "reason": "SimSiamが「モーメンタムエンコーダを除いたBYOL」と位置づけられており、予測器とstop-gradientの出自を理解するのに必須であるため。"
+          },
+          {
+            "title": "A simple framework for contrastive learning of visual representations (SimCLR)",
+            "reason": "負例と大バッチに依存する対照学習の代表手法で、SimSiamとの方法論的な比較の基準になるため。"
+          },
+          {
+            "title": "Unsupervised learning of visual features by contrasting cluster assignments (SwAV)",
+            "reason": "オンラインクラスタリングで崩壊を防ぐ手法であり、SimSiamとの関係（交互最適化・クロスエントロピー類似度）を理解するのに役立つため。"
+          }
+        ]
+      },
+      "titleJa": "単純なSiamese表現学習の探究",
+      "why": "負例ペア・大きなバッチ・モーメンタムエンコーダのいずれも使わず、単純なSiameseネットワークだけで教師なし視覚表現学習が成り立つことを示した研究です。提案手法SimSiamでは、崩壊回避の鍵がstop-gradientであることを実験で示し、ImageNetでの100エポックの学習では比較手法中最高精度（67.7%）を達成しました。一方で800エポックでは71.3%とBYOLの74.3%を下回るものの、SimCLR・SwAV・BYOLに共通する基盤がSiamese構造にあることを示唆した点が注目されます。"
+    },
+    {
+      "title": "Less is More: ClipBERT for Video-and-Language Learning via Sparse Sampling",
+      "award": "Best Paper Honorable Mention",
+      "authors": [
+        "Jie Lei",
+        "Linjie Li",
+        "Luowei Zhou",
+        "Zhe Gan",
+        "Tamara L. Berg",
+        "Mohit Bansal",
+        "Jingjing Liu"
+      ],
+      "url": "https://arxiv.org/abs/2102.06183",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ClipBERT は、動画と言語のタスク（テキスト→動画検索、動画質問応答）を、オフライン抽出した密な特徴量ではなく、生のフレーム画素と生のテキストトークンから End-to-End で学習するための汎用フレームワークである。各学習ステップで動画から疎にサンプリングした 1 本または数本の短いクリップだけを使うことで、計算・メモリコストを抑えている。3 秒の GIF から 180 秒の YouTube 動画まで、6 つのデータセットで評価している。",
+        "novelty": "従来は凍結した視覚・言語特徴量を使う（stop gradient）のが主流で、タスクやドメイン、モダリティ間のズレが問題だった。本研究は疎サンプリングで End-to-End 学習を現実的なコストにし、「少ないクリップのほうが全長動画の密な特徴量より精度が高いことが多い」という less-is-more を示した。また、2D CNN を使うことで、動画テキスト事前学習ではなく画像テキスト事前学習（COCO/Visual Genome Captions）が動画テキストタスクに有効であることを示した。",
+        "method": "動画から Ntrain 個のクリップをランダムに疎サンプリングし、各クリップから T フレームを取り出す。各フレームを ResNet-50（2D CNN）で符号化し、平均プーリングでクリップ特徴にまとめ、2D 位置埋め込みを加える。これをテキスト埋め込みと連結して 12 層 Transformer（BERT-base 初期化）に入力し、[CLS] 表現から予測する。クリップごとの予測は平均、最大、LogSumExp などで集約して動画レベルの損失を計算する（LogSumExp が最良）。推論時は Ntest 個のクリップを一様に密サンプリングして予測を集約する（sparse training, dense inference）。重みは COCO/VG Captions での MLM と画像テキストマッチングによる事前学習で初期化する。",
+        "validation": "MSRVTT、DiDeMo、ActivityNet Captions のテキスト→動画検索と、TGIF-QA、MSRVTT-QA、MSRVTT 多肢選択 QA で評価した。MSRVTT 検索では ClipBERT 4×1 が HowTo100M で事前学習した HERO より R@1 で 3.0% 高く、8×2 では 5.2% 高かった（22.0）。TGIF-QA では 1 フレーム学習の ClipBERT が QueST を Action で 6.9%、Transition で 6.8% 上回った。アブレーションでは、ランダム 4 クリップが一様 16 クリップを全指標で上回り、画像テキスト事前学習と End-to-End 学習の効果も確認された。",
+        "discussion": "TGIF-QA の Count のように全長動画のモデリングが必要なタスクは対象外としており、長尺動画では少数クリップでは情報が足りない可能性がある（ActivityNet では音声を使う MMT などに及ばない結果もある）。著者らは、クリップ数を増やすこと、音声などの追加入力を組み込むこと、より高解像度の動画を使うことを今後の方向として挙げている。計算コストの制約から、動画テキストの大規模事前学習は行っていない。",
+        "next": [
+          {
+            "title": "HERO: Hierarchical Encoder for Video+Language Omni-representation Pre-training",
+            "reason": "HowTo100M で事前学習した密な特徴量ベースの主要比較対象であり、ClipBERT との設計差を理解できる。"
+          },
+          {
+            "title": "Pixel-BERT: Aligning Image Pixels with Text by Deep Multi-Modal Transformers",
+            "reason": "ClipBERT の視覚エンコーダ構成と画像テキスト事前学習の設計の元になっている。"
+          },
+          {
+            "title": "In Defense of Grid Features for Visual Question Answering",
+            "reason": "ClipBERT の ResNet-50 の初期化に使われた grid-feat の背景と、グリッド特徴の有効性を理解できる。"
+          }
+        ]
+      },
+      "titleJa": "Less is More: 疎サンプリングによる動画・言語学習のための ClipBERT",
+      "why": "ClipBERT は、動画から疎にサンプリングした短いクリップだけを使い、生のフレーム画素とテキストトークンから End-to-End で動画・言語タスク（テキスト→動画検索、動画質問応答）を学習する枠組みで、計算・メモリコストを抑えている。凍結した密な特徴量に頼る従来手法に対し、少数クリップのほうが精度が高いことが多いという「less is more」を示し、画像テキスト事前学習（COCO/Visual Genome Captions）が動画テキストタスクに有効であることも明らかにした点が注目される。MSRVTT 検索では HowTo100M で事前学習した HERO を R@1 で上回り、TGIF-QA でも QueST を上回るなど、6 つのデータセットで有効性が確認されている。"
+    },
+    {
+      "title": "Rethinking Semantic Segmentation from a Sequence-to-Sequence Perspective with Transformers",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Sixiao Zheng",
+        "Jiachen Lu",
+        "Hengshuang Zhao",
+        "Xiatian Zhu",
+        "Zekun Luo",
+        "Yabiao Wang",
+        "Yanwei Fu",
+        "Jianfeng Feng",
+        "Tao Xiang",
+        "Philip H. S. Torr",
+        "Li Zhang"
+      ],
+      "url": "https://arxiv.org/abs/2012.15840",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "セマンティックセグメンテーションを、エンコーダ・デコーダ型FCNではなく「画像パッチ列から出力列を予測するsequence-to-sequence問題」として捉え直し、純粋なTransformerエンコーダを用いたSETR（SEgmentation TRansformer）を提案した研究。ADE20KとPascal Contextで当時の最高性能を達成した。",
+        "novelty": "従来はdilated convolutionやアテンションモジュールの追加で受容野を広げるだけで、FCNのエンコーダ・デコーダ構造自体は不変だった。SETRは解像度を下げず、全層で大域的な文脈をモデル化する純Transformerエンコーダに置き換え、アーキテクチャレベルで受容野の制約を解消した点が新しい。解像度を段階的に落とすAxial-DeepLabとも異なり、標準的なself-attentionを使う。",
+        "method": "画像をH/16×W/16の固定サイズパッチに分割し、線形埋め込みと学習可能な位置埋め込みを加えて長さHW/256の系列としてTransformerエンコーダ（T-Base 12層／T-Large 24層）に入力する。出力系列をH/16×W/16×Cの特徴マップに戻し、3種のデコーダで画素単位の分類を行う。デコーダは、一括でバイリニア補間するNaive、2倍ずつ段階的にアップサンプリングするPUP、複数層の特徴を集約するMLAである。ViTまたはDeiTの事前学習重みで初期化し、中間層に補助損失も加える。",
+        "validation": "ADE20K、Pascal Context、Cityscapesで、mIoUを指標にFCN・Semantic FPN・各種アテンション系手法と比較した。SETR-MLAはマルチスケール推論でADE20Kにて50.28%、Pascal Contextにて55.83%を達成し、ADE20Kのテストサーバのリーダーボードで1位となった。Cityscapes検証セットではSETR-PUPが82.15%（80k、MS）で、テストセットでは81.08%（fineのみ、100k）となり競争力のある結果だった。ImageNet-21kで事前学習したFCNとの比較でも優位で、利点は事前学習データの多さだけによらないと示された。",
+        "discussion": "事前学習への依存が大きく、ランダム初期化のSETR-PUPはCityscapesで42.27% mIoUにとどまる。GPUメモリの制約により出力ストライドは16としており、dilated FCNの8とは条件が異なる。T-Largeは約300M以上のパラメータを持ち、計算コストも大きい。",
+        "next": [
+          {
+            "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+            "reason": "SETRのエンコーダと事前学習重みの元になった純Transformerによる画像認識手法（ViT）で、パッチ系列化の基礎を理解できる。"
+          },
+          {
+            "title": "Axial-DeepLab: Stand-alone Axial-Attention for Panoptic Segmentation",
+            "reason": "アテンションのみのセグメンテーションモデルとしてSETRと最も近く、解像度を段階的に落とす設計との違いを比較できる。"
+          },
+          {
+            "title": "Training data-efficient image transformers & distillation through attention",
+            "reason": "SETRで事前学習に用いられるDeiTの学習法を理解でき、ImageNet-1kのみで得られる性能の根拠が分かる。"
+          }
+        ]
+      },
+      "titleJa": "Transformerによる系列対系列の視点からのセマンティックセグメンテーションの再考",
+      "why": "セマンティックセグメンテーションを、エンコーダ・デコーダ型FCNではなく画像パッチ列から出力列を予測するsequence-to-sequence問題として捉え直し、解像度を下げず全層で大域的な文脈をモデル化する純Transformerエンコーダ採用のSETRを提案した研究です。ADE20KとPascal Contextで当時の最高性能を達成し、ADE20Kのテストサーバのリーダーボードでも1位となりました。ImageNet-21kで事前学習したFCNとの比較でも優位を示し、被引用数でもCVPR 2021の上位（Paper Digest集計で同年2位）に入ることから注目されています。"
     }
   ],
   "sources": [
@@ -100,6 +250,10 @@
     {
       "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
       "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    },
+    {
+      "title": "Most Influential CVPR Papers 2023-04（Paper Digest・被引用数の集計）",
+      "url": "https://resources.paperdigest.org/2023/04/most-influential-cvpr-papers-2023-04/"
     }
   ],
   "unreachable": [

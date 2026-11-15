@@ -30,6 +30,16 @@ NeurIPS・ICML・ICLR・AAAI・IJCAI・CVPR・ICCV・ECCV・ACL・EMNLP・KDD・
 5. `npm run conf:ochiai` → `npm run conf:render` → `npm run docs:build` が通ることを確認して、
    `data/conferences` と `docs/conferences` をコミットし main に push する。
 
+### 注目論文の選び方（featured）
+
+1回あたり5本前後（最大6本）。ページにも同じ説明が表示される（`render.mjs` の `SELECTION_NOTE`）。
+
+1. その回の受賞論文を、賞の格の順（最優秀 → 優秀・佳作・次点 → Test of Time）に最大4本。
+2. Paper Digest の「Most Influential <会議> Papers」（被引用数の集計）でその年の上位の論文を、合計5本になるまで加える（最低1本）。
+   `"selection": "被引用数上位（Paper Digest の集計で同年N位）"` とし、出典 `sources` にそのページを加える。
+   開催直後で集計がまだ無い回は受賞論文だけでよい。
+3. URL は arXiv で原題が一致したものだけを付ける。arXiv に無い論文は URL なしで載せてよい（落合フォーマットは作られない）。
+
 ### 情報源（この順で確認）
 
 - 受賞一覧: `https://<会議>.cc/virtual/<年>/awards_detail`（NeurIPS・ICML・ICLR）、各会議の公式ブログ（blog.neurips.cc / blog.iclr.cc など）
@@ -52,11 +62,10 @@ NeurIPS・ICML・ICLR・AAAI・IJCAI・CVPR・ICCV・ECCV・ACL・EMNLP・KDD・
   "trends": ["この回の主なテーマ: 説明", "..."],          // 3〜5件
   "implications": ["技術動向への示唆", "..."],             // 2〜4件
   "awards": [{ "award": "Best Paper", "title": "原題", "authors": "著者", "url": "任意（arXiv など）" }],
-  "featured": [{                                            // 特に注目された論文 1〜2本（最高賞を優先）
-    "title": "原題", "titleJa": "日本語の題", "award": "Best Paper",
-    "authors": ["..."], "url": "https://arxiv.org/abs/XXXX.XXXXX",
-    "why": "注目される理由（2〜3文）"
-    // "ochiai" は npm run conf:ochiai が追加する
+  "featured": [{                                            // 注目論文 5本前後（下の「注目論文の選び方」）
+    "title": "原題", "award": "Best Paper",                 // 受賞していない論文は award の代わりに "selection"
+    "authors": ["..."], "url": "https://arxiv.org/abs/XXXX.XXXXX"
+    // "titleJa"・"why"・"ochiai" は書かなくてよい。npm run conf:ochiai が論文本文から作る
   }],
   "sources": [{ "title": "出典名", "url": "https://..." }],
   "unreachable": ["確認できなかった情報と理由"]

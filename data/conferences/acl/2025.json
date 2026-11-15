@@ -122,6 +122,121 @@
           }
         ]
       }
+    },
+    {
+      "title": "A Theory of Response Sampling in LLMs: Part Descriptive and Part Prescriptive",
+      "award": "Best Paper",
+      "authors": [
+        "Sarath Sivaprasad",
+        "Pramod Kaushik",
+        "Sahar Abdelnabi",
+        "Mario Fritz"
+      ],
+      "url": "https://arxiv.org/abs/2402.11005",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "LLMがとりうる多数の選択肢から応答をサンプリングする際のヒューリスティクスが、人間の「規範性（normality）」と同様に、記述的成分（統計的な典型）と規範的成分（モデル内に暗黙的に符号化された理想）の両方から成るとする理論を提案した研究。サンプルが統計的平均から理想の方向へずれることを、新規概念と既存概念の両方で示した。医療での回復期間推定のケーススタディを通じ、自律的意思決定でのバイアスや倫理的懸念も示している。",
+        "novelty": "従来のLLM研究はサンプリングを行動生成や意思決定のための道具として使うことが多く、サンプリング機構そのものの解明は少なかった。本研究は人間の認知科学（Bear et al.）の実験枠組みをLLMに適用・拡張し、統計と価値という2成分でサンプリングを説明する枠組みを与えた。また、概念プロトタイプにも規範的成分が含まれることや、人間との比較（ずれの程度は人間と一致しない点）も示している。",
+        "method": "架空概念「glubbing」について、平均45・標準偏差15のガウス分布（および双峰分布）に従う100個の値に、高いほど良い／低いほど良い／中立の成績（A+〜D-）を付けてプロンプトに与え、サンプルS(C)とLLM自己申告の平均A(C)をMann-Whitney U検定で比較する。既存概念では、平均A(C)・理想I(C)・サンプルS(C)を独立の文脈で尋ね、サンプルが平均より理想側にある概念数を二項検定（帰無確率0.5）で検証する。ずれはα=(A−S)×sign(A−I)、正規化版α̂=α/|A−I|で定量化する。プロトタイプについては、8概念×6事例を平均・理想・典型性の7段階で評価させ、典型性が理想側に寄るかを検定する。",
+        "validation": "新規概念の実験（GPT-4）では、中立条件でS(C)≈A(C)≈45（p=0.52）だった一方、単峰分布では正の価値でS(C)平均46.72、負の価値で36.50となり、A(C)との差は有意（正でp=.003、負でp<.001）だった。500概念・10領域の検証では、GPT-4で444概念中304がサンプルが理想側に寄り（二項検定でp≈5×10⁻¹⁵）、Llama-2-7bベースを除く14モデル中13モデルで有意だった。医療ケースでは35症状セット中26回でサンプルが理想側に寄り（p=0.003）、プロトタイプ実験では46件中39件が理想側だった（p<0.001）。",
+        "discussion": "規範的成分の起源（事前学習かRLHFか）や、規範が出力に影響する機構は未解明であり、プロトタイプ分析も初期的な探索にとどまると著者らは述べている。LLMの「理想」は人間の価値と整合する保証がなく、人間より極端な理想（例：甘い飲料0杯）を示す傾向があるため、医療・政策などでの公平性や整合性の観点から今後の検討が必要である。",
+        "next": [
+          {
+            "title": "What comes to mind?",
+            "reason": "本論文の実験枠組み（記述的・規範的成分が人間の選択肢サンプリングを導くこと）の元となる人間研究であり、比較の基礎になる。"
+          },
+          {
+            "title": "Normality: Part descriptive, part prescriptive",
+            "reason": "「規範性は記述的かつ規範的」という理論と、プロトタイプ実験の手法の出典である。"
+          },
+          {
+            "title": "Do LLMs play dice? Exploring probability distribution sampling in large language models for behavioral simulation",
+            "reason": "LLMが確率的サンプリングを正確に行えない点を扱った関連研究で、本論文の主張と対比して読める。"
+          }
+        ]
+      },
+      "titleJa": "LLMにおける応答サンプリングの理論：記述的でもあり規範的でもある",
+      "why": "LLMが多数の選択肢から応答をサンプリングする際のヒューリスティクスを、人間の規範性と同様に統計的な典型（記述的成分）と暗黙的に符号化された理想（規範的成分）の両方から成るとする理論を提案した研究です。GPT-4の新規概念実験では、単峰分布で正の価値のときサンプル平均が46.72、負の価値のときが36.50となり、統計的平均から理想の方向へずれることが示され、500概念・10領域の検証でも14モデル中13モデルで有意でした。医療での回復期間推定のケーススタディを通じて自律的意思決定におけるバイアスや倫理的懸念も示しており、サンプリング機構そのものを人間の認知科学の枠組みで説明した点が注目され、ACL 2025のBest Paperに選ばれました。"
+    },
+    {
+      "title": "Fairness through Difference Awareness: Measuring Desired Group Discrimination in LLMs",
+      "award": "Best Paper",
+      "authors": [
+        "Angelina Wang",
+        "Michelle Phan",
+        "Daniel E. Ho",
+        "Sanmi Koyejo"
+      ],
+      "url": "https://arxiv.org/abs/2502.01926",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "公平性ベンチマークが前提としてきた「グループを区別しない（difference unaware）」立場に対し、文脈上適切な場合にはグループ間の違いを認識して異なる扱いをすること（difference awareness）が重要だと主張する研究である。違いの認識能力を測る指標 DiffAware と CtxtAware を提案し、記述的（descriptive）・規範的（normative）・相関的（correlation）という評価内容の3分類を示した。8つのシナリオ計16,000問のベンチマークスイートを構築し、10種のLLMを評価している。",
+        "novelty": "従来の公平性ベンチマークは、グループを入れ替えても出力が変わらないことを良しとする設計が大半である。37件の既存ベンチマークを調査したところ32件が difference unaware であり、違いの認識を要する完全に仕様化されたものは3件だけだった。本研究は、違いの認識を公平性の独立した次元として扱い、評価内容の形式（記述的／規範的／相関的）の区別を導入した点が新しい。",
+        "method": "ベンチマークは記述的4種（宗教、職業、法律、難民申請）と規範的4種（BBQ由来、SBF由来、職業のアファーマティブ・アクション、文化の盗用）の計8種からなる。各ベンチマークは2,000問で、グループを区別すべき問い1,000問（≠条件）と同じ扱いをすべき問い1,000問（=条件）から成る。DiffAware は≠条件での正答率（再現率に相当）、CtxtAware は区別した回答のうち実際に区別すべきだった割合（適合率に相当）で、ランダム水準はいずれも1/3である。信頼区間はシナリオ内の相関を考慮したクラスタ・ブートストラップで求めている。",
+        "validation": "Llama-3.1、Mistral、Gemma-2、GPT-4、Claude-3.5 の5ファミリー、計10個の指示チューニング済みLLMで評価した。既存の公平性指標（BBQ、DiscrimEval）でほぼ満点の Gemma-2 9b（0.95〜1.0）と GPT-4o（0.97〜0.99）も、DiffAware・CtxtAware ではほとんど0.75を超えなかった。MMLUで測った能力が高いほど CtxtAware は向上したが DiffAware とは相関せず、4種のデバイアス用プロンプトはほぼ全ての場合で DiffAware を悪化させ、特に規範的ベンチマークで顕著だった。違いの認識を促すプロンプトは DiffAware を改善するが CtxtAware を悪化させ、適合率と再現率のトレードオフに似た関係が見られた。",
+        "discussion": "多肢選択式の上流評価であり、実際の下流タスクでの性能を保証しない。また、8種のうち4種は米国の文脈に基づいており、西洋的な規範に偏る可能性がある。さらに、人種・性別などの軸ごとの分解をしておらず、集団を固定的な離散カテゴリとして扱うことで本質化の害や、ノンバイナリーや多民族の人々の排除につながる恐れがある。また、不当な差別を捉える指標ではないため、既存の公平性ベンチマークと併用する必要がある。",
+        "next": [
+          {
+            "title": "BBQ: A Hand-Built Bias Benchmark for Question Answering",
+            "reason": "本研究の規範的ベンチマーク N1 の元となっており、difference unaware な評価の代表例を理解できる。"
+          },
+          {
+            "title": "Evaluating and Mitigating Discrimination in Language Model Decisions",
+            "reason": "DiscrimEval を提案した論文で、本研究が批判対象とする規範的な difference unaware 評価と、デバイアス用プロンプトの出典を確認できる。"
+          },
+          {
+            "title": "The Capacity for Moral Self-Correction in Large Language Models",
+            "reason": "本研究が DiffAware を悪化させると示した、プロンプトによる道徳的自己修正手法の原典である。"
+          }
+        ]
+      },
+      "titleJa": "違いの認識による公平性：LLMにおける望ましいグループ差別の測定",
+      "why": "グループを区別しないことを公平性とみなしてきた従来のベンチマークに対し、文脈によってはグループ間の違いを認識して異なる扱いをすることも重要だと主張し、指標 DiffAware と CtxtAware、および8シナリオ計16,000問のベンチマークを構築した研究である。既存の公平性指標でほぼ満点のモデルでも新指標ではほとんど0.75を超えず、デバイアス用プロンプトは DiffAware を悪化させるなど、従来の公平性評価の盲点を示した点が注目され、ACL 2025 の Best Paper に選ばれた。"
+    },
+    {
+      "title": "Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Benjamin Warner",
+        "Antoine Chaffin",
+        "Benjamin Clavié",
+        "Orion Weller",
+        "Oskar Hallström",
+        "Said Taghadouini",
+        "Alexis Gallagher",
+        "Raja Biswas",
+        "Faisal Ladhak",
+        "Tom Aarsen",
+        "Nathan Cooper",
+        "Griffin Adams",
+        "Jeremy Howard",
+        "Iacopo Poli"
+      ],
+      "url": "https://arxiv.org/abs/2412.13663",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "BERTに代表されるエンコーダ専用Transformerを現代的に刷新したModernBERT（base: 149M、large: 395M）を提案した研究。2兆トークン（コードを含む）で学習し、ネイティブ8192トークンの系列長をサポートする。分類・単一/複数ベクトル検索・コード検索で最高水準の性能を示しつつ、推論速度とメモリ効率も最良のエンコーダとなっている。",
+        "novelty": "従来の近代化の試み（MosaicBERT、CrammingBERT、NomicBERT、GTE-en-MLMなど）は学習効率や検索性能の一部に偏っていたが、本研究はアーキテクチャ、データ規模、ハードウェア効率を同時に改善した。コードを含むデータ混合と現代的BPEトークナイザ、モデル全体のunpadding、一般的なGPUでの利用を前提とした設計を組み合わせた点が新しい。",
+        "method": "バイアス項の削除、RoPE、Pre-LayerNorm、GeGLUといったLLM由来の改良を導入した。3層ごとにグローバル注意（RoPE theta 160,000）、残りは128トークンのスライディングウィンドウ局所注意（theta 10,000）とする交互注意を採用し、Flash Attention 3/2の併用、unpadding、torch.compileで高速化した。GPU向けにDeep & Narrowな設計（22層/28層）を採用し、語彙数は64の倍数の50,368とした。学習はMLM（マスク率30%）、StableAdamW、台形（WSD）型の学習率スケジュールとバッチサイズ・スケジュール、baseからlargeへの重み初期化を用いた。1024長で1.7兆トークン学習した後、RoPE thetaを引き上げて300Bトークンで8192長へ拡張した。",
+        "validation": "GLUE、BEIR（DPR/ColBERT）、MLDR（長文検索）、CodeSearchNet、StackQAでBERT、RoBERTa、DeBERTaV3、NomicBERT、GTE-en-MLMと比較した。ModernBERT-baseはGLUEでDeBERTaV3-baseを上回った初のMLM学習モデルで、コード検索とColBERT長文検索でも最良であり、結論では次点に対しそれぞれ6.85ポイント以上、9.1ポイント以上の差とされている。RTX 4090での効率評価では、長文入力を次に速いエンコーダの2.65倍（base）・3倍（large）の速度で処理し、base では他モデルの2倍のバッチサイズを扱えた。",
+        "discussion": "英語のみを対象としており、他言語や低リソース言語には直接適用できない。単一ベクトルの長文検索（MLDR OOD）ではGTE-en-MLMに劣り、局所注意の影響などが理由として挙げられているが未解明である。また、DeBERTaV3のようにMLMとRTDを併用すれば分類性能がさらに伸びる可能性があり、モデルパラメータ数のスケーリングも未検討である。",
+        "next": [
+          {
+            "title": "DeBERTaV3: Improving DeBERTa using ELECTRA-Style Pre-Training with Gradient-Disentangled Embedding Sharing",
+            "reason": "GLUEでModernBERT-baseに抜かれるまで最強だったRTD学習の比較対象であり、MLMとの違いを理解できる。"
+          },
+          {
+            "title": "Training Sparse Mixture Of Experts Text Embedding Models (NomicBERT)",
+            "reason": "長文脈対応の近代化エンコーダの先行例として、ModernBERTとの設計差を比較できる。"
+          },
+          {
+            "title": "Gemma 2: Improving Open Language Models at a Practical Size",
+            "reason": "ModernBERTの交互（局所/グローバル）注意の着想元であり、その仕組みを詳しく知れる。"
+          }
+        ]
+      },
+      "titleJa": "Smarter, Better, Faster, Longer: 高速・省メモリで長文脈のファインチューニングと推論に対応する現代的な双方向エンコーダ",
+      "why": "BERTに代表されるエンコーダ専用Transformerを、アーキテクチャ、データ規模、ハードウェア効率の面から同時に刷新したModernBERT(base: 149M、large: 395M)を提案した研究です。2兆トークンで学習し、ネイティブで8192トークンの系列長に対応しており、ModernBERT-baseはGLUEでDeBERTaV3-baseを上回った初のMLM学習モデルとなりました。コード検索やColBERT長文検索でも最良の性能を示し、RTX 4090では長文入力を次に速いエンコーダの2.65倍(base)・3倍(large)の速度で処理できる点も注目され、ACL 2025で被引用数が同年1位(Paper Digest集計)となっています。"
     }
   ],
   "sources": [
@@ -140,6 +255,10 @@
     {
       "title": "arXiv（受賞論文の著者情報）",
       "url": "https://arxiv.org/"
+    },
+    {
+      "title": "Most Influential ACL Papers 2026-03（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-acl-papers-2026-03-version/"
     }
   ],
   "unreachable": []

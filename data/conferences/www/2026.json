@@ -74,6 +74,82 @@
           }
         ]
       }
+    },
+    {
+      "title": "DualGR: Generative Retrieval with Long and Short-Term Interests Modeling",
+      "award": "Best Short Paper",
+      "authors": [
+        "Zhongchao Yi",
+        "Kai Feng",
+        "Xiaojian Ma",
+        "Yalong Wang",
+        "Yongqi Liu",
+        "Han Li",
+        "Zhengyang Zhou",
+        "Yang Wang"
+      ],
+      "url": "https://arxiv.org/abs/2511.12518",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "快手（Kuaishou）の2カラム型ショート動画フィードにおける生成的検索（Generative Retrieval, GR）フレームワーク DualGR を提案した研究。長期・短期の興味を明示的に分けてモデル化し、さらにクリックされなかった露出アイテムを負例として使い、興味の薄れ（フェードアウト）を素早く反映できるようにした。",
+        "novelty": "従来のGRではマルチビームデコードにより受動的にしか多様な興味が現れず、長短期の興味が干渉していた。本研究はこれを明示的な2ブランチのルーティングで制御する。また、細粒度SIDのデコードを粗粒度バケット内に限定する検索ベース設計と、未クリック露出を粗粒度の困難負例として扱う損失を組み合わせ、NTP学習で扱いにくかった負のフィードバックを取り込んだ点が新しい。",
+        "method": "(i) DBR：直近の長期窓(1000件)と短期窓(64件)の履歴からレベル1 SIDの埋め込みをプーリングし、正解レベル1トークンとのコサイン類似度が高い方のみを学習時に選ぶハードゲートで長短の希釈を防ぐ。推論時は両ブランチでビームサーチを実行して候補をマージする。(ii) S2D：レベル2/3のデコード時は全履歴から、決定したレベル1バケットと同じ行動のみを検索して入力とし、ノイズと計算量を抑えて長い履歴を使えるようにする。(iii) ENTP-Loss：正例には全3階層の通常のNTP損失、未クリック露出にはレベル1のみ -α log(1-p) のペナルティ（α=0.1）を課す。バックボーンはエンコーダなしの4層Transformerデコーダで、RQ-KMeansにより動画を3階層（各8192）のSIDに量子化する。",
+        "validation": "快手の2カラムExploreフィード（1日あたり1億超のユーザー）で評価し、オンラインHRでComiRec・PDN・KuaiFormer・TIGERと比較した。DualGRはHR@100/500/1000で6.827%/10.319%/19.529%となり、最良のベースラインTIGER（4.936%/8.184%/14.442%）を上回った。アブレーションでは各モジュールを除くと性能が低下し（例：HR@1000でw/o DBR 15.379%、w/o S2D 16.287%、w/o ENTP-Loss 17.576%）、6%トラフィックの1週間のオンラインA/Bテストで視聴数+0.527%、視聴時間+0.432%を達成し、レイテンシの増加は計測されなかった。",
+        "discussion": "評価は快手の単一サービス・独自のオンラインHRが中心で、公開データセットでの再現性や他ドメインへの汎化は本文では示されていない。また、短期窓長やαには最適値があり感度が高いため調整が必要で、2ブランチ推論による計算コストの詳細な分析や、ハードゲートに代わるソフトなルーティングなどの発展は本文では議論されていない。",
+        "next": [
+          {
+            "title": "Recommender Systems with Generative Retrieval (TIGER)",
+            "reason": "SIDによる生成的検索の基礎であり、本論文の主要ベースラインかつ枠組みの出発点であるため。"
+          },
+          {
+            "title": "OneRec Technical Report",
+            "reason": "RQ-KMeansによるSID量子化とエンドツーエンドな生成的推薦の産業実装を理解するのに役立つため。"
+          },
+          {
+            "title": "KuaiFormer: Transformer-based Retrieval at Kuaishou",
+            "reason": "同じ快手環境で比較された強力なTransformerベースの検索手法で、DualGRとの違いを把握できるため。"
+          }
+        ]
+      },
+      "titleJa": "DualGR: 長期・短期の興味をモデル化する生成的検索",
+      "why": "快手（Kuaishou）の2カラム型ショート動画フィードを対象に、長期・短期の興味を明示的な2ブランチで分けて扱い、未クリックの露出アイテムを粗粒度の困難負例として損失に取り込む生成的検索フレームワークDualGRを提案した研究です。快手のExploreフィードでのオンライン評価では、HR@100/500/1000が6.827%/10.319%/19.529%と最良のベースラインTIGER（4.936%/8.184%/14.442%）を上回りました。6%トラフィックの1週間のA/Bテストでも視聴数+0.527%、視聴時間+0.432%を達成し、レイテンシの増加は計測されなかった点が注目され、WWW 2026のBest Short Paperに選ばれています。"
+    },
+    {
+      "title": "LINE: Large-scale Information Network Embedding",
+      "award": "Seoul Test of Time",
+      "authors": [
+        "Jian Tang",
+        "Meng Qu",
+        "Mingzhe Wang",
+        "Ming Zhang",
+        "Jun Yan",
+        "Qiaozhu Mei"
+      ],
+      "url": "https://arxiv.org/abs/1503.03578",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "数百万頂点・数十億エッジ規模の大規模情報ネットワークを低次元ベクトル空間に埋め込む手法LINEを提案した研究。無向・有向・重み付きなど任意のネットワークに適用でき、可視化、ノード分類、リンク予測などに利用できる。",
+        "novelty": "従来のMDS、IsoMap、Laplacian eigenmapは計算量が頂点数の2乗以上で大規模網に適用できなかった。Graph factorizationは無向グラフ限定で、DeepWalkは目的関数が不明確で重みなしネットワークにしか使えない。LINEはネットワーク向けに設計した目的関数で1次近接性（局所構造）と2次近接性（近傍構造の類似）の両方を保存し、重み付き・有向グラフも扱える。",
+        "method": "1次近接性は、頂点ベクトルの内積によるシグモイドの結合確率と経験分布とのKLダイバージェンスを最小化して保存する。2次近接性は、各頂点を「頂点」と「コンテキスト」の2つのベクトルで表し、条件付き分布を経験分布に近づける。最適化は負例サンプリングと非同期SGDで行い、エッジを重みに比例した確率でサンプリングして2値エッジとして更新する（alias tableでO(1)サンプリング）。これにより重みの分散が大きい場合の勾配爆発を避け、計算量はO(dK|E|)でエッジ数に線形となる。1次と2次は別々に学習し、ベクトルを連結して併用する。",
+        "validation": "Wikipediaの単語共起ネットワーク（約200万頂点・10億エッジ）、Flickr、Youtube、DBLPの著者引用・論文引用ネットワークで、単語類推、文書分類、多ラベルノード分類を評価し、GF、DeepWalk、LINE-SGDと比較した。単語類推ではLINE(2nd)が総合66.10%で、SkipGramの63.02%、GFの51.93%、DeepWalkの43.65%を上回った。LINE(1st)とLINE(2nd)は約2.5時間で処理でき、DeepWalkより大幅に高速（約5倍の差）だった。LINE(1st+2nd)はWikipedia文書分類とFlickrで全手法を有意に上回った。",
+        "discussion": "次数の小さい頂点では2次近接性が不正確になり、極めて疎なYoutubeや著者引用ネットワークではDeepWalkに劣った。この問題は近傍の近傍を追加する再構成で緩和される。1次と2次の結合は連結という単純な方法にとどまり、同時学習による原理的な統合は今後の課題とされている。また、新規頂点が既存頂点と接続を持たない場合はテキスト情報などの別の情報が必要で、これも今後の課題である。",
+        "next": [
+          {
+            "title": "DeepWalk: Online Learning of Social Representations",
+            "reason": "LINEの主要な比較対象で、ランダムウォークとSkipGramによるネットワーク埋め込みの基本的なアイデアを理解できる。"
+          },
+          {
+            "title": "Distributed Representations of Words and Phrases and their Compositionality",
+            "reason": "LINEが最適化に採用した負例サンプリングとノイズ分布の設計の出典である。"
+          },
+          {
+            "title": "Distributed large-scale natural graph factorization",
+            "reason": "行列分解に基づく大規模グラフ埋め込みの代表的手法で、LINEの1次近接性との関係を理解するのに役立つ。"
+          }
+        ]
+      },
+      "titleJa": "LINE: 大規模情報ネットワークの埋め込み",
+      "why": "数百万頂点・数十億エッジ規模の大規模ネットワークを低次元ベクトル空間に埋め込む手法LINEを提案した研究です。1次近接性（局所構造）と2次近接性（近傍構造の類似）の両方を保存する専用の目的関数により、無向・有向・重み付きのネットワークを扱える点が注目されます。Wikipediaの単語共起ネットワークでの単語類推ではLINE(2nd)が66.10%でDeepWalkの43.65%などを上回り、処理時間もDeepWalkより大幅に短く（約5倍の差）、Seoul Test of Timeを受賞しています。"
     }
   ],
   "sources": [

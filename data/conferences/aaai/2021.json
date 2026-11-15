@@ -72,6 +72,144 @@
           }
         ]
       }
+    },
+    {
+      "title": "Exploration-Exploitation in Multi-Agent Learning: Catastrophe Theory Meets Game Theory",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Stefanos Leonardos",
+        "Georgios Piliouras"
+      ],
+      "url": "https://arxiv.org/abs/2012.03083",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "探索と活用のバランスを多エージェント学習で扱うため、Boltzmann（softmax）探索を持つQ学習の連続時間版である Smooth Q-learning (SQL) を研究した。SQLの後悔（regret）と収束性を示したうえで、探索率の時間変化が集団性能と均衡選択に与える影響を、QRE曲面の幾何とカタストロフィ（分岐）理論から理論的に説明した。",
+        "novelty": "SQLのregret有界性や収束自体は従来の結果に近いが、本論文ではそれらを出発点と位置づけている。主眼は、探索率の変化で相転移（サドルノード分岐・カスプ分岐）が起き、探索が性能に無制限の利得にも損失にもなり得ることを、カタストロフィ理論で形式的に扱った点にある。またQRE曲面が連結か否かで分岐の種類と均衡選択の結果が決まることを示した。",
+        "method": "SQLダイナミクスは、エントロピー正則化項を加えた修正効用 u^H を持つゲーム Γ^H におけるレプリケータ動力学として書ける（Lemma 3.1）。これにより、定数のregret上界（行動数に対し対数）と、加重ポテンシャルゲームで修正ポテンシャル Φ^H = Φ + Σδ_k H(x_k) を用いたQREの連結コンパクト集合への収束が得られる。さらに2×2協調ゲームでQREの幾何的な位置を特徴づけ（Theorem 4.2）、利害が一致していればQRE曲面は非連結でリスク支配均衡が選ばれ、一致していなければ連結で2本のサドルノード分岐曲線（カスプ）が現れるとした。",
+        "validation": "Pareto Coordination、Stag Hunt、Battle of the Sexes の2×2ゲームで、Explore-Then-Exploit (ETE) と1周期のCyclical Learning Rate (CLR-1) の探索方策を比較し、QRE曲面上の学習経路を可視化した。Stag Huntでは探索後にペイオフ支配均衡からリスク支配均衡へ永続的に遷移し、Battle of the Sexesでは遷移が永続的でない場合があり、結果は両エージェントの探索方策に依存した。n=10行動のポテンシャルゲームでは、探索が大きいと唯一のアトラクタが残り、探索を戻すと全軌道が同じ最適解に収束した。数値的な性能指標の定量比較は本文中には示されていない。",
+        "discussion": "理論は主に低次元（2×2）の協調ゲームで幾何を完全に特徴づけており、大規模ゲームでは修正ポテンシャルの可視化にとどまり、分岐の種類まで論じていない。Theorem 4.1は存在証明で、どの条件で利得または損失になるかを一般に予測するには、QRE曲面の幾何の特徴づけが別途必要である。",
+        "next": [
+          {
+            "title": "Dynamics of Boltzmann Q learning in two-player two-action games",
+            "reason": "2人2行動ゲームにおけるBoltzmann Q学習の動力学を扱っており、本論文のSQLと分岐解析の直接の土台になる。"
+          },
+          {
+            "title": "Penalty-Regulated Dynamics and Robust Learning Procedures in Games",
+            "reason": "ポテンシャルゲームでのSQL型ダイナミクスの収束を示した先行研究で、Theorem 3.3の拡張元である。"
+          },
+          {
+            "title": "Quantal Response Equilibria for Normal Form Games",
+            "reason": "本論文で中心となる解概念QREを導入した原論文で、限定合理性下の均衡の理解に必要である。"
+          }
+        ]
+      },
+      "titleJa": "多エージェント学習における探索と活用：カタストロフィ理論とゲーム理論の出会い",
+      "why": "Boltzmann探索を持つQ学習の連続時間版である Smooth Q-learning (SQL) を対象に、探索率の時間変化が集団の性能と均衡選択に与える影響を、QRE曲面の幾何とカタストロフィ（分岐）理論で理論的に説明した研究です。サドルノード分岐やカスプ分岐といった相転移が起き、探索が性能にとって無制限の利得にも損失にもなり得ることを形式的に示し、QRE曲面の連結性によって分岐の種類と均衡選択の結果が決まることも明らかにしました。2×2ゲームやn=10行動のポテンシャルゲームでの学習経路の可視化で裏づけており、AAAI 2021 の Outstanding Paper に選ばれています。"
+    },
+    {
+      "title": "Mitigating Political Bias in Language Models through Reinforced Calibration",
+      "award": "AI for Social Impact Track",
+      "authors": [
+        "Ruibo Liu",
+        "Chenyan Jia",
+        "Jason Wei",
+        "Guangxuan Xu",
+        "Lili Wang",
+        "Soroush Vosoughi"
+      ],
+      "url": "https://arxiv.org/abs/2104.14795",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "GPT-2が生成するテキストの政治的バイアス（リベラル/保守）を、性別・地域・トピックの3属性について測る2つの指標（Indirect Bias / Direct Bias）を定義し、それを緩和する強化学習ベースのデバイアス枠組みを提案した研究。元の学習データへのアクセスやモデルの再学習なしに、生成時にバイアスを調整できる。",
+        "novelty": "従来のデバイアス手法（データ拡張、埋め込み操作、公平な分類器など）は主に性別バイアスや分類タスクが対象で、学習データへのアクセスや大規模LMの再学習を必要とした。本手法は政治的バイアスを対象に、GPT-2のアーキテクチャを変えず生成時のsoftmaxとargmaxの間にデバイアス段階を挿入する「キャリブレーション」で、データも再学習も不要とした点が新しい。",
+        "method": "状態を生成済みトークン列、行動を次トークン、softmax出力を方策とし、PPOに着想を得たデバイアス報酬（元方策とデバイアス方策の比で重み付け）を定義する。Mode 1（単語埋め込み）はMedia CloudからTF-IDFで抽出したリベラル/保守語（各250語）への距離を等しくする利得を最大化する。Mode 2（分類器誘導）はGPT-2ベースの分類器の出力が0.5に近づく（中立）ほど高い報酬を与える。KLダイバージェンス制約でλを適応的に調整し、可読性の劣化を抑える。",
+        "validation": "Media Cloudの約26万記事から作った分類器（XLNet, F1=0.984）で判定し、GPT-2 mediumの生成計42,048サンプルで評価した。全体のIndirect Biasは、性別で1.02→0.56（Emb.）/0.29（Cls.）、地域で0.98→0.44/0.37、トピックで1.94→0.90/0.38へ低下し、分類器誘導が概ね優れていた。MTurk参加者170名の人手評価でも両手法でバイアスが有意に低下し、分類器誘導は可読性（4.93 vs ベースライン4.33）も高かった。一方、単語置換ベースのNaiveやIN-GloVeは削減効果が小さく、可読性はIN-GloVeで悪化した。",
+        "discussion": "λを大きくするとバイアスは下がる一方でパープレキシティが上がり、流暢さとのトレードオフがある。Indirect Biasはバイアスの方向を示さず、指標がリベラル/保守の二値に限られるため、非二値のバイアスへ拡張するには大幅な修正が必要である。",
+        "next": [
+          {
+            "title": "Reducing sentiment bias in language models via counterfactual evaluation",
+            "reason": "LMの生成バイアスを公平性損失による再学習で抑える直接の比較対象であり、本論文の「再学習不要」という位置づけを理解できる。"
+          },
+          {
+            "title": "Learning Gender-Neutral Word Embeddings",
+            "reason": "本論文のMode 1と比較手法IN-GloVeの元になったGN-GloVeで、単語埋め込みによるデバイアスの考え方を確認できる。"
+          },
+          {
+            "title": "Plug and Play Language Models: A Simple Approach to Controlled Text Generation",
+            "reason": "再学習せず生成時に出力を制御する手法で、本論文の生成時キャリブレーションと近い発想を持つ。"
+          }
+        ]
+      },
+      "titleJa": "強化学習によるキャリブレーションで言語モデルの政治的バイアスを緩和する",
+      "why": "GPT-2が生成するテキストの政治的バイアス（リベラル/保守）を、性別・地域・トピックの3属性で測る2つの指標（Indirect Bias / Direct Bias）を定義し、生成時のsoftmaxとargmaxの間にデバイアス段階を挿入する強化学習ベースの枠組みを提案した研究です。元の学習データへのアクセスやモデルの再学習が不要な点が特徴で、トピックのIndirect Biasは1.94から0.90（Emb.）/0.38（Cls.）へ低下し、MTurk参加者170名による人手評価でもバイアスの有意な低下が確認されました。AAAI 2021のAI for Social Impact Trackで受賞しています。"
+    },
+    {
+      "title": "TabNet: Attentive Interpretable Tabular Learning",
+      "selection": "被引用数上位（Paper Digest の集計で同年2位）",
+      "authors": [
+        "Sercan O. Arik",
+        "Tomas Pfister"
+      ],
+      "url": "https://arxiv.org/abs/1908.07442",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "表形式（タブular）データ向けに、各決定ステップでどの特徴量を使うかを逐次的なアテンションで選択する、高性能かつ解釈可能な深層学習アーキテクチャ TabNet を提案した研究。前処理なしの生データを勾配降下法でエンドツーエンドに学習でき、局所的・大域的な解釈性を備える。さらに、表データ向けのマスク特徴量予測による自己教師あり事前学習も示した。",
+        "novelty": "インスタンスごとの特徴量選択と推論を、L2XやINVASEのような別モデルを使わず単一のDNNで行う点が新しい。sparsemaxによる制御可能なスパース性を持つソフト特徴量選択と逐次マルチステップ構成により、決定木的な特徴選択の性質を保ちつつDNNの表現力を得る。著者らは表データにおける教師なし事前学習の有効性を初めて示したと主張している。",
+        "method": "各ステップで、前ステップの処理済み特徴から attentive transformer（FC+BN+sparsemax）が特徴量マスクM[i]を生成し、入力に乗算して選択する。事前使用量を表す prior scale（緩和パラメータγ）とエントロピー正則化（λ_sparse）でスパース性を制御する。選択した特徴は、全ステップ共有層とステップ固有層からなる feature transformer（FC+ghost BN+GLU）で処理し、ReLU後の出力を全ステップで合算して最終出力とする。ステップごとの寄与度η[i]でマスクを重み付けして集約し、大域的な特徴量重要度を得る。自己教師あり学習では、一部の列をマスクし、デコーダで欠損値を再構成する。",
+        "validation": "Chen et al.の合成データ6種ではINVASEと同等以上の性能を、INVASEの約1/4以下のパラメータ数（26k〜31k対101k）で達成した。実データでは、Forest Cover Typeで精度96.99%（XGBoost 89.34%、AutoML Tables 94.95%）、Poker Handで99.2%（XGBoost 71.1%）、SarcosでTabNet-LがテストMSE 0.14（Adaptive neural tree 1.23）、Higgsで78.84%などを示した。一方、性能が飽和しているKDDデータセットではXGBoost/CatBoostと同等かやや劣る結果だった。自己教師あり事前学習では、Higgsの1kサンプル学習で精度が57.47%から61.37%に向上し、収束も速くなった。",
+        "discussion": "KDDのように性能が飽和したデータセットでは優位性がなく、データセットごとにモデル容量やスパース性（γ、λ_sparse、ステップ数）の適切な調整が必要で、λ_sparseを高くしすぎる、あるいはステップ数を増やしすぎると性能が低下する。また、カテゴリ変数は1次元埋め込みに限定して解釈性を保っており、高次元埋め込みでは個々の次元の解釈が難しくなる点が制約として挙げられている。",
+        "next": [
+          {
+            "title": "From Softmax to Sparsemax: A Sparse Model of Attention and Multi-Label Classification",
+            "reason": "TabNetの特徴量選択の中核であるsparsemax正規化の定義と性質を理解するため。"
+          },
+          {
+            "title": "INVASE: Instance-wise Variable Selection using Neural Networks",
+            "reason": "TabNetが比較対象とするインスタンス単位の特徴量選択手法で、単一アーキテクチャとの違いを把握できる。"
+          },
+          {
+            "title": "Adaptive Neural Trees",
+            "reason": "決定木とDNNを統合する別アプローチで、Sarcosデータセットの比較対象としてTabNetとの違いを確認できる。"
+          }
+        ]
+      },
+      "titleJa": "TabNet: アテンションに基づく解釈可能な表形式データ学習",
+      "why": "各決定ステップで使う特徴量を逐次的なアテンションとsparsemaxで選ぶことで、単一のDNNによりインスタンスごとの特徴量選択と推論を行い、局所的・大域的な解釈性を備えた表形式データ向けアーキテクチャTabNetを提案した研究です。Forest Cover Typeでは精度96.99%（XGBoost 89.34%）、Poker Handでは99.2%（XGBoost 71.1%）を示し、合成データではINVASEと同等以上の性能を約1/4以下のパラメータ数で達成しました。さらに、マスク特徴量予測による自己教師あり事前学習で、Higgsの1kサンプル学習の精度を57.47%から61.37%に高めた点も注目され、被引用数でも同年2位に入っています。"
+    },
+    {
+      "title": "R3Det: Refined Single-Stage Detector with Feature Refinement for Rotating Object",
+      "selection": "被引用数上位（Paper Digest の集計で同年3位）",
+      "authors": [
+        "Xue Yang",
+        "Junchi Yan",
+        "Ziming Feng",
+        "Tao He"
+      ],
+      "url": "https://arxiv.org/abs/1908.05612",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "大アスペクト比・高密度・任意方向という回転物体検出の課題に対し、粗から細へ段階的に回帰するリファイン型の単段（シングルステージ）回転物体検出器 R3Det を提案した研究。RetinaNet を基盤とし、特徴ずれを解消する特徴リファインメントモジュール（FRM）と、微分可能な近似SkewIoU損失を組み込んでいる。",
+        "novelty": "既存のリファイン型単段検出器に残る特徴ミスアライメントを、deformable convolution のような学習ベースの暗黙的手法ではなく、計算により明示的に補正する方式で解決した。著者らは回転検出でこの問題に取り組んだ初の研究だと主張している。また、第1段で水平アンカー、後段で回転アンカーを使う段階的回帰と、SkewIoUの大きさを保ちつつ勾配方向のみを近似する損失（PIoUのような過剰近似をしない）を提案している。",
+        "method": "FRMでは、各特徴点について最高スコアのリファイン済みボックスのみを残し（BF）、そのボックスの中心と4隅の計5点の特徴ベクトルをバイリニア補間で取得して加算し、現在の特徴ベクトルを置き換えることで特徴マップ全体を再構成する（FR）。さらに2系統の畳み込みを加算する large kernel（LK）を併用し、再構成後の特徴を元の特徴マップに加算する。損失は、smooth L1と水平IoUからなる回帰損失の単位ベクトルで勾配方向を決め、微分不要なSkewIoU関数の値で大きさを調整する。リファイン段階は複数回繰り返せ、段ごとにIoU閾値（前景0.5→0.6→0.7、背景0.4→0.5→0.6）を変える。",
+        "validation": "DOTA、HRSC2016、UCAS-AOD、ICDAR2015の4データセットで評価した。DOTAのアブレーションでは、ベースラインのRetinaNet-H（62.79%）に対しR3Detは66.31%、2段リファインと近似SkewIoU損失の併用で69.50%に達した。単段手法の中でDOTAでは73.79%（ResNet101）で最良、マルチスケールとResNet152で76.47%、UCAS-AODは96.17%、HRSC2016はResNet101・800×800でmAP(12)が96.01%、MobileNetV2・600×600で20fpsを達成した。ICDAR2015ではHmean 84.96%（13.5fps）だった。",
+        "discussion": "FRMは水平検出に適用すると隅の点が物体から遠くなり特徴が不正確になるため、COCOでの結果は満足できるものではなかったと著者らは述べており、回転検出に特化した手法といえる。リファイン段階は3段以上にしても性能向上が見られず、DOTAでは低層特徴（P2）を使う二段階手法が小物体に有利で、トップの二段階手法とは差が残る。",
+        "next": [
+          {
+            "title": "Focal Loss for Dense Object Detection",
+            "reason": "R3DetのベースラインであるRetinaNetとフォーカルロスの理解に必要なため。"
+          },
+          {
+            "title": "SCRDet: Towards More Robust Detection for Small, Cluttered and Rotated Objects",
+            "reason": "近似SkewIoU損失の着想元であり、DOTAでの主要な比較対象でもあるため。"
+          },
+          {
+            "title": "PIoU Loss: Towards Accurate Oriented Object Detection in Complex Environments",
+            "reason": "SkewIoU損失を近似する別のアプローチであり、R3Detの損失設計との違いを比較できるため。"
+          }
+        ]
+      },
+      "titleJa": "R3Det: 回転物体のための特徴リファインメントを備えたリファイン型単段検出器",
+      "why": "大アスペクト比・高密度・任意方向という回転物体検出の課題に対し、RetinaNetを基盤に粗から細へ段階的に回帰する単段検出器R3Detを提案した研究です。リファイン型検出器に残る特徴のずれを、学習ベースの暗黙的手法ではなく計算による明示的な補正（FRM）で解消し、さらに微分可能な近似SkewIoU損失を組み合わせた点が特徴です。DOTA・HRSC2016・UCAS-AOD・ICDAR2015の4データセットで評価され、DOTAでは単段手法として最良の73.79%（ResNet101）を達成しており、被引用数でもAAAI 2021の同年3位という高い注目を集めています。"
     }
   ],
   "sources": [
@@ -86,6 +224,10 @@
     {
       "title": "Conference-Acceptance-Rate（主要会議の採択率まとめ）",
       "url": "https://github.com/lixin4ever/Conference-Acceptance-Rate"
+    },
+    {
+      "title": "Most Influential AAAI Papers 2024-09（Paper Digest・被引用数の集計）",
+      "url": "https://resources.paperdigest.org/2024/09/most-influential-aaai-papers-2024-09/"
     }
   ],
   "unreachable": [

@@ -83,6 +83,133 @@
           }
         ]
       }
+    },
+    {
+      "title": "Learning-Rate-Free Learning by D-Adaptation",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Aaron Defazio",
+        "Konstantin Mishchenko"
+      ],
+      "url": "https://arxiv.org/abs/2301.07733",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "凸かつLipschitz連続な関数の最小化において、学習率を手動で調整せずに自動設定するD-Adaptationを提案した研究である。初期点から解までの距離Dの下界を逐次推定・更新することで、バックトラックや直線探索、追加の勾配・関数値評価なしに、漸近的に最適な収束率を達成する。SGD版とAdam版も実装し、多様な機械学習問題で検証している。",
+        "novelty": "この問題クラスで、収束率に乗算的なlog係数を加えずに漸近最適率を達成する、初のハイパーパラメータフリー手法であると主張している。Carmon and Hinder (2022) の発想を引き継ぎつつ、従来の双対平均化の上界に負の項を加え、D²をD‖s_{n+1}‖に置き換えたより厳密な上界を導出した。これにより、実測量のみからDの下界を構成できる。ハイパー勾配法のように追加の超学習率を必要とせず、d0以外のパラメータは不要である。",
+        "method": "AdaGrad-Normのステップサイズを重み付き双対平均化に適用し、重みとして現在の下界推定d_kを用いる。重み付き関数値和の上界が非負であることから、既知量のみで書けるDの下界d̂_{k+1}を導き、d_{k+1}=max(d_k, d̂_{k+1})で更新する。d̂の推定には2つの方式があり、第2方式は負のハイパー勾配⟨g_i,s_i⟩を用いるが、理論的性質は同じで実用上も同等である。実用向けにはSGD版（primal averagingによるモーメンタム、G=‖g0‖、d̂を2倍）とAdam版（指数移動平均、座標ごとのスケーリング）を示し、座標ごとのAdaGrad版ではℓ∞ノルムの距離を推定する。学習率スケジュールは別途γ_kとして併用できる。",
+        "validation": "LIBSVMの12個のロジスティック回帰問題で、グリッドサーチで選んだ学習率の精度と0.5%以内で一致するか上回った。深層学習ではCIFAR10/100、ImageNet、IWSLT14のLSTM、RoBERTa、GPT、COCO物体検出、fastMRI、DLRMなどで、手動調整のベースラインと同等の性能を示した。一方、ViTではベースラインを下回った。COCOB（コインベッティング法）はどの問題でもベースラインに及ばなかった。d0を10^-16から10^-2まで変えても最終性能に依存しないことも確認している。",
+        "discussion": "理論は凸Lipschitz関数の非確率的設定に限られ、確率的設定やSGD・Adam版は理論の直接の保証外である。収束も漸近的であり、非漸近の場合はlog₂(1+D/d0)の因子が付く。また、初期下界d0≤Dが必要で、float16では10^-8〜10^-6程度を推奨する。ViTは初期学習率への感度が高く、性能が劣る例であり、学習率が広い範囲で有効な場合は高めの値を選ぶ傾向がある。",
+        "next": [
+          {
+            "title": "Making SGD parameter-free",
+            "reason": "D-Adaptationが下界推定の着想を得た先行研究で、確率的設定への拡張の議論も含まれるため。"
+          },
+          {
+            "title": "DoG is SGD's best friend: A parameter-free dynamic step size schedule",
+            "reason": "同時期に提案された並行研究で、確率的設定での学習率フリー収束を示しており、D-Adaptationとの比較に適している。"
+          },
+          {
+            "title": "Training deep networks without learning rates through coin betting",
+            "reason": "深層学習向けのパラメータフリー手法COCOBの原論文で、本論文の比較対象であるため。"
+          }
+        ]
+      },
+      "titleJa": "D-Adaptationによる学習率フリー学習",
+      "why": "凸かつLipschitz連続な関数の最小化で、初期点から解までの距離Dの下界を逐次推定することで学習率を自動設定するD-Adaptationを提案した研究です。この問題クラスで収束率にlog係数を乗せずに漸近最適率を達成する初のハイパーパラメータフリー手法だと主張しており、追加の勾配・関数値評価や直線探索も不要で、d0以外のパラメータも要りません。LIBSVMのロジスティック回帰や、CIFAR10/100、ImageNet、RoBERTa、GPTなど多様な深層学習でも手動調整のベースラインと同等の性能を示しましたが、ViTではベースラインを下回っています。"
+    },
+    {
+      "title": "Adapting to game trees in zero-sum imperfect information games",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Côme Fiegel",
+        "Pierre Ménard",
+        "Tadashi Kozuno",
+        "Rémi Munos",
+        "Vianney Perchet",
+        "Michal Valko"
+      ],
+      "url": "https://arxiv.org/abs/2212.12567",
+      "ochiai": {
+        "basis": "abstract",
+        "what": "各プレイヤーがゲーム状態を部分的にしか観測できない2人零和の不完全情報ゲームで、軌跡フィードバック付きの自己対戦によりε最適戦略を学習する問題を扱う研究である。必要なゲーム実現回数の問題非依存な下界を示し、2つのFTRL系アルゴリズム（Balanced FTRLとAdaptive FTRL）を提案している。",
+        "novelty": "ゲーム長H、両プレイヤーの総行動数A_X, B_Yに依存する下界 Õ(H(A_X+B_Y)/ε²) を与え、これに一致する上界をBalanced FTRLで達成した点が新しい。さらにAdaptive FTRLは、情報集合の構造を事前に知らなくても Õ(H²(A_X+B_Y)/ε²) の実現回数で学習でき、ゲーム木への適応を可能にした点が優れている。",
+        "method": "どちらもFollow the Regularized Leader (FTRL) に基づく。Balanced FTRLは情報集合の構造を事前に利用して正則化を設計することで下界に一致する性能を得る。Adaptive FTRLは観測に応じて正則化を段階的に適応させ、事前知識を不要にする。",
+        "validation": "アブストラクトからは、実験ではなく理論的な保証（下界と各アルゴリズムの実現回数の上界）で有効性を示していると読み取れる。Balanced FTRLは下界に一致し、Adaptive FTRLはHの因子が1つ多い H² の依存で済む。具体的な数値実験の記述は確認できない。",
+        "discussion": "Adaptive FTRLの上界はBalanced FTRLや下界に比べてHの因子が余分にあり、事前知識なしで適応する代償となっている。この差を縮められるか、またアブストラクトのみでは実験的検証や実用規模のゲームでの性能は不明である。",
+        "next": []
+      },
+      "titleJa": "2人零和不完全情報ゲームにおけるゲーム木への適応",
+      "why": "各プレイヤーが状態を部分的にしか観測できない2人零和の不完全情報ゲームで、軌跡フィードバック付きの自己対戦によりε最適戦略を学習する問題に取り組み、必要なゲーム実現回数について問題非依存の下界 Õ(H(A_X+B_Y)/ε²) を示した。この下界に一致する上界を Balanced FTRL で達成し、さらに Adaptive FTRL では情報集合の構造を事前に知らなくても Õ(H²(A_X+B_Y)/ε²) の実現回数で学習でき、ゲーム木への適応を可能にした点が注目される。評価は実験ではなく理論的保証によるもので、ICML 2023 の Outstanding Paper に選ばれている。"
+    },
+    {
+      "title": "Generalization on the Unseen, Logic Reasoning and Degree Curriculum",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Emmanuel Abbe",
+        "Samy Bengio",
+        "Aryo Lotfi",
+        "Kevin Rizk"
+      ],
+      "url": "https://arxiv.org/abs/2301.13105",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "ブール関数の学習において、訓練で一部の入力領域を全く見ない「未見領域への汎化(GOTU)」という強いOOD汎化設定を定式化し、(S)GDで訓練したネットワークが未見領域でどのような解を学習するかを調べた研究。スパースな関数に対し、ランダム特徴量モデル・線形ネットワーク・Transformerなどが、訓練データを補間しつつフーリエ質量が低次の基底に集中する「最小次数補間解(MD interpolator)」を学ぶことを理論・実験で示した。この性質から、ブール関数での長さ汎化問題の説明と、Degree-Curriculumという学習アルゴリズムを導いた。",
+        "novelty": "未見領域での暗黙バイアスを、ブール関数のフーリエ・ウォルシュ解析と消失イデアル(代数幾何)を用いて「最小次数プロファイルの補間解」として特徴づけた点が新しい。ランダム特徴量モデル(Theorem 11)、対角線形ネットワーク(Theorem 15)、2層全結合線形ネットワーク(Theorem 17)で最小次数バイアスを証明し、Transformerでも実験的に確認している。さらに、このバイアスを長さ汎化の説明(Theorem 21)やカリキュラム学習に応用した点が特徴である。",
+        "method": "未見領域Uを除いた領域で訓練誤差0となる補間解の集合を考え、その中でフーリエ質量が低次に集中する(次数プロファイルが辞書式順序で最小の)唯一の解をMD補間解と定義する。ランダム特徴量モデルでは、強表現的(strongly expressive)な活性化関数のもとで次数|T|の単項式の特徴量が持つ質量がd^{-|T|}で減衰するため、‖a‖₂最小の補間解がMD補間解に収束することを示す。線形ネットワークでは、凍結した入力ビットの係数が第1層バイアスと同じ動力学に従うことを利用し、初期化スケールを小さくすると漏れが消えることを勾配流の軌道解析で示す。Degree-Curriculumは、入力のハミング重みを段階的に増やしながら学習し、単項式の台(support)を少しずつ学習する。",
+        "validation": "訓練領域の全ビット列を学習データとし、ランダム特徴量モデルとencoder-only Transformerで、実験的に強い最小次数バイアスが観測された。MLPや平均場(mean-field)パラメータ化の2層ネットワークでも、漏れを伴いつつ弱い形でバイアスが見られた。また、スパース性条件やTransformerの因果的アテンションマスクの有無でバイアスが残る・弱まる様子を調べ、対称性に基づく正則化でバイアスを緩和する予備的試みも示した。提示された本文の範囲では、Degree-Curriculumの具体的な性能数値は確認できない。",
+        "discussion": "一般の全結合線形ネットワークへの拡張は予想(Conjecture)にとどまり、証明は2層に限られる。ReLUでは最小次数バイアスが弱まり、大きな学習率や平均場ネットワークでは高次単項式に質量が漏れるなど、成立条件は限定的である。スパース性を外した領域や、訓練領域を一様サンプリングする設定への拡張は今後の課題とされている。",
+        "next": [
+          {
+            "title": "Learning to reason with neural networks: Generalization, unseen data and boolean measures",
+            "reason": "本論文の前身にあたり、canonical holdoutと未見データへの汎化を扱った原論文で、問題設定の背景を理解できる。"
+          },
+          {
+            "title": "Exploring length generalization in large language models",
+            "reason": "本論文が理論的説明を与える長さ汎化問題の実証的な出発点となる研究である。"
+          },
+          {
+            "title": "An initial alignment between neural network and target is needed for gradient descent to learn",
+            "reason": "ランダム特徴量モデルの強表現的な活性化の条件で用いられる初期アライメント(INAL)の理論的基盤を扱っている。"
+          }
+        ]
+      },
+      "titleJa": "未見領域への汎化、論理推論、そしてDegree Curriculum",
+      "why": "ブール関数の学習で、訓練中に入力空間の一部を全く見ない「未見領域への汎化(GOTU)」という強いOOD汎化設定を定式化し、ランダム特徴量モデル・線形ネットワーク・Transformerなどが訓練データを補間しつつ低次のフーリエ基底に質量を集中させる「最小次数補間解」を学ぶことを理論と実験で示した研究です。この暗黙バイアスをブール関数での長さ汎化の説明や、Degree-Curriculumという学習アルゴリズムの導出につなげた点が注目され、ICML 2023でOutstanding Paperに選ばれました。"
+    },
+    {
+      "title": "BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models",
+      "selection": "被引用数上位（Paper Digest の集計で同年1位）",
+      "authors": [
+        "Junnan Li",
+        "Dongxu Li",
+        "Silvio Savarese",
+        "Steven Hoi"
+      ],
+      "url": "https://arxiv.org/abs/2301.12597",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "凍結済みの画像エンコーダと凍結済みの大規模言語モデル（LLM）を再利用し、学習対象を軽量なQuerying Transformer（Q-Former）に絞った、計算効率の高い視覚言語事前学習手法BLIP-2を提案した研究。VQA、画像キャプション生成、画像テキスト検索で高い性能を示し、自然言語の指示に従うゼロショットの画像→テキスト生成も可能にした。",
+        "novelty": "FrozenやFlamingoは画像から文章を生成する損失だけでモダリティ間のギャップを埋めようとしたが、本論文ではそれでは不十分だと示し、表現学習と生成学習の2段階で事前学習するQ-Formerを導入した。凍結した画像エンコーダとLLMの両方を活用し、学習パラメータ数を大きく減らしながら高い性能を達成した。たとえばゼロショットVQAv2でFlamingo80Bを8.7%上回り、学習パラメータは54分の1である。",
+        "method": "Q-Formerは32個の学習可能なクエリ（各768次元）を持ち、凍結した画像エンコーダとcross-attentionでやり取りして固定長の視覚特徴を取り出す。BERT baseで初期化し、パラメータは188Mである。第1段階では凍結画像エンコーダに接続し、ITC・ITG・ITMの3つの目的関数を、異なるself-attentionマスクで同時に最適化して、テキストに関連する視覚表現を学習する。第2段階では、Q-Formerの出力を全結合層でLLMの入力次元に射影し、ソフトな視覚プロンプトとして凍結LLM（OPTまたはFlanT5）の入力に前置して、言語モデリング損失またはprefix言語モデリング損失で学習する。",
+        "validation": "BLIPと同じ129M枚の画像データ（LAION400Mの115M枚を含む）で事前学習し、ゼロショットVQA、COCO・NoCapsでのキャプション生成、Flickr30K・COCOでの画像テキスト検索などで評価した。ゼロショットVQAv2（test-dev）はViT-g+FlanT5 XXLで65.0となりFlamingo80Bの56.3を上回った。ただしOK-VQAではFlamingo80Bに劣る。また、第1段階の表現学習を外すと性能が大きく下がり、OPTでは破滅的忘却も起きた。画像テキスト検索ではITG損失を加えることでも性能が向上した。",
+        "discussion": "事前学習データが1サンプルにつき画像テキスト1組のみのため、in-contextの少数事例を与えてもVQA性能が向上せず、インターリーブ形式の画像テキストデータの構築が今後の課題とされている。また、LLMの不正確な知識や誤った推論経路、新しい画像内容への知識不足により出力が不十分になることがある。さらに凍結モデルを使う以上、攻撃的な表現や社会的バイアス、個人情報漏洩といったLLMのリスクを引き継ぐ。",
+        "next": [
+          {
+            "title": "Flamingo: a Visual Language Model for Few-Shot Learning",
+            "reason": "BLIP-2が主な比較対象とし、凍結LLMにcross-attentionで視覚特徴を注入する代表的手法であり、in-context学習の限界の議論も理解できるため。"
+          },
+          {
+            "title": "BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation",
+            "reason": "BLIP-2の3つの表現学習目的（ITC・ITG・ITM）やCapFiltによる合成キャプション作成の元になった前身の手法であるため。"
+          },
+          {
+            "title": "Multimodal Few-Shot Learning with Frozen Language Models",
+            "reason": "画像エンコーダの出力を凍結LLMへのソフトプロンプトとして用いる初期の手法であり、BLIP-2が改善した点を比べて理解できるため。"
+          }
+        ]
+      },
+      "titleJa": "BLIP-2: 凍結済み画像エンコーダと大規模言語モデルを用いた言語・画像事前学習のブートストラップ",
+      "why": "凍結済みの画像エンコーダとLLMを再利用し、学習対象を軽量なQ-Formerに絞って、表現学習と生成学習の2段階で事前学習する視覚言語手法BLIP-2を提案した研究です。ゼロショットVQAv2（test-dev）ではFlamingo80Bの56.3を上回る65.0を、学習パラメータ数を54分の1に抑えて達成し、自然言語の指示に従うゼロショットの画像→テキスト生成も可能にしました。Paper Digestの集計で同年の被引用数1位という点からも注目されますが、OK-VQAではFlamingo80Bに劣るという限界も報告されています。"
     }
   ],
   "sources": [
@@ -97,6 +224,10 @@
     {
       "title": "International Conference on Machine Learning（Wikipedia・投稿数と採択数の表）",
       "url": "https://en.wikipedia.org/wiki/International_Conference_on_Machine_Learning"
+    },
+    {
+      "title": "Most Influential ICML Papers（Paper Digest・被引用数の集計）",
+      "url": "https://www.paperdigest.org/2026/03/most-influential-icml-papers-2026-03-version/"
     }
   ],
   "unreachable": [

@@ -115,6 +115,39 @@
           }
         ]
       }
+    },
+    {
+      "title": "CxMP: A Linguistic Minimal-Pair Benchmark for Evaluating Constructional Understanding in Language Models",
+      "award": "Outstanding Paper",
+      "authors": [
+        "Miyu Oba",
+        "Saku Sugawara"
+      ],
+      "url": "https://arxiv.org/abs/2602.21978",
+      "ochiai": {
+        "basis": "fulltext",
+        "what": "構文文法（Construction Grammar）に基づき、形式と意味の対である「構文」の意味解釈を言語モデルがどこまで理解しているかを測る最小対ベンチマーク CxMP を提案した研究。let-alone、caused-motion、ditransitive など9種の構文を対象に、構文を含む文とその意味を問う診断文のペアで評価する。文法的容認性の判定に偏った既存評価を、構文が担う意味関係の理解へ拡張する。",
+        "novelty": "従来の構文研究は単一構文が中心で、NLI 形式では判断の手がかりが不明瞭かつ小型モデルのゼロショット評価が難しかった。CxMP は9構文を網羅し、尤度比較による最小対で発達的に妥当な小型モデルから LLM まで同一条件で比較できる。名詞タイプ（普通名詞・男女名・Name+alphabet）や主客入れ替え版の導入により、語彙的偏りやヒューリスティクスも分析できる。",
+        "method": "gpt-5-chat-latest にテンプレートとスロット変数を与えて構文例文を生成し、フィルタリングと人手確認を経て、妥当・非妥当の2種の診断文（各構文に2つのバリアントA/B）と対にした。計約43kの評価ペアである。評価は CLM では長さ正規化対数確率、MLM では pseudo log-likelihood を用い、妥当なペアの確率が高ければ正解とする。GPT-5 は確率が取れないためプロンプトで尤度の高い方を選ばせる。診断文の語の出現頻度を均等化して表層ヒューリスティクスの影響を抑えている。",
+        "validation": "BabyLM 系小型モデル、BabyBERTa、Pythia（14M〜12B）、Open-sci-ref、RoBERTa、GPT-2、Llama-3.1（8B/70B、base/instruct）、GPT-5 を評価した。小型モデルはほぼ偶然水準で、GPT-5 はほとんどの構文を解けるが、70B オープンモデルでも一部構文は難しいままだった。OLMo2 の学習過程では BLiMP が約50Bトークンで頭打ちになる一方、CxMP は約10Bトークン以降も緩やかに向上し続けた。人手検証（896項目）では多数決正解率96.65%、全員一致83.59%（Conative は67.86%と低い）だった。擬似語に置換すると Llama3.1-70B のスコアは全構文で大きく低下するが、偶然水準よりはわずかに高かった。",
+        "discussion": "英語と9種の構文に限られ、孤立した書き言葉の文のみで談話・語用論的文脈を含まないほか、擬似語実験は不自然な刺激によりモデル能力を過小評価する可能性がある。静的な評価であるため、内部表現のプロービングやファインチューニングなどの動的評価、他言語・他の構文への拡張が今後の課題として挙げられている。",
+        "next": [
+          {
+            "title": "The better your syntax, the better your semantics? Probing pretrained language models for the English comparative correlative",
+            "reason": "CxMP が取り入れた Comparative Correlative 構文を LM がどう理解するかを調べた先行研究で、構文理解の評価の出発点を押さえられる。"
+          },
+          {
+            "title": "BLiMP: The Benchmark of Linguistic Minimal Pairs for English",
+            "reason": "CxMP が対比する文法的容認性の最小対ベンチマークであり、学習軌跡の比較の基準にもなっている。"
+          },
+          {
+            "title": "A construction grammar corpus of varying schematicity: a dataset for the evaluation of abstractions in language models",
+            "reason": "CxMP が対象とする9構文の選定元で、構文文法に基づくデータセット設計の背景が分かる。"
+          }
+        ]
+      },
+      "titleJa": "CxMP: 言語モデルの構文理解を評価するための言語学的最小対ベンチマーク",
+      "why": "構文文法に基づき、let-alone や caused-motion など9種の構文の意味解釈を、尤度比較による最小対で測るベンチマーク CxMP を提案した研究です。文法的容認性の判定に偏りがちな既存評価を、構文が担う意味関係の理解へ広げ、小型モデルから GPT-5 までを同一条件で比較できる点が注目されます。OLMo2 の学習過程では BLiMP が約50Bトークンで頭打ちになる一方、CxMP は約10Bトークン以降も緩やかに向上し続け、既存指標では捉えにくい能力を測れることも示されました。"
     }
   ],
   "sources": [
