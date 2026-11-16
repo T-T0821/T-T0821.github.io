@@ -225,7 +225,7 @@ const teekConfig = defineTeekConfig({
     docAnalysis: true,
     // サイトの情報の「記事の数」「文字数」と記事ページの「読了目安」の集計。
     // 一覧ページ（index.md やアーカイブなど）は数えず、日本語は 1 分あたり 500 字で読了目安を出す
-    docAnalysisOption: { ignoreIndexMd: true, ignoreList: ['archives.md', 'categories.md', 'tags.md'], cn: 500 },
+    docAnalysisOption: { ignoreIndexMd: true, ignoreList: ['archives.md', 'categories.md', 'tags.md', 'works.md'], cn: 500 },
   },
 })
 
@@ -274,6 +274,7 @@ export default defineConfig({
           { text: '📡 RSS', link: '/feed.rss', target: '_blank' },
         ],
       },
+      { text: '💻 個人開発', link: '/works', activeMatch: '^/works' },
     ],
     logo: '/logo.svg',
 
